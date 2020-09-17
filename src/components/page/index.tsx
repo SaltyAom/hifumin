@@ -20,7 +20,7 @@ const Page: PageComponent = memo(
 			let options = {
 					root: null,
 					rootMargin: `${window.innerHeight / 1.75}px`,
-					threshold: 0,
+					threshold: 0
 				},
 				callback = (result) => {
 					let [{ isIntersecting }] = result
@@ -52,6 +52,7 @@ const Page: PageComponent = memo(
 					ref={page}
 					src={shouldLoad ? link : ""}
 					alt={`Page ${index + 1}`}
+					loading="lazy"
 				/>
 			</div>
 		)

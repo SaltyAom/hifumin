@@ -22,6 +22,7 @@
 		"@zeit/next-stylus": "^1.0.1",
 		"next-compose-plugins": "^2.2.0",
 		"next-offline": "^5.0.2",
+		"optimize-css-assets-webpack-plugin": "^5.0.4",
 		"postcss-preset-env": "^6.7.0",
 		"stylus": "^0.54.8",
 		"tailwindcss": "^1.8.10",
