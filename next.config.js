@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const withStylus = require("@zeit/next-stylus")
+const withStylus = require("@zeit/next-stylus"),
+	withOffline = require("next-offline")
 
 const composePlugins = require("next-compose-plugins")
 
 const { join } = require("path")
 
-module.exports = composePlugins([[withStylus]], {
+module.exports = composePlugins([[withStylus], [withOffline]], {
 	experimental: {
 		modern: true,
-		polyfillsOptimization: true,
+		polyfillsOptimization: true
 	},
-	target: "experimental-serverless-trace",
+	target: "serverless",
 
 	webpack(config, { dev, isServer }) {
 		const splitChunks =
@@ -20,14 +21,14 @@ module.exports = composePlugins([[withStylus]], {
 			const preactModules = /[\\/]node_modules[\\/](preact|preact-render-to-string|preact-context-provider)[\\/]/
 			if (cacheGroups.framework) {
 				cacheGroups.preact = Object.assign({}, cacheGroups.framework, {
-					test: preactModules,
+					test: preactModules
 				})
 				cacheGroups.commons.name = "framework"
 			} else {
 				cacheGroups.preact = {
 					name: "commons",
 					chunks: "all",
-					test: preactModules,
+					test: preactModules
 				}
 			}
 		}
@@ -43,7 +44,12 @@ module.exports = composePlugins([[withStylus]], {
 			"@components": join(__dirname, "src/components"),
 			"@libs": join(__dirname, "src/libs"),
 			"@stores": join(__dirname, "src/stores"),
-			"@layouts": join(__dirname, "src/layouts"),
+			"@layouts": join(__dirname, "src/layouts")
+		}
+
+		config.optimization = {
+			...config.optimization,
+			usedExports: true
 		}
 
 		if (dev && !isServer) {
@@ -58,5 +64,5 @@ module.exports = composePlugins([[withStylus]], {
 		}
 
 		return config
-	},
+	}
 })

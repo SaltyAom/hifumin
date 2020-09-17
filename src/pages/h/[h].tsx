@@ -85,10 +85,16 @@ const Code = ({ story }) => {
 	return (
 		<Fragment>
 			<Head>
+				<link rel="preload" as="image" href={pages[0].link} />
 				{pages.map(({ link }, index) =>
-					index < 6 ? (
-						<link key={link} rel="preload" as="image" href={link} />
-					) : null
+					!index || index > 4 ? null : (
+						<link key={link} rel="preconnect" href={link} />
+					)
+				)}
+				{pages.map(({ link }, index) =>
+					index < 5 || index > allowPage ? null : (
+						<link key={link} rel="dns-prefetch" href={link} />
+					)
 				)}
 			</Head>
 			<main id="h">
