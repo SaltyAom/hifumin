@@ -17,10 +17,6 @@ const App = ({ Component, pageProps }: AppProps) => {
 				.register("/service-worker.js", {
 					scope: "/"
 				})
-				.then((registration) => console.log(registration))
-				.catch((err) => {
-					console.log("Err")
-				})
 		}
 	}, [])
 

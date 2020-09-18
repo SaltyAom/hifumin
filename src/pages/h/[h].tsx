@@ -5,18 +5,28 @@ import {
 	useRef,
 	useReducer,
 	useState,
+	FunctionComponent
 } from "react"
 
 import Head from "next/head"
 import { GetStaticPaths, GetStaticProps } from "next"
 
 import Page from "@components/page"
+import Cover from "@components/cover"
 
 import fetch from "@libs/fetch"
 
+import { Story } from "@types"
+
 import "@styles/h.styl"
 
-const Code = ({ story }) => {
+interface Props {
+	story: string
+}
+
+type Component = FunctionComponent<Props>
+
+const Code: Component = ({ story }) => {
 	let [allowPage, increaseAllowPage] = useReducer(
 			(allowPage) => allowPage + 20,
 			20
@@ -31,7 +41,7 @@ const Code = ({ story }) => {
 
 		if (allowPage < totalPage)
 			document.addEventListener("scroll", lazyLoad, {
-				passive: true,
+				passive: true
 			})
 
 		previousLazyLoad.current = lazyLoad
@@ -42,7 +52,7 @@ const Code = ({ story }) => {
 
 		let {
 			id,
-			images: { pages },
+			images: { pages }
 		} = JSON.parse(story)
 
 		if (id) updateTotalPage(pages.length)
@@ -61,30 +71,40 @@ const Code = ({ story }) => {
 	}, [allowPage, increaseAllowPage, totalPage])
 
 	// ? Generating
-	if (typeof story === "undefined") {
+	if (typeof story === "undefined")
 		return (
 			<main id="h">
-				{Array(20)
-					.fill(0)
-					.map(({ link }, index) => (
-						<Page key={index} preload link={`preload-${link}`} />
-					))}
+				<Cover preload />
+				<section className="pages">
+					{Array(20)
+						.fill(0)
+						.map(({ link }, index) => (
+							<Page
+								key={index}
+								preload
+								link={`preload-${link}`}
+							/>
+						))}
+				</section>
 			</main>
 		)
-	}
 
-	let data = JSON.parse(story)
+	let data: Story = JSON.parse(story)
 
 	// ? Not valid
 	if (!data.id) return <main id="h">Not Found</main>
 
 	let {
-		images: { pages },
+		images: { cover, pages },
+		title,
+		metadata,
+		info
 	} = data
 
 	return (
 		<Fragment>
 			<Head>
+				<link rel="preload" as="image" href={cover.link} />
 				<link rel="preload" as="image" href={pages[0].link} />
 				{pages.map(({ link }, index) =>
 					!index || index > 4 ? null : (
@@ -98,11 +118,14 @@ const Code = ({ story }) => {
 				)}
 			</Head>
 			<main id="h">
-				{pages.map(({ link }, index) =>
-					index < allowPage ? (
-						<Page key={link} link={link} index={index} />
-					) : null
-				)}
+				<Cover story={data} />
+				<section className="pages">
+					{pages.map(({ link }, index) =>
+						index < allowPage ? (
+							<Page key={link} link={link} index={index} />
+						) : null
+					)}
+				</section>
 			</main>
 		</Fragment>
 	)
@@ -111,11 +134,13 @@ const Code = ({ story }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
 	return {
 		paths: [],
-		fallback: true,
+		fallback: true
 	}
 }
 
-export const getStaticProps: GetStaticProps = async ({ params: { h } }) => {
+export const getStaticProps: GetStaticProps<Props> = async ({
+	params: { h }
+}) => {
 	let story
 
 	try {
@@ -126,9 +151,9 @@ export const getStaticProps: GetStaticProps = async ({ params: { h } }) => {
 
 	return {
 		props: {
-			story,
+			story
 		},
-		revalidate: 3600,
+		revalidate: 3600
 	}
 }
 
