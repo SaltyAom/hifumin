@@ -4,15 +4,15 @@
 
     &.-preload
         & > .cover
-            @apply inline bg-gray-300 rounded-md
-            padding-right 37%
-            padding-bottom 1%
-            box-shadow 0 2px 8px rgba(72,72,72,0.05), 
-                0 8px 25px rgba(72,72,72,0.1), 
-                0 16px 48px rgba(72,72,72,0.1)
+            @apply rounded-md mx-auto
 
             & > .page
-                opacity 0
+                box-shadow 0 2px 8px rgba(72,72,72,0.05), 
+                    0 8px 25px rgba(72,72,72,0.1), 
+                    0 16px 48px rgba(72,72,72,0.1)
+
+                & > .paper
+                    height 506px
 
         & > .detail
             & > .code,
@@ -49,6 +49,9 @@
                 0 8px 25px rgba(0,0,0,.1),
                 0 16px 48px rgba(0,0,0,.1)
 
+            & > .paper
+                width 350px
+
     & > .detail
         @apply flex flex-col pl-8
         flex 6
@@ -66,33 +69,30 @@
             & > .content
                 @apply text-gray-600 text-lg font-medium mr-6
 
-    @media screen and (max-width 767.9px)
-        &
-            @apply flex-col
+    @media screen and (max-width 410px)
+        & > .cover
+            & > .page
+                @apply w-full
+
+                & > .paper
+                    width unset
+                    height unset !important
 
         &.-preload
             & > .cover
-                @apply mx-auto mb-12
-                width 350px
-                max-width 100%
+                @apply mb-12
+                width 100%
+                height unset
 
-                & > .page
-                    @apply mb-0
-                    padding-top 25%
-
-                    & > .paper
-                        min-height 370px
+    @media screen and (max-width 639.9px)
+        &
+            @apply flex-col
 
         & > .cover
             @apply contents
 
             & > .page
                 @apply inline-block mx-auto mb-12
-
-            &,
-            & > .page,
-            & > .page > .paper
-                max-height 95vh
 
         & > .detail
             @apply pl-0

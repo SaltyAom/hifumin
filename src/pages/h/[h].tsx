@@ -56,7 +56,7 @@ const Code: Component = ({ story }) => {
 		} = JSON.parse(story)
 
 		if (id) updateTotalPage(pages.length)
-	}, [story, updateTotalPage])
+	}, [story])
 
 	let lazyLoad = useCallback(() => {
 		let pageHeight = window.innerHeight
@@ -95,10 +95,7 @@ const Code: Component = ({ story }) => {
 	if (!data.id) return <main id="h">Not Found</main>
 
 	let {
-		images: { cover, pages },
-		title,
-		metadata,
-		info
+		images: { cover, pages }
 	} = data
 
 	return (

@@ -1,6 +1,5 @@
 import { memo } from "react"
 
-import Page from "@components/page"
 import Tag, { TagContainer } from "./tag"
 
 import { randomBetween } from "@libs/random"
@@ -21,7 +20,9 @@ const Cover: CoverComponent = memo(({ story = null, preload = false }) => {
 		return (
 			<header id="cover" className="-preload">
 				<div className="cover">
-					<Page preload />
+					<div className="page">
+						<img className="paper -preload" />
+					</div>
 				</div>
 				<section className="detail">
 					<h3 className="code" />
@@ -82,7 +83,14 @@ const Cover: CoverComponent = memo(({ story = null, preload = false }) => {
 	return (
 		<header id="cover">
 			<div className="cover">
-				<Page link={cover.link} index={-1} />
+				<div className="page">
+					<img
+						src={cover.link}
+						className="paper"
+						alt={`${title.display}`}
+						style={{ height: cover.info.height }}
+					/>
+				</div>
 			</div>
 			<section className="detail">
 				<h3 className="code">{id}</h3>
