@@ -8,8 +8,9 @@ import {
 	FunctionComponent
 } from "react"
 
-import Head from "next/head"
 import { GetStaticPaths, GetStaticProps } from "next"
+import Head from "next/head"
+import Link from "next/link"
 
 import Page from "@components/page"
 import Cover from "@components/cover"
@@ -22,11 +23,12 @@ import "@styles/h.styl"
 
 interface Props {
 	story: string
+	related: string
 }
 
 type Component = FunctionComponent<Props>
 
-const Code: Component = ({ story }) => {
+const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 	let [allowPage, increaseAllowPage] = useReducer(
 			(allowPage) => allowPage + 20,
 			20
@@ -48,15 +50,15 @@ const Code: Component = ({ story }) => {
 	}, [allowPage, totalPage])
 
 	useEffect(() => {
-		if (typeof story === "undefined") return
+		if (typeof storyJson === "undefined") return
 
 		let {
 			id,
 			images: { pages }
-		} = JSON.parse(story)
+		} = JSON.parse(storyJson)
 
 		if (id) updateTotalPage(pages.length)
-	}, [story])
+	}, [storyJson])
 
 	let lazyLoad = useCallback(() => {
 		let pageHeight = window.innerHeight
@@ -71,7 +73,7 @@ const Code: Component = ({ story }) => {
 	}, [allowPage, increaseAllowPage, totalPage])
 
 	// ? Generating
-	if (typeof story === "undefined")
+	if (typeof storyJson === "undefined")
 		return (
 			<main id="h">
 				<Cover preload />
@@ -89,14 +91,15 @@ const Code: Component = ({ story }) => {
 			</main>
 		)
 
-	let data: Story = JSON.parse(story)
+	let story: Story = JSON.parse(storyJson),
+		related: Story[] = JSON.parse(relatedJson)
 
 	// ? Not valid
-	if (!data.id) return <main id="h">Not Found</main>
+	if (!story.id) return <main id="h">Not Found</main>
 
 	let {
 		images: { cover, pages }
-	} = data
+	} = story
 
 	return (
 		<Fragment>
@@ -115,14 +118,40 @@ const Code: Component = ({ story }) => {
 				)}
 			</Head>
 			<main id="h">
-				<Cover story={data} />
+				<Cover story={story} />
 				<section className="pages">
 					{pages.map(({ link }, index) =>
 						index < allowPage ? (
-							<Page key={link} link={link} index={index} />
+							<Page
+								key={link}
+								link={link}
+								alt={`Page ${index + 1}`}
+							/>
 						) : null
 					)}
 				</section>
+				<h5 className="more">More like this</h5>
+				<footer className="related">
+					{related.map(
+						({
+							id,
+							title: { display },
+							images: {
+								cover: { link }
+							}
+						}) => (
+							<Link href={`/h/${id}`} key={link}>
+								<a className="link">
+									<Page
+										key={link}
+										link={link}
+										alt={`Read ${display}`}
+									/>
+								</a>
+							</Link>
+						)
+					)}
+				</footer>
 			</main>
 		</Fragment>
 	)
@@ -138,7 +167,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<Props> = async ({
 	params: { h }
 }) => {
-	let story
+	let story, related
 
 	try {
 		story = JSON.stringify(await fetch(`https://nhapi.now.sh/${h}`))
@@ -146,9 +175,20 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 		story = JSON.stringify({ id: "0" })
 	}
 
+	try {
+		let data = await fetch(`https://nhapi.now.sh/${h}/related`)
+
+		related = JSON.stringify(
+			Array.isArray(data) ? data : [data]
+		)
+	} catch (err) {
+		related = JSON.stringify([])
+	}
+
 	return {
 		props: {
-			story
+			story,
+			related
 		},
 		revalidate: 3600
 	}

@@ -6,3 +6,35 @@
         @apply flex flex-col mx-auto w-full
         max-width 560px
         content-visibility auto
+
+    & > .more
+        @apply text-3xl text-gray-700 text-center
+        margin 60px 0 20px 0
+
+    & > .related
+        @apply grid justify-center mb-12 px-2
+        grid-template-columns repeat(auto-fill, 240px)
+        grid-gap 20px
+
+        & > .link
+            outline none
+
+            &:hover,
+            &:focus
+                & > .page
+                    transform translateY(-4px)
+                    box-shadow 0 2px 8px rgba(0,0,0,0.0625), 
+                        0 16px 48px rgba(0,0,0,0.1), 
+                        0 24px 60px rgba(0,0,0,0.2)
+
+            & > .page
+                @apply rounded-md
+                box-shadow 0 2px 8px rgba(0,0,0,0.05), 
+                    0 8px 25px rgba(0,0,0,0.0875), 
+                    0 16px 48px rgba(0,0,0,0.0875)
+                transition box-shadow .2s ease-out, transform .2s ease-out
+
+    @media screen and (max-width 567.9px)
+        &
+            & > .related
+                grid-template-columns repeat(auto-fill, calc(50% - 20px))

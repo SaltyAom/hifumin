@@ -13,10 +13,9 @@ const App = ({ Component, pageProps }: AppProps) => {
 			"serviceWorker" in navigator &&
 			process.env.NODE_ENV === "production"
 		) {
-			navigator.serviceWorker
-				.register("/service-worker.js", {
-					scope: "/"
-				})
+			navigator.serviceWorker.register("/service-worker.js", {
+				scope: "/"
+			})
 		}
 	}, [])
 

@@ -77,7 +77,7 @@ const Cover: CoverComponent = memo(({ story = null, preload = false }) => {
 
 	let { id, title, images, info, metadata } = story,
 		{ cover } = images,
-		{ amount, favorites } = info,
+		{ amount, favorite } = info,
 		{ tags, language, artist } = metadata
 
 	return (
@@ -99,7 +99,7 @@ const Cover: CoverComponent = memo(({ story = null, preload = false }) => {
 				<section className="info">
 					<h5 className="content">{amount.toLocaleString()} Page</h5>
 					<h5 className="content">
-						{favorites.toLocaleString()} Favorite
+						{favorite.toLocaleString()} Favorite
 					</h5>
 				</section>
 				<TagContainer>
@@ -111,7 +111,7 @@ const Cover: CoverComponent = memo(({ story = null, preload = false }) => {
 					<Tag href={`/artist/${language}`}>{artist.name}</Tag>
 				</TagContainer>
 				<TagContainer>
-					{tags.map(({ name, count }) => (
+					{tags.map(({ name }) => (
 						<Tag key={name} href={`/tag/${name}`}>
 							{name}
 						</Tag>

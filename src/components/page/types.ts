@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react'
 
 export interface PageProps {
     link?: string
-    index?: number
+    alt?: string
     preload?: boolean
 }
 

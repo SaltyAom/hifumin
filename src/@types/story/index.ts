@@ -24,7 +24,7 @@ export type Pages = Page[]
 
 export interface Info {
 	amount: number
-	favorites: number
+	favorite: number
 	upload: Upload
 }
 
