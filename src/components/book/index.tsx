@@ -1,15 +1,16 @@
-import { memo } from "react"
+import { memo } from 'react'
 
-import Link from "next/link"
+import Link from 'next/link'
 
-import Page from "@components/page"
+import Page from '@components/page'
 
-import { BookComponent, BookProps } from "./types"
+import { BookComponent, BookProps } from './types'
 
-import "./book.styl"
+import './book.styl'
 
 const shouldRender = (prevProps: BookProps, nextProps: BookProps) =>
-	prevProps.story.id === nextProps.story.id
+	(prevProps.preload || prevProps.story.id) ===
+	(nextProps.preload || nextProps.story.id)
 
 const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 	if (preload)
@@ -54,9 +55,7 @@ const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 	let {
 		id,
 		title: { display },
-		images: {
-			cover: { link }
-		},
+		images: { cover },
 		info: { amount, favorite },
 		metadata: { language }
 	} = story
@@ -64,7 +63,7 @@ const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 	return (
 		<Link href={`/h/${id}`}>
 			<a className="book">
-				<Page link={link} alt={`Read ${display}`}>
+				<Page page={cover} alt={`Read ${display}`}>
 					<div className="detail">
 						<h6 className="title">{display}</h6>
 						<div className="row">

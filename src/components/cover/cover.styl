@@ -75,14 +75,19 @@
                 @apply w-full
 
                 & > .paper
-                    width unset
-                    height unset !important
+                    width 100%
 
         &.-preload
             & > .cover
                 @apply mb-12
                 width 100%
                 height unset
+
+                & > .page
+                    & > .paper
+                        height unset
+                        padding-top 140%
+
 
     @media screen and (max-width 639.9px)
         &

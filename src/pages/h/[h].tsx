@@ -6,21 +6,21 @@ import {
 	useReducer,
 	useState,
 	FunctionComponent
-} from "react"
+} from 'react'
 
-import { GetStaticPaths, GetStaticProps } from "next"
-import Head from "next/head"
-import dynamic from "next/dynamic"
+import { GetStaticPaths, GetStaticProps } from 'next'
+import Head from 'next/head'
+import dynamic from 'next/dynamic'
 
-import { Cover, Page } from "@components"
+import { Cover, Page } from '@components'
 
-import fetch from "@libs/fetch"
+import fetch from '@libs/fetch'
 
-import { Story } from "@types"
+import { Story } from '@types'
 
-import "@styles/h.styl"
+import '@styles/h.styl'
 
-const Book = dynamic(() => import("@components/book"))
+const Book = dynamic(() => import('@components/book'))
 
 interface Props {
 	story: string
@@ -40,10 +40,10 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 
 	useEffect(() => {
 		if (previousLazyLoad.current)
-			document.removeEventListener("scroll", previousLazyLoad.current)
+			document.removeEventListener('scroll', previousLazyLoad.current)
 
 		if (allowPage < totalPage)
-			document.addEventListener("scroll", lazyLoad, {
+			document.addEventListener('scroll', lazyLoad, {
 				passive: true
 			})
 
@@ -51,7 +51,7 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 	}, [allowPage, totalPage])
 
 	useEffect(() => {
-		if (typeof storyJson === "undefined") return
+		if (typeof storyJson === 'undefined') return
 
 		let {
 			id,
@@ -74,19 +74,15 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 	}, [allowPage, increaseAllowPage, totalPage])
 
 	// ? Generating
-	if (typeof storyJson === "undefined")
+	if (typeof storyJson === 'undefined')
 		return (
 			<main id="h">
 				<Cover preload />
 				<section className="pages">
 					{Array(20)
 						.fill(0)
-						.map(({ link }, index) => (
-							<Page
-								key={index}
-								preload
-								link={`preload-${link}`}
-							/>
+						.map((_, index) => (
+							<Page key={index} preload />
 						))}
 				</section>
 				<h5 className="more">More like this</h5>
@@ -94,7 +90,7 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 					{Array(5)
 						.fill(0)
 						.map((_, index) => (
-							<Book key={index} story={false} preload />
+							<Book key={index} preload />
 						))}
 				</footer>
 			</main>
@@ -117,23 +113,23 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 				<link rel="preload" as="image" href={pages[0].link} />
 				{pages.map(({ link }, index) =>
 					!index || index > 4 ? null : (
-						<link key={link} rel="preconnect" href={link} />
+						<link key={index} rel="preconnect" href={link} />
 					)
 				)}
 				{pages.map(({ link }, index) =>
 					index < 5 || index > allowPage ? null : (
-						<link key={link} rel="dns-prefetch" href={link} />
+						<link key={index} rel="dns-prefetch" href={link} />
 					)
 				)}
 			</Head>
 			<main id="h">
 				<Cover story={story} />
 				<section className="pages">
-					{pages.map(({ link }, index) =>
+					{pages.map((page, index) =>
 						index < allowPage ? (
 							<Page
-								key={link}
-								link={link}
+								key={index}
+								page={page}
 								alt={`Page ${index + 1}`}
 							/>
 						) : null
@@ -141,8 +137,8 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 				</section>
 				<h5 className="more">More like this</h5>
 				<footer className="related">
-					{related.map((story) => (
-						<Book key={story.id} story={story} />
+					{related.map((story, index) => (
+						<Book key={index} story={story} />
 					))}
 				</footer>
 			</main>
@@ -165,7 +161,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 	try {
 		story = JSON.stringify(await fetch(`https://nhapi.now.sh/${h}`))
 	} catch (err) {
-		story = JSON.stringify({ id: "0" })
+		story = JSON.stringify({ id: 0 })
 	}
 
 	try {

@@ -1,5 +1,6 @@
-import Book from "@components/book"
-import Cover from "@components/cover"
-import Page from "@components/page"
+import Book from './book'
+import Cover from './cover'
+import ErrorBoundary from './errorBoundary'
+import Page from './page'
 
-export { Book, Cover, Page }
+export { Book, Cover, ErrorBoundary, Page }

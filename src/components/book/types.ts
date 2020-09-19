@@ -7,9 +7,9 @@ export interface BookProps {
     preload?: false
 }
 
-export interface BookPropsPreload {
-    story?: {}
+export interface PreloadBookProps {
+    story?: Story
     preload?: true
 }
 
-export type BookComponent = FunctionComponent<BookProps | BookPropsPreload>
+export type BookComponent = FunctionComponent<BookProps | PreloadBookProps>

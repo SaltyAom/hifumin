@@ -1,18 +1,41 @@
-import { memo, useEffect, useReducer, useRef } from "react"
+import {
+	memo,
+	useEffect,
+	useReducer,
+	useRef
+} from 'react'
 
-import { PageComponent, PageProps } from "./types"
+import { PageComponent, PageProps } from './types'
 
-import "./page.styl"
+import './page.styl'
+import useSimulateHeight from '@libs/hooks/simulateHeight'
 
 const shouldReRender = (prevProps: PageProps, nextProps: PageProps) =>
-	prevProps.link === nextProps.link
+	prevProps?.page?.link === nextProps?.page?.link
 
 const Page: PageComponent = memo(
-	({ link = "", alt = "", preload = false, children = null }) => {
+	({
+		page: { link, info: { width, height } } = {
+			link: '',
+			info: { width: 0, height: 0 }
+		},
+		alt = '',
+		preload = false,
+		children = null
+	}) => {
 		let [shouldLoad, load] = useReducer(() => true, false)
 
-		let page = useRef(),
-			persistObserver = useRef<IntersectionObserver>()
+		let [
+			simulatedImageHeight,
+			{ element, stopSimulateImageHeight }
+		] = useSimulateHeight({
+			width,
+			height,
+			preload,
+			shouldLoad
+		})
+
+		let persistObserver = useRef<IntersectionObserver>()
 
 		useEffect(() => {
 			if (shouldLoad) return persistObserver.current.disconnect()
@@ -29,7 +52,7 @@ const Page: PageComponent = memo(
 				}
 
 			let observer = new IntersectionObserver(callback, options)
-			observer.observe(page.current)
+			observer.observe(element.current)
 
 			persistObserver.current = observer
 		}, [shouldLoad])
@@ -37,9 +60,10 @@ const Page: PageComponent = memo(
 		if (preload)
 			return (
 				<div className="page">
+					{children}
 					<img
 						className={`paper -lazy -preload`}
-						ref={page}
+						ref={element}
 						alt={alt}
 					/>
 				</div>
@@ -49,11 +73,13 @@ const Page: PageComponent = memo(
 			<div className="page">
 				{children}
 				<img
-					className={`paper ${!shouldLoad ? "-lazy" : ""}`}
-					ref={page}
-					src={shouldLoad ? link : ""}
+					className={`paper ${!shouldLoad ? '-lazy' : ''}`}
+					ref={element}
+					src={shouldLoad ? link : ''}
 					alt={alt}
 					loading="lazy"
+					style={{ height: simulatedImageHeight }}
+					onLoad={stopSimulateImageHeight}
 				/>
 			</div>
 		)

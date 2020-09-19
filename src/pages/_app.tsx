@@ -1,20 +1,22 @@
-import { Fragment, useEffect } from "react"
+import { Fragment, useEffect } from 'react'
 
-import Head from "next/head"
-import { AppProps } from "next/app"
+import Head from 'next/head'
+import { AppProps } from 'next/app'
 
-import "@styles/init.styl"
+import { ErrorBoundary } from '@components'
+
+import '@styles/init.styl'
 
 const App = ({ Component, pageProps }: AppProps) => {
 	useEffect(() => {
-		document.addEventListener("touchstart", () => null, false)
+		document.addEventListener('touchstart', () => null, false)
 
 		if (
-			"serviceWorker" in navigator &&
-			process.env.NODE_ENV === "production"
+			'serviceWorker' in navigator &&
+			process.env.NODE_ENV === 'production'
 		) {
-			navigator.serviceWorker.register("/service-worker.js", {
-				scope: "/"
+			navigator.serviceWorker.register('/service-worker.js', {
+				scope: '/'
 			})
 		}
 	}, [])
@@ -28,7 +30,9 @@ const App = ({ Component, pageProps }: AppProps) => {
 					data-react-helmet="true"
 				/>
 			</Head>
-			<Component {...pageProps} />
+			<ErrorBoundary>
+				<Component {...pageProps} />
+			</ErrorBoundary>
 		</Fragment>
 	)
 }
