@@ -8,7 +8,7 @@ export interface BookProps {
 }
 
 export interface BookPropsPreload {
-    story?: false
+    story?: {}
     preload?: true
 }
 

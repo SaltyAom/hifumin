@@ -11,7 +11,7 @@ import "./book.styl"
 const shouldRender = (prevProps: BookProps, nextProps: BookProps) =>
 	prevProps.story.id === nextProps.story.id
 
-const Book: BookComponent = memo(({ story = false, preload = false }) => {
+const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 	if (preload)
 		return (
 			<Link href="">
