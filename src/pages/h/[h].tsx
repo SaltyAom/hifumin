@@ -10,16 +10,17 @@ import {
 
 import { GetStaticPaths, GetStaticProps } from "next"
 import Head from "next/head"
-import Link from "next/link"
+import dynamic from "next/dynamic"
 
-import Page from "@components/page"
-import Cover from "@components/cover"
+import { Cover, Page } from "@components"
 
 import fetch from "@libs/fetch"
 
 import { Story } from "@types"
 
 import "@styles/h.styl"
+
+const Book = dynamic(() => import("@components/book"))
 
 interface Props {
 	story: string
@@ -88,6 +89,14 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 							/>
 						))}
 				</section>
+				<h5 className="more">More like this</h5>
+				<footer className="related">
+					{Array(5)
+						.fill(0)
+						.map((_, index) => (
+							<Book key={index} story={false} preload />
+						))}
+				</footer>
 			</main>
 		)
 
@@ -132,25 +141,9 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 				</section>
 				<h5 className="more">More like this</h5>
 				<footer className="related">
-					{related.map(
-						({
-							id,
-							title: { display },
-							images: {
-								cover: { link }
-							}
-						}) => (
-							<Link href={`/h/${id}`} key={link}>
-								<a className="link">
-									<Page
-										key={link}
-										link={link}
-										alt={`Read ${display}`}
-									/>
-								</a>
-							</Link>
-						)
-					)}
+					{related.map((story) => (
+						<Book key={story.id} story={story} />
+					))}
 				</footer>
 			</main>
 		</Fragment>
@@ -178,9 +171,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 	try {
 		let data = await fetch(`https://nhapi.now.sh/${h}/related`)
 
-		related = JSON.stringify(
-			Array.isArray(data) ? data : [data]
-		)
+		related = JSON.stringify(Array.isArray(data) ? data : [data])
 	} catch (err) {
 		related = JSON.stringify([])
 	}
