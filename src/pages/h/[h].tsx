@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic'
 
 import { Cover, Page } from '@components'
 
-import fetch from '@libs/fetch'
+import { fetch } from '@libs/fetch'
 
 import { Story } from '@types'
 

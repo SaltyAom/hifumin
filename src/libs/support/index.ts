@@ -1,4 +1,5 @@
-const isServer = typeof window === 'undefined'
+import { isServer } from '../is'
+
 export const supportsLazyLoad = !isServer
-    ? 'loading' in document.createElement('img')
-    : false
+	? 'loading' in document.createElement('img')
+	: false

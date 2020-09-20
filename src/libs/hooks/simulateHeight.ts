@@ -1,16 +1,50 @@
-import { useState, useReducer, useRef, useCallback, useEffect, MutableRefObject } from 'react'
+import {
+	useState,
+	useReducer,
+	useRef,
+	useCallback,
+	useEffect,
+	MutableRefObject
+} from 'react'
 
-type UseSimulateHeight = (argument: {
-	width: number
-	height: number
+import { Page } from '@types'
+
+interface SimulateHeightArgument {
+	page: Page
 	preload: boolean
 	shouldLoad?: boolean
-}) => [number | 'unset', {
-    element: MutableRefObject<HTMLImageElement>
-    stopSimulateImageHeight: () => void
-}]
+}
 
-const useSimulateHeight: UseSimulateHeight = ({ width, height, preload, shouldLoad = false }) => {
+interface SimulatePreloadHeightArgument {
+	page: undefined
+	preload: true
+	shouldLoad?: boolean
+}
+
+type UseSimulateHeight = (
+	argument: SimulateHeightArgument | SimulatePreloadHeightArgument
+) => [
+	number | 'unset',
+	{
+		element: MutableRefObject<HTMLImageElement>
+		stopSimulateImageHeight: () => void
+	}
+]
+
+const useSimulateHeight: UseSimulateHeight = ({
+	page = {
+		info: {
+			width: 0,
+			height: 0
+		}
+	},
+	preload,
+	shouldLoad = false
+}) => {
+	let {
+		info: { width, height }
+	} = page
+
 	let [imageHeight, updateHeight] = useState(0)
 
 	let [isImageLoaded, imageLoaded] = useReducer(() => true, false)

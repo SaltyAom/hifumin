@@ -6,6 +6,8 @@ export interface Story {
 	title: Title
 }
 
+export type Stories = Story[]
+
 export interface Image {
     cover: Page
     pages: Pages

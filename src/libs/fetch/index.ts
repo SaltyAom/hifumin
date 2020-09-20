@@ -1,6 +1,6 @@
-import fetch from 'isomorphic-unfetch'
+import get from 'isomorphic-unfetch'
 
-export default async (href, options = {}) => {
-    const res = await fetch(href, options)
-    return res.json()
-}
+export const fetch = async (href, options = {}) =>
+		(await get(href, options)).json(),
+	fetchAsJsonString = async (href, options = {}) =>
+		JSON.stringify(await fetch(href, options))
