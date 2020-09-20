@@ -1,20 +1,12 @@
-import {
-	useEffect,
-	useReducer,
-	useState,
-	useRef,
-	useCallback,
-	useMemo,
-	FunctionComponent
-} from 'react'
+import { Fragment, useEffect, useMemo, FunctionComponent } from 'react'
 
 import { GetStaticProps } from 'next'
+import Head from 'next/head'
 
 import { Book } from '@components'
 
-import { fetch, randomBetween, splitChunk, useMasonry } from '@libs'
-
-import { Stories } from '@types'
+import { fetch, randomBetween, splitChunk } from '@libs'
+import { useInfiniteHentai, useMasonry } from '@libs/hooks'
 
 import '@styles/landing.styl'
 
@@ -23,22 +15,9 @@ interface Props {
 }
 
 const Index: FunctionComponent<Props> = ({ stories }) => {
-	let [galleries, updateGalleries] = useState<Stories>(JSON.parse(stories)),
-		[page, nextPage] = useReducer((state) => state + 1, 1)
-
-	let persistedListener = useRef<() => void>(),
-		isLoading = useRef(false)
+	let [galleries] = useInfiniteHentai(JSON.parse(stories))
 
 	let masonry = useMasonry()
-
-	let lazyListener = useCallback(() => {
-		if (isLoading.current) return
-
-		if (document.body.scrollHeight - window.innerHeight * 3 >= pageYOffset)
-			return
-
-		nextPage()
-	}, [nextPage])
 
 	let margin = useMemo(() => {
 		if (masonry === 2) return [40, 120]
@@ -54,63 +33,51 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 		})
 	}, [])
 
-	useEffect(() => {
-		if (!isLoading.current)
-			fetch(`https://nhapi.now.sh/search/page/${page}`).then(
-				(newGalleries: Stories) => {
-					isLoading.current = false
-
-					updateGalleries([...galleries, ...newGalleries])
-				}
-			)
-
-		let stopListener = () =>
-			window.removeEventListener('scroll', persistedListener.current)
-
-		if (persistedListener.current) stopListener()
-
-		window.addEventListener('scroll', lazyListener, {
-			passive: true
-		})
-
-		return () => stopListener()
-	}, [page])
-
 	if (!galleries.length)
 		return (
-			<main id="gallery">
-				{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
-					<div
+			<Fragment>
+				<Head>
+					<title>Opener Studio</title>
+				</Head>
+				<main id="gallery">
+					{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
+						<div
 						key={index}
 						className="masonry"
 						style={{ marginTop: margin[index] }}
+						>
+							{column.map((_, index) => (
+								<Book key={index} preload />
+								))}
+							<Book preload />
+							<Book preload />
+						</div>
+					))}
+				</main>
+			</Fragment>
+		)
+
+	return (
+		<Fragment>
+			<Head>
+				<title>Opener Studio</title>
+			</Head>
+			<main id="gallery">
+				{splitChunk(galleries, masonry).map((column, index) => (
+					<div
+					key={index}
+					className="masonry"
+					style={{ marginTop: margin[index] }}
 					>
-						{column.map((_, index) => (
-							<Book key={index} preload />
-						))}
+						{column.map((story, index) => (
+							<Book key={index} story={story} />
+							))}
 						<Book preload />
 						<Book preload />
 					</div>
 				))}
 			</main>
-		)
-
-	return (
-		<main id="gallery">
-			{splitChunk(galleries, masonry).map((column, index) => (
-				<div
-					key={index}
-					className="masonry"
-					style={{ marginTop: margin[index] }}
-				>
-					{column.map((story, index) => (
-						<Book key={index} story={story} />
-					))}
-					<Book preload />
-					<Book preload />
-				</div>
-			))}
-		</main>
+		</Fragment>
 	)
 }
 

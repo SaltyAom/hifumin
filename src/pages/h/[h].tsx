@@ -76,24 +76,29 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 	// ? Generating
 	if (typeof storyJson === 'undefined')
 		return (
-			<main id="h">
-				<Cover preload />
-				<section className="pages">
-					{Array(20)
-						.fill(0)
-						.map((_, index) => (
-							<Page key={index} preload />
-						))}
-				</section>
-				<h5 className="more">More like this</h5>
-				<footer className="related">
-					{Array(5)
-						.fill(0)
-						.map((_, index) => (
-							<Book key={index} preload />
-						))}
-				</footer>
-			</main>
+			<Fragment>
+				<Head>
+					<title>Loading...</title>
+				</Head>
+				<main id="h">
+					<Cover preload />
+					<section className="pages">
+						{Array(20)
+							.fill(0)
+							.map((_, index) => (
+								<Page key={index} preload />
+							))}
+					</section>
+					<h5 className="more">More like this</h5>
+					<footer className="related">
+						{Array(5)
+							.fill(0)
+							.map((_, index) => (
+								<Book key={index} preload />
+							))}
+					</footer>
+				</main>
+			</Fragment>
 		)
 
 	let story: Story = JSON.parse(storyJson),
@@ -103,12 +108,14 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 	if (!story.id) return <main id="h">Not Found</main>
 
 	let {
-		images: { cover, pages }
+		images: { cover, pages },
+		title: { display }
 	} = story
 
 	return (
 		<Fragment>
 			<Head>
+				<title>{display}</title>
 				<link rel="preload" as="image" href={cover.link} />
 				<link rel="preload" as="image" href={pages[0].link} />
 				{pages.map(({ link }, index) =>

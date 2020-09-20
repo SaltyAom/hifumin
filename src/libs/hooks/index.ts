@@ -1,4 +1,5 @@
+import useInfiniteHentai from './infiniteHentai'
 import useMasonry from './masonry'
 import useSimulateHeight from './simulateHeight'
 
-export { useMasonry, useSimulateHeight }
+export { useInfiniteHentai, useMasonry, useSimulateHeight }

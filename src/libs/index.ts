@@ -1,8 +1,7 @@
-import { isServer } from './is'
-import { randomBetween } from './random'
-import { fetch, fetchAsJsonString } from './fetch'
-
-export { useSimulateHeight, useMasonry } from './hooks'
+export { isServer } from './is'
+export { randomBetween, randomPick } from './random'
+export { fetch, fetchAsJsonString } from './fetch'
+export { useInfiniteHentai, useSimulateHeight, useMasonry } from './hooks'
 export { supportsLazyLoad } from './support'
-export { fetch, isServer, randomBetween }
 export { splitChunk } from './array'
+export { tags } from './data'

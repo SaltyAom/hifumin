@@ -61,7 +61,7 @@ const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 	} = story
 
 	return (
-		<Link href={`/h/${id}`}>
+		<Link href='/h/[h]' as={`/h/${id}`}>
 			<a className="book">
 				<Page page={cover} alt={`Read ${display}`}>
 					<div className="detail">
