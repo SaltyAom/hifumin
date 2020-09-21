@@ -34,7 +34,7 @@ const Search = () => {
 	return (
 		<header id="search">
 			<h1 className="title">Opener Studio</h1>
-			<form className="search-bar" onSubmit={preventDefault}>
+			<section className="search-bar" onSubmit={preventDefault}>
 				<SearchIcon />
 				<input
 					className="input"
@@ -44,7 +44,7 @@ const Search = () => {
 					onInput={deferSearch}
 				/>
 				{isLoading && <Loader />}
-			</form>
+			</section>
 		</header>
 	)
 }
