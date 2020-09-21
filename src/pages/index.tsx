@@ -1,31 +1,38 @@
-import { Fragment, useEffect, useMemo, FunctionComponent } from 'react'
+import { Fragment, useEffect, FunctionComponent } from 'react'
+
+import dynamic from 'next/dynamic'
+
+import { useStoreon } from 'storeon/react'
+import { SearchStore, SearchEvent } from '@stores'
 
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 
-import { Book } from '@components'
+import {
+	MasonryLayoutDeterminer,
+	PreloadGallery,
+	RecommendedGallery,
+	Search
+} from '@components'
 
-import { fetch, randomBetween, splitChunk } from '@libs'
-import { useInfiniteHentai, useMasonry } from '@libs/hooks'
+import { fetch, isNhentai } from '@libs'
+
+import { Stories } from '@types'
 
 import '@styles/landing.styl'
+
+const SearchGallery = dynamic(() => import('@components/gallery/search')),
+	LandingCover = dynamic(() => import('@components/landingCover'))
 
 interface Props {
 	stories: string
 }
 
 const Index: FunctionComponent<Props> = ({ stories }) => {
-	let [galleries] = useInfiniteHentai(JSON.parse(stories))
+	// ? Pass down an initial story from Incremental Static Regeneration.
+	let initialStories: Stories = JSON.parse(stories)
 
-	let masonry = useMasonry()
-
-	let margin = useMemo(() => {
-		if (masonry === 2) return [40, 120]
-
-		let margin = Array(masonry).fill(0)
-
-		return margin.map(() => randomBetween(0, 160) + 'px')
-	}, [masonry])
+	let { search } = useStoreon<SearchStore, SearchEvent>('search')
 
 	useEffect(() => {
 		window.scrollTo({
@@ -33,27 +40,14 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 		})
 	}, [])
 
-	if (!galleries.length)
+	if (!initialStories.length)
 		return (
 			<Fragment>
 				<Head>
 					<title>Opener Studio</title>
 				</Head>
-				<main id="gallery">
-					{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
-						<div
-						key={index}
-						className="masonry"
-						style={{ marginTop: margin[index] }}
-						>
-							{column.map((_, index) => (
-								<Book key={index} preload />
-								))}
-							<Book preload />
-							<Book preload />
-						</div>
-					))}
-				</main>
+				<MasonryLayoutDeterminer />
+				<PreloadGallery />
 			</Fragment>
 		)
 
@@ -62,21 +56,17 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 			<Head>
 				<title>Opener Studio</title>
 			</Head>
-			<main id="gallery">
-				{splitChunk(galleries, masonry).map((column, index) => (
-					<div
-					key={index}
-					className="masonry"
-					style={{ marginTop: margin[index] }}
-					>
-						{column.map((story, index) => (
-							<Book key={index} story={story} />
-							))}
-						<Book preload />
-						<Book preload />
-					</div>
-				))}
-			</main>
+			<MasonryLayoutDeterminer />
+			<Search />
+			{search ? (
+				isNhentai(search) ? (
+					<LandingCover />
+				) : (
+					<SearchGallery />
+				)
+			) : (
+				<RecommendedGallery initial={initialStories} />
+			)}
 		</Fragment>
 	)
 }

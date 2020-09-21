@@ -11,4 +11,4 @@ export type {
 	Tag,
 	Tags,
 	Title
-} from "./story"
+} from './story'

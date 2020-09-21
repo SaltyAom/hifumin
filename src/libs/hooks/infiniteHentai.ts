@@ -18,7 +18,8 @@ const useInfiniteHentai = (initState: Stories) => {
 
 	let persistedListener = useRef<() => void>(),
 		isLoading = useRef(false),
-		loadedTag = useRef<string[]>([])
+		loadedTag = useRef<string[]>([]),
+		isInitial = useRef(true)
 
 	let lazyListener = useCallback(
 		(tag = '') => {
@@ -80,7 +81,9 @@ const useInfiniteHentai = (initState: Stories) => {
 			tags.filter((tag) => !loadedTag.current.includes(tag))
 		)
 
-		if (!isLoading.current) fetchStories(randomTag)
+		if (!isLoading.current)
+			if (isInitial.current) isInitial.current = false
+			else fetchStories(randomTag)
 
 		let stopListener = () =>
 				window.removeEventListener('scroll', persistedListener.current),

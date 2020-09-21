@@ -5563,6 +5563,11 @@ preact@^10.4.8:
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.4.8.tgz#8517b106cc5591eb675237c93da99ac052cf4756"
   integrity sha512-uVLeEAyRsCkUEFhVHlOu17OxcrwC7+hTGZ08kBoLBiGHiZooUZuibQnphgMKftw/rqYntNMyhVCPqQhcyAGHag==
 
+prettier@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.1.2.tgz#3050700dae2e4c8b67c4c3f666cdb8af405e1ce5"
+  integrity sha512-16c7K+x4qVlJg9rEbXl7HEGmQyZlG4R9AgP+oHKRMsMsuk8s+ATStlf1NpDqyBI1HpVyfjLOeMhH2LvuNvV5Vg==
+
 pretty-bytes@^5.3.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.4.1.tgz#cd89f79bbcef21e3d21eb0da68ffe93f803e884b"
@@ -6251,6 +6256,11 @@ static-extend@^0.1.1:
   dependencies:
     define-property "^0.2.5"
     object-copy "^0.1.0"
+
+storeon@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/storeon/-/storeon-3.0.3.tgz#6afca72ccdeb4c137574dd340e8b4be3e07e6725"
+  integrity sha512-z56Bs1vglBFSxdJieKDxPbXWuOLI8ht86C0MQ3t4JtE0CyuZ0FCsCkHsdpuKoTcNFZ5sp8J3fEK0wLw0N6Lh7A==
 
 stream-browserify@3.0.0:
   version "3.0.0"
