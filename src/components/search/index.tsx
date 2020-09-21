@@ -9,9 +9,10 @@ import SearchIcon from './icon'
 
 import './search.styl'
 
-
 const Search = () => {
-	let { dispatch, isLoading } = useStoreon<SearchStore, SearchEvent>('isLoading')
+	let { dispatch, isLoading } = useStoreon<SearchStore, SearchEvent>(
+		'isLoading'
+	)
 
 	let search = useRef('')
 
@@ -26,10 +27,14 @@ const Search = () => {
 		}, 300)
 	}, [])
 
+	let preventDefault = useCallback((event) => {
+		event.preventDefault()
+	}, [])
+
 	return (
 		<header id="search">
 			<h1 className="title">Opener Studio</h1>
-			<form className="search-bar">
+			<form className="search-bar" onSubmit={preventDefault}>
 				<SearchIcon />
 				<input
 					className="input"

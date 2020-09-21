@@ -9,7 +9,7 @@ export const getMasonry = () => {
 
 	if (width <= 768) return 4
 
-	return Math.floor(width / 240)
+	return Math.floor(width / 192)
 },
 	getMasonryMargin = (masonry: number) => {
 		if (masonry === 2) return ['0px', '80px']
