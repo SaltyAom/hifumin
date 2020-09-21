@@ -34,17 +34,34 @@ const SearchGallery = () => {
 	let previousSearch = useRef('')
 
 	useEffect(() => {
-		if (!search.includes(previousSearch.current)) reset()
+		reset()
 
 		previousSearch.current = search
 	}, [search])
 
 	if (isError) return <NotFound />
 
-	if (!galleries.length) return <PreloadGallery />
+	if (!galleries.length)
+		return (
+			<Fragment>
+				{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
+					<div
+						key={index}
+						className="masonry"
+						style={{ marginTop: margin[index] }}
+					>
+						{column.map((_, index) => (
+							<Book key={index} preload />
+						))}
+						<Book preload />
+						<Book preload />
+					</div>
+				))}
+			</Fragment>
+		)
 
 	return (
-		<main id="gallery">
+		<Fragment>
 			{splitChunk(galleries, masonry).map((column, index) => (
 				<div
 					key={index}
@@ -62,7 +79,7 @@ const SearchGallery = () => {
 					)}
 				</div>
 			))}
-		</main>
+		</Fragment>
 	)
 }
 

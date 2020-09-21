@@ -1,10 +1,10 @@
-import { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 import { StoreContext } from 'storeon/react'
 import store from '@stores'
 
-import Head from 'next/head'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
 
 import { ErrorBoundary } from '@components'
 
@@ -25,20 +25,20 @@ const App = ({ Component, pageProps }: AppProps) => {
 	}, [])
 
 	return (
-		<StoreContext.Provider value={store}>
-			<Fragment>
-				<Head>
-					<meta
-						name="referrer"
-						content="same-origin"
-						data-react-helmet="true"
-					/>
-				</Head>
+		<Fragment>
+			<Head>
+				<meta
+					name="referrer"
+					content="same-origin"
+					data-react-helmet="true"
+				/>
+			</Head>
+			<StoreContext.Provider value={store}>
 				<ErrorBoundary>
 					<Component {...pageProps} />
 				</ErrorBoundary>
-			</Fragment>
-		</StoreContext.Provider>
+			</StoreContext.Provider>
+		</Fragment>
 	)
 }
 

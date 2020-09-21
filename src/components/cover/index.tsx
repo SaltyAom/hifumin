@@ -112,7 +112,7 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 				<section className="info">
 					<h5 className="content">{amount.toLocaleString()} Page</h5>
 					<h5 className="content">
-						{favorite.toLocaleString()} Favorite
+						{favorite?.toLocaleString()} Favorite
 					</h5>
 				</section>
 				<TagContainer>

@@ -2,7 +2,7 @@ export const splitChunk = <T extends any[]>(
 	data: T,
 	chunk: number
 ): Array<T> => {
-	let newChunk: Array<T> = Array(chunk).fill(Array())
+	let newChunk: T[] = Array(chunk).fill(Array())
 
 	data.forEach((data, index) => {
 		let column = index % chunk

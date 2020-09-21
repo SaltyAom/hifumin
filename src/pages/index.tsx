@@ -1,12 +1,12 @@
 import { Fragment, useEffect, FunctionComponent } from 'react'
 
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 
 import { useStoreon } from 'storeon/react'
 import { SearchStore, SearchEvent } from '@stores'
 
 import { GetStaticProps } from 'next'
-import Head from 'next/head'
 
 import {
 	MasonryLayoutDeterminer,
@@ -32,12 +32,18 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 	// ? Pass down an initial story from Incremental Static Regeneration.
 	let initialStories: Stories = JSON.parse(stories)
 
-	let { search } = useStoreon<SearchStore, SearchEvent>('search')
+	let { search, dispatch } = useStoreon<SearchStore, SearchEvent>('search')
 
 	useEffect(() => {
 		window.scrollTo({
 			top: 0
 		})
+
+		return () => {
+			dispatch('UPDATE_SEARCH', '')
+			dispatch('UPDATE_IS_LOADING', false)
+			dispatch('UPDATE_IS_ERROR', false)
+		}
 	}, [])
 
 	if (!initialStories.length)
@@ -47,7 +53,9 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 					<title>Opener Studio</title>
 				</Head>
 				<MasonryLayoutDeterminer />
-				<PreloadGallery />
+				<main id="gallery">
+					<PreloadGallery />
+				</main>
 			</Fragment>
 		)
 
@@ -58,15 +66,17 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 			</Head>
 			<MasonryLayoutDeterminer />
 			<Search />
-			{search ? (
-				isNhentai(search) ? (
-					<LandingCover />
+			<main id="gallery">
+				{search ? (
+					isNhentai(search) ? (
+						<LandingCover />
+					) : (
+						<SearchGallery />
+					)
 				) : (
-					<SearchGallery />
-				)
-			) : (
-				<RecommendedGallery initial={initialStories} />
-			)}
+					<RecommendedGallery initial={initialStories} />
+				)}
+			</main>
 		</Fragment>
 	)
 }

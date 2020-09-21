@@ -1,7 +1,7 @@
 import { Component } from "react"
 
 class ErrorBoundary extends Component {
-	getDerivedStateFromError(error) {
+	static getDerivedStateFromError(error) {
 		console.log(error)
 	}
 

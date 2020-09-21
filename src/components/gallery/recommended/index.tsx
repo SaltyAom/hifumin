@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { Fragment, FunctionComponent } from 'react'
 
 import { useStoreon } from 'storeon/react'
 import { MasonryEvent, MasonryStore } from '@stores'
@@ -15,9 +15,7 @@ interface Props {
 	initial: Stories
 }
 
-const RecommendedGallery: FunctionComponent<Props> = ({
-	initial
-}) => {
+const RecommendedGallery: FunctionComponent<Props> = ({ initial }) => {
 	let { margin, masonry } = useStoreon<MasonryStore, MasonryEvent>(
 		'margin',
 		'masonry'
@@ -27,10 +25,26 @@ const RecommendedGallery: FunctionComponent<Props> = ({
 	let [galleries] = useInfiniteHentai(initial)
 
 	if (!galleries.length)
-		return <PreloadGallery />
+		return (
+			<Fragment>
+				{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
+					<div
+						key={index}
+						className="masonry"
+						style={{ marginTop: margin[index] }}
+					>
+						{column.map((_, index) => (
+							<Book key={index} preload />
+						))}
+						<Book preload />
+						<Book preload />
+					</div>
+				))}
+			</Fragment>
+		)
 
 	return (
-		<main id="gallery">
+		<Fragment>
 			{splitChunk(galleries, masonry).map((column, index) => (
 				<div
 					key={index}
@@ -44,7 +58,7 @@ const RecommendedGallery: FunctionComponent<Props> = ({
 					<Book preload />
 				</div>
 			))}
-		</main>
+		</Fragment>
 	)
 }
 

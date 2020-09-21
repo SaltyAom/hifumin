@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { useStoreon } from 'storeon/react'
 import { MasonryEvent, MasonryStore } from '@stores'
 
@@ -12,7 +14,7 @@ const PreloadGallery = () => {
 	)
 
 	return (
-		<main id="gallery">
+		<Fragment>
 			{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
 				<div
 					key={index}
@@ -26,7 +28,7 @@ const PreloadGallery = () => {
 					<Book preload />
 				</div>
 			))}
-		</main>
+		</Fragment>
 	)
 }
 

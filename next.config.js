@@ -90,16 +90,16 @@ module.exports = composePlugins(
 					]
 				}
 
-			if (dev && !isServer) {
-				const entry = config.entry
-				config.entry = () =>
-					entry().then((entries) => {
-						entries["main.js"] = ["preact/debug"].concat(
-							entries["main.js"] || []
-						)
-						return entries
-					})
-			}
+			// if (dev && !isServer) {
+			// 	const entry = config.entry
+			// 	config.entry = () =>
+			// 		entry().then((entries) => {
+			// 			entries["main.js"] = ["preact/debug"].concat(
+			// 				entries["main.js"] || []
+			// 			)
+			// 			return entries
+			// 		})
+			// }
 
 			return config
 		}
