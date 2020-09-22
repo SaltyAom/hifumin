@@ -6,6 +6,9 @@ import store from '@stores'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
+import Router from "next/router"
+import withGA from "next-ga"
+
 import { ErrorBoundary } from '@components'
 
 import '@styles/init.styl'
@@ -42,4 +45,4 @@ const App = ({ Component, pageProps }: AppProps) => {
 	)
 }
 
-export default App
+export default withGA("UA-178626618-1", Router)(App)

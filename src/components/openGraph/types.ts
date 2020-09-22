@@ -8,10 +8,8 @@ export interface OpenGraphProps {
 	author?: string
 	icon?: string
 	image?: Page
-	shortName?: string
 	name?: string
 	twitterDevAccount?: string
-	site?: string
 }
 
 export type OpenGraphComponent = FunctionComponent<OpenGraphProps>

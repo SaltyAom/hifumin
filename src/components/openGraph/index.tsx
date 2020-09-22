@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import Head from 'next/head'
 
 import { OpenGraphComponent } from './types'
@@ -17,10 +15,8 @@ const OpenGraph: OpenGraphComponent = ({
 		},
 		link: 'https://opener.saltyaom.com/assets/images/cover.jpg'
 	},
-	shortName = 'Opener',
 	name = 'Opener Studio',
 	twitterDevAccount = '@SaltyAom',
-	site = 'https://opener.saltyaom.com'
 }) => {
 	return (
 		<Head>
@@ -52,26 +48,6 @@ const OpenGraph: OpenGraphComponent = ({
 			<meta name="twitter:site" content={twitterDevAccount} />
 			<meta name="twitter:image" content={image.link} />
 			<meta name="twitter:creator" content={twitterDevAccount} />
-
-			<link rel="manifest" href="/assets/app/manifest.json" />
-			<meta name="mobile-web-app-capable" content="yes" />
-
-			<meta name="application-name" content={name} />
-			<meta name="mssmarttagspreventparsing" content="true" />
-			<meta name="msapplication-window" content="width=1366;height=768" />
-
-			<meta name="apple-mobile-web-app-capable" content="yes" />
-			<meta name="apple-mobile-web-app-title" content={shortName} />
-			<link
-				rel="apple-touch-icon"
-				href={`/assets/app/icon/apple-icon.jpg`}
-			/>
-			<meta
-				name="apple-mobile-web-app-status-bar-style"
-				content="default"
-			/>
-			<meta name="format-detection" content="telephone=no" />
-			<meta name="apple-touch-fullscreen" content="yes" />
 		</Head>
 	)
 }
