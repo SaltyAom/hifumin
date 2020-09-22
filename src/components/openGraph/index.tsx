@@ -53,7 +53,7 @@ const OpenGraph: OpenGraphComponent = ({
 			<meta name="twitter:image" content={image.link} />
 			<meta name="twitter:creator" content={twitterDevAccount} />
 
-			<link rel="manifest" href="/app/manifest.json" />
+			<link rel="manifest" href="/assets/app/manifest.json" />
 			<meta name="mobile-web-app-capable" content="yes" />
 
 			<meta name="application-name" content={name} />
