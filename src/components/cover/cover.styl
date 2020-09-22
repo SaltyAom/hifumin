@@ -40,7 +40,6 @@
                 @apply mb-0 px-12 py-0
                 height 29px
 
-
     & > .cover
         & > .page
             @apply flex rounded-md
@@ -101,3 +100,26 @@
 
         & > .detail
             @apply pl-0
+
+    @media (prefers-color-scheme dark)
+        &
+            & > .detail
+                & > .title
+                    @apply text-gray-400
+
+                & > .sub-title,
+                & > .code
+                    @apply text-gray-500
+
+                & > .info
+                    & > .content
+                        @apply text-gray-500 text-lg font-medium mr-6
+
+            &.-preload
+                & > .detail
+                    & > .code,
+                    & > .title,
+                    & > .sub-title,
+                    & > .info > .content
+                    & > .tag-container > .tag
+                        @apply inline-block px-8 rounded-sm bg-gray-800

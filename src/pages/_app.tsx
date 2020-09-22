@@ -12,6 +12,7 @@ import withGA from "next-ga"
 import { ErrorBoundary } from '@components'
 
 import '@styles/init.styl'
+import '@styles/tailwind.styl'
 
 const App = ({ Component, pageProps }: AppProps) => {
 	useEffect(() => {

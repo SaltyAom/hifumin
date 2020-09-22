@@ -33,3 +33,12 @@
     @media screen and (max-width 374.9px)
         & > .title
             @apply text-4xl
+
+    @media screen and (prefers-color-scheme dark)
+        &
+            & > .search-wrapper
+                & > .search-bar
+                    @apply bg-gray-700
+                    
+                    & > .input
+                        @apply text-gray-300

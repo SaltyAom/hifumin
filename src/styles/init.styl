@@ -1,8 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind screens;
-
 @font-face
     font-family somatic
     src url('/fonts/somatic.otf') format('opentype')
@@ -10,3 +5,7 @@
 
 body
     @apply block font-sans m-0
+
+@media screen and (prefers-color-scheme dark)
+    body
+        @apply bg-gray-900
