@@ -1,11 +1,12 @@
 #search
-    @apply flex flex-col justify-center items-center align-middle w-full mx-auto px-8
+    @apply flex flex-col justify-center items-center align-middle w-full mx-auto px-2
     max-width 460px
     height 500px
     padding-top 80px
 
     & > .title
         @apply text-5xl font-medium text-gray-600 text-center mb-6
+        font-family somatic
         text-shadow 0 2px 8px rgba(0,0,0,0.05), 0 8px 25px rgba(0,0,0,0.1), 0 16px 48px rgba(0,0,0,0.1)
 
         @supports (-webkit-background-clip text)
@@ -13,15 +14,22 @@
             -webkit-background-clip text
             -webkit-text-fill-color transparent
 
-    & > .search-bar
-        @apply flex flex-row justify-center items-center w-full px-4 py-2 bg-gray-200 rounded-md text-gray-500
-        box-shadow 0 2px 8px rgba(0,0,0,0.0125), 0 8px 25px rgba(0,0,0,0.0125), 0 16px 48px rgba(0,0,0,0.0125)
+    & > .search-wrapper
+        @apply block w-full px-6
 
-        & > .icon
-            @apply mr-2
+        & > .search-bar
+            @apply flex flex-row justify-center items-center w-full px-4 py-2 bg-gray-200 rounded-md text-gray-500
+            box-shadow 0 2px 8px rgba(0,0,0,0.0125), 0 8px 25px rgba(0,0,0,0.0125), 0 16px 48px rgba(0,0,0,0.0125)
 
-        & > .input
-            @apply text-2xl font-normal text-gray-700 outline-none bg-transparent w-full
+            & > .icon
+                @apply mr-2
 
-            &::placeholder
-                @apply text-gray-500 font-light
+            & > .input
+                @apply text-2xl font-normal text-gray-700 outline-none bg-transparent w-full
+
+                &::placeholder
+                    @apply text-gray-500 font-light
+
+    @media screen and (max-width 374.9px)
+        & > .title
+            @apply text-4xl

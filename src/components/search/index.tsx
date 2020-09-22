@@ -34,16 +34,18 @@ const Search = () => {
 	return (
 		<header id="search">
 			<h1 className="title">Opener Studio</h1>
-			<section className="search-bar" onSubmit={preventDefault}>
-				<SearchIcon />
-				<input
-					className="input"
-					type="text"
-					name="Search"
-					placeholder="Find hentai or 6 digits code"
-					onInput={deferSearch}
-				/>
-				{isLoading && <Loader />}
+			<section className="search-wrapper">
+				<div className="search-bar" onSubmit={preventDefault}>
+					<SearchIcon />
+					<input
+						className="input"
+						type="text"
+						name="Search"
+						placeholder="Find hentai or 6 digits code"
+						onInput={deferSearch}
+					/>
+					{isLoading && <Loader />}
+				</div>
 			</section>
 		</header>
 	)
