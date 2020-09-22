@@ -1,0 +1,52 @@
+$navbar-height = 58px
+
+#navbar
+    @apply fixed z-30 top-0 left-0 flex flex-row items-center w-full px-6 border-gray-300
+    height $navbar-height
+    background-color #fff
+    border-bottom-width 1px
+
+    & > .link
+        @apply flex items-center h-full
+
+        & > .title
+            @apply text-2xl font-medium text-gray-700
+            font-family somatic
+            text-shadow 0 2px 8px rgba(0,0,0,0.05), 0 8px 25px rgba(0,0,0,0.1), 0 16px 48px rgba(0,0,0,0.1)
+
+            @supports (-webkit-background-clip text)
+                background linear-gradient(45deg, #7F7FD5, #86A8E7, #91EAE4)
+                -webkit-background-clip text
+                -webkit-text-fill-color transparent
+
+    & > .tools
+        @apply flex flex-row justify-end items-center flex-1
+
+        & > .tab
+            @apply flex flex-row justify-center items-center text-gray-600 text-xl font-medium px-2 outline-none
+            height $navbar-height
+
+            &:hover,
+            &:focus
+                @apply bg-gray-200
+
+            &.safe-mode
+                @apply relative
+                font-family somatic
+                width $navbar-height
+
+                & > .icon
+                    width 18px
+                    height 18px
+
+                & > .strike
+                    @apply absolute bg-gray-600
+                    width 52px
+                    height 7px
+                    border-radius 4px
+                    border 2px solid #fff
+                    transform rotate(-10deg)
+                    transition width .175s ease-out
+
+                    &.-hidden
+                        width 0

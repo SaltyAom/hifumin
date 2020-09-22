@@ -1,6 +1,9 @@
 import { memo, useEffect, useReducer, useRef } from 'react'
 
-import useSimulateHeight from '@libs/hooks/simulateHeight'
+import { useStoreon } from 'storeon/react'
+import { SettingEvent, SettingStore } from '@stores'
+
+import { useSimulateHeight } from '@libs/hooks'
 
 import { PageComponent, PageProps } from './types'
 
@@ -11,6 +14,10 @@ const shouldReRender = (prevProps: PageProps, nextProps: PageProps) =>
 
 const Page: PageComponent = memo(
 	({ page, alt = '', preload = false, children = null }) => {
+		let { safeMode } = useStoreon<SettingStore, SettingEvent>(
+			'safeMode'
+		)
+
 		let [shouldLoad, load] = useReducer(() => true, false)
 
 		let [
@@ -62,7 +69,7 @@ const Page: PageComponent = memo(
 			<div className="page">
 				{children}
 				<img
-					className={`paper ${!shouldLoad ? '-lazy' : ''}`}
+					className={`paper ${safeMode ? '-blur' : ''} ${!shouldLoad ? '-lazy' : ''}`}
 					ref={element}
 					src={shouldLoad ? link : ''}
 					alt={alt}

@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 
+import Navbar from '@components/navbar'
+
 import { StoreContext } from 'storeon/react'
 import store from '@stores'
 
@@ -39,6 +41,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 			</Head>
 			<StoreContext.Provider value={store}>
 				<ErrorBoundary>
+					<Navbar />
 					<Component {...pageProps} />
 				</ErrorBoundary>
 			</StoreContext.Provider>

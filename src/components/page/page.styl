@@ -6,6 +6,7 @@
         @apply block w-full
         object-fit contain
         border-radius inherit
+        transition filter .1s ease-out
 
         &.-lazy
             min-height 500px
@@ -13,6 +14,9 @@
 
         &.-preload
             @apply opacity-0
+
+        &.-blur
+            filter blur(16px)
 
     @media screen and (max-width 567.9px)
         &
