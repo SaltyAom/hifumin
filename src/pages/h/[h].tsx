@@ -12,7 +12,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 
-import { Cover, Page } from '@components'
+import { Cover, Page, OpenGraph } from '@components'
 
 import { fetch } from '@libs/fetch'
 
@@ -80,6 +80,10 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 				<Head>
 					<title>Loading...</title>
 				</Head>
+				<OpenGraph
+					title="Opener Studio"
+					description="Pinterest but for hentai and 6 digit code."
+				/>
 				<main id="h">
 					<Cover preload />
 					<section className="pages">
@@ -109,7 +113,9 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 
 	let {
 		images: { cover, pages },
-		title: { display }
+		title: { display },
+		info: { favorite, amount },
+		metadata: { language }
 	} = story
 
 	return (
@@ -129,6 +135,11 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 					)
 				)}
 			</Head>
+			<OpenGraph
+				title={display}
+				description={`${language}, ${amount} page, ${favorite} favorite.`}
+				image={cover}
+			/>
 			<main id="h">
 				<Cover story={story} />
 				<section className="pages">

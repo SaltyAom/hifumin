@@ -4,6 +4,7 @@ import ErrorBoundary from './errorBoundary'
 import LandingCover from './landingCover'
 import Loader from './loader'
 import MasonryLayoutDeterminer from './masonryLayoutDeterminer'
+import OpenGraph from './openGraph'
 import Page from './page'
 import Search from './search'
 
@@ -15,6 +16,7 @@ export {
 	LandingCover,
 	Loader,
 	MasonryLayoutDeterminer,
+	OpenGraph,
 	Page,
 	Search
 }

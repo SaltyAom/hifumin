@@ -20,6 +20,7 @@ import { fetch, isNhentai } from '@libs'
 import { Stories } from '@types'
 
 import '@styles/landing.styl'
+import OpenGraph from '@components/openGraph'
 
 const SearchGallery = dynamic(() => import('@components/gallery/search')),
 	LandingCover = dynamic(() => import('@components/landingCover'))
@@ -52,6 +53,10 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 				<Head>
 					<title>Opener Studio</title>
 				</Head>
+				<OpenGraph
+					title="Opener Studio"
+					description="Pinterest but for hentai and 6 digit code."
+				/>
 				<MasonryLayoutDeterminer />
 				<main id="gallery">
 					<PreloadGallery />
@@ -64,6 +69,10 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 			<Head>
 				<title>Opener Studio</title>
 			</Head>
+			<OpenGraph
+				title="Opener Studio"
+				description="Pinterest but for hentai and 6 digit code."
+			/>
 			<MasonryLayoutDeterminer />
 			<Search />
 			<main id="gallery">
