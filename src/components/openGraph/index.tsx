@@ -15,7 +15,7 @@ const OpenGraph: OpenGraphComponent = ({
 			height: 1080,
 			type: 'jpg'
 		},
-		link: 'https://opener.saltyaom.com/open-graph/cover.jpg'
+		link: 'https://opener.saltyaom.com/assets/images/cover.jpg'
 	},
 	shortName = 'Opener',
 	name = 'Opener Studio',
