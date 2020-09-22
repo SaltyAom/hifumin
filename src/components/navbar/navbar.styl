@@ -5,6 +5,10 @@ $navbar-height = 58px
     height $navbar-height
     background-color #fff
     border-bottom-width 1px
+    transition top .15s ease-out
+
+    &.-hidden
+        top -58px
 
     & > .link
         @apply flex items-center h-full
@@ -25,10 +29,15 @@ $navbar-height = 58px
         & > .tab
             @apply flex flex-row justify-center items-center text-gray-600 text-xl font-medium px-2 outline-none
             height $navbar-height
+            transition background-color .15s ease-out
 
             &:hover,
             &:focus
                 @apply bg-gray-200
+
+                &.safe-mode
+                    & > .strike
+                        @apply border-gray-200
 
             &.safe-mode
                 @apply relative
@@ -40,13 +49,32 @@ $navbar-height = 58px
                     height 18px
 
                 & > .strike
-                    @apply absolute bg-gray-600
+                    @apply absolute bg-gray-600 border-white
                     width 52px
                     height 7px
                     border-radius 4px
-                    border 2px solid #fff
+                    border-width 2px
                     transform rotate(-10deg)
-                    transition width .175s ease-out
+                    transition width .175s ease-out, border-color .15s ease-out
 
                     &.-hidden
                         width 0
+
+    @media (prefers-color-scheme dark)
+        &
+            @apply bg-gray-900 border-gray-800
+
+            & > .tools
+                & > .tab
+                    &:hover,
+                    &:focus
+                        @apply bg-gray-800
+
+                        &.safe-mode
+                            & > .strike
+                                @apply border-gray-800
+
+                    &.safe-mode
+
+                        & > .strike
+                            @apply border-gray-900

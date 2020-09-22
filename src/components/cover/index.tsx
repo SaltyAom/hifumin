@@ -1,5 +1,8 @@
 import { memo } from 'react'
 
+import { useStoreon } from 'storeon/react'
+import { SettingEvent, SettingStore } from '@stores'
+
 import Tag, { TagContainer } from './tag'
 
 import { randomBetween, useSimulateHeight } from '@libs'
@@ -24,6 +27,8 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 		page: preload ? undefined : story.images.cover,
 		preload
 	})
+
+	let { safeMode } = useStoreon<SettingStore, SettingEvent>('safeMode')
 
 	if (preload)
 		return (
@@ -96,7 +101,7 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 					<img
 						src={cover.link}
 						ref={element}
-						className="paper"
+						className={`paper ${safeMode ? '-blur' : ''}`}
 						alt={title.display}
 						style={{
 							height: simulatedImageHeight
