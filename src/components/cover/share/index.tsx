@@ -1,5 +1,5 @@
 import { supportsShare } from '@libs'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { LinkIcon, ShareIcon } from './icons'
 
@@ -14,13 +14,12 @@ const Share: ShareComponent = ({ id = '', title, preload = false }) => {
 		updateSupportNativeShare(supportsShare)
 	}, [])
 
-	let share = () => {
-		if (supportsShare)
-			navigator.share({
-				title,
-				url: `https://opener.saltyaom.com/h/${id}`
-			})
-	}
+	let share = useCallback(() => {
+		navigator.share({
+			title,
+			url: `https://opener.saltyaom.com/h/${id}`
+		})
+	}, [id])
 
 	return (
 		<footer id="share">
