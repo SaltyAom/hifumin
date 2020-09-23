@@ -1,6 +1,9 @@
+import { useState, useEffect } from 'react'
+
 import Head from 'next/head'
 
 import { OpenGraphComponent } from './types'
+import { isServer } from '@libs'
 
 const OpenGraph: OpenGraphComponent = ({
 	title,
@@ -16,8 +19,28 @@ const OpenGraph: OpenGraphComponent = ({
 		link: 'https://opener.saltyaom.com/assets/images/cover.jpg'
 	},
 	name = 'Opener Studio',
-	twitterDevAccount = '@SaltyAom',
+	twitterDevAccount = '@SaltyAom'
 }) => {
+	let [isDarkTheme, updateIsDarkTheme] = useState(
+		isServer
+			? true
+			: window.matchMedia &&
+					window.matchMedia('(prefers-color-scheme: dark)').matches
+	)
+
+	useEffect(() => {
+		updateIsDarkTheme(
+			window.matchMedia &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches
+		)
+
+		window
+			.matchMedia('(prefers-color-scheme: dark)')
+			.addEventListener('change', ({ matches }) => {
+				updateIsDarkTheme(matches)
+			})
+	}, [])
+
 	return (
 		<Head>
 			<meta name="title" content={title} />
@@ -48,6 +71,11 @@ const OpenGraph: OpenGraphComponent = ({
 			<meta name="twitter:site" content={twitterDevAccount} />
 			<meta name="twitter:image" content={image.link} />
 			<meta name="twitter:creator" content={twitterDevAccount} />
+
+			<meta
+				name="theme-color"
+				content={isDarkTheme ? '#1a202c' : '#fff'}
+			/>
 		</Head>
 	)
 }

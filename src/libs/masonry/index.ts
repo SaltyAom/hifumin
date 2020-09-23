@@ -6,7 +6,9 @@ export const getMasonry = () => {
 		let width = window.innerWidth,
 			space = 280
 
-		if (width <= space * 2) return 2
+		if (width <= 300) return 1
+		if (width <= 660) return 2
+		if (width <= space * 3) return 3
 
 		return Math.floor(width / space)
 	},
