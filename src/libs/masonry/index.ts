@@ -1,16 +1,15 @@
 import { isServer, randomBetween } from '@libs'
 
 export const getMasonry = () => {
-	if (isServer) return 2
+		if (isServer) return 2
 
-	let width = window.innerWidth
+		let width = window.innerWidth,
+			space = 280
 
-	if (width <= 568) return 2
+		if (width <= space * 2) return 2
 
-	if (width <= 768) return 4
-
-	return Math.floor(width / 192)
-},
+		return Math.floor(width / space)
+	},
 	getMasonryMargin = (masonry: number) => {
 		if (masonry === 2) return ['0px', '80px']
 

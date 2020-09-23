@@ -27,6 +27,13 @@
             & > .input
                 @apply text-2xl font-normal text-gray-700 outline-none bg-transparent w-full
 
+                &:-webkit-autofill,
+                &:-webkit-autofill:hover,
+                &:-webkit-autofill:focus,
+                &:-webkit-autofill:active
+                    transition background-color 5000s ease-in-out 0s
+                    -webkit-text-fill-color #fff !important
+
                 &::placeholder
                     @apply text-gray-500 font-light
 

@@ -61,11 +61,21 @@ const Navbar = () => {
 		<nav id="navbar" className={shouldShow ? '' : '-hidden'}>
 			<Link href="/">
 				<a className="link">
-					<h1 className="title">Opener Studio</h1>
+					<img
+						className="icon"
+						src="/assets/app/icon/icon.png"
+						alt="Opener Studio"
+					/>
+					<h1 className="title">Opener</h1>
 				</a>
 			</Link>
 			<section className="tools">
-				<button className="tab safe-mode" onClick={toggleSafeMode}>
+				<button
+					title={`Turn ${safeMode ? 'on' : 'off'} safe mode`}
+					aria-label={`Turn ${safeMode ? 'on' : 'off'} safe mode`}
+					className="tab safe-mode"
+					onClick={toggleSafeMode}
+				>
 					18
 					<PlusIcon />
 					<div

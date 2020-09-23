@@ -4,6 +4,7 @@ import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@stores'
 
 import Tag, { TagContainer } from './tag'
+import Share from './share'
 
 import { randomBetween, useSimulateHeight } from '@libs'
 
@@ -85,6 +86,7 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 								/>
 							))}
 					</TagContainer>
+					<Share preload />
 				</section>
 			</header>
 		)
@@ -135,6 +137,7 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 						</Tag>
 					))}
 				</TagContainer>
+				<Share id={id} title={title.display} />
 			</section>
 		</header>
 	)

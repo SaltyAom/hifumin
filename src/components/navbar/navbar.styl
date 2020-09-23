@@ -7,11 +7,22 @@ $navbar-height = 58px
     border-bottom-width 1px
     transition top .15s ease-out
 
+    @supports (backdrop-filter blur(1px))
+        &
+            background-color #ffffffd0
+            backdrop-filter blur(8px)
+
     &.-hidden
         top -58px
 
     & > .link
         @apply flex items-center h-full
+
+        & > .icon
+            width $navbar-height
+            height $navbar-height
+            padding 6px 0
+            object-fit contain
 
         & > .title
             @apply text-2xl font-medium text-gray-700
@@ -19,7 +30,7 @@ $navbar-height = 58px
             text-shadow 0 2px 8px rgba(0,0,0,0.05), 0 8px 25px rgba(0,0,0,0.1), 0 16px 48px rgba(0,0,0,0.1)
 
             @supports (-webkit-background-clip text)
-                background linear-gradient(45deg, #7F7FD5, #86A8E7, #91EAE4)
+                background linear-gradient(225deg, #7F7FD5, #86A8E7, #91EAE4)
                 -webkit-background-clip text
                 -webkit-text-fill-color transparent
 
@@ -62,7 +73,11 @@ $navbar-height = 58px
 
     @media (prefers-color-scheme dark)
         &
-            @apply bg-gray-900 border-gray-800
+            @apply border-gray-800 bg-gray-800
+
+            @supports (backdrop-filter blur(1px))
+                &
+                    background-color #1a202ce6
 
             & > .tools
                 & > .tab

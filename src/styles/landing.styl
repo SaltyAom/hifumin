@@ -1,13 +1,15 @@
 #gallery
     @apply flex flex-row w-full
+    padding 0 12px
 
     & > .masonry
-        @apply flex flex-col flex-1 px-2
+        @apply flex flex-col flex-1 px-3
         content-visibility auto
         contain-intrinsic-size 340px
+        will-change margin-top
 
         & > .book
-            @apply mb-3
+            @apply mb-6
 
             & > .page
                 @apply w-full
