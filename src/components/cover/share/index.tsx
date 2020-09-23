@@ -7,7 +7,7 @@ import './share.styl'
 
 import { ShareComponent } from './types'
 
-const Share: ShareComponent = ({ id = '', title, preload = false }) => {
+const Share: ShareComponent = ({ id = '', preload = false }) => {
 	let [supportNativeShare, updateSupportNativeShare] = useState(false)
 
 	useEffect(() => {
@@ -16,7 +16,6 @@ const Share: ShareComponent = ({ id = '', title, preload = false }) => {
 
 	let share = useCallback(() => {
 		navigator.share({
-			title,
 			url: `https://opener.saltyaom.com/h/${id}`
 		})
 	}, [id])

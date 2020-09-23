@@ -137,7 +137,7 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 						</Tag>
 					))}
 				</TagContainer>
-				<Share id={id} title={title.display} />
+				<Share id={id} />
 			</section>
 		</header>
 	)
