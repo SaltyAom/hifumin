@@ -15,7 +15,7 @@ import {
 	Search
 } from '@components'
 
-import { fetch, isNhentai } from '@libs'
+import { fetch, isNhentai, randomPick, tags } from '@libs'
 
 import { Stories } from '@types'
 
@@ -92,7 +92,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
 	let stories = JSON.stringify(
-		await fetch('https://nhapi.now.sh/search/page/1')
+		await fetch(`https://nhapi.now.sh/search/${randomPick(tags)}/1`)
 	)
 
 	return {
