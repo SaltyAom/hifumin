@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const withStylus = require("@zeit/next-stylus"),
-	withOffline = require("next-offline")
+const withStylus = require('@zeit/next-stylus'),
+	withOffline = require('next-offline')
 
-const composePlugins = require("next-compose-plugins")
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+const composePlugins = require('next-compose-plugins')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
-const { join } = require("path")
+const { join } = require('path')
 
 module.exports = composePlugins(
 	[
@@ -15,11 +15,20 @@ module.exports = composePlugins(
 			{
 				dontAutoRegisterSw: true,
 				workboxOpts: {
-					swDest: "static/service-worker.js",
+					swDest: 'static/service-worker.js',
 					runtimeCaching: [
 						{
-							urlPattern: /.js$|.css$|.svg$|.jpg$|.png$/,
-							handler: "CacheFirst"
+							urlPattern: /.js$|.css$|.svg$|.jpg$|.png$|.otf$/,
+							handler: 'CacheFirst'
+						},
+						{
+							urlPattern: /nhapi.now.sh\/\*/,
+							handler: 'NetworkFirst',
+							options: {
+								cacheableResponse: {
+									statuses: [0, 200]
+								}
+							}
 						}
 					]
 				}
@@ -31,13 +40,13 @@ module.exports = composePlugins(
 			modern: true,
 			polyfillsOptimization: true
 		},
-		target: "serverless",
+		target: 'serverless',
 
 		async rewrites() {
 			return [
 				{
-					source: "/service-worker.js",
-					destination: "/_next/static/service-worker.js"
+					source: '/service-worker.js',
+					destination: '/_next/static/service-worker.js'
 				}
 			]
 		},
@@ -56,11 +65,11 @@ module.exports = composePlugins(
 							test: preactModules
 						}
 					)
-					cacheGroups.commons.name = "framework"
+					cacheGroups.commons.name = 'framework'
 				} else {
 					cacheGroups.preact = {
-						name: "commons",
-						chunks: "all",
+						name: 'commons',
+						chunks: 'all',
 						test: preactModules
 					}
 				}
@@ -68,16 +77,16 @@ module.exports = composePlugins(
 
 			config.resolve.alias = {
 				...config.resolve.alias,
-				react: "preact/compat",
-				"react-dom": "preact/compat",
-				"react-render-to-string": "preact-render-to-stirng",
-				"@pages": join(__dirname, "src/pages"),
-				"@public": join(__dirname, "public"),
-				"@styles": join(__dirname, "src/styles"),
-				"@components": join(__dirname, "src/components"),
-				"@libs": join(__dirname, "src/libs"),
-				"@stores": join(__dirname, "src/stores"),
-				"@layouts": join(__dirname, "src/layouts")
+				react: 'preact/compat',
+				'react-dom': 'preact/compat',
+				'react-render-to-string': 'preact-render-to-stirng',
+				'@pages': join(__dirname, 'src/pages'),
+				'@public': join(__dirname, 'public'),
+				'@styles': join(__dirname, 'src/styles'),
+				'@components': join(__dirname, 'src/components'),
+				'@libs': join(__dirname, 'src/libs'),
+				'@stores': join(__dirname, 'src/stores'),
+				'@layouts': join(__dirname, 'src/layouts')
 			}
 
 			if (!dev)

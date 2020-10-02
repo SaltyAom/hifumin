@@ -7,11 +7,6 @@ $navbar-height = 58px
     border-bottom-width 1px
     transition top .15s ease-out
 
-    @supports (backdrop-filter blur(1px))
-        &
-            background-color #ffffffd0
-            backdrop-filter blur(8px)
-
     &.-hidden
         top -58px
 
@@ -74,10 +69,6 @@ $navbar-height = 58px
     @media (prefers-color-scheme dark)
         &
             @apply border-gray-800 bg-gray-800
-
-            @supports (backdrop-filter blur(1px))
-                &
-                    background-color #1a202ce6
 
             & > .tools
                 & > .tab
