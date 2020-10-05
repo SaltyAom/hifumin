@@ -124,17 +124,15 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 				</section>
 				<TagContainer>
 					<span>Language: </span>
-					<Tag href={`/language/${language}`}>{language}</Tag>
+					<Tag>{language}</Tag>
 				</TagContainer>
 				<TagContainer>
 					<span>Artist: </span>
-					<Tag href={`/artist/${language}`}>{artist.name}</Tag>
+					<Tag>{artist.name}</Tag>
 				</TagContainer>
 				<TagContainer>
 					{tags.map(({ name }) => (
-						<Tag key={name} href={`/tag/${name}`}>
-							{name}
-						</Tag>
+						<Tag key={name}>{name}</Tag>
 					))}
 				</TagContainer>
 				<Share id={id} />
