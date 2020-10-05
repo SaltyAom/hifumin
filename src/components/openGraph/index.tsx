@@ -16,7 +16,7 @@ const OpenGraph: OpenGraphComponent = ({
 			height: 1080,
 			type: 'jpg'
 		},
-		link: 'https://opener.saltyaom.com/assets/images/cover.jpg'
+		link: 'https://opener.studio/assets/images/cover.jpg'
 	},
 	name = 'Opener Studio',
 	twitterDevAccount = '@SaltyAom'
@@ -48,6 +48,7 @@ const OpenGraph: OpenGraphComponent = ({
 			<meta name="author" content={author} />
 			<link rel="icon" href={icon} />
 			<link rel="shortcut icon" href={icon} />
+			<link rel="canonical" href="https://opener.studio" />
 
 			<meta property="og:title" content={title} />
 			<meta property="og:description" content={description} />

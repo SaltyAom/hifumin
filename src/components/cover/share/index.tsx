@@ -16,7 +16,7 @@ const Share: ShareComponent = ({ id = '', preload = false }) => {
 
 	let share = useCallback(() => {
 		navigator.share({
-			url: `https://opener.saltyaom.com/h/${id}`
+			url: `https://opener.studio/h/${id}`
 		})
 	}, [id])
 
