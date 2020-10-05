@@ -1,4 +1,4 @@
-import { useCallback, useRef, FormEvent } from 'react'
+import { useCallback, useRef, FormEvent, useEffect } from 'react'
 
 import { useStoreon } from 'storeon/react'
 import { SearchStore, SearchEvent } from '@stores'
@@ -10,22 +10,30 @@ import SearchIcon from './icon'
 import './search.styl'
 
 const Search = () => {
-	let { dispatch, isLoading } = useStoreon<SearchStore, SearchEvent>(
-		'isLoading'
-	)
+	let {
+		dispatch,
+		isLoading,
+		useCurrentSearch,
+		search: searchState
+	} = useStoreon<SearchStore, SearchEvent>('isLoading', 'useCurrentSearch', 'search')
 
 	let search = useRef('')
 
-	let deferSearch = useCallback((event: FormEvent<HTMLInputElement>) => {
-		let { value } = event.currentTarget
+	let deferSearch = useCallback(
+		(event: FormEvent<HTMLInputElement>) => {
+			let { value } = event.currentTarget
 
-		search.current = value
-		setTimeout(() => {
-			if (value !== search.current) return
+			if (useCurrentSearch) dispatch('USE_CURRENT_SEARCH', false)
 
-			dispatch('UPDATE_SEARCH', value.toLocaleLowerCase())
-		}, 300)
-	}, [])
+			search.current = value
+			setTimeout(() => {
+				if (value !== search.current) return
+
+				dispatch('UPDATE_SEARCH', value.toLocaleLowerCase())
+			}, 300)
+		},
+		[useCurrentSearch]
+	)
 
 	let preventDefault = useCallback((event) => {
 		event.preventDefault()
@@ -43,6 +51,7 @@ const Search = () => {
 						name="Search"
 						placeholder="Find hentai or 6 digits code"
 						onInput={deferSearch}
+						value={useCurrentSearch ? searchState : undefined}
 					/>
 					{isLoading && <Loader />}
 				</div>

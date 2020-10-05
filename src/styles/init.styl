@@ -1,10 +1,11 @@
 @font-face
     font-family somatic
-    src url('/fonts/somatic.otf') format('opentype')
+    src local('Somatic'), local('Somatic Rounded'), url('/fonts/somatic.otf') format('opentype')
     font-display swap
 
 body
     @apply block font-sans m-0
+    scroll-behavior smooth
 
 @media screen and (prefers-color-scheme dark)
     body

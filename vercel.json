@@ -1,0 +1,36 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "next.config.js",
+            "use": "@vercel/next"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Methods",
+                    "value": "GET"
+                },
+                {
+                    "key": "Access-Control-Allow-Headers",
+                    "value": "X-Requested-With, Content-Type, Accept"
+                },
+                {
+                    "key": "cache-control",
+                    "value": "public,max-age=31536000"
+                },
+                {
+                    "key": "Accept-Encoding",
+                    "value": "deflate, br;q=1.0, gzip;q=1.0, *;q=0.5"
+                },
+                {
+                    "key": "Vary",
+                    "value": "Accept-Encoding"
+                }
+            ]
+        }
+    ]
+}

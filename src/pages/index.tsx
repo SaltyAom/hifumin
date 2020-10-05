@@ -12,7 +12,8 @@ import {
 	MasonryLayoutDeterminer,
 	PreloadGallery,
 	RecommendedGallery,
-	Search
+	Search,
+	OpenGraph
 } from '@components'
 
 import { fetch, isNhentai, randomPick, tags } from '@libs'
@@ -20,7 +21,6 @@ import { fetch, isNhentai, randomPick, tags } from '@libs'
 import { Stories } from '@types'
 
 import '@styles/landing.styl'
-import OpenGraph from '@components/openGraph'
 
 const SearchGallery = dynamic(() => import('@components/gallery/search')),
 	LandingCover = dynamic(() => import('@components/landingCover'))

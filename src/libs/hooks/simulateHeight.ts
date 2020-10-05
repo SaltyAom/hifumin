@@ -4,7 +4,7 @@ import {
 	useRef,
 	useCallback,
 	useEffect,
-	MutableRefObject
+	MutableRefObject, useMemo
 } from 'react'
 
 import { Page } from '@types'
@@ -52,7 +52,7 @@ const useSimulateHeight: UseSimulateHeight = ({
 	let element = useRef<HTMLImageElement>(),
 		resizeListener = useRef<() => void>()
 
-	let calculateImageHeight = useCallback(
+	let calculateImageHeight = useMemo(
 		() =>
 			(typeof element.current === 'undefined'
 				? 0
@@ -61,7 +61,7 @@ const useSimulateHeight: UseSimulateHeight = ({
 	)
 
 	let simulateImageHeight = useCallback(() => {
-			updateHeight(calculateImageHeight())
+			updateHeight(calculateImageHeight)
 		}, []),
 		stopSimulateImageHeight = useCallback(() => {
 			imageLoaded()
@@ -71,7 +71,7 @@ const useSimulateHeight: UseSimulateHeight = ({
 	useEffect(() => {
 		if (preload) return
 
-		updateHeight(calculateImageHeight())
+		updateHeight(calculateImageHeight)
 
 		if (!shouldLoad) return
 
