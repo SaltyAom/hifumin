@@ -28,7 +28,8 @@ const useSearchHentai = ({
 
 	let persistedListener = useRef<() => void>(),
 		isLoading = useRef(false),
-		loadedTag = useRef<string[]>([])
+		loadedTag = useRef<string[]>([]),
+		previousFetch = useRef<AbortController>()
 	// ? Initial isn't require because nothing has loaded.
 
 	let lazyListener = useCallback(
@@ -60,7 +61,16 @@ const useSearchHentai = ({
 			isLoading.current = true
 			dispatch('UPDATE_IS_LOADING', true)
 
-			fetch(`https://nhapi.now.sh/search/${randomTag}/${page}`)
+			let controller = new AbortController(),
+				{ signal } = controller
+
+			if (previousFetch.current) previousFetch.current.abort()
+
+			previousFetch.current = controller
+
+			fetch(`https://nhapi.now.sh/search/${randomTag}/${page}`, {
+				signal
+			})
 				.then((newGalleries: Stories) => {
 					if (newGalleries.length)
 						return updateGalleries([...galleries, ...newGalleries])
@@ -72,6 +82,8 @@ const useSearchHentai = ({
 					isLoading.current = false
 					dispatch('UPDATE_IS_LOADING', false)
 				})
+
+			return () => previousFetch.current.abort()
 		},
 		[galleries]
 	)

@@ -13,7 +13,8 @@ const useInfiniteHentai = (initState: Stories) => {
 	let persistedListener = useRef<() => void>(),
 		isLoading = useRef(false),
 		loadedTag = useRef<string[]>([]),
-		isInitial = useRef(true)
+		isInitial = useRef(true),
+		previousFetch = useRef<AbortController>()
 
 	let lazyListener = useCallback(
 		(tag = '') => {
@@ -42,13 +43,24 @@ const useInfiniteHentai = (initState: Stories) => {
 		(randomTag: string[]) => {
 			isLoading.current = true
 
-			fetch(`https://nhapi.now.sh/search/${randomTag}/${page}`)
+			let controller = new AbortController(),
+				{ signal } = controller
+
+			if (previousFetch.current) previousFetch.current.abort()
+
+			previousFetch.current = controller
+
+			fetch(`https://nhapi.now.sh/search/${randomTag}/${page}`, {
+				signal
+			})
 				.then((newGalleries: Stories) => {
 					updateGalleries([...galleries, ...newGalleries])
 				})
 				.finally(() => {
 					isLoading.current = false
 				})
+
+			return () => previousFetch.current.abort()
 		},
 		[galleries]
 	)
