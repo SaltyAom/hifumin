@@ -8,6 +8,7 @@ import {
 } from 'react'
 
 import { Page } from '@types'
+import { h } from 'preact'
 
 interface SimulateHeightArgument {
 	page: Page
@@ -52,16 +53,14 @@ const useSimulateHeight: UseSimulateHeight = ({
 	let element = useRef<HTMLImageElement>(),
 		resizeListener = useRef<() => void>()
 
-	let calculateImageHeight = useMemo(
+	let calculateImageHeight = 
 		() =>
 			(typeof element.current === 'undefined'
 				? 0
-				: element.current.clientWidth / width) * height,
-		[element.current?.clientWidth, width, height]
-	)
+				: element.current.clientWidth / width) * height
 
 	let simulateImageHeight = useCallback(() => {
-			updateHeight(calculateImageHeight)
+			updateHeight(calculateImageHeight())
 		}, []),
 		stopSimulateImageHeight = useCallback(() => {
 			imageLoaded()
@@ -71,7 +70,7 @@ const useSimulateHeight: UseSimulateHeight = ({
 	useEffect(() => {
 		if (preload) return
 
-		updateHeight(calculateImageHeight)
+		updateHeight(calculateImageHeight())
 
 		if (!shouldLoad) return
 

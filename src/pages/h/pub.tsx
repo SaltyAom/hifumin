@@ -8,7 +8,7 @@ import {
 	FunctionComponent
 } from 'react'
 
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 
@@ -21,13 +21,13 @@ import '@styles/h.styl'
 const Book = dynamic(() => import('@components/book'))
 
 interface Props {
-	story: string
-	related: string
+	story: Story
+	related: Story[]
 }
 
 type Component = FunctionComponent<Props>
 
-const Code: Component = ({ story: storyJson, related: relatedJson }) => {
+const Code: Component = ({ story, related }) => {
 	let [allowPage, increaseAllowPage] = useReducer(
 			(allowPage) => allowPage + 20,
 			20
@@ -49,15 +49,15 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 	}, [allowPage, totalPage])
 
 	useEffect(() => {
-		if (typeof storyJson === 'undefined') return
+		if (typeof story === 'undefined') return
 
 		let {
 			id,
 			images: { pages }
-		} = JSON.parse(storyJson)
+		} = story
 
 		if (id) updateTotalPage(pages.length)
-	}, [storyJson])
+	}, [story])
 
 	let lazyLoad = useCallback(() => {
 		let pageHeight = window.innerHeight
@@ -72,7 +72,7 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 	}, [allowPage, increaseAllowPage, totalPage])
 
 	// ? Generating
-	if (typeof storyJson === 'undefined')
+	if (typeof story === 'undefined')
 		return (
 			<Fragment>
 				<Head>
@@ -102,9 +102,6 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 				</main>
 			</Fragment>
 		)
-
-	let story: Story = JSON.parse(storyJson),
-		related: Story[] = JSON.parse(relatedJson)
 
 	// ? Not valid
 	if (!story.id) return <main id="h">Not Found</main>
@@ -232,11 +229,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 				language: 'Thai'
 			}
 		},
-		related = JSON.stringify([])
+		related = []
 
 	return {
 		props: {
-			story: JSON.stringify(story),
+			story,
 			related
 		},
 		revalidate: 3600
