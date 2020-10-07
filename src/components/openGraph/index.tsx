@@ -22,7 +22,7 @@ const OpenGraph: OpenGraphComponent = ({
 	name = 'Opener Studio',
 	twitterDevAccount = '@SaltyAom'
 }) => {
-	let { pathname } = useRouter()
+	let { asPath } = useRouter()
 
 	let [isDarkTheme, updateIsDarkTheme] = useState(
 		isServer
@@ -51,7 +51,7 @@ const OpenGraph: OpenGraphComponent = ({
 			<meta name="author" content={author} />
 			<link rel="icon" href={icon} />
 			<link rel="shortcut icon" href={icon} />
-			<link rel="canonical" href={`https://opener.studio${pathname}`} />
+			<link rel="canonical" href={`https://opener.studio${asPath}`} />
 
 			<meta property="og:title" content={title} />
 			<meta property="og:description" content={description} />
@@ -68,7 +68,7 @@ const OpenGraph: OpenGraphComponent = ({
 			/>
 			<meta property="og:locale" content="en_US" />
 			<meta property="og:type" content="website" />
-			<meta property="og:url" content={`https://opener.studio${pathname}`} />
+			<meta property="og:url" content={`https://opener.studio${asPath}`} />
 
 			<meta name="twitter:card" content="summary_large_image" />
 			<meta name="twitter:title" content={title} />
