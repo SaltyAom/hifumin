@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 
 export interface ShareProps {
-	id: string
+	id: number
 	preload?: false
 }
 

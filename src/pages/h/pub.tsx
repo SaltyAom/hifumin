@@ -162,13 +162,6 @@ const Code: Component = ({ story: storyJson, related: relatedJson }) => {
 	)
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: true
-	}
-}
-
 export const getStaticProps: GetStaticProps<Props> = async () => {
 	let story: Story = {
 			id: 229345,

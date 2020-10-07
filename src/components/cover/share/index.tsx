@@ -7,7 +7,7 @@ import './share.styl'
 
 import { ShareComponent } from './types'
 
-const Share: ShareComponent = ({ id = '', preload = false }) => {
+const Share: ShareComponent = ({ id = 0, preload = false }) => {
 	let [supportNativeShare, updateSupportNativeShare] = useState(false)
 
 	useEffect(() => {
