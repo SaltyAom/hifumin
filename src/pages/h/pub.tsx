@@ -1,0 +1,253 @@
+import {
+	Fragment,
+	useEffect,
+	useCallback,
+	useRef,
+	useReducer,
+	useState,
+	FunctionComponent
+} from 'react'
+
+import { GetStaticPaths, GetStaticProps } from 'next'
+import Head from 'next/head'
+import dynamic from 'next/dynamic'
+
+import { Cover, Page, OpenGraph } from '@components'
+
+import { Story } from '@types'
+
+import '@styles/h.styl'
+
+const Book = dynamic(() => import('@components/book'))
+
+interface Props {
+	story: string
+	related: string
+}
+
+type Component = FunctionComponent<Props>
+
+const Code: Component = ({ story: storyJson, related: relatedJson }) => {
+	let [allowPage, increaseAllowPage] = useReducer(
+			(allowPage) => allowPage + 20,
+			20
+		),
+		[totalPage, updateTotalPage] = useState(20)
+
+	let previousLazyLoad = useRef<() => void>()
+
+	useEffect(() => {
+		if (previousLazyLoad.current)
+			document.removeEventListener('scroll', previousLazyLoad.current)
+
+		if (allowPage < totalPage)
+			document.addEventListener('scroll', lazyLoad, {
+				passive: true
+			})
+
+		previousLazyLoad.current = lazyLoad
+	}, [allowPage, totalPage])
+
+	useEffect(() => {
+		if (typeof storyJson === 'undefined') return
+
+		let {
+			id,
+			images: { pages }
+		} = JSON.parse(storyJson)
+
+		if (id) updateTotalPage(pages.length)
+	}, [storyJson])
+
+	let lazyLoad = useCallback(() => {
+		let pageHeight = window.innerHeight
+
+		if (
+			totalPage <= allowPage ||
+			document.body.scrollHeight >= window.pageYOffset + pageHeight * 2.5
+		)
+			return
+
+		increaseAllowPage()
+	}, [allowPage, increaseAllowPage, totalPage])
+
+	// ? Generating
+	if (typeof storyJson === 'undefined')
+		return (
+			<Fragment>
+				<Head>
+					<title>Loading...</title>
+				</Head>
+				<OpenGraph
+					title="Opener Studio"
+					description="Pinterest but for hentai and 6 digit code."
+				/>
+				<main id="h">
+					<Cover preload />
+					<section className="pages">
+						{Array(20)
+							.fill(0)
+							.map((_, index) => (
+								<Page key={index} preload />
+							))}
+					</section>
+					<h5 className="more">More like this</h5>
+					<footer className="related">
+						{Array(5)
+							.fill(0)
+							.map((_, index) => (
+								<Book key={index} preload />
+							))}
+					</footer>
+				</main>
+			</Fragment>
+		)
+
+	let story: Story = JSON.parse(storyJson),
+		related: Story[] = JSON.parse(relatedJson)
+
+	// ? Not valid
+	if (!story.id) return <main id="h">Not Found</main>
+
+	let {
+		images: { cover, pages },
+		title: { display },
+		info: { favorite, amount },
+		metadata: { language }
+	} = story
+
+	return (
+		<Fragment>
+			<Head>
+				<title>{display}</title>
+				<link rel="preload" as="image" href={cover.link} />
+				<link rel="preload" as="image" href={pages[0].link} />
+				{pages.map(({ link }, index) =>
+					!index || index > 4 ? null : (
+						<link key={index} rel="preconnect" href={link} />
+					)
+				)}
+				{pages.map(({ link }, index) =>
+					index < 5 || index > allowPage ? null : (
+						<link key={index} rel="dns-prefetch" href={link} />
+					)
+				)}
+			</Head>
+			<OpenGraph
+				title={display}
+				description={`${language}, ${amount} page, ${favorite} favorite.`}
+				image={cover}
+			/>
+			<main id="h">
+				<Cover story={story} />
+				<section className="pages">
+					{pages.map((page, index) =>
+						index < allowPage ? (
+							<Page
+								key={index}
+								page={page}
+								alt={`Page ${index + 1}`}
+							/>
+						) : null
+					)}
+				</section>
+				<h5 className="more">More like this</h5>
+				<footer className="related">
+					{related.map((story, index) => (
+						<Book key={index} story={story} />
+					))}
+				</footer>
+			</main>
+		</Fragment>
+	)
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: true
+	}
+}
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+	let story: Story = {
+			id: 229345,
+			title: {
+				display: 'ปุ๊บปั๊บมองแรงใส่คุณ',
+				english: 'ปุ๊บปั๊บมองแรงใส่คุณ',
+				japanese: 'ปุ๊บปั๊บมองแรงใส่คุณ'
+			},
+			images: {
+				pages: [
+					{
+						link: 'https://opener.studio/images/pub/cover.jpg',
+						info: {
+							type: 'jpg',
+							width: 350,
+							height: 506
+						}
+					},
+					{
+						link: 'https://opener.studio/images/pub/pub.jpg',
+						info: {
+							type: 'jpg',
+							width: 573,
+							height: 572
+						}
+					}
+				],
+				cover: {
+					link: 'https://opener.studio/images/pub/cover.jpg',
+					info: {
+						type: 'jpg',
+						width: 350,
+						height: 506
+					}
+				}
+			},
+			info: {
+				amount: 2,
+				favorite: 42069,
+				upload: {
+					original: 1602043927,
+					parsed: '10/7/2020'
+				}
+			},
+			metadata: {
+				artist: {
+					name: 'ปุ๊บปั๊บ',
+					count: 1,
+					url: 'https://opener.studio'
+				},
+				tags: [
+					{
+						name: 'Happy',
+						count: 1,
+						url: 'https://opener.studio'
+					},
+					{
+						name: 'Birthday',
+						count: 1,
+						url: 'https://opener.studio'
+					},
+					{
+						name: 'Wholesome',
+						count: 1,
+						url: 'https://opener.studio'
+					}
+				],
+				language: 'Thai'
+			}
+		},
+		related = JSON.stringify([])
+
+	return {
+		props: {
+			story: JSON.stringify(story),
+			related
+		},
+		revalidate: 3600
+	}
+}
+
+export default Code

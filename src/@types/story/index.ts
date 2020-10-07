@@ -1,5 +1,5 @@
 export interface Story {
-	id: string
+	id: number
 	images: Image
 	info: Info
 	metadata: Metadata
