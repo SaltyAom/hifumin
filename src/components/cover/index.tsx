@@ -31,8 +31,6 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 
 	let { safeMode } = useStoreon<SettingStore, SettingEvent>('safeMode')
 
-	console.log(preload)
-
 	if (preload)
 		return (
 			<header id="cover" className="-preload">
@@ -97,8 +95,6 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 		{ cover } = images,
 		{ amount, favorite } = info,
 		{ tags, language, artist } = metadata
-
-	console.log("H")
 
 	return (
 		<header id="cover" className="">
