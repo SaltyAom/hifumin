@@ -11,6 +11,7 @@ const HydrateStoreProvider = ({ children }) => {
 
 	useEffect(() => {
 		dispatch('UPDATE_SAFE_MODE', initPersist('safeMode', false))
+		dispatch('UPDATE_FULL_CENSOR', initPersist('fullCensor', false))
 	}, [])
 
 	return children

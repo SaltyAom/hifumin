@@ -12,6 +12,7 @@
                         @apply text-gray-500
 
                 &.-link
+                    -webkit-tap-highlight-color transparent
                     transition background-color .15s ease-out
 
                     &:hover,
@@ -19,8 +20,7 @@
                         @apply bg-gray-200
 
                         @media (prefers-color-scheme dark)
-                            &
-                                @apply bg-gray-800
+                            @apply bg-gray-800
 
                 @media (min-width 410px) 
                     &
@@ -41,3 +41,8 @@
 
                 & > .link
                     @apply underline text-primary
+                    -webkit-tap-highlight-color transparent
+
+                    @media (prefers-color-scheme dark)
+                        &
+                            @apply text-primary-dark

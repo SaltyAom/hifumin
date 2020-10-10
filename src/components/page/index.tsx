@@ -14,8 +14,9 @@ const shouldReRender = (prevProps: PageProps, nextProps: PageProps) =>
 
 const Page: PageComponent = memo(
 	({ page, alt = '', preload = false, children = null }) => {
-		let { safeMode } = useStoreon<SettingStore, SettingEvent>(
-			'safeMode'
+		let { safeMode, fullCensor } = useStoreon<SettingStore, SettingEvent>(
+			'safeMode',
+			'fullCensor'
 		)
 
 		let [shouldLoad, load] = useReducer(() => true, false)
@@ -69,7 +70,9 @@ const Page: PageComponent = memo(
 			<div className="page">
 				{children}
 				<img
-					className={`paper ${safeMode ? '-blur' : ''} ${!shouldLoad ? '-lazy' : ''}`}
+					className={`paper ${safeMode ? '-blur' : ''} ${
+						!shouldLoad ? '-lazy' : ''
+					} ${fullCensor ? '-full-censor' : ''}`}
 					ref={element}
 					src={shouldLoad ? link : ''}
 					alt={alt}

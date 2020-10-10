@@ -13,13 +13,17 @@ import SettingsLayout, {
 import { Account, Info } from '@icons'
 
 const Settings = () => {
-	const { safeMode, dispatch } = useStoreon<SettingStore, SettingEvent>(
-		'safeMode'
-	)
+	const { safeMode, fullCensor, dispatch } = useStoreon<
+		SettingStore,
+		SettingEvent
+	>('safeMode', 'fullCensor')
 
 	const toggleSafeMode = useCallback((active) => {
-		dispatch('UPDATE_SAFE_MODE', !active)
-	}, [])
+			dispatch('UPDATE_SAFE_MODE', !active)
+		}, []),
+		toggleFullCensor = useCallback((active) => {
+			dispatch('UPDATE_FULL_CENSOR', !active)
+		}, [])
 
 	return (
 		<SettingsLayout>
@@ -27,6 +31,9 @@ const Settings = () => {
 				{/* <MenuLink href="recommendation">Recommendation</MenuLink> */}
 				<MenuToggle active={safeMode} onSwitch={toggleSafeMode}>
 					Safe mode
+				</MenuToggle>
+				<MenuToggle active={fullCensor} onSwitch={toggleFullCensor}>
+					Full censorship
 				</MenuToggle>
 			</MenuLayout>
 

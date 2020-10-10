@@ -29,7 +29,10 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 		preload
 	})
 
-	let { safeMode } = useStoreon<SettingStore, SettingEvent>('safeMode')
+	let { safeMode, fullCensor } = useStoreon<SettingStore, SettingEvent>(
+		'safeMode',
+		'fullCensor'
+	)
 
 	if (preload)
 		return (
@@ -103,7 +106,9 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 					<img
 						src={cover.link}
 						ref={element}
-						className={`paper ${safeMode ? '-blur' : ''}`}
+						className={`paper ${safeMode ? '-blur' : ''} ${
+							fullCensor ? '-full-censor' : ''
+						}`}
 						alt={title.display}
 						style={{
 							height: simulatedImageHeight

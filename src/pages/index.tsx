@@ -9,6 +9,9 @@ import { GetStaticProps } from 'next'
 
 import {
 	MasonryLayoutDeterminer,
+} from '@providers'
+
+import {
 	PreloadGallery,
 	RecommendedGallery,
 	Search,
