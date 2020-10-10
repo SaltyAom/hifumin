@@ -64,6 +64,18 @@ const About = () => {
 						Opener.
 					</MenuDetail>
 				</MenuLayout>
+				<MenuLayout title="API">
+					<MenuDetail>
+						Opener Studio built on top and rely on nhentai API. We
+						developed reverse proxy server for caching data and
+						transforming data to reduce nhentai API usage.
+					</MenuDetail>
+					<MenuDetail>
+						We're planning to collect the data from nhentai API
+						server in the future to help reduce the server load from
+						our client.
+					</MenuDetail>
+				</MenuLayout>
 				<MenuLayout title="Ownership">
 					<MenuDetail>
 						Opener Studio is closed-source software rightfully owned
