@@ -23,7 +23,8 @@ const useInfiniteHentai = (initState: Stories) => {
 		isInitial = useRef(true),
 		previousFetch = useRef<AbortController>()
 
-	const useTag = useDefaultPreference ? tags : preference
+	const useTag =
+		useDefaultPreference || !preference.length ? tags : preference
 
 	let lazyListener = useCallback(
 		(tag = '') => {

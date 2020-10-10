@@ -7,8 +7,8 @@ const Support = () => {
 		<SettingsLayout title="Support">
 			<MenuLayout title="Support">
 				<MenuDetail>
-					Opener is completly free, you can support Opener by continue
-					to using the platform or{' '}
+					Opener is completly free to use, you can support Opener by continue
+					to using the platform or if you really want, you can{' '}
 					<a
 						className="link"
 						href="https://ko-fi.com/saltyaom"

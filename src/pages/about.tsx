@@ -25,8 +25,8 @@ const About = () => {
 						or your personal information.
 					</MenuDetail>
 					<MenuDetail>
-						Opener is completly free, you can support Opener by
-						continue to using the platform or{' '}
+						You can support Opener by continue to using the platform
+						or if you really want, you can{' '}
 						<a
 							className="link"
 							href="https://ko-fi.com/saltyaom"
