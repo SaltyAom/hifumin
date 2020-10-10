@@ -46,6 +46,7 @@ const OpenGraph: OpenGraphComponent = ({
 
 	return (
 		<Head>
+			<title>{title}</title>
 			<meta name="title" content={title} />
 			<meta name="description" content={description} />
 			<meta name="author" content={author} />

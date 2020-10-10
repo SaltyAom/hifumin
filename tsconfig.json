@@ -26,6 +26,8 @@
 			"@stores/*": ["./src/stores/*"],
 			"@layouts": ["./src/layouts/index.ts"],
 			"@layouts/*": ["./src/layouts/*"],
+			"@providers": ["./src/providers/index.ts"],
+			"@providers/*": ["./src/providers/*"],
 			"@test-helpers": ["./src/test-helpers/index.ts"],
 			"@test-helpers/*": ["./src/test-helpers/*"],
 			"@icons": ["./src/icons/index.ts"],

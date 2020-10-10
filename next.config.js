@@ -86,7 +86,8 @@ module.exports = composePlugins(
 				'@components': join(__dirname, 'src/components'),
 				'@libs': join(__dirname, 'src/libs'),
 				'@stores': join(__dirname, 'src/stores'),
-				'@layouts': join(__dirname, 'src/layouts')
+				'@layouts': join(__dirname, 'src/layouts'),
+				'@providers': join(__dirname, 'src/providers')
 			}
 
 			if (!dev)

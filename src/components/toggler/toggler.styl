@@ -1,0 +1,31 @@
+.toggler
+    @apply block bg-gray-300
+    appearance none
+    width 48px
+    height 26px
+    border 0
+    border-radius 12px
+    outline none
+    transition background-color .15s ease-out
+
+    &:hover,
+    &:focus
+        outline none
+
+    &.-active
+        @apply bg-primary
+
+        & > .slider
+            transform translateX(23px)
+
+    & > .slider
+        @apply block bg-white
+        width 24px
+        height 24px
+        transform translateX(1px)
+        border-radius 12px
+        transition transform .15s ease-out
+
+    @media (prefers-color-scheme dark)
+        &
+            @apply bg-gray-700

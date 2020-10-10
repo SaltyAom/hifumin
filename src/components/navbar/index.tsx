@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@stores'
 
 import Link from 'next/link'
 
-import PlusIcon from './icons/plus'
-
-import { getPersist } from '@libs'
+import { Plus, Settings } from '@icons'
 
 import './navbar.styl'
 
@@ -16,15 +14,12 @@ const Navbar = () => {
 		'safeMode'
 	)
 
-	let [localSafeMode, updateLocalSafeMode] = useState(false),
-		[shouldShow, updateShouldShow] = useState(true)
+	let [shouldShow, updateShouldShow] = useState(true)
 
 	let previousY = useRef(0),
 		lastY = useRef(0)
 
 	useEffect(() => {
-		updateLocalSafeMode(getPersist('safeMode'))
-
 		let determineNavbarDisplay = () => {
 			previousY.current = window.scrollY
 
@@ -49,23 +44,14 @@ const Navbar = () => {
 			window.removeEventListener('scroll', determineNavbarDisplay)
 	}, [])
 
-	useEffect(() => {
-		updateLocalSafeMode(safeMode)
-	}, [safeMode])
-
-	let toggleSafeMode = () => {
+	let toggleSafeMode = useCallback(() => {
 		dispatch('UPDATE_SAFE_MODE', !safeMode)
-	}
+	}, [safeMode])
 
 	return (
 		<nav id="navbar" className={shouldShow ? '' : '-hidden'}>
 			<Link href="/">
 				<a className="link">
-					<img
-						className="icon"
-						src="/assets/app/icon/icon.png"
-						alt="Opener Studio"
-					/>
 					<h1 className="title">Opener</h1>
 				</a>
 			</Link>
@@ -77,11 +63,14 @@ const Navbar = () => {
 					onClick={toggleSafeMode}
 				>
 					18
-					<PlusIcon />
-					<div
-						className={`strike ${!localSafeMode ? '-hidden' : ''}`}
-					/>
+					<Plus />
+					<div className={`strike ${!safeMode ? '-hidden' : ''}`} />
 				</button>
+				<Link href="/settings" aria-label="Settings">
+					<a className="tab">
+						<Settings />
+					</a>
+				</Link>
 			</section>
 		</nav>
 	)

@@ -1,7 +1,6 @@
 import { Fragment, useEffect, FunctionComponent } from 'react'
 
 import dynamic from 'next/dynamic'
-import Head from 'next/head'
 
 import { useStoreon } from 'storeon/react'
 import { SearchStore, SearchEvent } from '@stores'
@@ -50,9 +49,6 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 	if (!initialStories.length)
 		return (
 			<Fragment>
-				<Head>
-					<title>Opener Studio</title>
-				</Head>
 				<OpenGraph
 					title="Opener Studio"
 					description="Pinterest but for hentai and 6 digit code."
@@ -66,9 +62,6 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 
 	return (
 		<Fragment>
-			<Head>
-				<title>Opener Studio</title>
-			</Head>
 			<OpenGraph
 				title="Opener Studio"
 				description="Pinterest but for hentai and 6 digit code."

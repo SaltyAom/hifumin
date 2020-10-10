@@ -1,8 +1,9 @@
 $navbar-height = 58px
 
 #navbar
-    @apply fixed z-30 top-0 left-0 flex flex-row items-center w-full px-6 border-gray-300
+    @apply fixed z-30 top-0 left-0 flex flex-row items-center w-full border-gray-300
     height $navbar-height
+    padding 0 20px
     background-color #fff
     border-bottom-width 1px
     transition top .15s ease-out
@@ -33,7 +34,7 @@ $navbar-height = 58px
         @apply flex flex-row justify-end items-center flex-1
 
         & > .tab
-            @apply flex flex-row justify-center items-center text-gray-600 text-xl font-medium px-2 outline-none
+            @apply flex flex-row justify-center items-center text-gray-600 text-xl font-medium ml-2 px-2 outline-none
             height $navbar-height
             transition background-color .15s ease-out
 
@@ -81,6 +82,5 @@ $navbar-height = 58px
                                 @apply border-gray-800
 
                     &.safe-mode
-
                         & > .strike
-                            @apply border-gray-900
+                            @apply border-gray-800

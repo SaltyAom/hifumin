@@ -1,0 +1,19 @@
+#settings
+    & > .menu
+        & > .title
+            @apply flex flex-row font-semibold items-start text-xl text-gray-700 border-gray-400 mt-4 mb-2 mx-auto py-1
+            width calc(100% - 40px)
+            border-bottom-width 1px
+
+            @media (prefers-color-scheme dark)
+                &
+                    @apply text-gray-400
+
+            & > .icon
+                @apply mr-2
+                width 21px
+                height 21px
+                margin-top 3px
+
+        & > .item
+            @apply flex flex-col w-full mb-8

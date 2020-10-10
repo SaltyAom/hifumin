@@ -1,4 +1,6 @@
-const PlusIcon = () => (
+import { IconComponent } from './types'
+
+const ChevronRight: IconComponent = ({ style }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="24"
@@ -6,14 +8,14 @@ const PlusIcon = () => (
 		viewBox="0 0 24 24"
 		fill="none"
 		stroke="currentColor"
-		strokeWidth="4"
+		strokeWidth="2"
 		strokeLinecap="round"
 		strokeLinejoin="round"
 		className="icon"
+		style={style}
 	>
-		<line x1="12" y1="5" x2="12" y2="19"></line>
-		<line x1="5" y1="12" x2="19" y2="12"></line>
+		<polyline points="18 15 12 9 6 15" />
 	</svg>
 )
 
-export default PlusIcon
+export default ChevronRight

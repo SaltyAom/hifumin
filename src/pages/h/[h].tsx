@@ -77,13 +77,13 @@ const Code: Component = ({ story, related }) => {
 	if (typeof story === 'undefined')
 		return (
 			<Fragment>
-				<Head>
-					<title>Loading...</title>
-				</Head>
 				<OpenGraph
 					title="Opener Studio"
 					description="Pinterest but for hentai and 6 digit code."
 				/>
+				<Head>
+					<title>Loading...</title>
+				</Head>
 				<main id="h">
 					<Cover preload />
 					<section className="pages">
@@ -118,7 +118,6 @@ const Code: Component = ({ story, related }) => {
 	return (
 		<Fragment>
 			<Head>
-				<title>{display}</title>
 				<link rel="preload" as="image" href={cover.link} />
 				<link rel="preload" as="image" href={pages[0].link} />
 				{pages.map(({ link }, index) =>

@@ -8,13 +8,14 @@ import store from '@stores'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
-import Router from "next/router"
-import withGA from "next-ga"
+import Router from 'next/router'
+import withGA from 'next-ga'
 
 import { ErrorBoundary } from '@components'
 
 import '@styles/init.styl'
 import '@styles/tailwind.styl'
+import { HydrateStoreProvider } from '@providers'
 
 const App = ({ Component, pageProps }: AppProps) => {
 	useEffect(() => {
@@ -40,13 +41,15 @@ const App = ({ Component, pageProps }: AppProps) => {
 				/>
 			</Head>
 			<StoreContext.Provider value={store}>
-				<ErrorBoundary>
-					<Navbar />
-					<Component {...pageProps} />
-				</ErrorBoundary>
+				<HydrateStoreProvider>
+					<ErrorBoundary>
+						<Navbar />
+						<Component {...pageProps} />
+					</ErrorBoundary>
+				</HydrateStoreProvider>
 			</StoreContext.Provider>
 		</Fragment>
 	)
 }
 
-export default withGA("UA-178626618-1", Router)(App)
+export default withGA('UA-178626618-1', Router)(App)
