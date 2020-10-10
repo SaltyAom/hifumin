@@ -12,7 +12,7 @@ export const getPersist = (key: string) => {
 
 		let persisted = getPersist(key)
 
-		if (persisted) return persisted
+		if (persisted !== null) return persisted
 
 		localStorage.setItem(key, JSON.stringify(initialValue))
 		return initialValue

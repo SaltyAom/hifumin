@@ -1,4 +1,5 @@
 export { default as Book } from './book'
+export { default as Chip } from './chip'
 export { default as Cover } from './cover'
 export { default as ErrorBoundary } from './errorBoundary'
 export { default as FloatingActionButton } from './fab'

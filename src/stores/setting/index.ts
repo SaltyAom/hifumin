@@ -5,7 +5,12 @@ import { setPersist } from '@libs'
 import { SettingStore, SettingEvent } from './types'
 
 const Setting: StoreonModule<SettingStore, SettingEvent> = (store) => {
-	store.on('@init', () => ({ safeMode: false, fullCensor: false }))
+	store.on('@init', () => ({
+		safeMode: false,
+		fullCensor: false,
+		useDefaultPreference: true,
+		preference: []
+	}))
 
 	store.on('UPDATE_SAFE_MODE', (store, safeMode) => {
 		setPersist('safeMode', safeMode)
@@ -22,6 +27,46 @@ const Setting: StoreonModule<SettingStore, SettingEvent> = (store) => {
 		return {
 			...store,
 			fullCensor
+		}
+	})
+
+	store.on('UPDATE_DEFAULT_PREFERENCE', (store, useDefaultPreference) => {
+		setPersist('useDefaultPreference', useDefaultPreference)
+
+		return {
+			...store,
+			useDefaultPreference
+		}
+	})
+
+	store.on('ADD_PREFERENCE', (store, newPreference) => {
+		let preference = [...store.preference, newPreference]
+
+		setPersist('preference', preference)
+
+		return {
+			...store,
+			preference
+		}
+	})
+
+	store.on('REMOVE_PREFERENCE', (store, removePreference) => {
+		let preference = store.preference.filter(
+			(preference) => preference !== removePreference
+		)
+
+		setPersist('preference', preference)
+
+		return {
+			...store,
+			preference
+		}
+	})
+
+	store.on('SET_PREFERENCE', (store, preference) => {
+		return {
+			...store,
+			preference
 		}
 	})
 }

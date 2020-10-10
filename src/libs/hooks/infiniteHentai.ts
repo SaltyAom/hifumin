@@ -3,8 +3,15 @@ import { useEffect, useReducer, useState, useRef, useCallback } from 'react'
 import { tags, randomPick, fetch } from '@libs'
 
 import { Stories } from '@types'
+import { useStoreon } from 'storeon/react'
+import { SettingEvent, SettingStore } from '@stores'
 
 const useInfiniteHentai = (initState: Stories) => {
+	let { useDefaultPreference, preference } = useStoreon<
+		SettingStore,
+		SettingEvent
+	>('useDefaultPreference', 'preference')
+
 	let [galleries, updateGalleries] = useState(initState)
 
 	let [page, updatePage] = useState(2),
@@ -15,6 +22,8 @@ const useInfiniteHentai = (initState: Stories) => {
 		loadedTag = useRef<string[]>([]),
 		isInitial = useRef(true),
 		previousFetch = useRef<AbortController>()
+
+	const useTag = useDefaultPreference ? tags : preference
 
 	let lazyListener = useCallback(
 		(tag = '') => {
@@ -30,13 +39,14 @@ const useInfiniteHentai = (initState: Stories) => {
 
 			loadedTag.current = [...loadedTag.current, tag]
 
-			if (loadedTag.current.length < tags.length) return
+			console.log(loadedTag.current.length, useTag.length)
+			if (loadedTag.current.length < useTag.length) return
 
 			// ? Load tag from next page
 			loadedTag.current = []
 			updatePage(page + 1)
 		},
-		[page]
+		[page, useTag]
 	)
 
 	let fetchStories = useCallback(
@@ -67,7 +77,7 @@ const useInfiniteHentai = (initState: Stories) => {
 
 	useEffect(() => {
 		let randomTag = randomPick(
-			tags.filter((tag) => !loadedTag.current.includes(tag))
+			useTag.filter((tag) => !loadedTag.current.includes(tag))
 		)
 
 		if (!isLoading.current)
@@ -87,7 +97,7 @@ const useInfiniteHentai = (initState: Stories) => {
 		})
 
 		return () => stopListener()
-	}, [shouldFetchMore])
+	}, [shouldFetchMore, useTag])
 
 	return [galleries]
 }

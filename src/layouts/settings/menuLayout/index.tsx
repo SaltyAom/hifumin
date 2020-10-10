@@ -16,5 +16,5 @@ const MenuLayout: MenuLayoutComponent = ({ children, title, icon = null }) => {
 	)
 }
 
-export { MenuLink, MenuToggle, MenuDetail } from './menu'
+export { MenuLink, MenuToggle, MenuDetail, MenuContainer } from './menu'
 export default MenuLayout

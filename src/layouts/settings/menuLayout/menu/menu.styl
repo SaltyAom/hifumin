@@ -7,6 +7,10 @@
                 padding 0 20px
                 outline none
 
+                @media (min-width 410px) 
+                    &
+                        @apply rounded
+
                 @media (prefers-color-scheme dark)
                     &
                         @apply text-gray-500
@@ -22,13 +26,15 @@
                         @media (prefers-color-scheme dark)
                             @apply bg-gray-800
 
-                @media (min-width 410px) 
-                    &
-                        @apply rounded
-
                 & > .icon
                     width 21px
                     height 21px
+
+                &.-disabled
+                    z-index -1
+                    touch-action none
+                    cursor default
+                    opacity .5
 
             & > .detail
                 @apply block text-lg text-gray-600 my-2
@@ -46,3 +52,13 @@
                     @media (prefers-color-scheme dark)
                         &
                             @apply text-primary-dark
+
+            & > .container
+                @apply block my-2
+                padding 0 20px
+
+                &.-disabled
+                    z-index -1
+                    touch-action none
+                    cursor default
+                    opacity .5

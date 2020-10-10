@@ -1,4 +1,4 @@
-import { Fragment, useCallback } from 'react'
+import { useCallback } from 'react'
 
 import { SettingEvent, SettingStore } from '@stores'
 import { useStoreon } from 'storeon/react'
@@ -28,7 +28,7 @@ const Settings = () => {
 	return (
 		<SettingsLayout>
 			<MenuLayout title="Preference" icon={<Account />}>
-				{/* <MenuLink href="recommendation">Recommendation</MenuLink> */}
+				<MenuLink href="/settings/preference">Preference</MenuLink>
 				<MenuToggle active={safeMode} onSwitch={toggleSafeMode}>
 					Safe mode
 				</MenuToggle>
