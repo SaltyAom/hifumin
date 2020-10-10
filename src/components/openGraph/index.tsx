@@ -80,7 +80,7 @@ const OpenGraph: OpenGraphComponent = ({
 
 			<meta
 				name="theme-color"
-				content={isDarkTheme ? '#1a202c' : '#fff'}
+				content={isDarkTheme ? '#2d3748' : '#fff'}
 			/>
 		</Head>
 	)
