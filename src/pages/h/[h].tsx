@@ -133,7 +133,7 @@ const Code: Component = ({ story, related }) => {
 		.map((tag) => tag.name)
 		.join(', ')}`
 
-	let date = new Date(upload.original),
+	let date = new Date(+`${upload.original}000`),
 		year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date),
 		month = new Intl.DateTimeFormat('en', { month: 'long' }).format(date),
 		day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
