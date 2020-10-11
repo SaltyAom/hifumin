@@ -38,7 +38,7 @@ const About = () => {
 						.
 					</MenuDetail>
 				</MenuLayout>
-				<MenuLayout title="Privacy">
+				<MenuLayout title="Privacy" id="privacy">
 					<MenuDetail>
 						We use{' '}
 						<a
@@ -57,14 +57,14 @@ const About = () => {
 						because we know we should keep this as a secret. :)
 					</MenuDetail>
 				</MenuLayout>
-				<MenuLayout title="Terms and Services">
+				<MenuLayout title="Terms and Services" id="terms">
 					<MenuDetail>
 						We are not responsible for any illegal act which is done
 						or caused within any place or location while using
 						Opener.
 					</MenuDetail>
 				</MenuLayout>
-				<MenuLayout title="API">
+				<MenuLayout title="API" id="api">
 					<MenuDetail>
 						Opener Studio built on top and rely on nhentai API. We
 						developed reverse proxy server for caching data and

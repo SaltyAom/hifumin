@@ -1,21 +1,21 @@
 import React, { Fragment, useEffect } from 'react'
 
-import Navbar from '@components/navbar'
-
-import { StoreContext } from 'storeon/react'
-import store from '@stores'
-
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import Router from 'next/router'
-import withGA from 'next-ga'
 
-import { ErrorBoundary } from '@components'
+import { StoreContext } from 'storeon/react'
+import store from '@stores'
+
+import { HydrateStoreProvider } from '@providers'
+
+import { Navbar, Footer, ErrorBoundary } from '@components'
+
+import withGA from 'next-ga'
 
 import '@styles/init.styl'
 import '@styles/tailwind.styl'
-import { HydrateStoreProvider } from '@providers'
 
 const App = ({ Component, pageProps }: AppProps) => {
 	useEffect(() => {
@@ -45,6 +45,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 					<ErrorBoundary>
 						<Navbar />
 						<Component {...pageProps} />
+						<Footer />
 					</ErrorBoundary>
 				</HydrateStoreProvider>
 			</StoreContext.Provider>

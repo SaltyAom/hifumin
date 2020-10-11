@@ -3,9 +3,15 @@
     src local('Somatic'), local('Somatic Rounded'), url('/fonts/somatic.otf') format('opentype')
     font-display swap
 
+html
+    scroll-behavior smooth
+
+*
+    box-sizing border-box
+    -webkit-tap-highlight-color transparent
+
 body
     @apply block font-sans m-0
-    scroll-behavior smooth
 
 @media screen and (prefers-color-scheme dark)
     body

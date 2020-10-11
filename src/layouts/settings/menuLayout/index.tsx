@@ -4,10 +4,15 @@ import { MenuLayoutComponent } from './types'
 
 import './menu-layout.styl'
 
-const MenuLayout: MenuLayoutComponent = ({ children, title, icon = null }) => {
+const MenuLayout: MenuLayoutComponent = ({
+	children,
+	title,
+	icon = null,
+	id = ''
+}) => {
 	return (
 		<Fragment>
-			<h2 className="title">
+			<h2 id={id} className="title">
 				{icon}
 				{title}
 			</h2>
