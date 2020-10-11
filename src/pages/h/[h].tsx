@@ -13,6 +13,7 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 
 import { Cover, Page, OpenGraph } from '@components'
+import NotFound from '@components/gallery/search/notFound'
 
 import { fetch } from '@libs/fetch'
 
@@ -51,7 +52,7 @@ const Code: Component = ({ story, related }) => {
 	}, [allowPage, totalPage])
 
 	useEffect(() => {
-		if (typeof story === 'undefined') return
+		if (typeof story === 'undefined' || !story.id) return
 
 		let {
 			id,
@@ -106,14 +107,46 @@ const Code: Component = ({ story, related }) => {
 		)
 
 	// ? Not valid
-	if (!story.id) return <main id="h">Not Found</main>
+	if (!story.id)
+		return (
+			<main id="h">
+				<OpenGraph
+					title="Opener Studio"
+					description="Pinterest but for hentai and 6 digit code."
+				/>
+				<Head>
+					<title>Not Found</title>
+				</Head>
+				<NotFound />
+			</main>
+		)
 
 	let {
+		id,
 		images: { cover, pages },
-		title: { display },
+		title: { display, english, japanese },
 		info: { favorite, amount },
-		metadata: { language }
+		metadata: { language, artist, tags }
 	} = story
+
+	let description = `${english} / ${japanese} Language: ${language}, ${amount} page, ${favorite} favorite. Tags: ${tags
+		.map((tag) => tag.name)
+		.join(', ')}`
+
+	let structuredData = JSON.stringify({
+		'@context': 'https://schema.org/',
+		'@type': 'Article',
+		description: '${description}',
+		headline: '${display}',
+		image: ['${cover.link}'],
+		bookEdition: '1',
+		bookFormat: 'GraphicNovel',
+		illustrator: '${artist.name}',
+		numberOfPages: '${pages.length}',
+		inLanguage: '${language}',
+		mainEntityOfPage: `https://opener.studio/h/${id}`,
+		url: `https://opener.studio/h/${id}`
+	}).replace(/\n|\t|  /g, '')
 
 	return (
 		<Fragment>
@@ -130,12 +163,29 @@ const Code: Component = ({ story, related }) => {
 						<link key={index} rel="dns-prefetch" href={link} />
 					)
 				)}
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: structuredData
+					}}
+				/>
 			</Head>
 			<OpenGraph
 				title={display}
-				description={`${language}, ${amount} page, ${favorite} favorite.`}
+				alternativeTitle={[english, japanese]}
+				description={description}
+				author={artist.name}
 				image={cover}
+				id={id}
 			/>
+			<Head>
+				<meta property="og:type" content="book" />
+				<meta property="book:author" content={artist.name} />
+				<meta
+					property="book:tag"
+					content={tags.map((tag) => tag.name).join(', ')}
+				/>
+			</Head>
 			<main id="h">
 				<Cover story={story} />
 				<section className="pages">

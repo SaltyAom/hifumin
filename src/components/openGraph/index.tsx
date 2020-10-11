@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { OpenGraphComponent } from './types'
 import { isServer } from '@libs'
+
+import { OpenGraphComponent } from './types'
 
 const OpenGraph: OpenGraphComponent = ({
 	title,
+	alternativeTitle = [],
 	description,
 	author = 'Opener Studio',
 	icon = '/assets/icon/icon.png',
@@ -20,7 +22,8 @@ const OpenGraph: OpenGraphComponent = ({
 		link: 'https://opener.studio/assets/images/cover.jpg'
 	},
 	name = 'Opener Studio',
-	twitterDevAccount = '@SaltyAom'
+	twitterDevAccount = '@SaltyAom',
+	id = 0
 }) => {
 	let { asPath } = useRouter()
 
@@ -53,6 +56,14 @@ const OpenGraph: OpenGraphComponent = ({
 			<link rel="icon" href={icon} />
 			<link rel="shortcut icon" href={icon} />
 			<link rel="canonical" href={`https://opener.studio${asPath}`} />
+			<meta
+				name="keyword"
+				content={`${title},${
+					alternativeTitle.length
+						? alternativeTitle.join(',') + ','
+						: ''
+				}${author},Opener Studio${id ? `,${id}` : ''}`}
+			/>
 
 			<meta property="og:title" content={title} />
 			<meta property="og:description" content={description} />
@@ -69,7 +80,10 @@ const OpenGraph: OpenGraphComponent = ({
 			/>
 			<meta property="og:locale" content="en_US" />
 			<meta property="og:type" content="website" />
-			<meta property="og:url" content={`https://opener.studio${asPath}`} />
+			<meta
+				property="og:url"
+				content={`https://opener.studio${asPath}`}
+			/>
 
 			<meta name="twitter:card" content="summary_large_image" />
 			<meta name="twitter:title" content={title} />
