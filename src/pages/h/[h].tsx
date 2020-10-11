@@ -125,7 +125,7 @@ const Code: Component = ({ story, related }) => {
 		id,
 		images: { cover, pages },
 		title: { display, english, japanese },
-		info: { favorite, amount },
+		info: { favorite, amount, upload },
 		metadata: { language, artist, tags }
 	} = story
 
@@ -133,19 +133,25 @@ const Code: Component = ({ story, related }) => {
 		.map((tag) => tag.name)
 		.join(', ')}`
 
+	let date = new Date(upload.original),
+		year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date),
+		month = new Intl.DateTimeFormat('en', { month: 'long' }).format(date),
+		day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
+
 	let structuredData = JSON.stringify({
 		'@context': 'https://schema.org/',
-		'@type': 'Article',
-		description: '${description}',
-		headline: '${display}',
-		image: ['${cover.link}'],
+		'@type': 'Book',
+		description: description,
+		headline: display,
+		image: [cover.link],
 		bookEdition: '1',
 		bookFormat: 'GraphicNovel',
-		illustrator: '${artist.name}',
-		numberOfPages: '${pages.length}',
-		inLanguage: '${language}',
+		illustrator: artist.name,
+		numberOfPages: pages.length,
+		inLanguage: language,
 		mainEntityOfPage: `https://opener.studio/h/${id}`,
-		url: `https://opener.studio/h/${id}`
+		url: `https://opener.studio/h/${id}`,
+		datePublished: `${month} ${day}, ${year}`
 	}).replace(/\n|\t|  /g, '')
 
 	return (
