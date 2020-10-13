@@ -64,6 +64,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 					description="Pinterest but for hentai and 6 digit code."
 				/>
 				<MasonryLayoutDeterminer />
+				<Search />
 				<main id="gallery">
 					<PreloadGallery />
 				</main>

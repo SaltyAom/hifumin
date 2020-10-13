@@ -17,6 +17,12 @@ export const splitChunk = <T extends any[]>(
 }
 
 export const filterTag = (galleries: Story[], filter: string[]) =>
-	galleries.filter((story) =>
-		story.metadata.tags.find((tag) => filter.includes(tag.name))
-	)
+		galleries.filter(
+			(story) =>
+				!story.metadata.tags.find((tag) => filter.includes(tag.name))
+		),
+	filterPreference = (galleries: Story[], preference: string[]) =>
+		galleries.filter(
+			(story) =>
+				story.metadata.tags.find((tag) => preference.includes(tag.name))
+		)
