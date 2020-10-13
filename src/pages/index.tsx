@@ -56,7 +56,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 		updateInitialStories(filterTag(stories, filter))
 	}, [stories, filter, useDefaultFilter])
 
-	if (!initialStories.length)
+	if (!stories.length)
 		return (
 			<Fragment>
 				<OpenGraph
