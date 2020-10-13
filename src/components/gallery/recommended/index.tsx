@@ -6,7 +6,7 @@ import { MasonryEvent, MasonryStore } from '@stores'
 import { Book } from '@components'
 import { PreloadGallery } from '..'
 
-import { splitChunk } from '@libs'
+import { isServer, splitChunk } from '@libs'
 import { useInfiniteHentai } from '@libs/hooks'
 
 import { Stories } from '@types'
@@ -52,7 +52,10 @@ const RecommendedGallery: FunctionComponent<Props> = ({ initial }) => {
 					style={{ marginTop: margin[index] }}
 				>
 					{column.map((story, index) => (
-						<Book key={index} story={story} />
+						<Book
+							key={`${index}-${isServer ? 'server' : 'client'}`}
+							story={story}
+						/>
 					))}
 					<Book preload />
 					<Book preload />

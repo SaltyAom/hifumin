@@ -21,7 +21,10 @@ export const filterTag = (galleries: Story[], filter: string[]) =>
 			(story) => {
 				let tags = story.metadata.tags.map(tag => tag.name).flat(1)
 
-				return filter.find(filter => tags.includes(filter))
+				let foundTag = filter.find(filter => tags.includes(filter)),
+					found = typeof foundTag !== "undefined"
+
+				return !found
 			}),
 	filterPreference = (galleries: Story[], preference: string[]) =>
 		galleries.filter(

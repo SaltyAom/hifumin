@@ -13,7 +13,8 @@ import {
 	PreloadGallery,
 	RecommendedGallery,
 	Search,
-	OpenGraph
+	OpenGraph,
+	Input
 } from '@components'
 
 import { fetch, isNhentai, randomPick, tags, filterTag } from '@libs'
@@ -87,7 +88,9 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 						<SearchGallery />
 					)
 				) : (
-					<RecommendedGallery initial={initialStories} />
+					<RecommendedGallery
+						initial={filterTag(initialStories, filter)}
+					/>
 				)}
 			</main>
 		</Fragment>
