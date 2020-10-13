@@ -12,8 +12,6 @@ import SettingsLayout, {
 
 import { CustomTagForm, RemovableChip } from '@components'
 
-import '@styles/settings/preference.styl'
-
 const Preference = () => {
 	let { useDefaultFilter, filter, dispatch } = useStoreon<
 		SettingStore,

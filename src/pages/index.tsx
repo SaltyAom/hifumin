@@ -1,4 +1,4 @@
-import { Fragment, useEffect, FunctionComponent } from 'react'
+import { Fragment, useEffect, useState, FunctionComponent } from 'react'
 
 import dynamic from 'next/dynamic'
 
@@ -16,7 +16,7 @@ import {
 	OpenGraph
 } from '@components'
 
-import { fetch, filterTag, isNhentai, randomPick, tags } from '@libs'
+import { fetch, isNhentai, randomPick, tags, filterTag } from '@libs'
 
 import { Stories } from '@types'
 
@@ -31,14 +31,12 @@ interface Props {
 
 const Index: FunctionComponent<Props> = ({ stories }) => {
 	let { search, dispatch } = useStoreon<SearchStore, SearchEvent>('search')
-	let { useDefaultFilter, filter } = useStoreon<SettingStore, SettingEvent>(
-		'filter'
+	let { filter, useDefaultFilter } = useStoreon<SettingStore, SettingEvent>(
+		'filter',
+		'useDefaultFilter'
 	)
 
-	// ? Pass down an initial story from Incremental Static Regeneration.
-	let initialStories: Stories = useDefaultFilter
-		? filterTag(stories, filter)
-		: stories
+	let [initialStories, updateInitialStories] = useState(stories)
 
 	useEffect(() => {
 		window.scrollTo({
@@ -51,6 +49,12 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 			dispatch('UPDATE_IS_ERROR', false)
 		}
 	}, [])
+
+	useEffect(() => {
+		if (useDefaultFilter) return
+
+		updateInitialStories(filterTag(stories, filter))
+	}, [stories, filter, useDefaultFilter])
 
 	if (!initialStories.length)
 		return (
