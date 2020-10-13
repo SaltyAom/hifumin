@@ -1,0 +1,21 @@
+.chip
+    &.-removable
+        @apply pr-1
+
+        &:hover,
+        &:focus
+            @apply bg-white cursor-default
+
+    & > .remove
+        @apply flex flex-row justify-center items-center ml-1 text-gray-600 outline-none
+        width 24px
+        height 24px
+        border-radius 12px
+
+        &:hover,
+        &:focus
+            @apply bg-gray-300
+
+        & > .icon
+            width 18px
+            height 18px

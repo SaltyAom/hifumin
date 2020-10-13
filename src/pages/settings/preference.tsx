@@ -10,9 +10,11 @@ import SettingsLayout, {
 	MenuToggle
 } from '@layouts/settings'
 
-import { Chip } from '@components'
+import { Chip, CustomTagForm, RemovableChip } from '@components'
 
 import { tags } from '@libs'
+
+import '@styles/settings/preference.styl'
 
 const Preference = () => {
 	let { useDefaultPreference, preference, dispatch } = useStoreon<
@@ -23,6 +25,13 @@ const Preference = () => {
 	let toggleDefaultPreference = useCallback((defaultPreference) => {
 		dispatch('UPDATE_DEFAULT_PREFERENCE', !defaultPreference)
 	}, [])
+
+	const addNewPreference = (preference) => {
+			dispatch('ADD_PREFERENCE', preference)
+		},
+		removePreference = (preference) => {
+			dispatch('REMOVE_PREFERENCE', preference)
+		}
 
 	return (
 		<SettingsLayout>
@@ -36,6 +45,25 @@ const Preference = () => {
 				<MenuDetail>
 					Adjust your preference for recommendation system.
 				</MenuDetail>
+				<MenuContainer disabled={useDefaultPreference}>
+					<CustomTagForm
+						placeholder="Preference"
+						onSubmit={addNewPreference}
+					/>
+					<MenuDetail className="mt-4">
+						{preference
+							.filter((tag) => !tags.includes(tag))
+							.map((tag) => (
+								<RemovableChip
+									key={tag}
+									onClick={removePreference}
+								>
+									{tag}
+								</RemovableChip>
+							))}
+					</MenuDetail>
+				</MenuContainer>
+				<MenuDetail>Or you can browser from top 100 tags.</MenuDetail>
 				<MenuContainer disabled={useDefaultPreference}>
 					{tags.map((tag) => (
 						<Chip

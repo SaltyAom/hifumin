@@ -29,6 +29,7 @@ const Settings = () => {
 		<SettingsLayout>
 			<MenuLayout title="Preference" icon={<Account />}>
 				<MenuLink href="/settings/preference">Preference</MenuLink>
+				<MenuLink href="/settings/filter">Filter</MenuLink>
 				<MenuToggle active={safeMode} onSwitch={toggleSafeMode}>
 					Safe mode
 				</MenuToggle>

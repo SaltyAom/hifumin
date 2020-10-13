@@ -3,6 +3,8 @@ export interface SettingStore {
 	fullCensor: boolean
 	useDefaultPreference: boolean
 	preference: string[]
+	useDefaultFilter: boolean
+	filter: string[]
 }
 
 export interface SettingEvent {
@@ -12,4 +14,8 @@ export interface SettingEvent {
 	ADD_PREFERENCE: string
 	REMOVE_PREFERENCE: string
 	SET_PREFERENCE: string[]
+	UPDATE_DEFAULT_FILTER: boolean
+	ADD_FILTER: string
+	REMOVE_FILTER: string
+	SET_FILTER: string[]
 }

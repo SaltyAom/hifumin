@@ -9,7 +9,9 @@ const Setting: StoreonModule<SettingStore, SettingEvent> = (store) => {
 		safeMode: false,
 		fullCensor: false,
 		useDefaultPreference: true,
-		preference: []
+		preference: [],
+		useDefaultFilter: true,
+		filter: []
 	}))
 
 	store.on('UPDATE_SAFE_MODE', (store, safeMode) => {
@@ -40,7 +42,10 @@ const Setting: StoreonModule<SettingStore, SettingEvent> = (store) => {
 	})
 
 	store.on('ADD_PREFERENCE', (store, newPreference) => {
-		let preference = [...store.preference, newPreference]
+		let preference: string[] = [
+			// @ts-ignore
+			...new Set([...store.preference, newPreference.toLocaleLowerCase()])
+		]
 
 		setPersist('preference', preference)
 
@@ -67,6 +72,47 @@ const Setting: StoreonModule<SettingStore, SettingEvent> = (store) => {
 		return {
 			...store,
 			preference
+		}
+	})
+
+	store.on('UPDATE_DEFAULT_FILTER', (store, useDefaultFilter) => {
+		setPersist('useDefaultFilter', useDefaultFilter)
+
+		return {
+			...store,
+			useDefaultFilter
+		}
+	})
+
+	store.on('ADD_FILTER', (store, newFilter) => {
+		let filter: string[] = [
+			// @ts-ignore
+			...new Set([...store.filter, newFilter.toLocaleLowerCase()])
+		]
+
+		setPersist('filter', filter)
+
+		return {
+			...store,
+			filter
+		}
+	})
+
+	store.on('REMOVE_FILTER', (store, removeFilter) => {
+		let filter = store.filter.filter((filter) => filter !== removeFilter)
+
+		setPersist('filter', filter)
+
+		return {
+			...store,
+			filter
+		}
+	})
+
+	store.on('SET_FILTER', (store, filter) => {
+		return {
+			...store,
+			filter
 		}
 	})
 }

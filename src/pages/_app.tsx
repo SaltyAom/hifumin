@@ -53,4 +53,9 @@ const App = ({ Component, pageProps }: AppProps) => {
 	)
 }
 
-export default withGA('UA-178626618-1', Router)(App)
+const ExportedApp =
+	process.env.NODE_ENV === 'production'
+		? withGA('UA-178626618-1', Router)(App)
+		: App
+
+export default ExportedApp

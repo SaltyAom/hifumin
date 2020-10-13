@@ -3,13 +3,11 @@ import { Fragment, useEffect, FunctionComponent } from 'react'
 import dynamic from 'next/dynamic'
 
 import { useStoreon } from 'storeon/react'
-import { SearchStore, SearchEvent } from '@stores'
+import { SearchStore, SearchEvent, SettingStore, SettingEvent } from '@stores'
 
 import { GetStaticProps } from 'next'
 
-import {
-	MasonryLayoutDeterminer,
-} from '@providers'
+import { MasonryLayoutDeterminer } from '@providers'
 
 import {
 	PreloadGallery,
@@ -18,7 +16,7 @@ import {
 	OpenGraph
 } from '@components'
 
-import { fetch, isNhentai, randomPick, tags } from '@libs'
+import { fetch, filterTag, isNhentai, randomPick, tags } from '@libs'
 
 import { Stories } from '@types'
 
@@ -28,14 +26,19 @@ const SearchGallery = dynamic(() => import('@components/gallery/search')),
 	LandingCover = dynamic(() => import('@components/landingCover'))
 
 interface Props {
-	stories: string
+	stories: Stories
 }
 
 const Index: FunctionComponent<Props> = ({ stories }) => {
-	// ? Pass down an initial story from Incremental Static Regeneration.
-	let initialStories: Stories = JSON.parse(stories)
-
 	let { search, dispatch } = useStoreon<SearchStore, SearchEvent>('search')
+	let { useDefaultFilter, filter } = useStoreon<SettingStore, SettingEvent>(
+		'filter'
+	)
+
+	// ? Pass down an initial story from Incremental Static Regeneration.
+	let initialStories: Stories = useDefaultFilter
+		? filterTag(stories, filter)
+		: stories
 
 	useEffect(() => {
 		window.scrollTo({
@@ -87,8 +90,8 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	let stories = JSON.stringify(
-		await fetch(`https://nhapi.now.sh/search/${randomPick(tags)}/1`)
+	let stories = await fetch(
+		`https://nhapi.now.sh/search/${randomPick(tags)}/1`
 	)
 
 	return {

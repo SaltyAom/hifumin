@@ -1,3 +1,5 @@
+import { Story } from '@types'
+
 export const splitChunk = <T extends any[]>(
 	data: T,
 	chunk: number
@@ -13,3 +15,8 @@ export const splitChunk = <T extends any[]>(
 
 	return newChunk
 }
+
+export const filterTag = (galleries: Story[], filter: string[]) =>
+	galleries.filter((story) =>
+		story.metadata.tags.find((tag) => filter.includes(tag.name))
+	)

@@ -17,6 +17,11 @@ const HydrateStoreProvider = ({ children }) => {
 			initPersist('useDefaultPreference', true)
 		)
 		dispatch('SET_PREFERENCE', initPersist<string[]>('preference', []))
+		dispatch(
+			'UPDATE_DEFAULT_FILTER',
+			initPersist('useDefaultFilter', true)
+		)
+		dispatch('SET_FILTER', initPersist<string[]>('filter', []))
 	}, [])
 
 	return children

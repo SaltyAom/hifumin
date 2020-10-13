@@ -1,9 +1,9 @@
 import { useEffect, useReducer, useState, useRef, useCallback } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SearchEvent, SearchStore } from '@stores'
+import { SearchEvent, SearchStore, SettingEvent, SettingStore } from '@stores'
 
-import { randomPick, fetch } from '@libs'
+import { randomPick, fetch, filterTag } from '@libs'
 
 import { Stories } from '@types'
 
@@ -19,6 +19,11 @@ const useSearchHentai = ({
 	searchKey
 }: useSearchHentaiArgument) => {
 	let { dispatch, isError } = useStoreon<SearchStore, SearchEvent>('isError')
+
+	let { filter, useDefaultFilter } = useStoreon<SettingStore, SettingEvent>(
+		'useDefaultFilter',
+		'filter'
+	)
 
 	let [galleries, updateGalleries] = useState<Stories>([]),
 		[shouldReset, reset] = useReducer((count) => count + 1, 0)
@@ -72,8 +77,12 @@ const useSearchHentai = ({
 				signal
 			})
 				.then((newGalleries: Stories) => {
+					let filteredGalleries = useDefaultFilter
+						? newGalleries
+						: filterTag(newGalleries, filter)
+
 					if (newGalleries.length)
-						return updateGalleries([...galleries, ...newGalleries])
+						return updateGalleries([...galleries, ...filteredGalleries])
 				})
 				.catch(() => {
 					dispatch('UPDATE_IS_ERROR', true)
@@ -85,7 +94,7 @@ const useSearchHentai = ({
 
 			return () => previousFetch.current.abort()
 		},
-		[galleries]
+		[galleries, filter, useDefaultFilter]
 	)
 
 	useEffect(() => {

@@ -26,10 +26,7 @@ const LandingCover = () => {
 		let controller = new AbortController(),
 			{ signal } = controller
 
-		if (previousFetch.current) {
-			console.log("Abort")
-			previousFetch.current.abort()
-		}
+		if (previousFetch.current) previousFetch.current.abort()
 
 		previousFetch.current = controller
 

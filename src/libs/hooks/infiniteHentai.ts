@@ -1,16 +1,24 @@
 import { useEffect, useReducer, useState, useRef, useCallback } from 'react'
 
-import { tags, randomPick, fetch } from '@libs'
-
-import { Stories } from '@types'
 import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@stores'
 
+import { tags, randomPick, fetch, filterTag } from '@libs'
+
+import { Stories } from '@types'
+
 const useInfiniteHentai = (initState: Stories) => {
-	let { useDefaultPreference, preference } = useStoreon<
-		SettingStore,
-		SettingEvent
-	>('useDefaultPreference', 'preference')
+	let {
+		useDefaultPreference,
+		preference,
+		useDefaultFilter,
+		filter
+	} = useStoreon<SettingStore, SettingEvent>(
+		'useDefaultPreference',
+		'preference',
+		'useDefaultFilter',
+		'filter'
+	)
 
 	let [galleries, updateGalleries] = useState(initState)
 
@@ -40,7 +48,6 @@ const useInfiniteHentai = (initState: Stories) => {
 
 			loadedTag.current = [...loadedTag.current, tag]
 
-			console.log(loadedTag.current.length, useTag.length)
 			if (loadedTag.current.length < useTag.length) return
 
 			// ? Load tag from next page
@@ -65,7 +72,11 @@ const useInfiniteHentai = (initState: Stories) => {
 				signal
 			})
 				.then((newGalleries: Stories) => {
-					updateGalleries([...galleries, ...newGalleries])
+					let filteredGalleries = useDefaultFilter
+						? newGalleries
+						: filterTag(newGalleries, filter)
+
+					updateGalleries([...galleries, ...filteredGalleries])
 				})
 				.finally(() => {
 					isLoading.current = false
@@ -73,7 +84,7 @@ const useInfiniteHentai = (initState: Stories) => {
 
 			return () => previousFetch.current.abort()
 		},
-		[galleries]
+		[galleries, filter, useDefaultFilter]
 	)
 
 	useEffect(() => {

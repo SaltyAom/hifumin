@@ -1,18 +1,27 @@
+import { ChipComponent } from './types'
+
 import './chip.styl'
 
-const Chip = ({ children, onClick, active }) => {
+const Chip: ChipComponent = ({
+	children,
+	onClick = () => {},
+	active = false,
+	className = ''
+}) => {
 	let handleClick = () => {
 		onClick(active)
 	}
 
 	return (
 		<button
-			className={`chip ${active ? '-active' : ''}`}
+			className={`chip ${className} ${active ? '-active' : ''}`}
 			onClick={handleClick}
 		>
 			{children}
 		</button>
 	)
 }
+
+export { RemovableChip } from './variants'
 
 export default Chip
