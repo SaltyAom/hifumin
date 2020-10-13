@@ -14,8 +14,6 @@ import { Chip, CustomTagForm, RemovableChip } from '@components'
 
 import { tags } from '@libs'
 
-import '@styles/settings/preference.styl'
-
 const Preference = () => {
 	let { useDefaultPreference, preference, dispatch } = useStoreon<
 		SettingStore,
