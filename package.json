@@ -12,18 +12,18 @@
 	},
 	"dependencies": {
 		"isomorphic-unfetch": "^3.1.0",
-		"next": "^9.5.5",
+		"next": "^10.0.0",
 		"next-ga": "^2.3.4",
-		"preact": "^10.5.4",
-		"preact-render-to-string": "^5.1.10",
-		"react": "^16.13.1",
-		"react-dom": "^16.13.1",
-		"storeon": "^3.0.4"
+		"preact": "^10.5.5",
+		"preact-render-to-string": "^5.1.11",
+		"react": "16.13.1",
+		"react-dom": "16.13.1",
+		"storeon": "^3.1.1"
 	},
 	"devDependencies": {
-		"@types/node": "^14.11.8",
-		"@types/react": "^16.9.51",
-		"@welldone-software/why-did-you-render": "^4.3.2",
+		"@types/node": "^14.14.5",
+		"@types/react": "^16.9.54",
+		"@welldone-software/why-did-you-render": "^5.0.0",
 		"@zeit/next-stylus": "^1.0.1",
 		"next-compose-plugins": "^2.2.0",
 		"next-offline": "^5.0.2",
@@ -31,7 +31,7 @@
 		"postcss-preset-env": "^6.7.0",
 		"prettier": "^2.1.2",
 		"stylus": "^0.54.8",
-		"tailwindcss": "^1.8.13",
-		"typescript": "^4.0.3"
+		"tailwindcss": "^1.9.6",
+		"typescript": "^4.0.5"
 	}
 }

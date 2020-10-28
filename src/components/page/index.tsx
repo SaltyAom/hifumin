@@ -1,5 +1,7 @@
 import { memo, useEffect, useReducer, useRef } from 'react'
 
+import Image from 'next/image'
+
 import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@stores'
 
@@ -37,7 +39,12 @@ const Page: PageComponent = memo(
 
 			let options = {
 					root: null,
-					rootMargin: `${window.innerHeight / 2.25}px`,
+					rootMargin: `${
+						(window.innerHeight +
+							// ? footer
+							255) /
+						2.25
+					}px`,
 					threshold: 0
 				},
 				callback = (result) => {

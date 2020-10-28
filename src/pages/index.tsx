@@ -89,7 +89,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 					)
 				) : (
 					<RecommendedGallery
-						initial={filterTag(initialStories, filter)}
+						initial={initialStories}
 					/>
 				)}
 			</main>

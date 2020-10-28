@@ -14,6 +14,8 @@ import { Navbar, Footer, ErrorBoundary } from '@components'
 
 import withGA from 'next-ga'
 
+import 'preact/debug'
+
 import '@styles/init.styl'
 import '@styles/tailwind.styl'
 
