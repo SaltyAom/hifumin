@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import { SearchEvent, SearchStore } from '@stores'
 import { useStoreon } from 'storeon/react'
+import { Search } from '@stores/constant'
 
 import TagContainer from './container'
 
@@ -11,8 +12,8 @@ const Tag = ({ children = null, preload = false, style = {} }) => {
 	const { dispatch } = useStoreon<SearchStore, SearchEvent>()
 
 	const updateSearch = () => {
-		dispatch('UPDATE_SEARCH', children)
-		dispatch('USE_CURRENT_SEARCH', true)
+		dispatch(Search.UPDATE, children)
+		dispatch(Search.USE_CURRENT, true)
 	}
 
 	return (

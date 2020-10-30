@@ -1,3 +1,5 @@
+import Setting from "./constant"
+
 export interface SettingStore {
 	safeMode: boolean
 	fullCensor: boolean
@@ -8,14 +10,14 @@ export interface SettingStore {
 }
 
 export interface SettingEvent {
-	UPDATE_SAFE_MODE: boolean
-	UPDATE_FULL_CENSOR: boolean
-	UPDATE_DEFAULT_PREFERENCE: boolean
-	ADD_PREFERENCE: string
-	REMOVE_PREFERENCE: string
-	SET_PREFERENCE: string[]
-	UPDATE_DEFAULT_FILTER: boolean
-	ADD_FILTER: string
-	REMOVE_FILTER: string
-	SET_FILTER: string[]
+	[Setting.SAFE_MODE]: boolean
+	[Setting.FULL_CENSOR]: boolean
+	[Setting.DEFAULT_PREFERENCE]: boolean
+	[Setting.ADD_PREFERENCE]: string
+	[Setting.REMOVE_PREFERENCE]: string
+	[Setting.SET_PREFERENCE]: string[]
+	[Setting.UPDATE_DEFAULT_FILTER]: boolean
+	[Setting.ADD_FILTER]: string
+	[Setting.REMOVE_FILTER]: string
+	[Setting.SET_FILTER]: string[]
 }

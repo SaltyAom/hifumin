@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 
 import { SettingEvent, SettingStore } from '@stores'
 import { useStoreon } from 'storeon/react'
+import { Setting } from '@stores/constant'
 
 import SettingsLayout, {
 	MenuLayout,
@@ -19,10 +20,10 @@ const Settings = () => {
 	>('safeMode', 'fullCensor')
 
 	const toggleSafeMode = useCallback((active) => {
-			dispatch('UPDATE_SAFE_MODE', !active)
+			dispatch(Setting.SAFE_MODE, !active)
 		}, []),
 		toggleFullCensor = useCallback((active) => {
-			dispatch('UPDATE_FULL_CENSOR', !active)
+			dispatch(Setting.FULL_CENSOR, !active)
 		}, [])
 
 	return (

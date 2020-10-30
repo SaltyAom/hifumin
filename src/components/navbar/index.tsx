@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@stores'
+import { Setting } from '@stores/constant'
 
 import Link from 'next/link'
 
@@ -45,7 +46,7 @@ const Navbar = () => {
 	}, [])
 
 	let toggleSafeMode = useCallback(() => {
-		dispatch('UPDATE_SAFE_MODE', !safeMode)
+		dispatch(Setting.SAFE_MODE, !safeMode)
 	}, [safeMode])
 
 	return (

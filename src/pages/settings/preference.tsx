@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 
 import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@stores'
+import { Setting } from '@stores/constant'
 
 import SettingsLayout, {
 	MenuLayout,
@@ -21,14 +22,14 @@ const Preference = () => {
 	>('useDefaultPreference', 'preference')
 
 	let toggleDefaultPreference = useCallback((defaultPreference) => {
-		dispatch('UPDATE_DEFAULT_PREFERENCE', !defaultPreference)
+		dispatch(Setting.DEFAULT_PREFERENCE, !defaultPreference)
 	}, [])
 
 	const addNewPreference = (preference) => {
-			dispatch('ADD_PREFERENCE', preference)
+			dispatch(Setting.ADD_PREFERENCE, preference)
 		},
 		removePreference = (preference) => {
-			dispatch('REMOVE_PREFERENCE', preference)
+			dispatch(Setting.REMOVE_PREFERENCE, preference)
 		}
 
 	return (

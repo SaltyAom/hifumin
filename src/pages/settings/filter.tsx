@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 
 import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@stores'
+import { Setting } from '@stores/constant'
 
 import SettingsLayout, {
 	MenuLayout,
@@ -19,14 +20,14 @@ const Preference = () => {
 	>('useDefaultFilter', 'filter')
 
 	let toggleDefaultPreference = useCallback((defaultFilter) => {
-		dispatch('UPDATE_DEFAULT_FILTER', !defaultFilter)
+		dispatch(Setting.UPDATE_DEFAULT_FILTER, !defaultFilter)
 	}, [])
 
 	const addNewPreference = (preference) => {
-			dispatch('ADD_FILTER', preference)
+			dispatch(Setting.ADD_FILTER, preference)
 		},
 		removePreference = (preference) => {
-			dispatch('REMOVE_FILTER', preference)
+			dispatch(Setting.REMOVE_FILTER, preference)
 		}
 
 	return (

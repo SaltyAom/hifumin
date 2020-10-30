@@ -35,7 +35,7 @@ class MyDocument extends Document {
 					<meta name="format-detection" content="telephone=no" />
 					<meta name="apple-touch-fullscreen" content="yes" />
 					<script type="text/javascript" dangerouslySetInnerHTML={{
-						__html: clarity
+						__html: process.env.NODE_ENV === "production" ? clarity : ''
 					}} />
 				</Head>
 				<body>

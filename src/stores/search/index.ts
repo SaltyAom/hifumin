@@ -1,5 +1,6 @@
 import { StoreonModule } from 'storeon'
 
+import Search from './constant'
 import { SearchStore, SearchEvent } from './types'
 
 const search: StoreonModule<SearchStore, SearchEvent> = (store) => {
@@ -10,21 +11,21 @@ const search: StoreonModule<SearchStore, SearchEvent> = (store) => {
 		useCurrentSearch: false
 	}))
 
-	store.on('UPDATE_SEARCH', (store, search) => ({
+	store.on(Search.UPDATE, (store, search) => ({
 		search
 	}))
 
-	store.on('UPDATE_IS_LOADING', (store, isLoading) => ({
+	store.on(Search.LOADING, (store, isLoading) => ({
 		...store,
 		isLoading
 	}))
 
-	store.on('UPDATE_IS_ERROR', (store, isError) => ({
+	store.on(Search.ERROR, (store, isError) => ({
 		...store,
 		isError
 	}))
 
-	store.on('USE_CURRENT_SEARCH', (store, useCurrentSearch) => ({
+	store.on(Search.USE_CURRENT, (store, useCurrentSearch) => ({
 		...store,
 		useCurrentSearch
 	}))

@@ -2,6 +2,7 @@ import { useCallback, useRef, FormEvent, useEffect } from 'react'
 
 import { useStoreon } from 'storeon/react'
 import { SearchStore, SearchEvent } from '@stores'
+import { Search as SearchAction } from '@stores/constant'
 
 import { Loader } from '@components'
 
@@ -23,13 +24,13 @@ const Search = () => {
 		(event: FormEvent<HTMLInputElement>) => {
 			let { value } = event.currentTarget
 
-			if (useCurrentSearch) dispatch('USE_CURRENT_SEARCH', false)
+			if (useCurrentSearch) dispatch(SearchAction.USE_CURRENT, false)
 
 			search.current = value
 			setTimeout(() => {
 				if (value !== search.current) return
 
-				dispatch('UPDATE_SEARCH', value.toLocaleLowerCase())
+				dispatch(SearchAction.UPDATE, value.toLocaleLowerCase())
 			}, 300)
 		},
 		[useCurrentSearch]

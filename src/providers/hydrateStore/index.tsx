@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useStoreon } from 'storeon/react'
 
 import { SettingEvent, SettingStore } from '@stores'
+import { Setting } from '@stores/constant'
 
 import { initPersist } from '@libs'
 
@@ -10,18 +11,21 @@ const HydrateStoreProvider = ({ children }) => {
 	const { dispatch } = useStoreon<SettingStore, SettingEvent>()
 
 	useEffect(() => {
-		dispatch('UPDATE_SAFE_MODE', initPersist('safeMode', false))
-		dispatch('UPDATE_FULL_CENSOR', initPersist('fullCensor', false))
+		dispatch(Setting.SAFE_MODE, initPersist('safeMode', false))
+		dispatch(Setting.FULL_CENSOR, initPersist('fullCensor', false))
 		dispatch(
-			'UPDATE_DEFAULT_PREFERENCE',
+			Setting.DEFAULT_PREFERENCE,
 			initPersist('useDefaultPreference', true)
 		)
-		dispatch('SET_PREFERENCE', initPersist<string[]>('preference', []))
 		dispatch(
-			'UPDATE_DEFAULT_FILTER',
+			Setting.SET_PREFERENCE,
+			initPersist<string[]>('preference', [])
+		)
+		dispatch(
+			Setting.UPDATE_DEFAULT_FILTER,
 			initPersist('useDefaultFilter', true)
 		)
-		dispatch('SET_FILTER', initPersist<string[]>('filter', []))
+		dispatch(Setting.SET_FILTER, initPersist<string[]>('filter', []))
 	}, [])
 
 	return children

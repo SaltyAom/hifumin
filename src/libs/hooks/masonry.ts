@@ -9,14 +9,21 @@ const useMasonry = () => {
 	let persistedListener = useRef<() => void>()
 
 	let masonryListener = useCallback(() => {
-		updateMasonry(getMasonry())
+		setTimeout(() => {
+			updateMasonry(getMasonry())
+			window.addEventListener('resize', masonryListener, {
+				once: true
+			})
+		}, 16) // 60 Fps
 	}, [])
 
 	useEffect(() => {
 		if (isServer) return
 
 		masonryListener()
-		window.addEventListener('resize', masonryListener)
+		window.addEventListener('resize', masonryListener, {
+			once: true
+		})
 
 		persistedListener.current = masonryListener
 

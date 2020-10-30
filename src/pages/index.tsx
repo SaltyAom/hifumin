@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 
 import { useStoreon } from 'storeon/react'
 import { SearchStore, SearchEvent, SettingStore, SettingEvent } from '@stores'
+import { Search as SearchAction } from '@stores/constant'
 
 import { GetStaticProps } from 'next'
 
@@ -13,8 +14,7 @@ import {
 	PreloadGallery,
 	RecommendedGallery,
 	Search,
-	OpenGraph,
-	Input
+	OpenGraph
 } from '@components'
 
 import { fetch, isNhentai, randomPick, tags, filterTag } from '@libs'
@@ -45,9 +45,9 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 		})
 
 		return () => {
-			dispatch('UPDATE_SEARCH', '')
-			dispatch('UPDATE_IS_LOADING', false)
-			dispatch('UPDATE_IS_ERROR', false)
+			dispatch(SearchAction.UPDATE, '')
+			dispatch(SearchAction.LOADING, false)
+			dispatch(SearchAction.ERROR, false)
 		}
 	}, [])
 

@@ -18,7 +18,7 @@
         @apply block w-full px-6
 
         & > .search-bar
-            @apply flex flex-row justify-center items-center w-full px-4 py-2 bg-gray-200 rounded-md text-gray-500
+            @apply flex flex-row justify-center items-center w-full pl-4 py-2 bg-gray-200 rounded-md text-gray-500
             box-shadow 0 2px 8px rgba(0,0,0,0.0125), 0 8px 25px rgba(0,0,0,0.0125), 0 16px 48px rgba(0,0,0,0.0125)
 
             & > .icon
@@ -36,6 +36,9 @@
 
                 &::placeholder
                     @apply text-gray-500 font-light
+
+            & > .loader
+                @apply mr-4
 
     @media screen and (max-width 374.9px)
         & > .title

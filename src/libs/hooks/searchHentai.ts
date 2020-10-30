@@ -2,6 +2,7 @@ import { useEffect, useReducer, useState, useRef, useCallback } from 'react'
 
 import { useStoreon } from 'storeon/react'
 import { SearchEvent, SearchStore, SettingEvent, SettingStore } from '@stores'
+import { Search } from '@stores/constant'
 
 import { randomPick, fetch, filterTag } from '@libs'
 
@@ -64,7 +65,7 @@ const useSearchHentai = ({
 	let fetchStories = useCallback(
 		(randomTag: string[]) => {
 			isLoading.current = true
-			dispatch('UPDATE_IS_LOADING', true)
+			dispatch(Search.LOADING, true)
 
 			let controller = new AbortController(),
 				{ signal } = controller
@@ -82,14 +83,17 @@ const useSearchHentai = ({
 						: filterTag(newGalleries, filter)
 
 					if (newGalleries.length)
-						return updateGalleries([...galleries, ...filteredGalleries])
+						return updateGalleries([
+							...galleries,
+							...filteredGalleries
+						])
 				})
 				.catch(() => {
-					dispatch('UPDATE_IS_ERROR', true)
+					dispatch(Search.ERROR, true)
 				})
 				.finally(() => {
 					isLoading.current = false
-					dispatch('UPDATE_IS_LOADING', false)
+					dispatch(Search.LOADING, false)
 				})
 
 			return () => previousFetch.current.abort()
@@ -122,13 +126,13 @@ const useSearchHentai = ({
 	useEffect(() => {
 		updatePage(1)
 		updateGalleries([])
-		dispatch('UPDATE_IS_ERROR', false)
+		dispatch(Search.ERROR, false)
 	}, [resetDeterminer])
 
 	useEffect(() => {
 		if (isError) {
 			reset()
-			dispatch('UPDATE_IS_ERROR', false)
+			dispatch(Search.ERROR, false)
 		}
 	}, [searchKey, galleries])
 

@@ -235,8 +235,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 		props: {
 			story,
 			related
-		},
-		revalidate: 3600
+		}
 	}
 }
 

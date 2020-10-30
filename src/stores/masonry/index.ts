@@ -2,6 +2,7 @@ import { StoreonModule } from 'storeon'
 
 import { getMasonry, getMasonryMargin } from '@libs'
 
+import Masonry from './constant'
 import { MasonryStore, MasonryEvent } from './types'
 
 const masonry: StoreonModule<MasonryStore, MasonryEvent> = (store) => {
@@ -14,7 +15,7 @@ const masonry: StoreonModule<MasonryStore, MasonryEvent> = (store) => {
 		}
 	})
 
-	store.on('UPDATE_LAYOUT', (store, action) => {
+	store.on(Masonry.update, (_, action) => {
 		return action
 	})
 }

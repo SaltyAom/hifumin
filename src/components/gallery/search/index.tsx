@@ -25,7 +25,7 @@ const SearchGallery = () => {
 	let [shouldReset, reset] = useReducer((count) => count + 1, 0)
 
 	let [galleries] = useSearchHentai({
-		tags: search.split(',').map((tag) => tag.trimLeft().trimRight()),
+		tags: search.split(',').map((tag) => tag.trim()),
 		resetDeterminer: shouldReset,
 		searchKey: search
 	})
