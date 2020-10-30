@@ -69,8 +69,8 @@ const Preference = () => {
 							onClick={(active) => {
 								dispatch(
 									!active
-										? 'ADD_PREFERENCE'
-										: 'REMOVE_PREFERENCE',
+										? Setting.ADD_PREFERENCE
+										: Setting.REMOVE_PREFERENCE,
 									tag
 								)
 							}}
