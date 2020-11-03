@@ -15,7 +15,7 @@ const HydrateStoreProvider = ({ children }) => {
 		dispatch(Setting.FULL_CENSOR, initPersist('fullCensor', false))
 		dispatch(
 			Setting.DEFAULT_PREFERENCE,
-			initPersist('useDefaultPreference', true)
+			initPersist('useDefaultPreference', false)
 		)
 		dispatch(
 			Setting.SET_PREFERENCE,
@@ -23,7 +23,7 @@ const HydrateStoreProvider = ({ children }) => {
 		)
 		dispatch(
 			Setting.UPDATE_DEFAULT_FILTER,
-			initPersist('useDefaultFilter', true)
+			initPersist('useDefaultFilter', false)
 		)
 		dispatch(Setting.SET_FILTER, initPersist<string[]>('filter', []))
 	}, [])

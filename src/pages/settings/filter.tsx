@@ -44,7 +44,7 @@ const Preference = () => {
 				</MenuDetail>
 				<MenuContainer disabled={useDefaultFilter}>
 					<CustomTagForm
-						placeholder="Filter"
+						placeholder="Type custom filter"
 						onSubmit={addNewPreference}
 					/>
 					<MenuDetail className="mt-4">

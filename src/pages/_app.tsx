@@ -3,7 +3,7 @@ import React, { Fragment, useEffect } from 'react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 
 import { StoreContext } from 'storeon/react'
 import store from '@stores'
@@ -12,6 +12,8 @@ import { HydrateStoreProvider } from '@providers'
 
 import { Navbar, Footer, ErrorBoundary } from '@components'
 
+import { isServer } from '@libs'
+
 import withGA from 'next-ga'
 
 import 'preact/debug'
@@ -19,7 +21,11 @@ import 'preact/debug'
 import '@styles/init.styl'
 import '@styles/tailwind.styl'
 
+const blacklist = ['/']
+
 const App = ({ Component, pageProps }: AppProps) => {
+	let router = useRouter()
+
 	useEffect(() => {
 		document.addEventListener('touchstart', () => null, false)
 
@@ -47,7 +53,9 @@ const App = ({ Component, pageProps }: AppProps) => {
 					<ErrorBoundary>
 						<Navbar />
 						<Component {...pageProps} />
-						<Footer />
+						{!isServer || !blacklist.includes(router.pathname) ? (
+							<Footer />
+						) : null}
 					</ErrorBoundary>
 				</HydrateStoreProvider>
 			</StoreContext.Provider>

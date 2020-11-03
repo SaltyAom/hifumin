@@ -195,15 +195,13 @@ const Code: Component = ({ story, related }) => {
 			<main id="h">
 				<Cover story={story} />
 				<section className="pages">
-					{pages.map((page, index) =>
-						index < allowPage ? (
-							<Page
-								key={index}
-								page={page}
-								alt={`Page ${index + 1}`}
-							/>
-						) : null
-					)}
+					{pages.map((page, index) => (
+						<Page
+							key={index}
+							page={page}
+							alt={`Page ${index + 1}`}
+						/>
+					))}
 				</section>
 				<h5 className="more">More like this</h5>
 				<footer className="related">
