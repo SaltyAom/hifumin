@@ -43,7 +43,7 @@ const Page: PageComponent = memo(
 						(window.innerHeight +
 							// ? footer
 							255) /
-						2.25
+						3.5
 					}px`,
 					threshold: 0
 				},

@@ -10,7 +10,8 @@ import './custom-tag-form.styl'
 
 const CustomTagForm: CustomTagFormComponent = ({
 	onSubmit,
-	placeholder = 'Tag'
+	placeholder = 'Tag',
+	enterKeyHint = 'enter',
 }) => {
 	let [newPreference, updatePreference] = useState('')
 
@@ -35,6 +36,7 @@ const CustomTagForm: CustomTagFormComponent = ({
 				placeholder={placeholder}
 				value={newPreference}
 				onChange={handleChange}
+				enterKeyHint={enterKeyHint}
 			>
 				<button id="add-tag">
 					<Plus />

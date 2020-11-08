@@ -46,6 +46,7 @@ const Preference = () => {
 					<CustomTagForm
 						placeholder="Type custom filter"
 						onSubmit={addNewPreference}
+						enterKeyHint="done"
 					/>
 					<MenuDetail className="mt-4">
 						{filter.map((tag) => (

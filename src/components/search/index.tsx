@@ -53,6 +53,8 @@ const Search = () => {
 						placeholder="Find hentai or 6 digits code"
 						onInput={deferSearch}
 						value={useCurrentSearch ? searchState : undefined}
+						// @ts-ignore
+						enterKeyHint="search"
 					/>
 					{isLoading && <Loader />}
 				</div>

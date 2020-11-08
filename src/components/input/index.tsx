@@ -6,7 +6,8 @@ const Input = ({
 	placeholder = 'Input',
 	onChange = (event: FormEvent<HTMLElement>) => {},
 	value = '',
-	children = null
+	children = null,
+	enterKeyHint = 'enter'
 }) => {
 	return (
 		<section className="text-input" defaultValue={value}>
@@ -18,6 +19,8 @@ const Input = ({
 				placeholder=" "
 				value={value}
 				onChange={onChange}
+				// @ts-ignore
+				enterKeyHint={enterKeyHint}
 			/>
 			<p className="placeholder">{placeholder}</p>
 			{children}

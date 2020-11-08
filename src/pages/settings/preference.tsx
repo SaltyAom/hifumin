@@ -48,6 +48,7 @@ const Preference = () => {
 					<CustomTagForm
 						placeholder="Type custom preference"
 						onSubmit={addNewPreference}
+						enterKeyHint="done"
 					/>
 					<MenuDetail className="mt-4">
 						{preference
