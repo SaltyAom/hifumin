@@ -8,7 +8,6 @@ import {
 } from 'react'
 
 import { Page } from '@types'
-import { h } from 'preact'
 
 interface SimulateHeightArgument {
 	page: Page
@@ -32,6 +31,10 @@ type UseSimulateHeight = (
 	}
 ]
 
+/**
+ * @deprecated
+ * ? Use Next Image instead
+ */
 const useSimulateHeight: UseSimulateHeight = ({
 	page = {
 		info: {

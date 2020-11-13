@@ -12,6 +12,7 @@ import { HydrateStoreProvider } from '@providers'
 
 import { Navbar, Footer, ErrorBoundary } from '@components'
 
+// import { useInstall } from 'app-hooks'
 import { isServer } from '@libs'
 
 import withGA from 'next-ga'
@@ -25,6 +26,7 @@ const blacklist = ['/']
 
 const App = ({ Component, pageProps }: AppProps) => {
 	let router = useRouter()
+	// useInstall()
 
 	useEffect(() => {
 		document.addEventListener('touchstart', () => null, false)

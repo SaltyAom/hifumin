@@ -20,7 +20,7 @@ const Input = ({
 				value={value}
 				onChange={onChange}
 				// @ts-ignore
-				enterKeyHint={enterKeyHint}
+				enterkeyhint={enterKeyHint}
 			/>
 			<p className="placeholder">{placeholder}</p>
 			{children}

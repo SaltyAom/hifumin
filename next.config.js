@@ -42,6 +42,13 @@ module.exports = composePlugins(
 			modern: true,
 			polyfillsOptimization: true
 		},
+		images: {
+			domains: ['i.nhentai.net', 't.nhentai.net'],
+			deviceSizes: [640, 750, 828, 1080],
+			imageSizes: [16, 32, 48, 64, 96],
+			path: '/_next/image',
+			loader: 'default',
+		},
 		target: 'serverless',
 
 		async rewrites() {

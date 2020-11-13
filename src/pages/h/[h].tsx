@@ -1,10 +1,5 @@
 import {
 	Fragment,
-	useEffect,
-	useCallback,
-	useRef,
-	useReducer,
-	useState,
 	FunctionComponent
 } from 'react'
 
@@ -20,6 +15,8 @@ import { fetch } from '@libs/fetch'
 import { Story } from '@types'
 
 import '@styles/h.styl'
+import { useLazyLoad } from '@libs/hooks'
+import { createStructureData } from '@libs'
 
 const Book = dynamic(() => import('@components/book'))
 
@@ -31,48 +28,7 @@ interface Props {
 type Component = FunctionComponent<Props>
 
 const Code: Component = ({ story, related }) => {
-	let [allowPage, increaseAllowPage] = useReducer(
-			(allowPage) => allowPage + 20,
-			20
-		),
-		[totalPage, updateTotalPage] = useState(20)
-
-	let previousLazyLoad = useRef<() => void>()
-
-	useEffect(() => {
-		if (previousLazyLoad.current)
-			document.removeEventListener('scroll', previousLazyLoad.current)
-
-		if (allowPage < totalPage)
-			document.addEventListener('scroll', lazyLoad, {
-				passive: true
-			})
-
-		previousLazyLoad.current = lazyLoad
-	}, [allowPage, totalPage])
-
-	useEffect(() => {
-		if (typeof story === 'undefined' || !story.id) return
-
-		let {
-			id,
-			images: { pages }
-		} = story
-
-		if (id) updateTotalPage(pages.length)
-	}, [story])
-
-	let lazyLoad = useCallback(() => {
-		let pageHeight = window.innerHeight
-
-		if (
-			totalPage <= allowPage ||
-			document.body.scrollHeight >= window.pageYOffset + pageHeight * 2.5
-		)
-			return
-
-		increaseAllowPage()
-	}, [allowPage, increaseAllowPage, totalPage])
+	let [allowLazyLoadPage] = useLazyLoad(story)
 
 	// ? Generating
 	if (typeof story === 'undefined')
@@ -125,57 +81,13 @@ const Code: Component = ({ story, related }) => {
 		id,
 		images: { cover, pages },
 		title: { display, english, japanese },
-		info: { favorite, amount, upload },
-		metadata: { language, artist, tags }
+		metadata: { artist, tags }
 	} = story
 
-	let description = `${english} / ${japanese} Language: ${language}, ${amount} page, ${favorite} favorite. Tags: ${tags
-		.map((tag) => tag.name)
-		.join(', ')}`
-
-	let date = new Date(+`${upload.original}000`),
-		year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date),
-		month = new Intl.DateTimeFormat('en', { month: 'long' }).format(date),
-		day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
-
-	let structuredData = JSON.stringify({
-		'@context': 'https://schema.org/',
-		'@type': 'Book',
-		description: description,
-		headline: display,
-		image: [cover.link],
-		bookEdition: '1',
-		bookFormat: 'GraphicNovel',
-		illustrator: artist.name,
-		numberOfPages: pages.length,
-		inLanguage: language,
-		mainEntityOfPage: `https://opener.studio/h/${id}`,
-		url: `https://opener.studio/h/${id}`,
-		datePublished: `${month} ${day}, ${year}`
-	}).replace(/\n|\t|  /g, '')
+	let [structuredData, description] = createStructureData(story)
 
 	return (
 		<Fragment>
-			<Head>
-				<link rel="preload" as="image" href={cover.link} />
-				<link rel="preload" as="image" href={pages[0].link} />
-				{pages.map(({ link }, index) =>
-					!index || index > 4 ? null : (
-						<link key={index} rel="preconnect" href={link} />
-					)
-				)}
-				{pages.map(({ link }, index) =>
-					index < 5 || index > allowPage ? null : (
-						<link key={index} rel="dns-prefetch" href={link} />
-					)
-				)}
-				<script
-					type="application/ld+json"
-					dangerouslySetInnerHTML={{
-						__html: structuredData
-					}}
-				/>
-			</Head>
 			<OpenGraph
 				title={display}
 				alternativeTitle={[english, japanese]}
@@ -185,6 +97,12 @@ const Code: Component = ({ story, related }) => {
 				id={id}
 			/>
 			<Head>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: structuredData
+					}}
+				/>
 				<meta property="og:type" content="book" />
 				<meta property="book:author" content={artist.name} />
 				<meta
@@ -193,7 +111,7 @@ const Code: Component = ({ story, related }) => {
 				/>
 			</Head>
 			<main id="h">
-				<Cover story={story} />
+				<Cover story={story} preview={false} />
 				<section className="pages">
 					{pages.map((page, index) => (
 						<Page

@@ -1,5 +1,7 @@
 import { useCallback } from 'react'
 
+// import { useInstall, usePwa } from 'app-hooks'
+
 import { SettingEvent, SettingStore } from '@stores'
 import { useStoreon } from 'storeon/react'
 import { Setting } from '@stores/constant'
@@ -8,7 +10,8 @@ import SettingsLayout, {
 	MenuLayout,
 	MenuLink,
 	MenuToggle,
-	MenuDetail
+	MenuDetail,
+	MenuButton
 } from '@layouts/settings'
 
 import { Account, Info } from '@icons'
@@ -18,6 +21,9 @@ const Settings = () => {
 		SettingStore,
 		SettingEvent
 	>('safeMode', 'fullCensor')
+
+	// let [prompt, userChoice, isInstallSupport] = useInstall()
+	// let [isPwa] = usePwa()
 
 	const toggleSafeMode = useCallback((active) => {
 			dispatch(Setting.SAFE_MODE, !active)
@@ -37,6 +43,11 @@ const Settings = () => {
 				<MenuToggle active={fullCensor} onSwitch={toggleFullCensor}>
 					Full censorship
 				</MenuToggle>
+				{/* {isInstallSupport && !isPwa ? (
+					<MenuButton onClick={() => prompt()} detail="Install">
+						Install
+					</MenuButton>
+				) : null} */}
 			</MenuLayout>
 
 			<MenuLayout title="About" icon={<Info />}>

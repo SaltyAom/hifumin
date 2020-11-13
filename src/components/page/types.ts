@@ -6,6 +6,7 @@ export interface PageProps {
     page: Page
     alt?: string
     preload?: boolean
+    quality?: number
 }
 
 export interface PreloadPageProps {

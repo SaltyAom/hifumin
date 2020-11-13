@@ -40,6 +40,7 @@ export {
 	MenuLink,
 	MenuToggle,
 	MenuDetail,
-	MenuContainer
+	MenuContainer,
+	MenuButton
 } from './menuLayout'
 export default SettingsLayout

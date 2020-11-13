@@ -1,12 +1,14 @@
 import { memo } from 'react'
 
+import Image from 'next/image'
+
 import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@stores'
 
 import Tag, { TagContainer } from './tag'
 import Share from './share'
 
-import { randomBetween, useSimulateHeight } from '@libs'
+import { randomBetween } from '@libs'
 
 import { CoverComponent, CoverProps } from './types'
 import { Story } from '@types'
@@ -20,15 +22,7 @@ const shouldRender = (prev: CoverProps, next: CoverProps) => {
 	)
 }
 
-const Cover: CoverComponent = memo(({ story, preload = false }) => {
-	let [
-		simulatedImageHeight,
-		{ element, stopSimulateImageHeight }
-	] = useSimulateHeight({
-		page: preload ? undefined : story.images.cover,
-		preload
-	})
-
+const Cover: CoverComponent = memo(({ story, preload = false, preview = true }) => {
 	let { safeMode, fullCensor } = useStoreon<SettingStore, SettingEvent>(
 		'safeMode',
 		'fullCensor'
@@ -103,17 +97,16 @@ const Cover: CoverComponent = memo(({ story, preload = false }) => {
 		<header id="cover" className="">
 			<div className="cover">
 				<div className="page">
-					<img
-						src={cover.link}
-						ref={element}
-						className={`paper ${safeMode ? '-blur' : ''} ${
+					<Image
+						className={`paper ${safeMode ? '-blur ' : ' '}${
 							fullCensor ? '-full-censor' : ''
 						}`}
+						quality={preview ? 60 : 82.5}
+						priority={!preview}
+						src={cover.link}
 						alt={title.display}
-						style={{
-							height: simulatedImageHeight
-						}}
-						onLoad={stopSimulateImageHeight}
+						width={cover.info.width}
+						height={cover.info.height}
 					/>
 				</div>
 			</div>

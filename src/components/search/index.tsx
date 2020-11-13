@@ -54,7 +54,7 @@ const Search = () => {
 						onInput={deferSearch}
 						value={useCurrentSearch ? searchState : undefined}
 						// @ts-ignore
-						enterKeyHint="search"
+						enterkeyhint="search"
 					/>
 					{isLoading && <Loader />}
 				</div>

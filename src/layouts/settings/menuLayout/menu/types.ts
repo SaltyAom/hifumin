@@ -21,6 +21,13 @@ export interface MenuLinkProps extends MenuBaseProps {
 
 export type MenuLinkComponent = FunctionComponent<MenuLinkProps>
 
+export interface MenuButtonProps extends MenuBaseProps {
+	detail: string
+	onClick: <T>(event: T) => void
+}
+
+export type MenuButtonComponent = FunctionComponent<MenuButtonProps>
+
 export interface MenuToggleProps extends TogglerProps, MenuBaseProps {}
 
 export type MenuToggleComponent = FunctionComponent<MenuToggleProps>
