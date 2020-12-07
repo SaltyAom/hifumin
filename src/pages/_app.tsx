@@ -22,7 +22,7 @@ import 'preact/debug'
 import '@styles/init.styl'
 import '@styles/tailwind.styl'
 
-const blacklist = ['/']
+const excludeFooter = ['/']
 
 const App = ({ Component, pageProps }: AppProps) => {
 	let router = useRouter()
@@ -55,7 +55,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 					<ErrorBoundary>
 						<Navbar />
 						<Component {...pageProps} />
-						{!isServer || !blacklist.includes(router.pathname) ? (
+						{!isServer ||
+						!excludeFooter.includes(router.pathname) ? (
 							<Footer />
 						) : null}
 					</ErrorBoundary>
