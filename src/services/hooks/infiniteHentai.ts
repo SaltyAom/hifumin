@@ -3,7 +3,7 @@ import { useEffect, useReducer, useState, useRef, useCallback } from 'react'
 import { useStoreon } from 'storeon/react'
 import { SettingEvent, SettingStore } from '@models'
 
-import { tags, randomPick, fetch, filterTag } from '@services'
+import { tags, randomPick, get, filterTag } from '@services'
 
 import { Stories } from '@types'
 
@@ -68,10 +68,10 @@ const useInfiniteHentai = (initState: Stories) => {
 
 			previousFetch.current = controller
 
-			fetch(`https://nhapi.now.sh/search/${randomTag}/${page}`, {
+			get<Stories>(`https://nhapi.now.sh/search/${randomTag}/${page}`, {
 				signal
 			})
-				.then((newGalleries: Stories) => {
+				.then(newGalleries => {
 					let filteredGalleries = useDefaultFilter
 						? newGalleries
 						: filterTag(newGalleries, filter)

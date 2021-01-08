@@ -13,7 +13,7 @@ import { randomBetween } from '@services'
 import { CoverComponent, CoverProps } from './types'
 import { Story } from '@types'
 
-import './cover.sass'
+import styles from './cover.module.sass'
 
 const shouldRender = (prev: CoverProps, next: CoverProps) => {
 	return (
@@ -30,23 +30,23 @@ const Cover: CoverComponent = memo(({ story, preload = false, preview = true }) 
 
 	if (preload || story === null)
 		return (
-			<header id="cover" className="-preload">
-				<div className="cover">
-					<div className="page">
-						<img className="paper -preload" />
+			<header id={styles['cover']} className={styles['preload']}>
+				<div className={styles.cover}>
+					<div className={styles.page}>
+						<img className={styles['paper -preload']} />
 					</div>
 				</div>
-				<section className="detail">
-					<h3 className="code" />
-					<h1 className="title" />
-					<p className="sub-title" />
-					<section className="info">
+				<section className={styles.detail}>
+					<h3 className={styles.code} />
+					<h1 className={styles.title} />
+					<p className={styles['sub-title']} />
+					<section className={styles.info}>
 						<h5
-							className="content"
+							className={styles.content}
 							style={{ width: `${randomBetween(70, 120)}px` }}
 						/>
 						<h5
-							className="content"
+							className={styles.content}
 							style={{ width: `${randomBetween(70, 120)}px` }}
 						/>
 					</section>
@@ -94,9 +94,9 @@ const Cover: CoverComponent = memo(({ story, preload = false, preview = true }) 
 		{ tags, language, artist } = metadata
 
 	return (
-		<header id="cover" className="">
-			<div className="cover">
-				<div className="page">
+		<header id={styles['cover']} className={styles['']}>
+			<div className={styles.cover}>
+				<div className={styles.page}>
 					<Image
 						className={`paper ${safeMode ? '-blur ' : ' '}${
 							fullCensor ? '-full-censor' : ''
@@ -110,13 +110,13 @@ const Cover: CoverComponent = memo(({ story, preload = false, preview = true }) 
 					/>
 				</div>
 			</div>
-			<section className="detail">
-				<h3 className="code">{id}</h3>
-				<h1 className="title">{title.display}</h1>
-				<p className="sub-title">{title.japanese}</p>
-				<section className="info">
-					<h5 className="content">{amount.toLocaleString()} Page</h5>
-					<h5 className="content">
+			<section className={styles.detail}>
+				<h3 className={styles.code}>{id}</h3>
+				<h1 className={styles.title}>{title.display}</h1>
+				<p className={styles['sub-title']}>{title.japanese}</p>
+				<section className={styles.info}>
+					<h5 className={styles.content}>{amount.toLocaleString()} Page</h5>
+					<h5 className={styles.content}>
 						{favorite?.toLocaleString()} Favorite
 					</h5>
 				</section>

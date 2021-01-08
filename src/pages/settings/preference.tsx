@@ -25,10 +25,10 @@ const Preference = () => {
 		dispatch(Setting.DEFAULT_PREFERENCE, !defaultPreference)
 	}, [])
 
-	const addNewPreference = (preference) => {
+	const addNewPreference = (preference: string) => {
 			dispatch(Setting.ADD_PREFERENCE, preference)
 		},
-		removePreference = (preference) => {
+		removePreference = (preference: string) => {
 			dispatch(Setting.REMOVE_PREFERENCE, preference)
 		}
 
@@ -50,7 +50,7 @@ const Preference = () => {
 						onSubmit={addNewPreference}
 						enterKeyHint="done"
 					/>
-					<MenuDetail className="mt-4">
+					<MenuDetail className={'mt-4'}>
 						{preference
 							.filter((tag) => !tags.includes(tag))
 							.map((tag) => (

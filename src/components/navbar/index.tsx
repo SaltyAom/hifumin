@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 import { Plus, Settings } from '@icons'
 
-import './navbar.sass'
+import styles from './navbar.module.sass'
 
 const Navbar = () => {
 	let { dispatch, safeMode } = useStoreon<SettingStore, SettingEvent>(
@@ -50,17 +50,17 @@ const Navbar = () => {
 	}, [safeMode])
 
 	return (
-		<nav id="navbar" className={shouldShow ? '' : '-hidden'}>
+		<nav id={styles['navbar']} className={shouldShow ? '' : '-hidden'}>
 			<Link href="/">
-				<a className="link">
-					<h1 className="title">Opener</h1>
+				<a className={styles.link}>
+					<h1 className={styles.title}>Opener</h1>
 				</a>
 			</Link>
-			<section className="tools">
+			<section className={styles.tools}>
 				<button
 					title={`Turn ${safeMode ? 'on' : 'off'} safe mode`}
 					aria-label={`Turn ${safeMode ? 'on' : 'off'} safe mode`}
-					className="tab safe-mode"
+					className={styles['tab safe-mode']}
 					onClick={toggleSafeMode}
 				>
 					18
@@ -68,7 +68,7 @@ const Navbar = () => {
 					<div className={`strike ${!safeMode ? '-hidden' : ''}`} />
 				</button>
 				<Link href="/settings" aria-label="Settings">
-					<a className="tab">
+					<a className={styles.tab}>
 						<Settings />
 					</a>
 				</Link>

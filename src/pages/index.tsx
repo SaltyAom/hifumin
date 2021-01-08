@@ -17,11 +17,11 @@ import {
 	OpenGraph
 } from '@components'
 
-import { fetch, isNhentai, randomPick, tags, filterTag } from '@services'
+import { get, isNhentai, randomPick, tags, filterTag } from '@services'
 
 import { Stories } from '@types'
 
-import '@styles/landing.sass'
+import styles from '@styles/landing.module.sass'
 
 const SearchGallery = dynamic(() => import('@components/gallery/search')),
 	LandingCover = dynamic(() => import('@components/landingCover'))
@@ -66,7 +66,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 				/>
 				<MasonryLayoutDeterminer />
 				<Search />
-				<main id="gallery">
+				<main id={styles['gallery']}>
 					<PreloadGallery />
 				</main>
 			</Fragment>
@@ -80,7 +80,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 			/>
 			<MasonryLayoutDeterminer />
 			<Search />
-			<main id="gallery">
+			<main id={styles['gallery']}>
 				{search ? (
 					isNhentai(search) ? (
 						<LandingCover />
@@ -98,7 +98,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	let stories = await fetch<Stories>(
+	let stories = await get<Stories>(
 		`https://nhapi.now.sh/search/${randomPick(tags)}/1`
 	)
 

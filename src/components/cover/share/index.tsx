@@ -6,7 +6,7 @@ import { LinkIcon, ShareIcon } from './icons'
 
 import { ShareComponent } from './types'
 
-import './share.sass'
+import styles from './share.module.sass'
 
 const Share: ShareComponent = ({ id = 0 }) => {
 	let [supportNativeShare, updateSupportNativeShare] = useState(false)
@@ -22,9 +22,9 @@ const Share: ShareComponent = ({ id = 0 }) => {
 	}, [id])
 
 	return (
-		<footer id="share">
+		<footer id={styles['share']}>
 			{supportNativeShare && (
-				<button type="button" className="button" onClick={share}>
+				<button type="button" className={styles.button} onClick={share}>
 					<ShareIcon /> Share
 				</button>
 			)}
@@ -33,7 +33,7 @@ const Share: ShareComponent = ({ id = 0 }) => {
 				href={`https://nhentai.net/${id ? `/g/${id}` : ''}`}
 				target="_blank"
 				rel="noreferrer noopener"
-				className="button"
+				className={styles.button}
 			>
 				<LinkIcon /> Original
 			</a>

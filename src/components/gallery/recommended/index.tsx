@@ -12,6 +12,8 @@ import { Stories } from '@types'
 
 import PreloadGallery from '../preload'
 
+import styles from '@styles/landing.module.sass'
+
 interface Props {
 	initial: Stories
 }
@@ -33,7 +35,7 @@ const RecommendedGallery: FunctionComponent<Props> = ({ initial }) => {
 				<div
 					// eslint-disable-next-line react/no-array-index-key
 					key={index}
-					className="masonry"
+					className={styles.masonry}
 					style={{ marginTop: margin[index] }}
 				>
 					{column.map((story) => (
@@ -42,8 +44,8 @@ const RecommendedGallery: FunctionComponent<Props> = ({ initial }) => {
 							story={story}
 						/>
 					))}
-					<Book preload />
-					<Book preload />
+					<Book preload story={undefined} />
+					<Book preload story={undefined} />
 				</div>
 			))}
 		</>

@@ -6,7 +6,7 @@ import { Plus } from '@icons'
 
 import { CustomTagFormComponent } from './types'
 
-import './custom-tag-form.sass'
+import styles from './custom-tag-form.module.sass'
 
 const CustomTagForm: CustomTagFormComponent = ({
 	onSubmit,
@@ -31,14 +31,14 @@ const CustomTagForm: CustomTagFormComponent = ({
 	}, [])
 
 	return (
-		<form id="custom-tag" onSubmit={addNewTag}>
+		<form id={styles['custom-tag']} onSubmit={addNewTag}>
 			<Input
 				placeholder={placeholder}
 				value={newPreference}
 				onChange={handleChange}
 				enterKeyHint={enterKeyHint}
 			>
-				<button id="add-tag">
+				<button id={styles['add-tag']}>
 					<Plus />
 				</button>
 			</Input>

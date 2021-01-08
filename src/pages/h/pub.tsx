@@ -16,7 +16,7 @@ import { Cover, Page, OpenGraph } from '@components'
 
 import { Stories, Story } from '@types'
 
-import '@styles/h.sass'
+import styles from '@styles/h.module.sass'
 
 const Book = dynamic(() => import('@components/book'))
 
@@ -82,17 +82,17 @@ const Code: Component = ({ story, related }) => {
 					title="Opener Studio"
 					description="Pinterest but for hentai and 6 digit code."
 				/>
-				<main id="h">
+				<main id={styles['h']}>
 					<Cover preload />
-					<section className="pages">
+					<section className={styles.pages}>
 						{Array(20)
 							.fill(0)
 							.map((_, index) => (
 								<Page key={index} preload />
 							))}
 					</section>
-					<h5 className="more">More like this</h5>
-					<footer className="related">
+					<h5 className={styles.more}>More like this</h5>
+					<footer className={styles.related}>
 						{Array(5)
 							.fill(0)
 							.map((_, index) => (
@@ -104,7 +104,7 @@ const Code: Component = ({ story, related }) => {
 		)
 
 	// ? Not valid
-	if (!story.id) return <main id="h">Not Found</main>
+	if (!story.id) return <main id={styles['h']}>Not Found</main>
 
 	let {
 		images: { cover, pages },
@@ -135,9 +135,9 @@ const Code: Component = ({ story, related }) => {
 				description={`${language}, ${amount} page, ${favorite} favorite.`}
 				image={cover}
 			/>
-			<main id="h">
+			<main id={styles['h']}>
 				<Cover story={story} />
-				<section className="pages">
+				<section className={styles.pages}>
 					{pages.map((page, index) =>
 						index < allowPage ? (
 							<Page
@@ -148,8 +148,8 @@ const Code: Component = ({ story, related }) => {
 						) : null
 					)}
 				</section>
-				<h5 className="more">More like this</h5>
-				<footer className="related">
+				<h5 className={styles.more}>More like this</h5>
+				<footer className={styles.related}>
 					{related.map((story, index) => (
 						<Book key={index} story={story} />
 					))}

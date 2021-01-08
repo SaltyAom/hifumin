@@ -6,7 +6,7 @@ import { Search } from '@models/constant'
 
 import TagContainer from './container'
 
-import './tag.sass'
+import styles from './tag.module.sass'
 
 import { TagComponent } from './types'
 
@@ -25,7 +25,7 @@ const Tag: TagComponent = ({ children, preload = false, style = {} }) => {
 		<Link href="/">
 			<a
 				aria-disabled={preload}
-				className={`tag ${preload ? '-preload' : ''}`}
+				className={`${styles.tag} ${preload ? '-preload' : ''}`}
 				style={style}
 				onClick={updateSearch}
 			>

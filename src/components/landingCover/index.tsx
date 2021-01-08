@@ -7,16 +7,16 @@ import Link from 'next/link'
 
 import Cover from '@components/cover'
 
-import { fetch } from '@services'
+import { get } from '@services'
 
 import { Story } from '@types'
 
-import './landing-cover.sass'
+import styles from './landing-cover.module.sass'
 
 const LandingCover = () => {
 	let { search } = useStoreon<SearchStore, SearchEvent>('search')
 
-	let [story, updateStory] = useState<Story>(null)
+	let [story, updateStory] = useState<Story | null>(null)
 
 	let previousFetch = useRef<AbortController>()
 
@@ -30,16 +30,16 @@ const LandingCover = () => {
 
 		previousFetch.current = controller
 
-		fetch(`https://nhapi.now.sh/${search.trim()}`, {
+		get<Story>(`https://nhapi.now.sh/${search.trim()}`, {
 			signal
 		}).then((story) => updateStory(story))
 	}, [search])
 
 	return (
 		<Link href="/h/[h]" as={`/h/${search}`}>
-			<a id="landing-cover">
+			<a id={styles['landing-cover']}>
 				{story === null ? (
-					<Cover preload={true} />
+					<Cover preload={true} story={undefined} />
 				) : (
 					<Cover story={story} />
 				)}

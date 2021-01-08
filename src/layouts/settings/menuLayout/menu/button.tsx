@@ -1,5 +1,6 @@
-import { ButtonHTMLAttributes } from 'react'
 import { MenuButtonComponent } from './types'
+
+import styles from './menu.module.sass'
 
 const MenuButton: MenuButtonComponent = ({
 	children,
@@ -9,7 +10,9 @@ const MenuButton: MenuButtonComponent = ({
 }) => {
 	return (
 		<div
-			className={`menu -link ${disabled ? '-disabled' : ''}`}
+			className={`${styles.menu} ${styles['-link']} ${
+				disabled ? styles['-disabled'] : ''
+			}`}
 			role="button"
 			onClick={onClick}
 			tabIndex={0}

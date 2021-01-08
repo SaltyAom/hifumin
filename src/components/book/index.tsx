@@ -8,7 +8,7 @@ import { BookComponent, BookProps } from './types'
 
 import { Story } from '@types'
 
-import './book.sass'
+import styles from './book.module.sass'
 
 const shouldRender = (prevProps: BookProps, nextProps: BookProps) =>
 	(prevProps.preload || prevProps.story?.id) ===
@@ -20,35 +20,35 @@ const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 			// eslint-disable-next-line jsx-a11y/anchor-is-valid
 			<Link href="">
 				{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-				<a className="book -preload">
+				<a className={styles.book}>
 					<Page preload={true} page={undefined} alt="Read">
-						<div className="detail">
+						<div className={styles.detail}>
 							{/* eslint-disable-next-line jsx-a11y/heading-has-content */}
-							<h6 className="title" />
-							<div className="row">
+							<h6 className={styles.title} />
+							<div className={styles.row}>
 								<img
-									className="icon"
+									className={styles.icon}
 									src="/icons/language.svg"
 									alt="Language"
 								/>
-								<p className="content" />
+								<p className={styles.content} />
 							</div>
-							<div className="row">
-								<div className="detail">
+							<div className={styles.row}>
+								<div className={styles.detail}>
 									<img
-										className="icon"
+										className={styles.icon}
 										src="/icons/book.svg"
 										alt="Language"
 									/>
-									<p className="content" />
+									<p className={styles.content} />
 								</div>
-								<div className="detail">
+								<div className={styles.detail}>
 									<img
-										className="icon"
+										className={styles.icon}
 										src="/icons/heart.svg"
 										alt="Language"
 									/>
-									<p className="content" />
+									<p className={styles.content} />
 								</div>
 							</div>
 						</div>
@@ -67,34 +67,34 @@ const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 
 	return (
 		<Link href="/h/[h]" as={`/h/${id}`}>
-			<a className="book">
+			<a className={styles.book}>
 				<Page page={cover} alt={`Read ${display}`}>
-					<div className="detail">
-						<h6 className="title">{display}</h6>
-						<div className="row">
+					<div className={styles.detail}>
+						<h6 className={styles.title}>{display}</h6>
+						<div className={styles.row}>
 							<img
-								className="icon"
+								className={styles.icon}
 								src="/icons/language.svg"
 								alt="Language"
 							/>
-							<p className="content">{language}</p>
+							<p className={styles.content}>{language}</p>
 						</div>
-						<div className="row">
-							<div className="detail">
+						<div className={styles.row}>
+							<div className={styles.detail}>
 								<img
-									className="icon"
+									className={styles.icon}
 									src="/icons/book.svg"
 									alt="Language"
 								/>
-								<p className="content">{amount}</p>
+								<p className={styles.content}>{amount}</p>
 							</div>
-							<div className="detail">
+							<div className={styles.detail}>
 								<img
-									className="icon"
+									className={styles.icon}
 									src="/icons/heart.svg"
 									alt="Language"
 								/>
-								<p className="content">{favorite}</p>
+								<p className={styles.content}>{favorite}</p>
 							</div>
 						</div>
 					</div>

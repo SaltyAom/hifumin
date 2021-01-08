@@ -11,7 +11,6 @@ const Remove: IconComponent = ({ style }) => (
 		strokeWidth="2"
 		strokeLinecap="round"
 		strokeLinejoin="round"
-		className="icon"
 		style={style}
 	>
 		<line x1="18" y1="6" x2="6" y2="18"></line>

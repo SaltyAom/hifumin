@@ -8,7 +8,7 @@ import { Loader } from '@components'
 
 import SearchIcon from './icon'
 
-import './search.sass'
+import styles from './search.module.sass'
 
 const Search = () => {
 	let {
@@ -41,13 +41,13 @@ const Search = () => {
 	}, [])
 
 	return (
-		<header id="search">
-			<h1 className="title">Opener Studio</h1>
-			<section className="search-wrapper">
-				<div className="search-bar" onSubmit={preventDefault}>
+		<header id={styles['search']}>
+			<h1 className={styles.title}>Opener Studio</h1>
+			<section className={styles['search-wrapper']}>
+				<div className={styles['search-bar']} onSubmit={preventDefault}>
 					<SearchIcon />
 					<input
-						className="input"
+						className={styles.input}
 						type="text"
 						name="Search"
 						placeholder="Find hentai or 6 digits code"

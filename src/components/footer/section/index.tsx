@@ -1,6 +1,8 @@
 import { useReducer } from 'react'
 
-const Section = ({ children }) => {
+import { FooterSectionComponent } from './types'
+
+const Section: FooterSectionComponent = ({ children }) => {
 	const [isCollapse, toggleCollapse] = useReducer(
 		(collapse) => !collapse,
 		true
@@ -10,8 +12,8 @@ const Section = ({ children }) => {
 		<section
 			tabIndex={0}
 			aria-label={`Tab to ${isCollapse ? 'close' : 'open'}`}
-            className={`col ${isCollapse ? '-collapse' : ''}`}
-            onClick={toggleCollapse}
+			className={`col ${isCollapse ? '-collapse' : ''}`}
+			onClick={toggleCollapse}
 		>
 			{children}
 		</section>

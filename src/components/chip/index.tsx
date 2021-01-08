@@ -1,6 +1,6 @@
 import { ChipComponent } from './types'
 
-import './chip.sass'
+import styles from './chip.module.sass'
 
 const Chip: ChipComponent = ({
 	children,
@@ -14,7 +14,7 @@ const Chip: ChipComponent = ({
 
 	return (
 		<button
-			className={`chip ${className} ${active ? '-active' : ''}`}
+			className={`${styles.chip} ${className} ${active ? styles['-active'] : ''}`}
 			onClick={handleClick}
 		>
 			{children}

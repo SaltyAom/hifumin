@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { MouseEvent, Fragment } from 'react'
 
 import { OpenGraph } from '@components'
 
@@ -6,12 +6,19 @@ import { useRouter } from 'next/router'
 
 import { ChevronLeft } from '@icons'
 
-import './settings-layout.sass'
+import styles from './settings-layout.module.sass'
 
-const SettingsLayout = ({ children, title = 'Settings' }) => {
+import { SettingsLayoutComponent } from './types'
+
+const SettingsLayout: SettingsLayoutComponent = ({
+	children,
+	title = 'Settings'
+}) => {
 	let { back } = useRouter()
 
-	const backToPreviousPage = (event) => {
+	const backToPreviousPage = (
+		event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>
+	) => {
 		event.preventDefault()
 		back()
 	}
@@ -19,17 +26,17 @@ const SettingsLayout = ({ children, title = 'Settings' }) => {
 	return (
 		<Fragment>
 			<OpenGraph title={title} description={`Opener Studio ${title}`} />
-			<main id="settings">
+			<main id={styles['settings']}>
 				<a
-					className="back"
+					className={styles.back}
 					href="/"
 					onClick={backToPreviousPage}
 					aria-label="Back to previous page"
 				>
 					<ChevronLeft /> Back
 				</a>
-				<h1 className="title">{title}</h1>
-				<section className="menu">{children}</section>
+				<h1 className={styles.title}>{title}</h1>
+				<section className={styles.menu}>{children}</section>
 			</main>
 		</Fragment>
 	)
@@ -41,6 +48,7 @@ export {
 	MenuToggle,
 	MenuDetail,
 	MenuContainer,
-	MenuButton
+	MenuButton,
+	ExternalLink
 } from './menuLayout'
 export default SettingsLayout

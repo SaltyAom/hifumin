@@ -23,10 +23,10 @@ const Preference = () => {
 		dispatch(Setting.UPDATE_DEFAULT_FILTER, !defaultFilter)
 	}, [])
 
-	const addNewPreference = (preference) => {
+	const addNewPreference = (preference: string) => {
 			dispatch(Setting.ADD_FILTER, preference)
 		},
-		removePreference = (preference) => {
+		removePreference = (preference: string) => {
 			dispatch(Setting.REMOVE_FILTER, preference)
 		}
 
@@ -48,7 +48,7 @@ const Preference = () => {
 						onSubmit={addNewPreference}
 						enterKeyHint="done"
 					/>
-					<MenuDetail className="mt-4">
+					<MenuDetail className={'mt-4'}>
 						{filter.map((tag) => (
 							<RemovableChip key={tag} onClick={removePreference}>
 								{tag}

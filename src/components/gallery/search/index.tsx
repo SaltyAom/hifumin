@@ -10,6 +10,8 @@ import { Book } from '@components'
 import { splitChunk } from '@services'
 import { useSearchHentai } from '@services/hooks'
 
+import styles from '@styles/landing.module.sass'
+
 const NotFound = dynamic(() => import('./notFound'))
 
 const SearchGallery = () => {
@@ -46,7 +48,7 @@ const SearchGallery = () => {
 				{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
 					<div
 						key={index}
-						className="masonry"
+						className={styles.masonry}
 						style={{ marginTop: margin[index] }}
 					>
 						{column.map((_, index) => (
@@ -64,7 +66,7 @@ const SearchGallery = () => {
 			{splitChunk(galleries, masonry).map((column, index) => (
 				<div
 					key={index}
-					className="masonry"
+					className={styles.masonry}
 					style={{ marginTop: margin[index] }}
 				>
 					{column.map((story, index) => (

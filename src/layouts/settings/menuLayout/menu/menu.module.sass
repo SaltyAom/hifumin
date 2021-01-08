@@ -2,10 +2,9 @@
     & > .menu
         & > .item
             & > .menu
-                @apply flex flex-row justify-between items-center w-full text-lg font-medium text-gray-600 my-1
-                min-height 48px
-                padding 0 20px
-                outline none
+                @apply flex flex-row justify-between items-center w-full text-lg font-medium text-gray-600 my-1 outline-none
+                min-height: 48px
+                padding: 0 20px
 
                 @media (min-width 410px) 
                     &
@@ -16,8 +15,8 @@
                         @apply text-gray-500
 
                 &.-link
-                    -webkit-tap-highlight-color transparent
-                    transition background-color .15s ease-out
+                    -webkit-tap-highlight-color: transparent
+                    transition: background-color .15s ease-out
 
                     &:hover,
                     &:focus
@@ -27,19 +26,19 @@
                             @apply bg-gray-800
 
                 & > .icon
-                    width 21px
-                    height 21px
+                    width: 21px
+                    height: 21px
 
                 &.-disabled
-                    z-index -1
-                    touch-action none
-                    cursor default
-                    opacity .5
+                    @apply cursor-default
+                    z-index: -1
+                    touch-action: none
+                    opacity: .5
 
             & > .detail
                 @apply block text-lg text-gray-600 my-2
-                line-height 1.5em
-                padding 0 20px
+                line-height: 1.5em
+                padding: 0 20px
 
                 @media (prefers-color-scheme dark)
                     &
@@ -47,7 +46,7 @@
 
                 & > .link
                     @apply underline text-primary
-                    -webkit-tap-highlight-color transparent
+                    -webkit-tap-highlight-color: transparent
 
                     @media (prefers-color-scheme dark)
                         &
@@ -55,10 +54,10 @@
 
             & > .container
                 @apply block my-2
-                padding 0 20px
+                padding: 0 20px
 
                 &.-disabled
-                    z-index -1
-                    touch-action none
-                    cursor default
-                    opacity .5
+                    z-index: -1
+                    touch-action: none
+                    cursor: default
+                    opacity: .5

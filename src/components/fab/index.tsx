@@ -1,6 +1,6 @@
 import { ChevronUp } from '@icons'
 
-import './fab.sass'
+import styles from './fab.module.sass'
 
 const FloatingActionButton = () => {
     const backToTop = () => {
@@ -11,7 +11,7 @@ const FloatingActionButton = () => {
     }
 
 	return (
-		<button id="fab" aria-label="Back to Top" onClick={backToTop}>
+		<button id={styles['fab" aria-label="Back to Top']} onClick={backToTop}>
 			<ChevronUp />
 		</button>
 	)

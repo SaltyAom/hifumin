@@ -7,7 +7,7 @@ import { SettingEvent, SettingStore } from '@models'
 
 import { PageComponent, PageProps } from './types'
 
-import './page.sass'
+import styles from './page.module.sass'
 
 const shouldReRender = (prevProps: PageProps, nextProps: PageProps) =>
 	prevProps?.page?.link === nextProps?.page?.link
@@ -19,9 +19,9 @@ const Page: PageComponent = memo(
 			'fullCensor'
 		)
 
-		if (preload)
+		if (preload || !page)
 			return (
-				<div className="page">
+				<div className={styles.page}>
 					{children}
 					<img
 						className={`paper -lazy -preload`}
@@ -33,7 +33,7 @@ const Page: PageComponent = memo(
 		let { link } = page
 
 		return (
-			<div className="page">
+			<div className={styles.page}>
 				{children}
 				<Image
 					className={`paper ${safeMode ? '-blur ' : ' '}${fullCensor ? '-full-censor' : ''}`}

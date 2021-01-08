@@ -6,14 +6,20 @@ import { MenuLinkComponent } from './types'
 
 import styles from './menu.module.sass'
 
-const MenuLink: MenuLinkComponent = ({ children, href, disabled = false }) => {
+const ExternalLink: MenuLinkComponent = ({
+	children,
+	href,
+	disabled = false
+}) => {
 	return (
 		<Link href={href}>
 			<a
 				className={`${styles.menu} ${styles['-link']} ${
 					disabled ? styles['-disabled'] : ''
 				}`}
-				role="section"
+				href="https://ko-fi.com/saltyaom"
+				target="_blank"
+				rel="norefferer noreopener"
 			>
 				{children}
 				<ChevronRight />
@@ -22,4 +28,4 @@ const MenuLink: MenuLinkComponent = ({ children, href, disabled = false }) => {
 	)
 }
 
-export default MenuLink
+export default ExternalLink

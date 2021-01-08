@@ -1,7 +1,4 @@
-import {
-	Fragment,
-	FunctionComponent
-} from 'react'
+import { Fragment, FunctionComponent } from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
@@ -10,11 +7,11 @@ import dynamic from 'next/dynamic'
 import { Cover, Page, OpenGraph } from '@components'
 import NotFound from '@components/gallery/search/notFound'
 
-import { createStructureData, fetch } from '@services'
+import { createStructureData, get } from '@services'
 
-import { Story } from '@types'
+import { Stories, Story } from '@types'
 
-import '@styles/h.sass'
+import styles from '@styles/h.module.sass'
 
 const Book = dynamic(() => import('@components/book'))
 
@@ -43,17 +40,17 @@ const Code: Component = ({ story, related }) => {
 				<Head>
 					<title>Loading...</title>
 				</Head>
-				<main id="h">
+				<main id={styles['h']}>
 					<Cover preload />
-					<section className="pages">
+					<section className={styles.pages}>
 						{Array(20)
 							.fill(0)
 							.map((_, index) => (
 								<Page key={index} preload />
 							))}
 					</section>
-					<h5 className="more">More like this</h5>
-					<footer className="related">
+					<h5 className={styles.more}>More like this</h5>
+					<footer className={styles.related}>
 						{Array(5)
 							.fill(0)
 							.map((_, index) => (
@@ -67,7 +64,7 @@ const Code: Component = ({ story, related }) => {
 	// ? Not valid
 	if (!story.id)
 		return (
-			<main id="h">
+			<main id={styles['h']}>
 				<OpenGraph
 					title="Opener Studio"
 					description="Pinterest but for hentai and 6 digit code."
@@ -113,9 +110,9 @@ const Code: Component = ({ story, related }) => {
 					content={tags.map((tag) => tag.name).join(', ')}
 				/>
 			</Head>
-			<main id="h">
+			<main id={styles['h']}>
 				<Cover story={story} preview={false} />
-				<section className="pages">
+				<section className={styles.pages}>
 					{pages.map((page, index) => (
 						<Page
 							key={index}
@@ -124,8 +121,8 @@ const Code: Component = ({ story, related }) => {
 						/>
 					))}
 				</section>
-				<h5 className="more">More like this</h5>
-				<footer className="related">
+				<h5 className={styles.more}>More like this</h5>
+				<footer className={styles.related}>
 					{related.map((story, index) => (
 						<Book key={index} story={story} />
 					))}
@@ -136,24 +133,29 @@ const Code: Component = ({ story, related }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => ({
-		paths: [],
-		fallback: true
-	})
+	paths: [],
+	fallback: true
+})
 
-export const getStaticProps: GetStaticProps<Props> = async ({
-	params: { h }
-}: Path) => {
-	let story
-	let related
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
+	let {
+		params: { h }
+	} = context as {
+		params: { h: string }
+	}
+
+	let story: Story
+	let related: Stories
 
 	try {
-		story = await fetch(`https://nhapi.now.sh/${h}`)
+		story = await get<Story>(`https://nhapi.now.sh/${h}`)
 	} catch (err) {
+		// @ts-ignore
 		story = { id: 0 }
 	}
 
 	try {
-		let data = await fetch(`https://nhapi.now.sh/${h}/related`)
+		let data = await get<Stories>(`https://nhapi.now.sh/${h}/related`)
 
 		related = Array.isArray(data) ? data : [data]
 	} catch (err) {

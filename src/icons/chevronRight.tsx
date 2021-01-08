@@ -11,7 +11,6 @@ const ChevronRight: IconComponent = ({ style }) => (
 		strokeWidth="2"
 		strokeLinecap="round"
 		strokeLinejoin="round"
-		className="icon"
 		style={style}
 	>
 		<polyline points="9 18 15 12 9 6" />

@@ -11,7 +11,6 @@ const Account: IconComponent = ({ style }) => (
 		strokeWidth="2"
 		strokeLinecap="round"
 		strokeLinejoin="round"
-		className="icon"
 		style={style}
 	>
 		<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />

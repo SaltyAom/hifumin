@@ -1,6 +1,6 @@
 import { TogglerComponent } from './types'
 
-import './toggler.sass'
+import styles from './toggler.module.sass'
 
 const Toggler: TogglerComponent = ({ active, onSwitch }) => {
 	const handleSwitch = () => {
@@ -13,7 +13,7 @@ const Toggler: TogglerComponent = ({ active, onSwitch }) => {
 			onClick={handleSwitch}
 			aria-label={active ? 'on' : 'off'}
 		>
-			<div className="slider" />
+			<div className={styles.slider} />
 		</button>
 	)
 }

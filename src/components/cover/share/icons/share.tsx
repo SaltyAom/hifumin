@@ -1,3 +1,5 @@
+// import styles from '../../share.module.css'
+
 const ShareIcon = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +11,7 @@ const ShareIcon = () => (
 		strokeWidth="2"
 		strokeLinecap="round"
 		strokeLinejoin="round"
-		className="icon"
+		// className={styles.icon}
 	>
 		<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
 		<polyline points="16 6 12 2 8 6"></polyline>

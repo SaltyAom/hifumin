@@ -2,7 +2,7 @@ import { FormEvent } from 'react'
 
 import { InputComponent } from './types'
 
-import './input.sass'
+import styles from './input.module.sass'
 
 const Input: InputComponent = ({
 	children = null,
@@ -12,9 +12,9 @@ const Input: InputComponent = ({
 	enterKeyHint = 'enter'
 }) => {
 	return (
-		<section className="text-input" defaultValue={value}>
+		<section className={styles['text-input']} defaultValue={value}>
 			<input
-				className="input"
+				className={styles.input}
 				type="text"
 				name={placeholder}
 				aria-label={placeholder}
@@ -24,7 +24,7 @@ const Input: InputComponent = ({
 				// @ts-ignore
 				enterkeyhint={enterKeyHint}
 			/>
-			<p className="placeholder">{placeholder}</p>
+			<p className={styles.placeholder}>{placeholder}</p>
 			{children}
 		</section>
 	)

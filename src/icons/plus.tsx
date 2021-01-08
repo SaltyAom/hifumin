@@ -11,7 +11,6 @@ const Plus: IconComponent = ({ style }) => (
 		strokeWidth="4"
 		strokeLinecap="round"
 		strokeLinejoin="round"
-		className="icon"
 		style={style}
 	>
 		<line x1="12" y1="5" x2="12" y2="19" />
