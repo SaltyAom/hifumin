@@ -1,8 +1,8 @@
 import { useCallback, useRef, FormEvent, useEffect } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SearchStore, SearchEvent } from '@stores'
-import { Search as SearchAction } from '@stores/constant'
+import { SearchStore, SearchEvent } from '@models'
+import { Search as SearchAction } from '@models/constant'
 
 import { Loader } from '@components'
 

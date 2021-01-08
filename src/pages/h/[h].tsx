@@ -10,13 +10,11 @@ import dynamic from 'next/dynamic'
 import { Cover, Page, OpenGraph } from '@components'
 import NotFound from '@components/gallery/search/notFound'
 
-import { fetch } from '@libs/fetch'
+import { createStructureData, fetch } from '@services'
 
 import { Story } from '@types'
 
 import '@styles/h.styl'
-import { useLazyLoad } from '@libs/hooks'
-import { createStructureData } from '@libs'
 
 const Book = dynamic(() => import('@components/book'))
 
@@ -27,13 +25,17 @@ interface Props {
 
 type Component = FunctionComponent<Props>
 
-const Code: Component = ({ story, related }) => {
-	let [allowLazyLoadPage] = useLazyLoad(story)
+interface Path {
+	params: {
+		h: string
+	}
+}
 
+const Code: Component = ({ story, related }) => {
 	// ? Generating
 	if (typeof story === 'undefined')
 		return (
-			<Fragment>
+			<>
 				<OpenGraph
 					title="Opener Studio"
 					description="Pinterest but for hentai and 6 digit code."
@@ -59,7 +61,7 @@ const Code: Component = ({ story, related }) => {
 							))}
 					</footer>
 				</main>
-			</Fragment>
+			</>
 		)
 
 	// ? Not valid
@@ -87,7 +89,7 @@ const Code: Component = ({ story, related }) => {
 	let [structuredData, description] = createStructureData(story)
 
 	return (
-		<Fragment>
+		<>
 			<OpenGraph
 				title={display}
 				alternativeTitle={[english, japanese]}
@@ -99,6 +101,7 @@ const Code: Component = ({ story, related }) => {
 			<Head>
 				<script
 					type="application/ld+json"
+					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: structuredData
 					}}
@@ -128,21 +131,20 @@ const Code: Component = ({ story, related }) => {
 					))}
 				</footer>
 			</main>
-		</Fragment>
+		</>
 	)
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	return {
+export const getStaticPaths: GetStaticPaths = async () => ({
 		paths: [],
 		fallback: true
-	}
-}
+	})
 
 export const getStaticProps: GetStaticProps<Props> = async ({
 	params: { h }
-}) => {
-	let story, related
+}: Path) => {
+	let story
+	let related
 
 	try {
 		story = await fetch(`https://nhapi.now.sh/${h}`)

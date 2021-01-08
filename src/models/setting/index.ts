@@ -1,6 +1,6 @@
 import { StoreonModule } from 'storeon'
 
-import { setPersist } from '@libs'
+import { setPersist } from '@services'
 
 import { SettingStore, SettingEvent } from './types'
 import Setting from './constant'

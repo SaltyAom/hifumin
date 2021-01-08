@@ -1,9 +1,9 @@
 import { useEffect, useReducer, useState, useRef, useCallback } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SettingEvent, SettingStore } from '@stores'
+import { SettingEvent, SettingStore } from '@models'
 
-import { tags, randomPick, fetch, filterTag } from '@libs'
+import { tags, randomPick, fetch, filterTag } from '@services'
 
 import { Stories } from '@types'
 
@@ -22,14 +22,14 @@ const useInfiniteHentai = (initState: Stories) => {
 
 	let [galleries, updateGalleries] = useState(initState)
 
-	let [page, updatePage] = useState(2),
-		[shouldFetchMore, fetchMore] = useReducer((state) => state + 1, 0)
+	let [page, updatePage] = useState(2)
+	let [shouldFetchMore, fetchMore] = useReducer((state) => state + 1, 0)
 
-	let persistedListener = useRef<() => void>(),
-		isLoading = useRef(false),
-		loadedTag = useRef<string[]>([]),
-		isInitial = useRef(true),
-		previousFetch = useRef<AbortController>()
+	let persistedListener = useRef<() => void>()
+	let isLoading = useRef(false)
+	let loadedTag = useRef<string[]>([])
+	let isInitial = useRef(true)
+	let previousFetch = useRef<AbortController>()
 
 	const useTag =
 		useDefaultPreference || !preference.length ? tags : preference
@@ -40,7 +40,7 @@ const useInfiniteHentai = (initState: Stories) => {
 
 			if (
 				document.body.scrollHeight - window.innerHeight * 3.5 >=
-				pageYOffset
+				window.pageYOffset
 			)
 				return
 
@@ -61,8 +61,8 @@ const useInfiniteHentai = (initState: Stories) => {
 		(randomTag: string[]) => {
 			isLoading.current = true
 
-			let controller = new AbortController(),
-				{ signal } = controller
+			let controller = new AbortController()
+			let { signal } = controller
 
 			if (previousFetch.current) previousFetch.current.abort()
 
@@ -82,7 +82,7 @@ const useInfiniteHentai = (initState: Stories) => {
 					isLoading.current = false
 				})
 
-			return () => previousFetch.current.abort()
+			return () => previousFetch.current?.abort()
 		},
 		[galleries, filter, useDefaultFilter]
 	)
@@ -97,8 +97,8 @@ const useInfiniteHentai = (initState: Stories) => {
 			else fetchStories(randomTag)
 
 		let stopListener = () =>
-				window.removeEventListener('scroll', persistedListener.current),
-			listener = () => lazyListener(randomTag)
+			window.removeEventListener('scroll', persistedListener.current as any)
+		let listener = () => lazyListener(randomTag)
 
 		if (persistedListener.current) stopListener()
 

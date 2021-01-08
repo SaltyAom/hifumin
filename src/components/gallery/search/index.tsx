@@ -3,12 +3,12 @@ import { Fragment, useEffect, useReducer, useRef } from 'react'
 import dynamic from 'next/dynamic'
 
 import { useStoreon } from 'storeon/react'
-import { SearchStore, SearchEvent, MasonryStore, MasonryEvent } from '@stores'
+import { SearchStore, SearchEvent, MasonryStore, MasonryEvent } from '@models'
 
 import { Book } from '@components'
 
-import { splitChunk } from '@libs'
-import { useSearchHentai } from '@libs/hooks'
+import { splitChunk } from '@services'
+import { useSearchHentai } from '@services/hooks'
 
 const NotFound = dynamic(() => import('./notFound'))
 

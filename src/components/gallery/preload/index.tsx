@@ -1,11 +1,10 @@
-import { Fragment } from 'react'
-
+/* eslint-disable react/no-array-index-key */
 import { useStoreon } from 'storeon/react'
-import { MasonryEvent, MasonryStore } from '@stores'
+import { MasonryEvent, MasonryStore } from '@models'
 
 import { Book } from '@components'
 
-import { splitChunk } from '@libs'
+import { splitChunk } from '@services'
 
 const PreloadGallery = () => {
 	let { margin, masonry } = useStoreon<MasonryStore, MasonryEvent>(
@@ -14,21 +13,21 @@ const PreloadGallery = () => {
 	)
 
 	return (
-		<Fragment>
+		<>
 			{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
 				<div
 					key={index}
 					className="masonry"
 					style={{ marginTop: margin[index] }}
 				>
-					{column.map((_, index) => (
-						<Book key={index} preload />
+					{column.map((_, _index) => (
+						<Book key={_index} preload />
 					))}
 					<Book preload />
 					<Book preload />
 				</div>
 			))}
-		</Fragment>
+		</>
 	)
 }
 

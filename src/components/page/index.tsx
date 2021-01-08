@@ -3,7 +3,7 @@ import { memo } from 'react'
 import Image from 'next/image'
 
 import { useStoreon } from 'storeon/react'
-import { SettingEvent, SettingStore } from '@stores'
+import { SettingEvent, SettingStore } from '@models'
 
 import { PageComponent, PageProps } from './types'
 

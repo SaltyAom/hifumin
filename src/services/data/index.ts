@@ -1,4 +1,4 @@
-import { Story } from "@types"
+import { Story } from '@types'
 
 // Popular tag on nHentai
 export const tags = [
@@ -110,22 +110,22 @@ export const createStructureData = (story: Story) => {
 		images: { cover, pages },
 		title: { display, english, japanese },
 		info: { favorite, amount, upload },
-		metadata: { language, artist, tags }
+		metadata: { language, artist, tags: tagList }
 	} = story
 
-	let description = `${english} / ${japanese} Language: ${language}, ${amount} page, ${favorite} favorite. Tags: ${tags
+	let description = `${english} / ${japanese} Language: ${language}, ${amount} page, ${favorite} favorite. Tags: ${tagList
 		.map((tag) => tag.name)
 		.join(', ')}`
 
-	let date = new Date(+`${upload.original}000`),
-		year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date),
-		month = new Intl.DateTimeFormat('en', { month: 'long' }).format(date),
-		day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
+	let date = new Date(+`${upload.original}000`)
+	let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date)
+	let month = new Intl.DateTimeFormat('en', { month: 'long' }).format(date)
+	let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
 
 	let structuredData = JSON.stringify({
 		'@context': 'https://schema.org/',
 		'@type': 'Book',
-		description: description,
+		description,
 		headline: display,
 		image: [cover.link],
 		bookEdition: '1',
@@ -136,7 +136,7 @@ export const createStructureData = (story: Story) => {
 		mainEntityOfPage: `https://opener.studio/h/${id}`,
 		url: `https://opener.studio/h/${id}`,
 		datePublished: `${month} ${day}, ${year}`
-	}).replace(/\n|\t|  /g, '')
+	}).replace(/\n|\t| {2}/g, '')
 
 	return [structuredData, description]
 }

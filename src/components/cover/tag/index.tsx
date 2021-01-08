@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import { SearchEvent, SearchStore } from '@stores'
+import { SearchEvent, SearchStore } from '@models'
 import { useStoreon } from 'storeon/react'
-import { Search } from '@stores/constant'
+import { Search } from '@models/constant'
 
 import TagContainer from './container'
 

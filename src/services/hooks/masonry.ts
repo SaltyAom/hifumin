@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, useRef } from 'react'
 
-import { getMasonry } from '@libs/masonry'
-import { isServer } from '@libs/is'
+import { getMasonry } from '@services/masonry'
+import { isServer } from '@services/is'
 
 const useMasonry = () => {
 	let [masonry, updateMasonry] = useState(getMasonry())
@@ -27,8 +27,10 @@ const useMasonry = () => {
 
 		persistedListener.current = masonryListener
 
-		return () =>
-			window.removeEventListener('resize', persistedListener.current)
+		return () => {
+			if (persistedListener.current)
+				window.removeEventListener('resize', persistedListener.current)
+		}
 	}, [])
 
 	return masonry

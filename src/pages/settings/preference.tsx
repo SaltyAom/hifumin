@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SettingEvent, SettingStore } from '@stores'
-import { Setting } from '@stores/constant'
+import { SettingEvent, SettingStore } from '@models'
+import { Setting } from '@models/constant'
 
 import SettingsLayout, {
 	MenuLayout,
@@ -13,7 +13,7 @@ import SettingsLayout, {
 
 import { Chip, CustomTagForm, RemovableChip } from '@components'
 
-import { tags } from '@libs'
+import { tags } from '@services'
 
 const Preference = () => {
 	let { useDefaultPreference, preference, dispatch } = useStoreon<

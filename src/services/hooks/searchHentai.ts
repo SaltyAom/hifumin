@@ -1,10 +1,10 @@
-import { useEffect, useReducer, useState, useRef, useCallback } from 'react'
+import { useEffect, useReducer, useState, useRef, useCallback, EventHandler } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SearchEvent, SearchStore, SettingEvent, SettingStore } from '@stores'
-import { Search } from '@stores/constant'
+import { SearchEvent, SearchStore, SettingEvent, SettingStore } from '@models'
+import { Search } from '@models/constant'
 
-import { randomPick, fetch, filterTag } from '@libs'
+import { randomPick, fetch, filterTag } from '@services'
 
 import { Stories } from '@types'
 
@@ -26,25 +26,25 @@ const useSearchHentai = ({
 		'filter'
 	)
 
-	let [galleries, updateGalleries] = useState<Stories>([]),
-		[shouldReset, reset] = useReducer((count) => count + 1, 0)
+	let [galleries, updateGalleries] = useState<Stories>([])
+	let [shouldReset, reset] = useReducer((count) => count + 1, 0)
 
-	let [page, updatePage] = useState(1),
-		[shouldFetchMore, fetchMore] = useReducer((state) => state + 1, 0)
+	let [page, updatePage] = useState(1)
+	let [shouldFetchMore, fetchMore] = useReducer((state) => state + 1, 0)
 
-	let persistedListener = useRef<() => void>(),
-		isLoading = useRef(false),
-		loadedTag = useRef<string[]>([]),
-		previousFetch = useRef<AbortController>()
+	let persistedListener = useRef<() => void>()
+	let isLoading = useRef(false)
+	let loadedTag = useRef<string[]>([])
+	let previousFetch = useRef<AbortController>()
+
 	// ? Initial isn't require because nothing has loaded.
-
 	let lazyListener = useCallback(
 		(tag = '') => {
 			if (isLoading.current) return
 
 			if (
 				document.body.scrollHeight - window.innerHeight * 3.5 >=
-				pageYOffset
+				window.pageYOffset
 			)
 				return
 
@@ -67,8 +67,8 @@ const useSearchHentai = ({
 			isLoading.current = true
 			dispatch(Search.LOADING, true)
 
-			let controller = new AbortController(),
-				{ signal } = controller
+			let controller = new AbortController()
+			let { signal } = controller
 
 			if (previousFetch.current) previousFetch.current.abort()
 
@@ -96,7 +96,7 @@ const useSearchHentai = ({
 					dispatch(Search.LOADING, false)
 				})
 
-			return () => previousFetch.current.abort()
+			return () => previousFetch.current?.abort()
 		},
 		[galleries, filter, useDefaultFilter]
 	)
@@ -109,8 +109,8 @@ const useSearchHentai = ({
 		if (!isLoading.current) fetchStories(randomTag)
 
 		let stopListener = () =>
-				window.removeEventListener('scroll', persistedListener.current),
-			listener = () => lazyListener(randomTag)
+			window.removeEventListener('scroll', persistedListener.current as any)
+		let listener = () => lazyListener(randomTag)
 
 		if (persistedListener.current) stopListener()
 

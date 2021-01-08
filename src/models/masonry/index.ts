@@ -1,23 +1,21 @@
 import { StoreonModule } from 'storeon'
 
-import { getMasonry, getMasonryMargin } from '@libs'
+import { getMasonry, getMasonryMargin } from '@services'
 
 import Masonry from './constant'
 import { MasonryStore, MasonryEvent } from './types'
 
 const masonry: StoreonModule<MasonryStore, MasonryEvent> = (store) => {
 	store.on('@init', () => {
-		let masonry = getMasonry()
+		let totalMasonry = getMasonry()
 
 		return {
 			masonry: getMasonry(),
-			margin: getMasonryMargin(masonry)
+			margin: getMasonryMargin(totalMasonry)
 		}
 	})
 
-	store.on(Masonry.update, (_, action) => {
-		return action
-	})
+	store.on(Masonry.update, (_, action) => action)
 }
 
 export type { MasonryStore, MasonryEvent }

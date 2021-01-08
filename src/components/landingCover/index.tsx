@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SearchEvent, SearchStore } from '@stores'
+import { SearchEvent, SearchStore } from '@models'
 
 import Link from 'next/link'
 
 import Cover from '@components/cover'
 
-import { fetch } from '@libs'
+import { fetch } from '@services'
 
 import { Story } from '@types'
 

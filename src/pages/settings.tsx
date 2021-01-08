@@ -1,10 +1,8 @@
 import { useCallback } from 'react'
 
-// import { useInstall, usePwa } from 'app-hooks'
-
-import { SettingEvent, SettingStore } from '@stores'
+import { SettingEvent, SettingStore } from '@models'
 import { useStoreon } from 'storeon/react'
-import { Setting } from '@stores/constant'
+import { Setting } from '@models/constant'
 
 import SettingsLayout, {
 	MenuLayout,
@@ -21,9 +19,6 @@ const Settings = () => {
 		SettingStore,
 		SettingEvent
 	>('safeMode', 'fullCensor')
-
-	// let [prompt, userChoice, isInstallSupport] = useInstall()
-	// let [isPwa] = usePwa()
 
 	const toggleSafeMode = useCallback((active) => {
 			dispatch(Setting.SAFE_MODE, !active)

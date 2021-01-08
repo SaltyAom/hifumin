@@ -3,12 +3,12 @@ import { memo } from 'react'
 import Image from 'next/image'
 
 import { useStoreon } from 'storeon/react'
-import { SettingEvent, SettingStore } from '@stores'
+import { SettingEvent, SettingStore } from '@models'
 
 import Tag, { TagContainer } from './tag'
 import Share from './share'
 
-import { randomBetween } from '@libs'
+import { randomBetween } from '@services'
 
 import { CoverComponent, CoverProps } from './types'
 import { Story } from '@types'
