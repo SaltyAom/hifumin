@@ -7,7 +7,7 @@ import { SettingEvent, SettingStore } from '@models'
 
 import { PageComponent, PageProps } from './types'
 
-import './page.styl'
+import './page.sass'
 
 const shouldReRender = (prevProps: PageProps, nextProps: PageProps) =>
 	prevProps?.page?.link === nextProps?.page?.link

@@ -21,7 +21,7 @@ import { fetch, isNhentai, randomPick, tags, filterTag } from '@services'
 
 import { Stories } from '@types'
 
-import '@styles/landing.styl'
+import '@styles/landing.sass'
 
 const SearchGallery = dynamic(() => import('@components/gallery/search')),
 	LandingCover = dynamic(() => import('@components/landingCover'))
@@ -98,7 +98,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	let stories = await fetch(
+	let stories = await fetch<Stories>(
 		`https://nhapi.now.sh/search/${randomPick(tags)}/1`
 	)
 

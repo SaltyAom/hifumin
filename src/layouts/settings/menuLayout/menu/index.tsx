@@ -1,4 +1,4 @@
-import './menu.styl'
+import './menu.sass'
 
 export { default as MenuContainer } from './container'
 export { default as MenuDetail } from './detail'

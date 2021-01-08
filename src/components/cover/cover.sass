@@ -1,18 +1,18 @@
 #cover
     @apply flex flex-row w-full my-12
-    padding 16px 36px
+    padding: 16px 36px
 
     &.-preload
         & > .cover
             @apply rounded-md mx-auto
 
             & > .page
-                box-shadow 0 2px 8px rgba(72,72,72,0.05), 
-                    0 8px 25px rgba(72,72,72,0.1), 
-                    0 16px 48px rgba(72,72,72,0.1)
+                box-shadow: 0 2px 8px rgba(72,72,72,0.05), 
+                            0 8px 25px rgba(72,72,72,0.1), 
+                            0 16px 48px rgba(72,72,72,0.1)
 
                 & > .paper
-                    height 506px
+                    height: 506px
 
         & > .detail
             & > .code,
@@ -23,38 +23,38 @@
                 @apply inline-block px-8 rounded-sm bg-gray-200
 
             & > .code
-                width 100px
-                height 24px
+                width: 100px
+                height: 24px
 
             & > .title
-                height 48px
+                height: 48px
 
             & > .sub-title
-                height 48px
+                height: 48px
 
             & > .info > .content
                 @apply px-0 mb-0
-                height 27px
+                height: 27px
 
             & > .tag-container > .tag
                 @apply mb-0 px-12 py-0
-                height 29px
+                height: 29px
 
     & > .cover
         & > .page
             @apply flex rounded-md
-            flex 5
-            box-shadow 0 2px 8px rgba(0,0,0,.05),
-                0 8px 25px rgba(0,0,0,.1),
-                0 16px 48px rgba(0,0,0,.1)
+            flex: 5
+            box-shadow: 0 2px 8px rgba(0,0,0,.05),
+                        0 8px 25px rgba(0,0,0,.1),
+                        0 16px 48px rgba(0,0,0,.1)
 
             & > .paper
-                width 350px
-                height 100%
+                width: 350px
+                height: 100%
 
     & > .detail
         @apply flex flex-col pl-8
-        flex 6
+        flex: 6
 
         & > .title
             @apply text-gray-800 text-2xl font-semibold mb-2
@@ -75,18 +75,18 @@
                 @apply w-full
 
                 & > .paper
-                    width 100%
+                    width: 100%
 
         &.-preload
             & > .cover
                 @apply mb-12
-                width 100%
-                height unset
+                width: 100%
+                height: unset
 
                 & > .page
                     & > .paper
-                        height unset
-                        padding-top 140%
+                        height: unset
+                        padding-top: 140%
 
 
     @media screen and (max-width 639.9px)

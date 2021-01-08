@@ -13,7 +13,7 @@ import { randomBetween } from '@services'
 import { CoverComponent, CoverProps } from './types'
 import { Story } from '@types'
 
-import './cover.styl'
+import './cover.sass'
 
 const shouldRender = (prev: CoverProps, next: CoverProps) => {
 	return (
@@ -28,7 +28,7 @@ const Cover: CoverComponent = memo(({ story, preload = false, preview = true }) 
 		'fullCensor'
 	)
 
-	if (preload)
+	if (preload || story === null)
 		return (
 			<header id="cover" className="-preload">
 				<div className="cover">

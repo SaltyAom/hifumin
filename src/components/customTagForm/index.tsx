@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { FormEvent, useCallback, useState } from 'react'
 
 import { Input } from '@components'
 
@@ -6,7 +6,7 @@ import { Plus } from '@icons'
 
 import { CustomTagFormComponent } from './types'
 
-import './custom-tag-form.styl'
+import './custom-tag-form.sass'
 
 const CustomTagForm: CustomTagFormComponent = ({
 	onSubmit,
@@ -15,7 +15,7 @@ const CustomTagForm: CustomTagFormComponent = ({
 }) => {
 	let [newPreference, updatePreference] = useState('')
 
-	const addNewTag = (event) => {
+	const addNewTag = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 
 		if (!newPreference || newPreference === null) return

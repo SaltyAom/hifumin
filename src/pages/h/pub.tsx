@@ -14,9 +14,9 @@ import dynamic from 'next/dynamic'
 
 import { Cover, Page, OpenGraph } from '@components'
 
-import { Story } from '@types'
+import { Stories, Story } from '@types'
 
-import '@styles/h.styl'
+import '@styles/h.sass'
 
 const Book = dynamic(() => import('@components/book'))
 
@@ -29,10 +29,10 @@ type Component = FunctionComponent<Props>
 
 const Code: Component = ({ story, related }) => {
 	let [allowPage, increaseAllowPage] = useReducer(
-			(allowPage) => allowPage + 20,
-			20
-		),
-		[totalPage, updateTotalPage] = useState(20)
+		(allowPage) => allowPage + 20,
+		20
+	)
+	let [totalPage, updateTotalPage] = useState(20)
 
 	let previousLazyLoad = useRef<() => void>()
 
@@ -161,75 +161,76 @@ const Code: Component = ({ story, related }) => {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
 	let story: Story = {
-			id: 229345,
-			title: {
-				display: 'ปุ๊บปั๊บมองแรงใส่คุณ',
-				english: 'ปุ๊บปั๊บมองแรงใส่คุณ',
-				japanese: 'ปุ๊บปั๊บมองแรงใส่คุณ'
-			},
-			images: {
-				pages: [
-					{
-						link: 'https://opener.studio/images/pub/cover.jpg',
-						info: {
-							type: 'jpg',
-							width: 350,
-							height: 506
-						}
-					},
-					{
-						link: 'https://opener.studio/images/pub/pub.jpg',
-						info: {
-							type: 'jpg',
-							width: 573,
-							height: 572
-						}
-					}
-				],
-				cover: {
+		id: 229345,
+		title: {
+			display: 'ปุ๊บปั๊บมองแรงใส่คุณ',
+			english: 'ปุ๊บปั๊บมองแรงใส่คุณ',
+			japanese: 'ปุ๊บปั๊บมองแรงใส่คุณ'
+		},
+		images: {
+			pages: [
+				{
 					link: 'https://opener.studio/images/pub/cover.jpg',
 					info: {
 						type: 'jpg',
 						width: 350,
 						height: 506
 					}
+				},
+				{
+					link: 'https://opener.studio/images/pub/pub.jpg',
+					info: {
+						type: 'jpg',
+						width: 573,
+						height: 572
+					}
 				}
-			},
-			info: {
-				amount: 2,
-				favorite: 42069,
-				upload: {
-					original: 1602043927,
-					parsed: '10/7/2020'
+			],
+			cover: {
+				link: 'https://opener.studio/images/pub/cover.jpg',
+				info: {
+					type: 'jpg',
+					width: 350,
+					height: 506
 				}
+			}
+		},
+		info: {
+			amount: 2,
+			favorite: 42069,
+			upload: {
+				original: 1602043927,
+				parsed: '10/7/2020'
+			}
+		},
+		metadata: {
+			artist: {
+				name: 'ปุ๊บปั๊บ',
+				count: 1,
+				url: 'https://opener.studio'
 			},
-			metadata: {
-				artist: {
-					name: 'ปุ๊บปั๊บ',
+			tags: [
+				{
+					name: 'Happy',
 					count: 1,
 					url: 'https://opener.studio'
 				},
-				tags: [
-					{
-						name: 'Happy',
-						count: 1,
-						url: 'https://opener.studio'
-					},
-					{
-						name: 'Birthday',
-						count: 1,
-						url: 'https://opener.studio'
-					},
-					{
-						name: 'Wholesome',
-						count: 1,
-						url: 'https://opener.studio'
-					}
-				],
-				language: 'Thai'
-			}
-		},
-		related = []
+				{
+					name: 'Birthday',
+					count: 1,
+					url: 'https://opener.studio'
+				},
+				{
+					name: 'Wholesome',
+					count: 1,
+					url: 'https://opener.studio'
+				}
+			],
+			language: 'Thai'
+		}
+	}
+
+	let related: Stories = []
 
 	return {
 		props: {

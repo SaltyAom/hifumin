@@ -2,16 +2,10 @@ import { FunctionComponent } from "react"
 
 import { Story } from "@types"
 
-export interface CoverProps {
-    story: Story
-    preload?: false
+export interface CoverProps<T = Story | null> {
+    story: T
+    preload?: T extends Story ? false : null
     preview?: boolean
 }
 
-export interface CoverPropsPreload {
-    story?: null
-    preload?: true
-    preview?: boolean
-}
-
-export type CoverComponent = FunctionComponent<CoverProps | CoverPropsPreload>
+export type CoverComponent = FunctionComponent<CoverProps>

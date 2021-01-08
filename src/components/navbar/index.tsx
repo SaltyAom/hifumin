@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 import { Plus, Settings } from '@icons'
 
-import './navbar.styl'
+import './navbar.sass'
 
 const Navbar = () => {
 	let { dispatch, safeMode } = useStoreon<SettingStore, SettingEvent>(

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 import { ChevronLeft } from '@icons'
 
-import './settings-layout.styl'
+import './settings-layout.sass'
 
 const SettingsLayout = ({ children, title = 'Settings' }) => {
 	let { back } = useRouter()

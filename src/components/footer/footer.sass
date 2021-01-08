@@ -3,9 +3,9 @@
 
     & > .wrapper
         @apply flex flex-col mx-auto w-full pt-2 pb-8
-        max-width 740px
-        padding-left 20px
-        padding-right 20px
+        max-width: 740px
+        padding-left: 20px
+        padding-right: 20px
 
         & > .row
             @apply flex flex-row w-full text-gray-600 font-light text-sm mb-4
@@ -18,7 +18,7 @@
 
                 & > .link
                     @apply mb-1
-                    height 24px
+                    height: 24px
 
                     &:hover,
                     &:focus
@@ -31,10 +31,10 @@
 
                     & > .col
                         & > .title
-                            transition margin-bottom .2s ease-out
+                            transition: margin-bottom .2s ease-out
 
                         & > .link
-                            transition height .2s ease-out, opacity .2s ease-out, margin-bottom .2s ease-out
+                            transition: height .2s ease-out, opacity .2s ease-out, margin-bottom .2s ease-out
 
                         &.-collapse
                             & > .title
@@ -42,8 +42,8 @@
 
                             & > .link
                                 @apply mb-0
-                                height 0
-                                opacity 0
+                                height: 0
+                                opacity: 0
 
                         & > .title
                             @apply border-gray-400 border-b pb-1 mb-3

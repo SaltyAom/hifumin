@@ -6,7 +6,7 @@ import { LinkIcon, ShareIcon } from './icons'
 
 import { ShareComponent } from './types'
 
-import './share.styl'
+import './share.sass'
 
 const Share: ShareComponent = ({ id = 0 }) => {
 	let [supportNativeShare, updateSupportNativeShare] = useState(false)

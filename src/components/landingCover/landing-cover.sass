@@ -1,0 +1,14 @@
+#landing-cover
+    @apply block w-full mx-auto
+    max-width: 840px
+
+    & > #cover > .cover > .page
+        transition: transform .2s ease-out, box-shadow .2s ease-out
+
+    &:hover,
+    &:focus 
+        & > #cover > .cover > .page
+            transform: translateY(-8px)
+            box-shadow: 0 2px 8px rgba(0,0,0,0.063), 
+                        0 16px 48px rgba(0,0,0,0.1), 
+                        0 24px 60px rgba(0,0,0,0.2)

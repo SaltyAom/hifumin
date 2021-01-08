@@ -8,7 +8,7 @@ import { Loader } from '@components'
 
 import SearchIcon from './icon'
 
-import './search.styl'
+import './search.sass'
 
 const Search = () => {
 	let {

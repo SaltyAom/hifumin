@@ -6,12 +6,17 @@ import { Search } from '@models/constant'
 
 import TagContainer from './container'
 
-import './tag.styl'
+import './tag.sass'
 
-const Tag = ({ children = null, preload = false, style = {} }) => {
+import { TagComponent } from './types'
+
+const Tag: TagComponent = ({ children, preload = false, style = {} }) => {
 	const { dispatch } = useStoreon<SearchStore, SearchEvent>()
 
 	const updateSearch = () => {
+		if(!children)
+			return
+
 		dispatch(Search.UPDATE, children)
 		dispatch(Search.USE_CURRENT, true)
 	}

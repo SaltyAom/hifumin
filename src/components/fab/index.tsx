@@ -1,6 +1,6 @@
 import { ChevronUp } from '@icons'
 
-import './fab.styl'
+import './fab.sass'
 
 const FloatingActionButton = () => {
     const backToTop = () => {

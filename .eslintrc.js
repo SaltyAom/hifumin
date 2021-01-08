@@ -27,7 +27,8 @@ module.exports = {
         'react/react-in-jsx-scope': 0,
         'react/jsx-indent': 0,
         'react/jsx-indent-props': 0,
-        'react/jsx-one-expression-per-line': 0,
+        'react/jsx-one-expression-per-line': 0,,
+        'jsx-a11y/anchor-is-valid': 0,
         'import/extensions': 0,
         'consistent-return': 0
     },

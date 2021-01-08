@@ -1,7 +1,6 @@
-import './toggler.styl'
-
 import { TogglerComponent } from './types'
-import './types.ts'
+
+import './toggler.sass'
 
 const Toggler: TogglerComponent = ({ active, onSwitch }) => {
 	const handleSwitch = () => {

@@ -17,8 +17,8 @@ import withGA from 'next-ga'
 
 import 'preact/debug'
 
-import '@styles/init.styl'
-import '@styles/tailwind.styl'
+import '@styles/init.sass'
+import '@styles/tailwind.sass'
 
 const excludeFooter = ['/']
 

@@ -2,17 +2,11 @@ import { FunctionComponent } from 'react'
 
 import { Page } from '@types'
 
-export interface PageProps {
-    page: Page
+export interface PageProps<T = boolean> {
+    page: T extends true ? undefined : Page
     alt?: string
-    preload?: boolean
+    preload?: T
     quality?: number
 }
 
-export interface PreloadPageProps {
-    page?: Page
-    alt?: string
-    preload: true
-}
-
-export type PageComponent = FunctionComponent<PageProps | PreloadPageProps>
+export type PageComponent = FunctionComponent<PageProps>

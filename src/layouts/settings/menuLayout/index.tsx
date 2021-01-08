@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 
 import { MenuLayoutComponent } from './types'
 
-import './menu-layout.styl'
+import './menu-layout.sass'
 
 const MenuLayout: MenuLayoutComponent = ({
 	children,

@@ -14,7 +14,7 @@ import { createStructureData, fetch } from '@services'
 
 import { Story } from '@types'
 
-import '@styles/h.styl'
+import '@styles/h.sass'
 
 const Book = dynamic(() => import('@components/book'))
 

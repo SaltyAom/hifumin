@@ -1,6 +1,6 @@
 import { ChipComponent } from './types'
 
-import './chip.styl'
+import './chip.sass'
 
 const Chip: ChipComponent = ({
 	children,

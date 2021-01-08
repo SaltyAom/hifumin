@@ -11,7 +11,7 @@ import { fetch } from '@services'
 
 import { Story } from '@types'
 
-import './landing-cover.styl'
+import './landing-cover.sass'
 
 const LandingCover = () => {
 	let { search } = useStoreon<SearchStore, SearchEvent>('search')

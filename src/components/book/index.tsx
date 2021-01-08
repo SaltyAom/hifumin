@@ -6,19 +6,24 @@ import Page from '@components/page'
 
 import { BookComponent, BookProps } from './types'
 
-import './book.styl'
+import { Story } from '@types'
+
+import './book.sass'
 
 const shouldRender = (prevProps: BookProps, nextProps: BookProps) =>
-	(prevProps.preload || prevProps.story.id) ===
-	(nextProps.preload || nextProps.story.id)
+	(prevProps.preload || prevProps.story?.id) ===
+	(nextProps.preload || nextProps.story?.id)
 
 const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 	if (preload)
 		return (
+			// eslint-disable-next-line jsx-a11y/anchor-is-valid
 			<Link href="">
+				{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
 				<a className="book -preload">
-					<Page preload alt="Read">
+					<Page preload={true} page={undefined} alt="Read">
 						<div className="detail">
+							{/* eslint-disable-next-line jsx-a11y/heading-has-content */}
 							<h6 className="title" />
 							<div className="row">
 								<img
@@ -58,10 +63,10 @@ const Book: BookComponent = memo(({ story = {}, preload = false }) => {
 		images: { cover },
 		info: { amount, favorite },
 		metadata: { language }
-	} = story
+	} = story as Story
 
 	return (
-		<Link href='/h/[h]' as={`/h/${id}`}>
+		<Link href="/h/[h]" as={`/h/${id}`}>
 			<a className="book">
 				<Page page={cover} alt={`Read ${display}`}>
 					<div className="detail">
