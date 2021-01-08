@@ -1,21 +1,23 @@
 const { colors } = require('tailwindcss/defaultTheme')
 
 module.exports = {
-	future: {
-		removeDeprecatedGapUtilities: true,
-		purgeLayersByDefault: true,
-	},
-	purge: ['./src/**/*'],
-	theme: {
-		extend: {},
-		colors: {
+    purge: {
+        preserveHtmlElements: false,
+        content: ['src/**/*.[j|t]s[x]?']
+    },
+    darkMode: 'class',
+    theme: {
+        extend: {},
+        colors: {
 			...colors,
 			primary: {
-				default: "#007aff",
+				DEFAULT: "#007aff",
 				dark: "#00aaff"
 			}
 		}
-	},
-	variants: {},
-	plugins: [],
+    },
+    variants: {
+        extend: {}
+    },
+    plugins: []
 }

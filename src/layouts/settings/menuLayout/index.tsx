@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 
 import { MenuLayoutComponent } from './types'
 
-import './menu-layout.styl'
+import './menu-layout.sass'
 
 const MenuLayout: MenuLayoutComponent = ({
 	children,
@@ -21,5 +21,5 @@ const MenuLayout: MenuLayoutComponent = ({
 	)
 }
 
-export { MenuLink, MenuToggle, MenuDetail, MenuContainer, MenuButton } from './menu'
+export { ExternalLink, MenuLink, MenuToggle, MenuDetail, MenuContainer, MenuButton } from './menu'
 export default MenuLayout

@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SettingEvent, SettingStore } from '@stores'
-import { Setting } from '@stores/constant'
+import { SettingEvent, SettingStore } from '@models'
+import { Setting } from '@models/constant'
 
 import Link from 'next/link'
 
 import { Plus, Settings } from '@icons'
 
-import './navbar.styl'
+import './navbar.sass'
 
 const Navbar = () => {
 	let { dispatch, safeMode } = useStoreon<SettingStore, SettingEvent>(

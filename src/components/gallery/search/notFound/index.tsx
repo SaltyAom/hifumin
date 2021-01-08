@@ -1,4 +1,4 @@
-import './not-found.styl'
+import './not-found.sass'
 
 const NotFound = () => (
 	<main id="hentai-not-found">

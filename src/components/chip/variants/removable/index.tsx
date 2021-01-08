@@ -1,20 +1,22 @@
+import { MouseEvent } from 'react'
+
 import Chip from '../..'
 
 import { Remove } from '@icons'
 
 import { RemovableChipComponent } from './types'
 
-import './removable.styl'
+import './removable.sass'
 
 const RemovableChip: RemovableChipComponent = ({
 	children,
 	onClick = () => null
 }) => {
-    const mapPreference = (event) => {
-        let element: HTMLElement = event.currentTarget
+	const mapPreference = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+		let element: HTMLElement = event.currentTarget
 
-        onClick(element.previousSibling.textContent)
-    }
+		onClick(element.previousSibling?.textContent || '')
+	}
 
 	return (
 		<Chip className="-removable">

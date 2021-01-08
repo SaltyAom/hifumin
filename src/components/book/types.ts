@@ -2,14 +2,9 @@ import { FunctionComponent } from "react"
 
 import { Story } from "@types"
 
-export interface BookProps {
-    story: Story
-    preload?: false
+export interface BookProps<T = boolean> {
+    story?: T extends false ? Story : undefined
+    preload?: T
 }
 
-export interface PreloadBookProps {
-    story?: Story
-    preload?: true
-}
-
-export type BookComponent = FunctionComponent<BookProps | PreloadBookProps>
+export type BookComponent = FunctionComponent<BookProps>

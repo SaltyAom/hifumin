@@ -1,12 +1,14 @@
 import { FormEvent } from 'react'
 
-import './input.styl'
+import { InputComponent } from './types'
 
-const Input = ({
+import './input.sass'
+
+const Input: InputComponent = ({
+	children = null,
+	value = '',
 	placeholder = 'Input',
 	onChange = (event: FormEvent<HTMLElement>) => {},
-	value = '',
-	children = null,
 	enterKeyHint = 'enter'
 }) => {
 	return (

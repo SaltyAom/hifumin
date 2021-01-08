@@ -1,4 +1,4 @@
-import './loader.styl'
+import './loader.sass'
 
 const Loader = () => (
     <div className="loader">

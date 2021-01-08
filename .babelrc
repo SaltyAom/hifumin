@@ -1,0 +1,22 @@
+{
+    "presets": ["next/babel"],
+    "plugins": [
+        [
+            "module-resolver",
+            {
+                "root": ["."],
+                "alias": {
+                    "@pages": "./src/pages",
+                    "components": "./src/components",
+                    "@layouts": "./src/layouts",
+                    "@providers": "./src/providers",
+                    "@services": "./src/services",
+                    "@models": "./src/models",
+                    "@styles": "./src/styles",
+                    "@icons": "./src/icons",
+                    "@types": "./src/@types"
+                }
+            }
+        ]
+    ]
+}

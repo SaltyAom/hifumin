@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, MouseEvent } from 'react'
 
 import { OpenGraph } from '@components'
 
@@ -6,12 +6,19 @@ import { useRouter } from 'next/router'
 
 import { ChevronLeft } from '@icons'
 
-import './settings-layout.styl'
+import { SettingsLayoutComponent } from './types'
 
-const SettingsLayout = ({ children, title = 'Settings' }) => {
+import './settings-layout.sass'
+
+const SettingsLayout: SettingsLayoutComponent = ({
+	children,
+	title = 'Settings'
+}) => {
 	let { back } = useRouter()
 
-	const backToPreviousPage = (event) => {
+	const backToPreviousPage = (
+		event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>
+	) => {
 		event.preventDefault()
 		back()
 	}
@@ -37,6 +44,7 @@ const SettingsLayout = ({ children, title = 'Settings' }) => {
 
 export {
 	default as MenuLayout,
+	ExternalLink,
 	MenuLink,
 	MenuToggle,
 	MenuDetail,

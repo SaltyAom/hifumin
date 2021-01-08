@@ -1,0 +1,62 @@
+#app-footer
+    @apply block w-full border-gray-400 border-t
+
+    & > .wrapper
+        @apply flex flex-col mx-auto w-full pt-2 pb-8
+        max-width: 740px
+        padding-left: 20px
+        padding-right: 20px
+
+        & > .row
+            @apply flex flex-row w-full text-gray-600 font-light text-sm mb-4
+
+            & > .col
+                @apply flex flex-1 flex-col w-full outline-none
+
+                & > .title
+                    @apply text-gray-800 font-medium mt-4 mb-2
+
+                & > .link
+                    @apply mb-1
+                    height: 24px
+
+                    &:hover,
+                    &:focus
+                        @apply underline
+
+        @media(max-width: 509.9px)
+            &
+                & > .row
+                    @apply flex-col
+
+                    & > .col
+                        & > .title
+                            transition: margin-bottom .2s ease-out
+
+                        & > .link
+                            transition: height .2s ease-out, opacity .2s ease-out, margin-bottom .2s ease-out
+
+                        &.-collapse
+                            & > .title
+                                @apply mb-0
+
+                            & > .link
+                                @apply mb-0
+                                height: 0
+                                opacity: 0
+
+                        & > .title
+                            @apply border-gray-400 border-b pb-1 mb-3
+
+    @media (prefers-color-scheme: dark)
+        &
+            @apply border-gray-600
+
+            & > .wrapper
+                & > .row
+                    @apply text-gray-400
+
+                    & > .col
+                        & > .title
+                            @apply text-gray-200
+

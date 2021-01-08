@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { isServer } from '@libs'
+import { isServer } from '@services'
 
 import { OpenGraphComponent } from './types'
 
@@ -60,7 +60,7 @@ const OpenGraph: OpenGraphComponent = ({
 				name="keyword"
 				content={`${title},${
 					alternativeTitle.length
-						? alternativeTitle.join(',') + ','
+						? `${alternativeTitle.join(',')},`
 						: ''
 				}${author},Opener Studio${id ? `,${id}` : ''}`}
 			/>

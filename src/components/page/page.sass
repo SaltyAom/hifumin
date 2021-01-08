@@ -1,0 +1,29 @@
+.page
+    @apply flex bg-gray-200 overflow-hidden
+
+    & > div > .paper
+        @apply block w-full object-contain
+        border-radius: inherit
+
+        &.-lazy
+            min-height: 500px
+            padding-top: 145%
+
+        &.-preload
+            @apply opacity-0
+
+        &.-blur
+            filter: blur(16px)
+        
+            &.-full-censor
+                @apply opacity-0
+
+    @media (max-width: 567.9px)
+        &
+            & > .paper
+                &.-preload
+                    padding-top: 145%
+
+    @media (prefers-color-scheme: dark)
+        &
+            @apply bg-gray-700

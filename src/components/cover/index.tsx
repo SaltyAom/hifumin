@@ -3,17 +3,17 @@ import { memo } from 'react'
 import Image from 'next/image'
 
 import { useStoreon } from 'storeon/react'
-import { SettingEvent, SettingStore } from '@stores'
+import { SettingEvent, SettingStore } from '@models'
 
 import Tag, { TagContainer } from './tag'
 import Share from './share'
 
-import { randomBetween } from '@libs'
+import { randomBetween } from '@services'
 
 import { CoverComponent, CoverProps } from './types'
 import { Story } from '@types'
 
-import './cover.styl'
+import './cover.sass'
 
 const shouldRender = (prev: CoverProps, next: CoverProps) => {
 	return (
@@ -28,7 +28,7 @@ const Cover: CoverComponent = memo(({ story, preload = false, preview = true }) 
 		'fullCensor'
 	)
 
-	if (preload)
+	if (preload || story === null)
 		return (
 			<header id="cover" className="-preload">
 				<div className="cover">

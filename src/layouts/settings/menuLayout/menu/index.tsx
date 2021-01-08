@@ -1,5 +1,5 @@
-import './menu.styl'
-
+import './menu.sass'
+export { default as ExternalLink } from './externalLink'
 export { default as MenuContainer } from './container'
 export { default as MenuDetail } from './detail'
 export { default as MenuLink } from './link'

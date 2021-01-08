@@ -3,8 +3,8 @@ import { Fragment, useEffect, useState, FunctionComponent } from 'react'
 import dynamic from 'next/dynamic'
 
 import { useStoreon } from 'storeon/react'
-import { SearchStore, SearchEvent, SettingStore, SettingEvent } from '@stores'
-import { Search as SearchAction } from '@stores/constant'
+import { SearchStore, SearchEvent, SettingStore, SettingEvent } from '@models'
+import { Search as SearchAction } from '@models/constant'
 
 import { GetStaticProps } from 'next'
 
@@ -17,11 +17,11 @@ import {
 	OpenGraph
 } from '@components'
 
-import { fetch, isNhentai, randomPick, tags, filterTag } from '@libs'
+import { get, isNhentai, randomPick, tags, filterTag } from '@services'
 
 import { Stories } from '@types'
 
-import '@styles/landing.styl'
+import '@styles/landing.sass'
 
 const SearchGallery = dynamic(() => import('@components/gallery/search')),
 	LandingCover = dynamic(() => import('@components/landingCover'))
@@ -98,7 +98,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	let stories = await fetch(
+	let stories = await get<Stories>(
 		`https://nhapi.now.sh/search/${randomPick(tags)}/1`
 	)
 

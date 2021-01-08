@@ -1,15 +1,16 @@
-import { Fragment, FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { MasonryEvent, MasonryStore } from '@stores'
+import { MasonryEvent, MasonryStore } from '@models'
 
 import { Book } from '@components'
-import { PreloadGallery } from '..'
 
-import { isServer, splitChunk } from '@libs'
-import { useInfiniteHentai } from '@libs/hooks'
+import { splitChunk } from '@services'
+import { useInfiniteHentai } from '@services/hooks'
 
 import { Stories } from '@types'
+
+import PreloadGallery from '../preload'
 
 interface Props {
 	initial: Stories
@@ -24,36 +25,20 @@ const RecommendedGallery: FunctionComponent<Props> = ({ initial }) => {
 	// ? Pass down an initial story from Incremental Static Regeneration.
 	let [galleries] = useInfiniteHentai(initial)
 
-	if (!galleries.length)
-		return (
-			<Fragment>
-				{splitChunk(Array(25).fill(0), masonry).map((column, index) => (
-					<div
-						key={index}
-						className="masonry"
-						style={{ marginTop: margin[index] }}
-					>
-						{column.map((_, index) => (
-							<Book key={index} preload />
-						))}
-						<Book preload />
-						<Book preload />
-					</div>
-				))}
-			</Fragment>
-		)
+	if (!galleries.length) return <PreloadGallery />
 
 	return (
-		<Fragment>
+		<>
 			{splitChunk(galleries, masonry).map((column, index) => (
 				<div
+					// eslint-disable-next-line react/no-array-index-key
 					key={index}
 					className="masonry"
 					style={{ marginTop: margin[index] }}
 				>
-					{column.map((story, index) => (
+					{column.map((story) => (
 						<Book
-							key={`${index}-${isServer ? 'server' : 'client'}`}
+							key={story.id}
 							story={story}
 						/>
 					))}
@@ -61,7 +46,7 @@ const RecommendedGallery: FunctionComponent<Props> = ({ initial }) => {
 					<Book preload />
 				</div>
 			))}
-		</Fragment>
+		</>
 	)
 }
 

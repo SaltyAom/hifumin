@@ -1,7 +1,4 @@
-import {
-	Fragment,
-	FunctionComponent
-} from 'react'
+import { Fragment, FunctionComponent } from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
@@ -10,13 +7,11 @@ import dynamic from 'next/dynamic'
 import { Cover, Page, OpenGraph } from '@components'
 import NotFound from '@components/gallery/search/notFound'
 
-import { fetch } from '@libs/fetch'
+import { createStructureData, get } from '@services'
 
-import { Story } from '@types'
+import { Stories, Story } from '@types'
 
-import '@styles/h.styl'
-import { useLazyLoad } from '@libs/hooks'
-import { createStructureData } from '@libs'
+import '@styles/h.sass'
 
 const Book = dynamic(() => import('@components/book'))
 
@@ -27,13 +22,17 @@ interface Props {
 
 type Component = FunctionComponent<Props>
 
-const Code: Component = ({ story, related }) => {
-	let [allowLazyLoadPage] = useLazyLoad(story)
+interface Path {
+	params: {
+		h: string
+	}
+}
 
+const Code: Component = ({ story, related }) => {
 	// ? Generating
 	if (typeof story === 'undefined')
 		return (
-			<Fragment>
+			<>
 				<OpenGraph
 					title="Opener Studio"
 					description="Pinterest but for hentai and 6 digit code."
@@ -59,7 +58,7 @@ const Code: Component = ({ story, related }) => {
 							))}
 					</footer>
 				</main>
-			</Fragment>
+			</>
 		)
 
 	// ? Not valid
@@ -87,7 +86,7 @@ const Code: Component = ({ story, related }) => {
 	let [structuredData, description] = createStructureData(story)
 
 	return (
-		<Fragment>
+		<>
 			<OpenGraph
 				title={display}
 				alternativeTitle={[english, japanese]}
@@ -99,6 +98,7 @@ const Code: Component = ({ story, related }) => {
 			<Head>
 				<script
 					type="application/ld+json"
+					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: structuredData
 					}}
@@ -128,30 +128,32 @@ const Code: Component = ({ story, related }) => {
 					))}
 				</footer>
 			</main>
-		</Fragment>
+		</>
 	)
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: true
-	}
-}
+export const getStaticPaths: GetStaticPaths = async () => ({
+	paths: [],
+	fallback: true
+})
 
-export const getStaticProps: GetStaticProps<Props> = async ({
-	params: { h }
-}) => {
-	let story, related
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
+	let story: Story
+	let related: Stories
+
+	let {
+		params: { h }
+	} = context as Path
 
 	try {
-		story = await fetch(`https://nhapi.now.sh/${h}`)
+		story = await get<Story>(`https://nhapi.now.sh/${h}`)
 	} catch (err) {
+		// @ts-ignore
 		story = { id: 0 }
 	}
 
 	try {
-		let data = await fetch(`https://nhapi.now.sh/${h}/related`)
+		let data = await get<Stories>(`https://nhapi.now.sh/${h}/related`)
 
 		related = Array.isArray(data) ? data : [data]
 	} catch (err) {

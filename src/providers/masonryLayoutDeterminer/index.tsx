@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { MasonryEvent, MasonryStore } from '@stores'
-import Masonry from '@stores/masonry/constant'
+import { MasonryEvent, MasonryStore } from '@models'
+import Masonry from '@models/masonry/constant'
 
-import { getMasonryMargin } from '@libs'
-import { useMasonry } from '@libs/hooks'
+import { getMasonryMargin } from '@services'
+import { useMasonry } from '@services/hooks'
 
 // ? Listener for masonry layout
 const MasonryLayoutDeterminer = () => {

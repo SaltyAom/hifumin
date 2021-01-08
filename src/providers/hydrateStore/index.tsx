@@ -2,12 +2,14 @@ import { useEffect } from 'react'
 
 import { useStoreon } from 'storeon/react'
 
-import { SettingEvent, SettingStore } from '@stores'
-import { Setting } from '@stores/constant'
+import { SettingEvent, SettingStore } from '@models'
+import { Setting } from '@models/constant'
 
-import { initPersist } from '@libs'
+import { initPersist } from '@services'
 
-const HydrateStoreProvider = ({ children }) => {
+import { HydrateStoreProviderComponents } from './types'
+
+const HydrateStoreProvider: HydrateStoreProviderComponents = ({ children }) => {
 	const { dispatch } = useStoreon<SettingStore, SettingEvent>()
 
 	useEffect(() => {

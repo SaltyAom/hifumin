@@ -1,48 +1,32 @@
-import React, { Fragment, useEffect } from 'react'
-
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import Router, { useRouter } from 'next/router'
 
 import { StoreContext } from 'storeon/react'
-import store from '@stores'
+import store from '@models'
 
 import { HydrateStoreProvider } from '@providers'
 
 import { Navbar, Footer, ErrorBoundary } from '@components'
 
-// import { useInstall } from 'app-hooks'
-import { isServer } from '@libs'
+import { isServer } from '@services'
 
+// @ts-ignore
 import withGA from 'next-ga'
 
 import 'preact/debug'
 
-import '@styles/init.styl'
-import '@styles/tailwind.styl'
+import '@styles/init.sass'
+import '@styles/tailwind.sass'
 
 const excludeFooter = ['/']
 
 const App = ({ Component, pageProps }: AppProps) => {
 	let router = useRouter()
-	// useInstall()
-
-	useEffect(() => {
-		document.addEventListener('touchstart', () => null, false)
-
-		if (
-			'serviceWorker' in navigator &&
-			process.env.NODE_ENV === 'production'
-		) {
-			navigator.serviceWorker.register('/service-worker.js', {
-				scope: '/'
-			})
-		}
-	}, [])
 
 	return (
-		<Fragment>
+		<>
 			<Head>
 				<meta
 					name="referrer"
@@ -62,7 +46,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 					</ErrorBoundary>
 				</HydrateStoreProvider>
 			</StoreContext.Provider>
-		</Fragment>
+		</>
 	)
 }
 

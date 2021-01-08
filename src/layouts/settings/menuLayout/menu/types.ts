@@ -1,16 +1,16 @@
-import { FunctionComponent, ReactElement } from 'react'
+import { FunctionComponent, ReactChild } from 'react'
 
 import { TogglerProps } from '@components/toggler/types'
 
 export interface MenuBaseProps {
-	children: string
+	children: ReactChild | ReactChild[]
 	disabled?: boolean
 }
 
 export type MenuBaseComponent = FunctionComponent<MenuBaseProps>
 
 export interface MenuContainerProps extends Omit<MenuBaseProps, 'children'> {
-	children: ReactElement | ReactElement[]
+	children: ReactChild | ReactChild[]
 }
 
 export type MenuContainerComponent = FunctionComponent<MenuContainerProps>

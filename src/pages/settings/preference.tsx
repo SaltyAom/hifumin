@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SettingEvent, SettingStore } from '@stores'
-import { Setting } from '@stores/constant'
+import { SettingEvent, SettingStore } from '@models'
+import { Setting } from '@models/constant'
 
 import SettingsLayout, {
 	MenuLayout,
@@ -13,7 +13,7 @@ import SettingsLayout, {
 
 import { Chip, CustomTagForm, RemovableChip } from '@components'
 
-import { tags } from '@libs'
+import { tags } from '@services'
 
 const Preference = () => {
 	let { useDefaultPreference, preference, dispatch } = useStoreon<
@@ -21,16 +21,17 @@ const Preference = () => {
 		SettingEvent
 	>('useDefaultPreference', 'preference')
 
-	let toggleDefaultPreference = useCallback((defaultPreference) => {
+	let toggleDefaultPreference = useCallback((defaultPreference: boolean) => {
 		dispatch(Setting.DEFAULT_PREFERENCE, !defaultPreference)
 	}, [])
 
-	const addNewPreference = (preference) => {
-			dispatch(Setting.ADD_PREFERENCE, preference)
-		},
-		removePreference = (preference) => {
-			dispatch(Setting.REMOVE_PREFERENCE, preference)
-		}
+	let addNewPreference = (preference: string) => {
+		dispatch(Setting.ADD_PREFERENCE, preference)
+	}
+
+	let removePreference = (preference: string) => {
+		dispatch(Setting.REMOVE_PREFERENCE, preference)
+	}
 
 	return (
 		<SettingsLayout>

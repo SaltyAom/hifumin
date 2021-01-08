@@ -1,13 +1,14 @@
-import { supportsShare } from '@libs'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
+
+import { supportsShare } from '@services'
 
 import { LinkIcon, ShareIcon } from './icons'
 
-import './share.styl'
-
 import { ShareComponent } from './types'
 
-const Share: ShareComponent = ({ id = 0, preload = false }) => {
+import './share.sass'
+
+const Share: ShareComponent = ({ id = 0 }) => {
 	let [supportNativeShare, updateSupportNativeShare] = useState(false)
 
 	useEffect(() => {
@@ -23,7 +24,7 @@ const Share: ShareComponent = ({ id = 0, preload = false }) => {
 	return (
 		<footer id="share">
 			{supportNativeShare && (
-				<button className="button" onClick={share}>
+				<button type="button" className="button" onClick={share}>
 					<ShareIcon /> Share
 				</button>
 			)}
@@ -31,7 +32,7 @@ const Share: ShareComponent = ({ id = 0, preload = false }) => {
 				title="Open original link"
 				href={`https://nhentai.net/${id ? `/g/${id}` : ''}`}
 				target="_blank"
-				rel="noreffer noopener"
+				rel="noreferrer noopener"
 				className="button"
 			>
 				<LinkIcon /> Original

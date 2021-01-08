@@ -3,11 +3,11 @@ import { memo } from 'react'
 import Image from 'next/image'
 
 import { useStoreon } from 'storeon/react'
-import { SettingEvent, SettingStore } from '@stores'
+import { SettingEvent, SettingStore } from '@models'
 
 import { PageComponent, PageProps } from './types'
 
-import './page.styl'
+import './page.sass'
 
 const shouldReRender = (prevProps: PageProps, nextProps: PageProps) =>
 	prevProps?.page?.link === nextProps?.page?.link
@@ -19,7 +19,7 @@ const Page: PageComponent = memo(
 			'fullCensor'
 		)
 
-		if (preload)
+		if (preload || !page)
 			return (
 				<div className="page">
 					{children}

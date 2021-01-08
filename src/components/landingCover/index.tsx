@@ -1,22 +1,22 @@
 import { useEffect, useState, useRef } from 'react'
 
 import { useStoreon } from 'storeon/react'
-import { SearchEvent, SearchStore } from '@stores'
+import { SearchEvent, SearchStore } from '@models'
 
 import Link from 'next/link'
 
 import Cover from '@components/cover'
 
-import { fetch } from '@libs'
+import { get } from '@services'
 
 import { Story } from '@types'
 
-import './landing-cover.styl'
+import './landing-cover.sass'
 
 const LandingCover = () => {
 	let { search } = useStoreon<SearchStore, SearchEvent>('search')
 
-	let [story, updateStory] = useState<Story>(null)
+	let [story, updateStory] = useState<Story | null>(null)
 
 	let previousFetch = useRef<AbortController>()
 
@@ -30,7 +30,7 @@ const LandingCover = () => {
 
 		previousFetch.current = controller
 
-		fetch(`https://nhapi.now.sh/${search.trim()}`, {
+		get<Story>(`https://nhapi.now.sh/${search.trim()}`, {
 			signal
 		}).then((story) => updateStory(story))
 	}, [search])
