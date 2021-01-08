@@ -21,16 +21,17 @@ const Preference = () => {
 		SettingEvent
 	>('useDefaultPreference', 'preference')
 
-	let toggleDefaultPreference = useCallback((defaultPreference) => {
+	let toggleDefaultPreference = useCallback((defaultPreference: boolean) => {
 		dispatch(Setting.DEFAULT_PREFERENCE, !defaultPreference)
 	}, [])
 
-	const addNewPreference = (preference) => {
-			dispatch(Setting.ADD_PREFERENCE, preference)
-		},
-		removePreference = (preference) => {
-			dispatch(Setting.REMOVE_PREFERENCE, preference)
-		}
+	let addNewPreference = (preference: string) => {
+		dispatch(Setting.ADD_PREFERENCE, preference)
+	}
+
+	let removePreference = (preference: string) => {
+		dispatch(Setting.REMOVE_PREFERENCE, preference)
+	}
 
 	return (
 		<SettingsLayout>

@@ -19,14 +19,15 @@ const Preference = () => {
 		SettingEvent
 	>('useDefaultFilter', 'filter')
 
-	let toggleDefaultPreference = useCallback((defaultFilter) => {
+	let toggleDefaultPreference = useCallback((defaultFilter: boolean) => {
 		dispatch(Setting.UPDATE_DEFAULT_FILTER, !defaultFilter)
 	}, [])
 
-	const addNewPreference = (preference) => {
+	let addNewPreference = (preference: string) => {
 			dispatch(Setting.ADD_FILTER, preference)
-		},
-		removePreference = (preference) => {
+		}
+
+		let removePreference = (preference: string) => {
 			dispatch(Setting.REMOVE_FILTER, preference)
 		}
 

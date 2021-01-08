@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react'
+
 import Chip from '../..'
 
 import { Remove } from '@icons'
@@ -10,7 +12,7 @@ const RemovableChip: RemovableChipComponent = ({
 	children,
 	onClick = () => null
 }) => {
-	const mapPreference = (event) => {
+	const mapPreference = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
 		let element: HTMLElement = event.currentTarget
 
 		onClick(element.previousSibling?.textContent || '')

@@ -21,12 +21,12 @@
         grid-template-columns: repeat(auto-fill, 240px)
         grid-gap: 20px
 
-    @media screen and (max-width 567.9px)
+    @media (max-width: 567.9px)
         &
             & > .related
                 grid-template-columns: repeat(auto-fill, calc(50% - 20px))
 
-    @media (prefers-color-scheme dark)
+    @media (prefers-color-scheme: dark)
         &
             & > .more
                 @apply text-gray-500

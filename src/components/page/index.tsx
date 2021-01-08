@@ -19,7 +19,7 @@ const Page: PageComponent = memo(
 			'fullCensor'
 		)
 
-		if (preload)
+		if (preload || !page)
 			return (
 				<div className="page">
 					{children}

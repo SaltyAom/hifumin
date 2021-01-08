@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 
 import FloatingActionButton from '@components/fab'
 
-import SettingsLayout, { MenuDetail, MenuLayout } from '@layouts/settings'
+import SettingsLayout, { MenuDetail, MenuLayout, ExternalLink } from '@layouts/settings'
 
 const About = () => {
 	return (
@@ -27,28 +27,18 @@ const About = () => {
 					<MenuDetail>
 						You can support Opener by continue to using the platform
 						or if you really want, you can{' '}
-						<a
-							className="link"
-							href="https://ko-fi.com/saltyaom"
-							target="_blank"
-							rel="norefferer noreopener"
-						>
+						<ExternalLink href="https://ko-fi.com/saltyaom">
 							buy me some Ko-fi
-						</a>
+						</ExternalLink>
 						.
 					</MenuDetail>
 				</MenuLayout>
 				<MenuLayout title="Privacy" id="privacy">
 					<MenuDetail>
 						We use{' '}
-						<a
-							href="https://marketingplatform.google.com/about/analytics/terms/us/"
-							className="link"
-							target="_blank"
-							rel="norefferer noreopener"
-						>
+						<ExternalLink href="https://marketingplatform.google.com/about/analytics/terms/us/">
 							Google Analytic
-						</a>{' '}
+						</ExternalLink>{' '}
 						to collect your data anonymously for Search Engine
 						Optimization and Data Analytic purpose only.
 					</MenuDetail>
@@ -80,13 +70,9 @@ const About = () => {
 					<MenuDetail>
 						Opener Studio is closed-source software rightfully owned
 						and developed by{' '}
-						<a
-							href="https://github.com/SaltyAom"
-							className="link"
-							target="_blank"
-						>
+						<ExternalLink href="https://github.com/saltyAom">
 							SaltyAom
-						</a>{' '}
+						</ExternalLink>{' '}
 						as side project in free time.
 					</MenuDetail>
 					<MenuDetail>

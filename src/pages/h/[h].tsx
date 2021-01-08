@@ -1,7 +1,4 @@
-import {
-	Fragment,
-	FunctionComponent
-} from 'react'
+import { Fragment, FunctionComponent } from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
@@ -10,9 +7,9 @@ import dynamic from 'next/dynamic'
 import { Cover, Page, OpenGraph } from '@components'
 import NotFound from '@components/gallery/search/notFound'
 
-import { createStructureData, fetch } from '@services'
+import { createStructureData, get } from '@services'
 
-import { Story } from '@types'
+import { Stories, Story } from '@types'
 
 import '@styles/h.sass'
 
@@ -136,24 +133,27 @@ const Code: Component = ({ story, related }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => ({
-		paths: [],
-		fallback: true
-	})
+	paths: [],
+	fallback: true
+})
 
-export const getStaticProps: GetStaticProps<Props> = async ({
-	params: { h }
-}: Path) => {
-	let story
-	let related
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
+	let story: Story
+	let related: Stories
+
+	let {
+		params: { h }
+	} = context as Path
 
 	try {
-		story = await fetch(`https://nhapi.now.sh/${h}`)
+		story = await get<Story>(`https://nhapi.now.sh/${h}`)
 	} catch (err) {
+		// @ts-ignore
 		story = { id: 0 }
 	}
 
 	try {
-		let data = await fetch(`https://nhapi.now.sh/${h}/related`)
+		let data = await get<Stories>(`https://nhapi.now.sh/${h}/related`)
 
 		related = Array.isArray(data) ? data : [data]
 	} catch (err) {

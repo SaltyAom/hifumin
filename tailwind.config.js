@@ -1,3 +1,5 @@
+const { colors } = require('tailwindcss/defaultTheme')
+
 module.exports = {
     purge: {
         preserveHtmlElements: false,
@@ -5,7 +7,14 @@ module.exports = {
     },
     darkMode: 'class',
     theme: {
-        extend: {}
+        extend: {},
+        colors: {
+			...colors,
+			primary: {
+				DEFAULT: "#007aff",
+				dark: "#00aaff"
+			}
+		}
     },
     variants: {
         extend: {}

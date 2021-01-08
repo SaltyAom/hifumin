@@ -1,4 +1,4 @@
-export const fetch = async <T extends unknown>(
+export const get = async <T extends unknown>(
 	href: string,
 	options = {}
 ): Promise<T> => {
@@ -8,5 +8,5 @@ export const fetch = async <T extends unknown>(
 	return data
 }
 
-export const fetchAsJsonString = async (href: string, options = {}) =>
-	JSON.stringify(await fetch(href, options))
+export const getJsonString = async (href: string, options = {}) =>
+	JSON.stringify(await get(href, options))

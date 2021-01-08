@@ -1,3 +1,5 @@
+@use "sass:color"
+    
 .book
     outline: none
 
@@ -13,23 +15,19 @@
     &:focus
         & > .page
             transform: translateY(-4px)
-            box-shadow: 0 2px 8px rgba(0,0,0,0.0625), 
-                0 16px 48px rgba(0,0,0,0.1), 
-                0 24px 60px rgba(0,0,0,0.2)
+            box-shadow: 0 2px 8px rgba(0,0,0,0.0625), 0 16px 48px rgba(0,0,0,0.1), 0 24px 60px rgba(0,0,0,0.2)
 
             & > .detail
                 opacity: 1
 
     & > .page
         @apply rounded-md relative
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05), 
-            0 8px 25px rgba(0,0,0,0.0875), 
-            0 16px 48px rgba(0,0,0,0.0875)
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 8px 25px rgba(0,0,0,0.0875), 0 16px 48px rgba(0,0,0,0.0875)
         transition: box-shadow .2s ease-out, transform .2s ease-out
 
         & > .detail
             @apply absolute z-10 flex flex-col justify-end w-full h-full p-4 opacity-0
-            background-color: color.scale(#000, $alpha: .625)
+            background-color: color.scale(#000, $alpha: 62.5%)
             transition: opacity .2s ease-out
 
             & > .title
@@ -51,7 +49,7 @@
                 & > .detail > .icon
                     @apply capitalize
 
-    @media screen and (max-width: 567.9px)
+    @media (max-width: 567.9px)
         &.-preload
             & > .detail
                 @apply opacity-0

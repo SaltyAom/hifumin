@@ -17,7 +17,7 @@ import {
 	OpenGraph
 } from '@components'
 
-import { fetch, isNhentai, randomPick, tags, filterTag } from '@services'
+import { get, isNhentai, randomPick, tags, filterTag } from '@services'
 
 import { Stories } from '@types'
 
@@ -98,7 +98,7 @@ const Index: FunctionComponent<Props> = ({ stories }) => {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-	let stories = await fetch<Stories>(
+	let stories = await get<Stories>(
 		`https://nhapi.now.sh/search/${randomPick(tags)}/1`
 	)
 

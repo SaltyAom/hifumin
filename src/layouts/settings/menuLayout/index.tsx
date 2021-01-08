@@ -21,5 +21,5 @@ const MenuLayout: MenuLayoutComponent = ({
 	)
 }
 
-export { MenuLink, MenuToggle, MenuDetail, MenuContainer, MenuButton } from './menu'
+export { ExternalLink, MenuLink, MenuToggle, MenuDetail, MenuContainer, MenuButton } from './menu'
 export default MenuLayout

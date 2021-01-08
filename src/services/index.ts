@@ -1,9 +1,8 @@
 export { isServer, isNumberString, isNhentai } from './is'
 export { randomBetween, randomPick } from './random'
-export { fetch, fetchAsJsonString } from './fetch'
+export { get, getJsonString } from './fetch'
 export {
 	useInfiniteHentai,
-	useSimulateHeight,
 	useMasonry,
 	useLazyLoad,
 	useSearchHentai

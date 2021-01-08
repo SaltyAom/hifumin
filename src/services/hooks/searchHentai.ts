@@ -4,7 +4,7 @@ import { useStoreon } from 'storeon/react'
 import { SearchEvent, SearchStore, SettingEvent, SettingStore } from '@models'
 import { Search } from '@models/constant'
 
-import { randomPick, fetch, filterTag } from '@services'
+import { randomPick, get, filterTag } from '@services'
 
 import { Stories } from '@types'
 
@@ -74,10 +74,10 @@ const useSearchHentai = ({
 
 			previousFetch.current = controller
 
-			fetch(`https://nhapi.now.sh/search/${randomTag}/${page}`, {
+			get<Stories>(`https://nhapi.now.sh/search/${randomTag}/${page}`, {
 				signal
 			})
-				.then((newGalleries: Stories) => {
+				.then((newGalleries) => {
 					let filteredGalleries = useDefaultFilter
 						? newGalleries
 						: filterTag(newGalleries, filter)

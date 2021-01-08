@@ -21,11 +21,9 @@ $navbar-height: 58px
         & > .title
             @apply text-2xl font-medium text-gray-700
             font-family: somatic
-            text-shadow: 0 2px 8px rgba(0,0,0,0.05), 
-                         0 8px 25px rgba(0,0,0,0.1), 
-                         0 16px 48px rgba(0,0,0,0.1)
+            text-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 8px 25px rgba(0,0,0,0.1), 0 16px 48px rgba(0,0,0,0.1)
 
-            @supports (-webkit-background-clip text)
+            @supports (-webkit-background-clip: text)
                 background: linear-gradient(225deg, #7F7FD5, #86A8E7, #91EAE4)
                 -webkit-background-clip: text
                 -webkit-text-fill-color: transparent
@@ -67,20 +65,20 @@ $navbar-height: 58px
                     &.-hidden
                         width: 0
 
-    @media (prefers-color-scheme dark)
+    @media (prefers-color-scheme: dark)
         &
             @apply border-gray-800 bg-gray-800
 
             & > .tools
                 & > .tab
-                    &:hover,
-                    &:focus
-                        @apply bg-gray-800
-
-                        &.safe-mode
-                            & > .strike
-                                @apply border-gray-800
-
                     &.safe-mode
+                        @apply bg-gray-800
+    
                         & > .strike
                             @apply border-gray-800
+
+                        &:hover,
+                        &:focus
+                            &.safe-mode
+                                & > .strike
+                                    @apply border-gray-800

@@ -1,6 +1,8 @@
 import { useReducer } from 'react'
 
-const Section = ({ children }) => {
+import { FooterSectionComponent } from './types'
+
+const Section: FooterSectionComponent = ({ children }) => {
 	const [isCollapse, toggleCollapse] = useReducer(
 		(collapse) => !collapse,
 		true

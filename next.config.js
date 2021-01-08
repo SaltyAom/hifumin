@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const withOffline = require('next-offline')
+const withSass = require('@zeit/next-sass')
 
 const composePlugins = require('next-compose-plugins')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -8,6 +9,7 @@ const { join } = require('path')
 
 module.exports = composePlugins(
 	[
+		[withSass],
 		[
 			withOffline,
 			{
@@ -73,7 +75,7 @@ module.exports = composePlugins(
 				'@models': join(__dirname, 'src/models'),
 				'@layouts': join(__dirname, 'src/layouts'),
 				'@providers': join(__dirname, 'src/providers'),
-				'@styles': join(__dirname, 'src/styles'),
+				'@styles': join(__dirname, 'src/styles')
 			}
 
 			if (!dev)
