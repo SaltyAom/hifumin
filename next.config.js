@@ -21,7 +21,7 @@ module.exports = composePlugins(
 							handler: 'CacheFirst'
 						},
 						{
-							urlPattern: /nhapi.now.sh\/\*/,
+							urlPattern: /nhapi-aomkirby123.vercel.app\/\*/,
 							handler: 'NetworkFirst',
 							options: {
 								cacheableResponse: {

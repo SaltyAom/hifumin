@@ -30,7 +30,7 @@ const LandingCover = () => {
 
 		previousFetch.current = controller
 
-		get<Story>(`https://nhapi.now.sh/${search.trim()}`, {
+		get<Story>(`https://nhapi-aomkirby123.vercel.app/${search.trim()}`, {
 			signal
 		}).then((story) => updateStory(story))
 	}, [search])
