@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const withOffline = require('next-offline')
+const withPreact = require('next-plugin-preact')
 const withSass = require('@zeit/next-sass')
 
 const composePlugins = require('next-compose-plugins')
@@ -7,9 +8,13 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const { join } = require('path')
 
+// const withStyles = require('./tools/withStyles')
+const { useEsbuildLoader } = require('./tools/useEsbuild')
+
 module.exports = composePlugins(
 	[
 		[withSass],
+		[withPreact],
 		[
 			withOffline,
 			{
@@ -17,13 +22,15 @@ module.exports = composePlugins(
 					swDest: 'static/service-worker.js',
 					runtimeCaching: [
 						{
-							urlPattern: /.js$|.css$|.svg$|.jpg$|.png$|.otf$/,
-							handler: 'CacheFirst'
-						},
-						{
-							urlPattern: /nhapi-aomkirby123.vercel.app\/\*/,
+							urlPattern: /^https?.*/,
 							handler: 'NetworkFirst',
 							options: {
+								cacheName: 'https-calls',
+								networkTimeoutSeconds: 15,
+								expiration: {
+									maxEntries: 150,
+									maxAgeSeconds: 6 * 60 * 60 // 6 hours
+								},
 								cacheableResponse: {
 									statuses: [0, 200]
 								}
@@ -65,7 +72,9 @@ module.exports = composePlugins(
 			]
 		},
 
-		webpack(config, { dev, isServer }) {
+		webpack(config, { dev }) {
+			// useEsbuildLoader(config)
+
 			config.resolve.alias = {
 				...config.resolve.alias,
 				'@pages': join(__dirname, 'src/pages'),
@@ -77,16 +86,6 @@ module.exports = composePlugins(
 				'@providers': join(__dirname, 'src/providers'),
 				'@styles': join(__dirname, 'src/styles')
 			}
-
-			if (!dev)
-				config.optimization = {
-					...config.optimization,
-					usedExports: true,
-					minimizer: [
-						...config.optimization.minimizer,
-						new OptimizeCSSAssetsPlugin()
-					]
-				}
 
 			return config
 		}

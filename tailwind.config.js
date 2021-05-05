@@ -1,6 +1,7 @@
 const { colors } = require('tailwindcss/defaultTheme')
 
 module.exports = {
+    mode: 'jit',
     purge: {
         preserveHtmlElements: false,
         content: ['src/**/*.[j|t]s[x]?']
