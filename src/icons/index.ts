@@ -1,8 +1,0 @@
-export { default as Account } from './account'
-export { default as ChevronLeft } from './chevronLeft'
-export { default as ChevronRight } from './chevronRight'
-export { default as ChevronUp } from './chevronUp'
-export { default as Info } from './info'
-export { default as Plus } from './plus'
-export { default as Remove } from './remove'
-export { default as Settings } from './settings'

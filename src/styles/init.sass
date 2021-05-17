@@ -1,18 +1,11 @@
-@font-face
-    font-family: somatic
-    src: local('Somatic'), local('Somatic Rounded'), url('/fonts/somatic.otf') format('opentype')
-    font-display: swap
-
-html
-    scroll-behavior: smooth
-
 *
     box-sizing: border-box
-    -webkit-tap-highlight-color: transparent
-
+    
 body
-    @apply block font-sans m-0
+    margin: 0
+    @apply font-sans
+    @apply dark:bg-gray-800
 
-@media (prefers-color-scheme: dark)
-    body
-        @apply bg-gray-900
+#__next
+    @apply flex flex-row
+    min-height: 100vh

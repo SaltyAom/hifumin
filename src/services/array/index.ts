@@ -1,4 +1,4 @@
-import { Story } from '@types'
+export const copy = <T extends any>(arr: T[]): T[] => [...arr]
 
 export const splitChunk = <T extends any[]>(
 	data: T,
@@ -15,18 +15,3 @@ export const splitChunk = <T extends any[]>(
 
 	return newChunk
 }
-
-export const filterTag = (galleries: Story[], filter: string[]) =>
-	galleries.filter((story) => {
-		let tags = story.metadata.tags.map((tag) => tag.name).flat(1)
-
-		let foundTag = filter.find((filter) => tags.includes(filter))
-		let found = typeof foundTag !== 'undefined'
-
-		return !found
-	})
-
-export const filterPreference = (galleries: Story[], preference: string[]) =>
-	galleries.filter((story) =>
-		story.metadata.tags.find((tag) => preference.includes(tag.name))
-	)

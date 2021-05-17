@@ -14,7 +14,11 @@
                     "@models": "./src/models",
                     "@styles": "./src/styles",
                     "@icons": "./src/icons",
-                    "@types": "./src/@types"
+                    "@stores": "./src/stores",
+                    "@types": "./src/@types",
+                    "@atoms": "./src/components/@atoms",
+                    "@molecules": "./src/components/@molecules",
+                    "@organisms": "./src/components/@organisms"
                 }
             }
         ]

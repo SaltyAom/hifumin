@@ -1,113 +1,80 @@
-import { Fragment, useEffect, useState, FunctionComponent } from 'react'
-
-import dynamic from 'next/dynamic'
-
-import { useStoreon } from 'storeon/react'
-import { SearchStore, SearchEvent, SettingStore, SettingEvent } from '@models'
-import { Search as SearchAction } from '@models/constant'
-
+import { FunctionComponent, useMemo, useRef } from 'react'
 import { GetStaticProps } from 'next'
 
-import { MasonryLayoutDeterminer } from '@providers'
+import tw from '@tailwind'
+
+import { BaseLayout } from '@layouts/base'
+import { DiscoverLayout, DiscoverCard } from '@layouts/discover'
+
+import { splitChunk } from '@services/array'
 
 import {
-	PreloadGallery,
-	RecommendedGallery,
-	Search,
-	OpenGraph
-} from '@components'
+	useComputedSpace,
+	useHentaiCollection,
+	usePageEndObserver
+} from '@services/hooks'
+import { query, getPreviews } from '@services/graphql'
+import type {
+	SearchHentai,
+	SearchHentaiVariables
+} from '@services/graphql/types'
+import { randomPick } from '@services/random'
+import { tags } from '@services/data'
 
-import { get, isNhentai, randomPick, tags, filterTag } from '@services'
+import type { Stories } from '@types'
 
-import { Stories } from '@types'
-
-import '@styles/landing.sass'
-
-const SearchGallery = dynamic(() => import('@components/gallery/search')),
-	LandingCover = dynamic(() => import('@components/landingCover'))
-
-interface Props {
+interface DiscoverProps {
 	stories: Stories
 }
 
-const Index: FunctionComponent<Props> = ({ stories }) => {
-	let { search, dispatch } = useStoreon<SearchStore, SearchEvent>('search')
-	let { filter, useDefaultFilter } = useStoreon<SettingStore, SettingEvent>(
-		'filter',
-		'useDefaultFilter'
+const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
+	let layout = useRef<HTMLElement>(null)
+
+	let [stories, fetch] = useHentaiCollection(initial)
+	let spaces = useComputedSpace(layout)
+
+	let storyGroup = useMemo(
+		() => splitChunk(stories, spaces),
+		[stories, spaces]
 	)
 
-	let [initialStories, updateInitialStories] = useState(stories)
-
-	useEffect(() => {
-		window.scrollTo({
-			top: 0
-		})
-
-		return () => {
-			dispatch(SearchAction.UPDATE, '')
-			dispatch(SearchAction.LOADING, false)
-			dispatch(SearchAction.ERROR, false)
-		}
-	}, [])
-
-	useEffect(() => {
-		if (useDefaultFilter) return
-
-		updateInitialStories(filterTag(stories, filter))
-	}, [stories, filter, useDefaultFilter])
-
-	if (!stories.length)
-		return (
-			<Fragment>
-				<OpenGraph
-					title="Opener Studio"
-					description="Pinterest but for hentai and 6 digit code."
-				/>
-				<MasonryLayoutDeterminer />
-				<Search />
-				<main id="gallery">
-					<PreloadGallery />
-				</main>
-			</Fragment>
-		)
+	usePageEndObserver(fetch)
 
 	return (
-		<Fragment>
-			<OpenGraph
-				title="Opener Studio"
-				description="Pinterest but for hentai and 6 digit code."
-			/>
-			<MasonryLayoutDeterminer />
-			<Search />
-			<main id="gallery">
-				{search ? (
-					isNhentai(search) ? (
-						<LandingCover />
-					) : (
-						<SearchGallery />
-					)
-				) : (
-					<RecommendedGallery
-						initial={initialStories}
-					/>
-				)}
-			</main>
-		</Fragment>
+		<BaseLayout>
+			<DiscoverLayout layoutRef={layout}>
+				{storyGroup.map((group, index) => (
+					<section
+						key={index}
+						className={tw`flex flex-col flex-1 px-2`}
+					>
+						{group.map((story) => (
+							<DiscoverCard key={story.id} story={story} />
+						))}
+					</section>
+				))}
+			</DiscoverLayout>
+		</BaseLayout>
 	)
 }
 
-export const getStaticProps: GetStaticProps<Props> = async () => {
-	let stories = await get<Stories>(
-		`https://nhapi-aomkirby123.vercel.app/search/${randomPick(tags)}/1`
-	)
+export const getStaticProps: GetStaticProps<DiscoverProps> = async () => {
+	let stories = await query<SearchHentai, SearchHentaiVariables>(
+		getPreviews,
+		{
+			keyword:
+				process.env.NODE_ENV === 'development'
+					? 'yuri'
+					: randomPick(tags),
+			page: 1
+		}
+	).toPromise()
 
 	return {
 		props: {
-			stories
-		},
-		revalidate: 3600
+			stories: stories.data?.searchHentai.data ?? []
+		}
 	}
 }
 
-export default Index
+export default Discover

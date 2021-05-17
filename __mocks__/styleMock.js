@@ -1,2 +1,2 @@
-// For mocking .css and .styl
+// ? For mocking styles file
 module.exports = {}

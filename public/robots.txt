@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /h/[h]
-
-Sitemap: http://opener.studio/sitemap.xml

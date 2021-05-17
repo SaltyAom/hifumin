@@ -1,24 +1,18 @@
-const { colors } = require('tailwindcss/defaultTheme')
-
 module.exports = {
     mode: 'jit',
     purge: {
         preserveHtmlElements: false,
-        content: ['src/**/*.[j|t]s[x]?']
+        content: ['src/**/*.[j|t]s[x]']
     },
     darkMode: 'class',
     theme: {
-        extend: {},
-        colors: {
-			...colors,
-			primary: {
-				DEFAULT: "#007aff",
-				dark: "#00aaff"
-			}
-		}
+        extend: {}
     },
     variants: {
         extend: {}
     },
-    plugins: []
+    plugins: [
+        require('@tailwindcss/aspect-ratio'),
+        require('@tailwindcss/forms')
+    ]
 }
