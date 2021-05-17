@@ -2,15 +2,15 @@ import Link from 'next/link'
 
 import tw, { combine } from '@tailwind'
 
-import { useLazyLoad, useScale } from '@services/hooks'
+import { useLazyLoad } from '@services/hooks'
 
 import { DiscoverCardComponent } from './types'
 
 import styles from './card.module.sass'
-import utilities from '@styles/utilities.module.sass'
 
 export const DiscoverCard: DiscoverCardComponent = ({
 	story: {
+		id,
 		title: { display },
 		images: {
 			cover: {
@@ -23,12 +23,12 @@ export const DiscoverCard: DiscoverCardComponent = ({
 	let [lazyElement, shouldLoad] = useLazyLoad<HTMLImageElement>()
 
 	return (
-		<Link href="/">
+		<Link href="/h/[id]" as={`/h/${id}`}>
 			<a
 				role="article"
 				className={tw`relative flex mb-4 bg-gray-100 rounded-lg overflow-hidden`}
 				style={{
-					paddingTop: height / width * 100 + '%'
+					paddingTop: (height / width) * 100 + '%'
 				}}
 			>
 				<img

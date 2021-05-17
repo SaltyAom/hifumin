@@ -3,7 +3,6 @@ import { GetStaticProps } from 'next'
 
 import tw from '@tailwind'
 
-import { BaseLayout } from '@layouts/base'
 import { DiscoverLayout, DiscoverCard } from '@layouts/discover'
 
 import { splitChunk } from '@services/array'
@@ -41,20 +40,18 @@ const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
 	usePageEndObserver(fetch)
 
 	return (
-		<BaseLayout>
-			<DiscoverLayout layoutRef={layout}>
-				{storyGroup.map((group, index) => (
-					<section
-						key={index}
-						className={tw`flex flex-col flex-1 px-2`}
-					>
-						{group.map((story) => (
-							<DiscoverCard key={story.id} story={story} />
-						))}
-					</section>
-				))}
-			</DiscoverLayout>
-		</BaseLayout>
+		<DiscoverLayout layoutRef={layout}>
+			{storyGroup.map((group, index) => (
+				<section
+					key={index}
+					className={tw`flex flex-col flex-1 px-2`}
+				>
+					{group.map((story) => (
+						<DiscoverCard key={story.id} story={story} />
+					))}
+				</section>
+			))}
+		</DiscoverLayout>
 	)
 }
 
@@ -73,7 +70,8 @@ export const getStaticProps: GetStaticProps<DiscoverProps> = async () => {
 	return {
 		props: {
 			stories: stories.data?.searchHentai.data ?? []
-		}
+		},
+		revalidate: 3600 * 3
 	}
 }
 

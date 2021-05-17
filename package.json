@@ -13,7 +13,6 @@
 		"lint": "eslint 'src/**/*.{ts,tsx}'"
 	},
 	"dependencies": {
-		"framer-motion": "^4.1.13",
 		"graphql": "^15.5.0",
 		"jotai": "^0.16.5",
 		"lodash": "^4.17.21",

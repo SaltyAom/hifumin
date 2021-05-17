@@ -18,11 +18,13 @@ export const useLazyLoad = <T extends HTMLElement = HTMLElement>(): [
 				})
 			},
 			{
-				rootMargin: window.innerHeight * .3 + 'px'
+				rootMargin: window.innerHeight * 0.5 + 'px'
 			}
 		)
 
-		if (element.current) observer.observe(element.current)
+		requestAnimationFrame(() => {
+			if (element.current) observer.observe(element.current)
+		})
 
 		return () => {
 			observer.disconnect()

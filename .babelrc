@@ -16,9 +16,9 @@
                     "@icons": "./src/icons",
                     "@stores": "./src/stores",
                     "@types": "./src/@types",
-                    "@atoms": "./src/components/@atoms",
-                    "@molecules": "./src/components/@molecules",
-                    "@organisms": "./src/components/@organisms"
+                    "@atoms": "./src/components/atoms",
+                    "@molecules": "./src/components/molecules",
+                    "@organisms": "./src/components/organisms"
                 }
             }
         ]
