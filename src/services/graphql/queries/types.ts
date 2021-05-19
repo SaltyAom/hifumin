@@ -28,5 +28,5 @@ export interface SearchHentai {
 
 export interface SearchHentaiVariables {
 	keyword: string
-	page: number
+	page?: number
 }

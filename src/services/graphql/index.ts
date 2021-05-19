@@ -7,7 +7,7 @@ export const client = createClient({
 
 export const { query } = client
 
-export { getPreviews, getHentaiReaderById } from './query'
+export { getPreviews, getHentaiReaderById } from './queries'
 
 export type {
 	HentaiQuery,
@@ -15,4 +15,4 @@ export type {
 	GetHentaiByIdVariables,
 	SearchHentai,
 	SearchHentaiVariables
-} from './types'
+} from './queries/types'

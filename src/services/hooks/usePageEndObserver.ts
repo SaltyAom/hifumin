@@ -1,9 +1,20 @@
 import { useEffect, useRef } from 'react'
 
-export const usePageEndObserver = (callback: Function) => {
-	let requested = useRef(false)
+export const usePageEndObserver = (callback: Function, shouldStop = false) => {
+	let previousObserver = useRef<() => Promise<void>>()
+	let isLoading = useRef(false)
+
+	useEffect(() => {
+		watchPageEnd()
+
+		return () => {
+			stopWatchingPageEnd()
+		}
+	}, [callback])
 
 	let watchPageEnd = () => {
+		stopWatchingPageEnd()
+
 		requestAnimationFrame(() => {
 			window.addEventListener('scroll', pageEndObserver, {
 				passive: true
@@ -12,10 +23,15 @@ export const usePageEndObserver = (callback: Function) => {
 	}
 
 	let stopWatchingPageEnd = () => {
-		window.removeEventListener('scroll', pageEndObserver)
+		if(previousObserver.current)
+			window.removeEventListener('scroll', previousObserver.current)
+
+		previousObserver.current = pageEndObserver
 	}
 
 	let pageEndObserver = async () => {
+		if (shouldStop) return
+
 		stopWatchingPageEnd()
 
 		let page = document.documentElement.scrollHeight
@@ -26,20 +42,12 @@ export const usePageEndObserver = (callback: Function) => {
 
 		if (current < nearEnd) return watchPageEnd()
 
-		requested.current = true
+		isLoading.current = true
 
 		await callback()
 
-		requested.current = false
+		isLoading.current = false
 
 		watchPageEnd()
 	}
-
-	useEffect(() => {
-		watchPageEnd()
-
-		return () => {
-			stopWatchingPageEnd()
-		}
-	}, [callback])
 }

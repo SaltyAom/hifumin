@@ -8,7 +8,7 @@ import { Page } from '@atoms'
 
 import { ReaderLayout } from '@layouts/reader'
 
-import { query, getHentaiReaderById, HentaiQuery } from '@services/graphql'
+import { getHentaiReaderById, HentaiQuery } from '@services/graphql'
 import type { GetHentaiById, GetHentaiByIdVariables } from '@services/graphql'
 
 import { Story } from '@types'
@@ -63,12 +63,7 @@ export const getStaticProps: GetStaticProps<ReaderProps> = async (context) => {
 		params: { id }
 	} = context as Path
 
-	let story = await query<GetHentaiById, GetHentaiByIdVariables>(
-		getHentaiReaderById,
-		{
-			id: +id
-		}
-	).toPromise()
+	let story = await getHentaiReaderById({ id: +id })
 
 	return {
 		props: {

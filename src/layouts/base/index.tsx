@@ -1,15 +1,15 @@
 import { FunctionComponent, useEffect, useReducer } from 'react'
 
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-
 import tw, { combine } from '@services/tailwind'
 
 import { Bookmark, Clock, Grid, Menu, Sliders } from 'react-feather'
 
 import styles from './base.module.sass'
 
-const sidebar = [
+import { BaseTab } from './components'
+import type { BaseLayoutTabs } from './components'
+
+const sidebars: BaseLayoutTabs = [
 	[Grid, 'Discover', '/'],
 	[Bookmark, 'Bookmark', '/bookmark'],
 	[Clock, 'History', '/history'],
@@ -19,8 +19,6 @@ const sidebar = [
 export const BaseLayout: FunctionComponent = ({ children }) => {
 	let [fullSide, toggleFullSide] = useReducer((v) => !v, true)
 	let [initial, loaded] = useReducer(() => false, true)
-
-	let { asPath } = useRouter()
 
 	useEffect(() => {
 		let persistedSidebar = localStorage.getItem('sidebar')
@@ -58,33 +56,9 @@ export const BaseLayout: FunctionComponent = ({ children }) => {
 					</button>
 					Opener
 				</h1>
-				{sidebar.map(([Icon, title, link]) => {
-					let isActive = link === asPath
-
-					let className = ''
-
-					if (isActive) className = 'text-gray-900 border-black'
-					else
-						className =
-							'text-gray-400 border-transparent hover:text-gray-700 focus:text-gray-700 transition-colors'
-
-					return (
-						<Link href={link}>
-							<a
-								key={title}
-								className={combine(
-									styles.tab,
-									tw(
-										`flex flex-row items-center pl-6 py-2 my-1 font-medium border-0 border-r-4 border-solid cursor-pointer no-underline ${className}`
-									)
-								)}
-							>
-								<Icon className={styles['icon']} />
-								{title}
-							</a>
-						</Link>
-					)
-				})}
+				{sidebars.map(([Icon, title, link]) => (
+					<BaseTab Icon={Icon} title={title} link={link} />
+				))}
 			</aside>
 			<section className={tw`flex flex-col flex-1 px-6`}>
 				{children}

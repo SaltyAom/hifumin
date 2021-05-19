@@ -8,12 +8,13 @@ export const splitChunk = <T extends any[]>(
 ): Array<T> => {
 	let newChunk: T[] = Array(chunk).fill([])
 
-	data.forEach((item, index) => {
-		let column = index % chunk
+	if(data)
+		data.forEach((item, index) => {
+			let column = index % chunk
 
-		// @ts-ignore
-		newChunk[column] = [...newChunk[column], item]
-	})
+			// @ts-ignore
+			newChunk[column] = [...newChunk[column], item]
+		})
 
 	return newChunk
 }

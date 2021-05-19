@@ -1,19 +1,70 @@
+import { useCallback, useEffect, useRef } from 'react'
+import type { FormEvent, ChangeEventHandler } from 'react'
+
+import { useRouter } from 'next/router'
+
+import { useAtom } from 'jotai'
+import { searchAtom } from '@stores/search'
+
 import { Search } from 'react-feather'
 
-import tw from '@services/tailwind'
+import tw from '@tailwind'
 
-import { DiscoverLayoutComponent } from './types'
+import type { DiscoverLayoutComponent } from './types'
 
-export const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
+export const DiscoverLayout: DiscoverLayoutComponent = ({
+	children,
+	layoutRef
+}) => {
+	let [sharedKeyword, updateKeyword] = useAtom(searchAtom)
+	let keyword = useRef<HTMLInputElement>(null)
+
+	let { push } = useRouter()
+
+	useEffect(() => {
+		if (sharedKeyword)
+			window.history.pushState(
+				sharedKeyword,
+				sharedKeyword,
+				`/search/${sharedKeyword}`
+			)
+	}, [sharedKeyword])
+
+	let handleSearch = useCallback((event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+
+		if (keyword.current) updateKeyword(keyword.current.value)
+	}, [])
+
+	let handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+		(event) => {
+			if (event.currentTarget.value) return
+
+			updateKeyword('')
+			push('/')
+		},
+		[]
+	)
+
 	return (
 		<>
 			<header className={tw`sticky top-0 z-30 px-2 py-4 mb-2 bg-white`}>
-				<form className={tw`flex flex-row items-center text-gray-600 pl-4 bg-gray-100 rounded-lg`}>
+				<form
+					className={tw`flex flex-row items-center text-gray-600 pl-4 bg-gray-100 rounded-lg`}
+					onSubmit={handleSearch}
+				>
 					<Search />
-					<input className={tw`w-full text-2xl pl-2 py-3 bg-transparent border-0 outline-none`} type="text" placeholder="Find hentai" />
+					<input
+						ref={keyword}
+						defaultValue={sharedKeyword}
+						className={tw`w-full text-2xl pl-2 py-3 bg-transparent border-0 outline-none`}
+						type="text"
+						placeholder="Find hentai"
+						onChange={handleChange}
+					/>
 				</form>
 			</header>
-			<main ref={layoutRef} className={tw`flex flex-row`}>
+			<main ref={layoutRef} className={tw`flex flex-1 flex-row`}>
 				{children}
 			</main>
 		</>

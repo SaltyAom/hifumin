@@ -1,68 +1,48 @@
-import { FunctionComponent, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
+import type { FunctionComponent } from 'react'
+
 import { GetStaticProps } from 'next'
 
-import tw from '@tailwind'
+import { useAtom } from 'jotai'
+import { searchAtom } from '@stores/search'
 
-import { DiscoverLayout, DiscoverCard } from '@layouts/discover'
+import { DiscoverLayout } from '@layouts/discover'
+import { DiscoverResults, SearchResults } from '@components/modules/discover'
 
-import { splitChunk } from '@services/array'
-
-import {
-	useComputedSpace,
-	useHentaiCollection,
-	usePageEndObserver
-} from '@services/hooks'
-import { query, getPreviews } from '@services/graphql'
-import type {
-	SearchHentai,
-	SearchHentaiVariables
-} from '@services/graphql/types'
+import { useComputedSpace } from '@services/hooks'
+import { getPreviews } from '@services/graphql'
 import { randomPick } from '@services/random'
 import { tags } from '@services/data'
 
 import type { Stories } from '@types'
 
-interface DiscoverProps {
+export interface DiscoverProps {
 	stories: Stories
 }
 
 const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
-	let layout = useRef<HTMLElement>(null)
+	let [keyword] = useAtom(searchAtom)
 
-	let [stories, fetch] = useHentaiCollection(initial)
+	let layout = useRef<HTMLElement>(null)
 	let spaces = useComputedSpace(layout)
 
-	let storyGroup = useMemo(
-		() => splitChunk(stories, spaces),
-		[stories, spaces]
+	let search = useMemo(() => <SearchResults spaces={spaces} />, [spaces])
+	let discover = useMemo(
+		() => <DiscoverResults initial={initial} spaces={spaces} />,
+		[spaces, initial]
 	)
-
-	usePageEndObserver(fetch)
 
 	return (
 		<DiscoverLayout layoutRef={layout}>
-			{storyGroup.map((group, index) => (
-				<section key={index} className={tw`flex flex-col flex-1 px-2`}>
-					{group.map((story) => (
-						<DiscoverCard key={story.id} story={story} />
-					))}
-				</section>
-			))}
+			{keyword ? search : discover}
 		</DiscoverLayout>
 	)
 }
 
 export const getStaticProps: GetStaticProps<DiscoverProps> = async () => {
-	let stories = await query<SearchHentai, SearchHentaiVariables>(
-		getPreviews,
-		{
-			keyword:
-				process.env.NODE_ENV === 'development'
-					? 'yuri'
-					: randomPick(tags),
-			page: 1
-		}
-	).toPromise()
+	let stories = await getPreviews({
+		keyword: randomPick(tags)
+	})
 
 	return {
 		props: {

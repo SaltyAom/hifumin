@@ -1,5 +1,5 @@
-export const getHentaiReaderById = `
-  query getHentaiById($id: Int!) {
+export const GET_HENTAI_READER_BY_ID = `
+  query getHentaiReaderById($id: Int!) {
     getHentaiById(id: $id) {
       success
       data {
@@ -33,7 +33,7 @@ export const getHentaiReaderById = `
           }
         }
         info {
-          amount,
+          amount
           favorite
         }    
       }
@@ -41,7 +41,7 @@ export const getHentaiReaderById = `
   }
 `
 
-export const getPreviews = `
+export const GET_PREVIEWS_QUERY = `
   query getPreview($keyword: String!, $page: Int!) {
     searchHentai(keyword: $keyword, page: $page) {
       success
@@ -67,6 +67,10 @@ export const getPreviews = `
               height
             }
           }
+        }
+        info {
+          amount
+          favorite
         }
       }
     }
