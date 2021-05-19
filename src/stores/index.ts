@@ -1,5 +1,9 @@
-import { atom } from 'jotai'
-
-// export const sidebarAtom = atom(true, (get, set) => {
-// 	set(sidebarAtom, !get(sidebarAtom))
-// })
+export { merge } from './operations'
+export {
+	settingsAtom,
+	safeModeAtom,
+	SafeMode,
+	ThemeMode,
+	PageType,
+	ReaderType
+} from './settings'

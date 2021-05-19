@@ -1,0 +1,15 @@
+$easing-out-expo: cubic-bezier(0.16, 1, 0.3, 1)
+
+.dropdown
+    padding: 0
+    box-shadow: 0 4px 16px rgba(0,0,0,.075), 0 8px 25px rgba(0,0,0,.075)
+    opacity: 0
+    transition: height .4s $easing-out-expo, padding .4s $easing-out-expo, opacity .4s $easing-out-expo
+
+.dropdown-open
+    opacity: 1
+    padding: 4px 0
+
+.option
+    height: 48px
+    min-height: 48px

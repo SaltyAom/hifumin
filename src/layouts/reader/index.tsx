@@ -11,7 +11,7 @@ const twClass = {
 	wrapper: tw`flex flex-col items-center w-full max-w-[560px] mx-auto mt-8`
 } as const
 
-const ReaderLayout: ReaderLayoutComponent = ({ children, story, isValid }) => {
+export const ReaderLayout: ReaderLayoutComponent = ({ children, story, isValid }) => {
 	if (!isValid || typeof story === 'undefined')
 		return (
 			<main key={key} className={twClass.layout}>
@@ -26,5 +26,3 @@ const ReaderLayout: ReaderLayoutComponent = ({ children, story, isValid }) => {
 		</article>
 	)
 }
-
-export default ReaderLayout

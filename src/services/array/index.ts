@@ -1,3 +1,5 @@
+import { isNumberString } from '@services/validation'
+
 export const copy = <T extends any>(arr: T[]): T[] => [...arr]
 
 export const splitChunk = <T extends any[]>(
@@ -14,4 +16,28 @@ export const splitChunk = <T extends any[]>(
 	})
 
 	return newChunk
+}
+
+export interface Enum {
+	[id: number]: string
+}
+
+export const enumToArrayDetail = <T = string>(enums: Enum) => {
+	let arr: T[] = []
+
+	Object.keys(enums).forEach((key: any) => {
+		if (isNumberString(key)) arr.push(enums[key] as any)
+	})
+
+	return arr
+}
+
+export const enumToArrayValue = <T = string>(enums: Enum) => {
+	let arr: T[] = []
+
+	Object.keys(enums).forEach((key: any) => {
+		if (!isNumberString(key)) arr.push(enums[key] as any)
+	})
+
+	return arr
 }

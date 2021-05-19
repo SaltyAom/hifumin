@@ -1,8 +1,12 @@
 import Link from 'next/link'
 
+import { useAtom } from 'jotai'
+
 import tw, { combine } from '@tailwind'
 
 import { useLazyLoad } from '@services/hooks'
+import { safeModeAtom } from '@stores/settings'
+import { imageEffect } from '@services/image-effect'
 
 import { DiscoverCardComponent } from './types'
 
@@ -20,6 +24,8 @@ export const DiscoverCard: DiscoverCardComponent = ({
 		}
 	}
 }) => {
+	let [safeMode] = useAtom(safeModeAtom)
+
 	let [lazyElement, shouldLoad] = useLazyLoad<HTMLImageElement>()
 
 	return (
@@ -32,7 +38,10 @@ export const DiscoverCard: DiscoverCardComponent = ({
 				}}
 			>
 				<img
-					className={tw`absolute top-0 z-10 w-full rounded-lg max-w-full m-0 object-fit object-center`}
+					className={combine(
+						imageEffect[safeMode],
+						tw`absolute top-0 z-10 w-full rounded-lg max-w-full m-0 object-fit object-center`
+					)}
 					src={shouldLoad ? link : undefined}
 					ref={lazyElement}
 				/>

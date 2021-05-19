@@ -7,7 +7,7 @@ import { Provider as JotaiProvider } from 'jotai'
 import { Provider as GraphQLProvider } from 'urql'
 import { client } from '@services/graphql'
 
-import { BaseLayout } from '@layouts/base'
+import { PersistanceProvider, BaseLayout } from '@layouts'
 
 import '@styles/init.sass'
 
@@ -20,11 +20,13 @@ const App = ({ Component, pageProps }: AppProps) => {
 
 	return (
 		<JotaiProvider>
-			<GraphQLProvider value={client}>
+			<PersistanceProvider>
 				<BaseLayout>
-					<Component {...pageProps} />
+					<GraphQLProvider value={client}>
+						<Component {...pageProps} />
+					</GraphQLProvider>
 				</BaseLayout>
-			</GraphQLProvider>
+			</PersistanceProvider>
 		</JotaiProvider>
 	)
 }

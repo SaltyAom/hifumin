@@ -1,7 +1,10 @@
-.aside
-    transition: width .15s ease-out
+$easing-out-expo: cubic-bezier(0.16, 1, 0.3, 1)
+    
+.width-transition
+    transition: width .32s $easing-out-expo
 
 .icon
+    @apply mr-6
     min-width: 26px
     min-height: 26px
 

@@ -6,7 +6,7 @@ import type { OperationResult } from 'urql'
 
 import { Page } from '@atoms'
 
-import ReaderLayout from '@layouts/reader'
+import { ReaderLayout } from '@layouts/reader'
 
 import { query, getHentaiReaderById, HentaiQuery } from '@services/graphql'
 import type { GetHentaiById, GetHentaiByIdVariables } from '@services/graphql'
@@ -34,20 +34,7 @@ const Reader: FunctionComponent<ReaderProps> = ({ story, error }) => {
 
 	let {
 		data: {
-			title: { display },
-			images: {
-				cover: {
-					link,
-					info: { width, height }
-				},
-				pages
-			},
-			metadata: {
-				tags,
-				artist: { name: artistName },
-				language
-			},
-			info: { amount, favorite }
+			images: { pages }
 		}
 	} = story
 

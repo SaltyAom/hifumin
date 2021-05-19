@@ -42,10 +42,7 @@ const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
 	return (
 		<DiscoverLayout layoutRef={layout}>
 			{storyGroup.map((group, index) => (
-				<section
-					key={index}
-					className={tw`flex flex-col flex-1 px-2`}
-				>
+				<section key={index} className={tw`flex flex-col flex-1 px-2`}>
 					{group.map((story) => (
 						<DiscoverCard key={story.id} story={story} />
 					))}

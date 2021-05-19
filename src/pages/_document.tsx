@@ -14,7 +14,7 @@ class MyDocument extends Document {
 						name="referrer"
 						content="same-origin"
 						data-react-helmet="true"
-					/>{' '}
+					/>
 				</Head>
 				<body>
 					<Main />
