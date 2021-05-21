@@ -9,7 +9,7 @@ import { splitChunk } from '@services/array'
 
 import type { DiscoverComponents } from '../types'
 
-export const DiscoverResults: DiscoverComponents = ({ initial, spaces }) => {
+export const DiscoverResults: DiscoverComponents = ({ initial = [], spaces }) => {
 	let { stories, fetchMore, isEnd } = useHentaiCollection(initial)
 
 	let storyGroups = useMemo(

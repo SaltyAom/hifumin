@@ -1,17 +1,24 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import type { OperationResult } from 'urql'
 
-import { Page } from '@atoms'
+import { useAtom } from 'jotai'
+import { collectHistoryAtom, historyAtom } from '@stores/settings'
+import {
+	composePersistsHistory,
+	HistoryActions
+} from '@stores/settings/history'
 
 import { ReaderLayout } from '@layouts/reader'
+
+import { Page } from '@atoms'
 
 import { getHentaiReaderById, HentaiQuery } from '@services/graphql'
 import type { GetHentaiById, GetHentaiByIdVariables } from '@services/graphql'
 
-import { Story } from '@types'
+import type { Story } from '@types'
 
 interface ReaderProps {
 	story: HentaiQuery<Story> | undefined
@@ -21,7 +28,19 @@ interface ReaderProps {
 }
 
 const Reader: FunctionComponent<ReaderProps> = ({ story, error }) => {
-	// Generating
+	let [collectHistory] = useAtom(collectHistoryAtom)
+	let [, dispatchHistory] = useAtom(historyAtom)
+
+	useEffect(() => {
+		if (typeof story === 'undefined' || !story.success) return
+
+		if (collectHistory)
+			dispatchHistory({
+				type: HistoryActions.add,
+				story: composePersistsHistory(story.data)
+			})
+	}, [story])
+
 	if (typeof story === 'undefined')
 		return <ReaderLayout isValid={false}>Loading</ReaderLayout>
 

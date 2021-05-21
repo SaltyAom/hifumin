@@ -14,7 +14,8 @@ export const DropDownSettingLayout: DropDownSettingComponent = ({
 	children,
 	options,
 	selected,
-	update
+	update,
+	footer
 }) => {
 	let [isOpen, toggle] = useReducer((v) => !v, false)
 	let select = useRef<HTMLButtonElement>(null)
@@ -30,6 +31,7 @@ export const DropDownSettingLayout: DropDownSettingComponent = ({
 
 	return (
 		<VerticalSettingLayout
+			footer={footer}
 			action={
 				<section
 					className={tw`relative flex flex-col justify-center mt-2 sm:mt-0 sm:pl-4 w-[18ch]`}

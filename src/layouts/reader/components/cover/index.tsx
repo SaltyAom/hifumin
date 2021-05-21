@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import tw from '@tailwind'
+import tw, { combine } from '@tailwind'
 
 import { ReaderCoverComponent } from './types'
 import { BookOpen, Edit2, Heart } from 'react-feather'
@@ -56,11 +56,14 @@ export const ReaderCover: ReaderCoverComponent = ({
 					<Edit2 className={twClass.contentIcon} /> {artistName}
 				</h5>
 			</section>
-			<section className={tw`block mt-2`}>
+			<section className={combine(styles.tags, tw`block my-2`)}>
 				{tags.map(({ name }) => (
-					<Link href="/" as={`/?search=${name}`}>
+					<Link href="/search/[keyword]" as={`/search/${name}`}>
 						<a
-							className={tw`inline-block text-md text-gray-800 font-medium capitalize mr-1 mb-1 px-3 py-2 bg-gray-100 no-underline rounded-sm`}
+							className={combine(
+								styles.tag,
+								tw`inline-block text-md text-gray-800 font-medium capitalize mr-1 mb-1 px-3 py-2 bg-gray-100 no-underline rounded-sm`
+							)}
 						>
 							{name}
 						</a>

@@ -1,6 +1,8 @@
-import { FunctionComponent } from 'react'
+import type { FunctionComponent } from 'react'
 
-export interface DropDownSettingProps<T = any> {
+import type { VerticalSettingLayoutProps } from '../vertical/types'
+
+export interface DropDownSettingProps<T = any> extends Omit<VerticalSettingLayoutProps, 'action'> {
 	selected: T
 	options: T[]
 	update: (select: T) => void

@@ -4,6 +4,6 @@ export {
 	safeModeAtom,
 	SafeMode,
 	ThemeMode,
-	PageType,
+	CompressionType,
 	ReaderType
 } from './settings'

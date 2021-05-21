@@ -1,5 +1,3 @@
-import { isProduction } from '@services/validation'
-
 import styles from './tailwind.module.sass'
 
 const tw = (classNames: string | TemplateStringsArray) => {

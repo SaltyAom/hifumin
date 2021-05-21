@@ -1,43 +1,57 @@
+import dynamic from 'next/dynamic'
+
 import { useAtom } from 'jotai'
-import { safeModeAtom } from '@stores/settings'
+import {
+	CompressionType,
+	safeModeAtom
+} from '@stores/settings'
+
+import { Figure } from './components'
 
 import tw, { combine } from '@tailwind'
 
-import { useLazyLoad } from '@services/hooks'
+import { useCompressionType } from '@services/hooks'
 import { imageEffect } from '@services/image-effect'
 
 import type { PageComponent } from './types'
 
-export const Page: PageComponent = ({
-	className = '',
-	lazyLoad = true,
-	page: {
-		link,
-		info: { width, height }
-	}
-}) => {
-	let [safeMode] = useAtom(safeModeAtom)
+const Image = dynamic(() => import('next/image'))
 
-	let [element, shouldLoad] = useLazyLoad()
+export const Page: PageComponent = (props) => {
+	let {
+		page: {
+			link,
+			info: { width, height }
+		}
+	} = props
+
+	let [safeMode] = useAtom(safeModeAtom)
+	let compression = useCompressionType()
+
+	let isCompact = compression === CompressionType.compact
+	let isHeavy = compression === CompressionType.heavy
+
+	if (isCompact || isHeavy)
+		return (
+			<Figure {...props}>
+				<Image
+					quality={isCompact ? 85 : 60}
+					src={link}
+					width={width}
+					height={height}
+				/>
+			</Figure>
+		)
 
 	return (
-		<figure
-			className={combine(
-				className,
-				tw`relative w-full m-0 bg-gray-100 overflow-hidden rounded`
-			)}
-			style={{
-				paddingTop: (height / width) * 100 + '%'
-			}}
-			ref={element}
-		>
+		<Figure {...props}>
 			<img
 				className={combine(
 					imageEffect[safeMode],
 					tw`absolute top-0 w-full rounded`
 				)}
-				src={shouldLoad || !lazyLoad ? link : ''}
+				src={link}
 			/>
-		</figure>
+		</Figure>
 	)
 }

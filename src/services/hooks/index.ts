@@ -1,3 +1,4 @@
+export { useCompressionType } from './useCompressionType'
 export { useComputedSpace } from './useComputedSpace'
 export { useHentaiCollection } from './useHentaiCollection'
 export { useLazyLoad } from './useLazyLoad'

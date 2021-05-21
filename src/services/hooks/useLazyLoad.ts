@@ -18,7 +18,7 @@ export const useLazyLoad = <T extends HTMLElement = HTMLElement>(): [
 				})
 			},
 			{
-				rootMargin: window.innerHeight * 0.5 + 'px'
+				rootMargin: window.innerHeight * .75 + 'px'
 			}
 		)
 

@@ -9,7 +9,8 @@ import styles from './switch.module.sass'
 export const SwitchSettingLayout: SwitchSettingComponent = ({
 	children,
 	value,
-	update
+	update,
+	footer
 }) => {
 	let toggle = () => {
 		update(!value)
@@ -17,6 +18,7 @@ export const SwitchSettingLayout: SwitchSettingComponent = ({
 
 	return (
 		<VerticalSettingLayout
+			footer={footer}
 			action={
 				<button
 					className={combine(
