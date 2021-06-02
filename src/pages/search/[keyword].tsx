@@ -1,23 +1,28 @@
 import { useEffect, useMemo, useReducer, useRef } from 'react'
 import type { FunctionComponent } from 'react'
 
+import { useRouter } from 'next/router'
 import type { GetStaticPaths, GetStaticProps } from 'next'
 
 import { useAtom } from 'jotai'
 import { searchAtom } from '@stores/search'
 
-import { DiscoverLayout } from '@layouts/discover'
-import { SearchResults } from '@components/modules/discover'
-
 import type { DiscoverProps } from '@pages/index'
 
+import { DiscoverLayout } from '@layouts/discover'
+
+import { SearchResults } from '@components/modules/discover'
+import { OpenGraph } from '@components/modules/opengraph'
+
 import { getPreviews } from '@services/graphql'
-import { useRouter } from 'next/router'
 import { useComputedSpace } from '@services/hooks'
 
 let getKeyword = (keyword: string) => decodeURI(keyword.replace('/search/', ''))
 
-const Search: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
+const Search: FunctionComponent<DiscoverProps> = ({
+	stories: initial,
+	keyword: initialKeyword
+}) => {
 	let [search, updateSearch] = useAtom(searchAtom)
 	let [keywordChange, notifyKeywordChange] = useReducer(() => true, false)
 
@@ -37,13 +42,20 @@ const Search: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
 	}, [search])
 
 	return (
-		<DiscoverLayout layoutRef={layout}>
-			<SearchResults
-				key={search}
-				initial={keywordChange ? [] : initial}
-				spaces={spaces}
+		<>
+			<OpenGraph
+				title={`${
+					search || initialKeyword || 'Search'
+				} - Opener Studio`}
 			/>
-		</DiscoverLayout>
+			<DiscoverLayout layoutRef={layout}>
+				<SearchResults
+					key={search}
+					initial={keywordChange ? [] : initial}
+					spaces={spaces}
+				/>
+			</DiscoverLayout>
+		</>
 	)
 }
 
@@ -67,7 +79,8 @@ export const getStaticProps: GetStaticProps<DiscoverProps> = async (
 
 	return {
 		props: {
-			stories: stories.data?.searchHentai.data ?? []
+			stories: stories.data?.searchHentai.data ?? [],
+			keyword: keyword
 		},
 		revalidate: 3600 * 3
 	}

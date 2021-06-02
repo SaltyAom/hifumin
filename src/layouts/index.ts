@@ -7,3 +7,4 @@ export {
 	DropDownSettingLayout,
 	VerticalSettingLayout
 } from './settings'
+export { VerticalGallery, VerticalCover } from './vertical-preview'

@@ -2,19 +2,15 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 import { languageCode } from '@services/constants'
 
-import { OpenGraphMeta } from '@components'
+import { OpenGraph } from '@components/modules/opengraph'
 
 class MyDocument extends Document {
 	render() {
 		return (
 			<Html lang={languageCode}>
 				<Head>
-					<OpenGraphMeta />
-					<meta
-						name="referrer"
-						content="same-origin"
-						data-react-helmet="true"
-					/>
+					<OpenGraph />
+					<meta name="referrer" content="same-origin" />
 				</Head>
 				<body>
 					<Main />

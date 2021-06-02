@@ -7,11 +7,13 @@ import { BookOpen, Edit2, Heart } from 'react-feather'
 
 import { Page } from '@atoms'
 
+import { Bookmark } from './components'
+import { twClass as sharedStyle } from './components/styles'
+
 import styles from './cover.module.sass'
 
 const twClass = {
-	content: tw`flex flex-row items-center text-gray-700 text-lg my-1 font-medium capitalize`,
-	contentIcon: tw`transform scale-90 mr-2`
+	content: tw`flex flex-row items-center text-gray-700 text-lg my-1 font-medium capitalize`
 } as const
 
 export const ReaderCover: ReaderCoverComponent = ({
@@ -24,9 +26,10 @@ export const ReaderCover: ReaderCoverComponent = ({
 			artist: { name: artistName }
 		},
 		info: { amount, favorite }
-	}
+	},
+	story
 }) => (
-	<header className={tw`flex flex-col md:flex-row w-full my-8 gap-8`}>
+	<header className={tw`flex flex-col md:flex-row w-full my-0 px-4 mb-4 xs:mb-0 xs:my-8 gap-4 md:gap-8`}>
 		<div
 			className={tw`flex flex-col justify-center items-center`}
 			style={{
@@ -47,13 +50,13 @@ export const ReaderCover: ReaderCoverComponent = ({
 			</h1>
 			<section className={tw`flex flex-col my-2`}>
 				<h5 className={twClass.content}>
-					<BookOpen className={twClass.contentIcon} /> {amount}
+					<BookOpen className={sharedStyle.contentIcon} /> {amount}
 				</h5>
 				<h5 className={twClass.content}>
-					<Heart className={twClass.contentIcon} /> {favorite}
+					<Heart className={sharedStyle.contentIcon} /> {favorite}
 				</h5>
 				<h5 className={twClass.content}>
-					<Edit2 className={twClass.contentIcon} /> {artistName}
+					<Edit2 className={sharedStyle.contentIcon} /> {artistName}
 				</h5>
 			</section>
 			<section className={combine(styles.tags, tw`block my-2`)}>
@@ -69,6 +72,9 @@ export const ReaderCover: ReaderCoverComponent = ({
 						</a>
 					</Link>
 				))}
+			</section>
+			<section className={tw`flex flex-row w-full mt-2`}>
+				<Bookmark story={story} />
 			</section>
 		</div>
 	</header>

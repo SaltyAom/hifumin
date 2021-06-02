@@ -13,6 +13,8 @@
 		"lint": "eslint 'src/**/*.{ts,tsx}'"
 	},
 	"dependencies": {
+		"critters": "0.0.7",
+		"dayjs": "^1.10.5",
 		"graphql": "^15.5.0",
 		"jotai": "^0.16.5",
 		"lodash": "^4.17.21",

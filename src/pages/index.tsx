@@ -7,7 +7,9 @@ import { useAtom } from 'jotai'
 import { searchAtom } from '@stores/search'
 
 import { DiscoverLayout } from '@layouts/discover'
+
 import { DiscoverResults, SearchResults } from '@components/modules/discover'
+import { OpenGraph } from '@components/modules/opengraph'
 
 import { useComputedSpace } from '@services/hooks'
 import { getPreviews } from '@services/graphql'
@@ -18,6 +20,7 @@ import type { Stories } from '@types'
 
 export interface DiscoverProps {
 	stories: Stories
+	keyword?: string
 }
 
 const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
@@ -33,9 +36,12 @@ const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
 	)
 
 	return (
-		<DiscoverLayout layoutRef={layout}>
-			{keyword ? search : discover}
-		</DiscoverLayout>
+		<>
+			<OpenGraph title={`${keyword || 'Search'} - Opener Studio`} />
+			<DiscoverLayout layoutRef={layout}>
+				{keyword ? search : discover}
+			</DiscoverLayout>
+		</>
 	)
 }
 

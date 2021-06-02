@@ -11,6 +11,7 @@ import { Search } from 'react-feather'
 import tw from '@tailwind'
 
 import type { DiscoverLayoutComponent } from './types'
+import { isNhentai } from '@services/validation'
 
 export const DiscoverLayout: DiscoverLayoutComponent = ({
 	children,
@@ -22,7 +23,10 @@ export const DiscoverLayout: DiscoverLayoutComponent = ({
 	let { push } = useRouter()
 
 	useEffect(() => {
-		if (sharedKeyword)
+		if (isNhentai(sharedKeyword)) {
+			push(`/h/${sharedKeyword}`)
+			updateKeyword('')
+		} else if (sharedKeyword)
 			window.history.pushState(
 				sharedKeyword,
 				sharedKeyword,
@@ -48,7 +52,7 @@ export const DiscoverLayout: DiscoverLayoutComponent = ({
 
 	return (
 		<>
-			<header className={tw`sticky top-0 z-30 px-2 py-4 mb-2 bg-white`}>
+			<header className={tw`sticky top-[64px] lg:top-0 z-30 mx-2 lg:mx-0 px-2 my-2 lg:my-0 py-2 lg:py-4 bg-white`}>
 				<form
 					className={tw`flex flex-row items-center text-gray-600 pl-4 bg-gray-100 rounded-lg`}
 					onSubmit={handleSearch}
@@ -64,7 +68,7 @@ export const DiscoverLayout: DiscoverLayoutComponent = ({
 					/>
 				</form>
 			</header>
-			<main ref={layoutRef} className={tw`flex flex-1 flex-row`}>
+			<main ref={layoutRef} className={tw`flex flex-1 flex-row px-2 lg:px-0`}>
 				{children}
 			</main>
 		</>

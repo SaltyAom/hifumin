@@ -17,7 +17,7 @@ export interface Page {
 	info: {
 		width: number
 		height: number
-		type: "jpg" | "png" | "gif"
+		type?: "jpg" | "png" | "gif"
 	}
 	link: string
 }

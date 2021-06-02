@@ -52,7 +52,8 @@ module.exports = withPlugins(
 		},
 		experimental: {
 			modern: true,
-			polyfillsOptimization: true
+			polyfillsOptimization: true,
+			optimizeCss: true
 		},
 		images: {
 			domains: ['i.nhentai.net', 't.nhentai.net'],

@@ -1,7 +1,8 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useReducer, useState, useCallback } from 'react'
 import type { Reducer } from 'react'
 
 import { getPreviews } from '@services/graphql'
+import { isNhentai } from '@services/validation'
 
 import { Stories } from '@types'
 
@@ -18,10 +19,10 @@ export const useSearchHentai = (keyword: string) => {
 		updatePage(1)
 		updateEnd(false)
 
-		if (keyword) fetchMore()
+		if (keyword && !isNhentai(keyword)) fetchMore()
 	}, [keyword])
 
-	let fetchMore = async () => {
+	let fetchMore = useCallback(async () => {
 		if (isLoading) return
 
 		setLoading(true)
@@ -38,7 +39,7 @@ export const useSearchHentai = (keyword: string) => {
 
 		setLoading(false)
 		updatePage(page + 1)
-	}
+	}, [page, keyword])
 
 	return {
 		stories,

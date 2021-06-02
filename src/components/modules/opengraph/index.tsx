@@ -1,56 +1,104 @@
+import { useState, useEffect } from 'react'
+
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-import { web, coverImage, title as TITLE, favicon } from '@services/constants'
+import { isServer } from '@services/validation'
 
-import { OpenGraphComponent } from './types'
+import type { OpenGraphComponent } from './types'
 
-const OpenGraphMeta: OpenGraphComponent = ({
-    title = TITLE,
-    description = '',
-    image = coverImage
-}) => (
-    <>
-        <title>{title}</title>
-        <meta name="title" content={title} />
-        <meta name="description" content={description} />
+export const OpenGraph: OpenGraphComponent = ({
+	title = 'Opener Studio',
+	alternativeTitle = [],
+	description = 'Pinterest but for hentai and 6 digit code.',
+	author = '',
+	icon = '/assets/icon/icon.png',
+	image = {
+		info: {
+			width: 1920,
+			height: 1080,
+			type: 'jpg'
+		},
+		link: 'https://atago.opener.studio/assets/images/cover.jpg'
+	},
+	name = 'Opener Studio',
+	twitterDevAccount = '@SaltyAom',
+	id = 0
+}) => {
+	let { asPath = '/' } = useRouter() ?? { asPath: '/' }
 
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={`${web}/${image}`} />
-        <meta property="og:image:alt" content={title} />
+	let [isDarkTheme, updateIsDarkTheme] = useState(
+		isServer
+			? true
+			: window.matchMedia &&
+					window.matchMedia('(prefers-color-scheme: dark)').matches
+	)
 
-        <meta name="twitter:card" content="description_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${web}/${image}`} />
+	useEffect(() => {
+		updateIsDarkTheme(
+			window.matchMedia &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches
+		)
 
-        <link rel="canonical" href={web} />
+		window
+			.matchMedia('(prefers-color-scheme: dark)')
+			.addEventListener('change', ({ matches }) => {
+				updateIsDarkTheme(matches)
+			})
+	}, [])
 
-        <link
-            rel="icon"
-            href={
-                favicon ??
-                'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐳</text></svg>'
-            }
-        />
+	return (
+		<Head>
+			<title>{title}</title>
+			<meta name="title" content={title} />
+			<meta name="description" content={description} />
+			<meta name="author" content={author} />
+			<link rel="icon" href={icon} />
+			<link rel="shortcut icon" href={icon} />
+			<link
+				rel="canonical"
+				href={`https://atago.opener.studio${asPath}`}
+			/>
+			<meta
+				name="keyword"
+				content={`${title},${
+					alternativeTitle.length
+						? `${alternativeTitle.join(',')},`
+						: ''
+				}${author},Opener Studio${id ? `,${id}` : ''}`}
+			/>
 
-        {/* // ? Opengraph */}
-        {/* <script
-                type="application/ld+json"
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{
-                    __html: structuredData
-                }}
-            /> */}
-    </>
-)
+			<meta property="og:title" content={title} />
+			<meta property="og:description" content={description} />
+			<meta property="article:author" content={author} />
+			<meta property="og:site_name" content={name} />
+			<meta property="og:image" content={image.link} />
+			<meta
+				property="og:image:width"
+				content={image.info.width.toString()}
+			/>
+			<meta
+				property="og:image:height"
+				content={image.info.height.toString()}
+			/>
+			<meta property="og:locale" content="en_US" />
+			<meta property="og:type" content="website" />
+			<meta
+				property="og:url"
+				content={`https://atago.opener.studio${asPath}`}
+			/>
 
-const OpenGraph: OpenGraphComponent = (props) => (
-    <Head>
-        <OpenGraphMeta {...props} />
-    </Head>
-)
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={title} />
+			<meta name="twitter:description" content={description} />
+			<meta name="twitter:site" content={twitterDevAccount} />
+			<meta name="twitter:image" content={image.link} />
+			<meta name="twitter:creator" content={twitterDevAccount} />
 
-export { OpenGraphMeta }
-
-export default OpenGraph
+			<meta
+				name="theme-color"
+				content={isDarkTheme ? '#2d3748' : '#fff'}
+			/>
+		</Head>
+	)
+}

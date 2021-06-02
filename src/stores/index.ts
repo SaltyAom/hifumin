@@ -1,3 +1,4 @@
+export { bookmarkAtom } from './bookmark'
 export { merge } from './operations'
 export {
 	settingsAtom,

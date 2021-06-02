@@ -7,7 +7,7 @@ import type { ReaderLayoutComponent } from './types'
 const key = 'reader-layout'
 
 const twClass = {
-	layout: tw`flex flex-col items-center w-full max-w-[760px] mx-auto py-6 px-4 md:px-0`,
+	layout: tw`flex flex-col items-center w-full max-w-[760px] mx-auto py-6 sm:py-12 px-0`,
 	wrapper: tw`flex flex-col items-center w-full max-w-[560px] mx-auto mt-8`
 } as const
 

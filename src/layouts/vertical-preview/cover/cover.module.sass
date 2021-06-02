@@ -1,0 +1,9 @@
+$ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1)
+    
+.page
+    transition: box-shadow .4s $ease-out-expo, transform .4s $ease-out-expo
+
+    &:hover,
+    &:focus
+        @apply transform -translate-y-2
+        box-shadow: 0 4px 16px rgba(0,0,0,.075), 0 8px 40px rgba(0,0,0,.125)

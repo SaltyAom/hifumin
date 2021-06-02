@@ -9,6 +9,7 @@ export interface BaseLayoutTabProps {
     Icon: Icon
     title: string
     link: string
+    toggle: () => void
 }
 
 export type BaseLayoutTabComponent = FunctionComponent<BaseLayoutTabProps>

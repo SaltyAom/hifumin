@@ -18,7 +18,7 @@ export const SwitchSettingLayout: SwitchSettingComponent = ({
 
 	return (
 		<VerticalSettingLayout
-			footer={footer}
+			className={combine(tw`flex-row`, styles['items-center-important'])}
 			action={
 				<button
 					className={combine(
@@ -37,6 +37,7 @@ export const SwitchSettingLayout: SwitchSettingComponent = ({
 					/>
 				</button>
 			}
+			footer={footer}
 		>
 			{children}
 		</VerticalSettingLayout>

@@ -1,20 +1,19 @@
-import { FunctionComponent, useEffect } from 'react'
+import { FunctionComponent, useCallback, useEffect } from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import type { OperationResult } from 'urql'
 
 import { useAtom } from 'jotai'
-import { collectHistoryAtom, historyAtom } from '@stores/settings'
-import {
-	composePersistsHistory,
-	HistoryActions
-} from '@stores/settings/history'
+import { collectHistoryAtom } from '@stores/settings'
+import { HistoryActions, historyAtom } from '@stores/history'
 
 import { ReaderLayout } from '@layouts/reader'
 
-import { Page } from '@atoms'
+import { OpenGraph } from '@components/modules/opengraph'
+import { Page, ProgressIndicator } from '@atoms'
 
+import tw from '@tailwind'
 import { getHentaiReaderById, HentaiQuery } from '@services/graphql'
 import type { GetHentaiById, GetHentaiByIdVariables } from '@services/graphql'
 
@@ -37,32 +36,60 @@ const Reader: FunctionComponent<ReaderProps> = ({ story, error }) => {
 		if (collectHistory)
 			dispatchHistory({
 				type: HistoryActions.add,
-				story: composePersistsHistory(story.data)
+				story: story.data
 			})
 	}, [story])
 
+	let reload = useCallback(() => {
+		window.location.reload()
+	}, [])
+
 	if (typeof story === 'undefined')
-		return <ReaderLayout isValid={false}>Loading</ReaderLayout>
+		return (
+			<>
+				<OpenGraph title="Opener Studio" />
+				<ReaderLayout isValid={false}>
+					<section
+						className={tw`absolute top-0 left-0 flex justify-center items-center w-full h-screen`}
+					>
+						<ProgressIndicator />
+					</section>
+				</ReaderLayout>
+			</>
+		)
 
 	if (error || !story.success)
 		return (
-			<ReaderLayout isValid={false}>
-				{JSON.stringify(error) || story.error.toString()}
-			</ReaderLayout>
+			<>
+				<OpenGraph title="Opener Studio" />
+				<ReaderLayout isValid={false}>
+					{JSON.stringify(error) || story.error.toString()}
+					<button
+						className={tw`appearance-none text-gray-700 font-medium px-6 py-2 rounded border-none`}
+						onClick={reload}
+					>
+						Reload
+					</button>
+				</ReaderLayout>
+			</>
 		)
 
 	let {
 		data: {
+			title: { display },
 			images: { pages }
 		}
 	} = story
 
 	return (
-		<ReaderLayout isValid={true} story={story.data}>
-			{pages.map((page) => (
-				<Page key={page.link} page={page} />
-			))}
-		</ReaderLayout>
+		<>
+			<OpenGraph title={`${display} - Opener Studio`} />
+			<ReaderLayout isValid={true} story={story.data}>
+				{pages.map((page) => (
+					<Page key={page.link} page={page} />
+				))}
+			</ReaderLayout>
+		</>
 	)
 }
 
