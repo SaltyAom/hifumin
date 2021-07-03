@@ -4,7 +4,7 @@ import { languageCode } from '@services/constants'
 
 import { OpenGraph } from '@components/modules/opengraph'
 
-class MyDocument extends Document {
+class OpenerDocument extends Document {
 	render() {
 		return (
 			<Html lang={languageCode}>
@@ -21,4 +21,4 @@ class MyDocument extends Document {
 	}
 }
 
-export default MyDocument
+export default OpenerDocument

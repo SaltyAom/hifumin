@@ -10,8 +10,8 @@ import styles from './tab.module.sass'
 import { BaseLayoutTabComponent } from './types'
 
 const twClass = {
-	active: tw`text-gray-900 border-black`,
-	default: tw`text-gray-400 border-transparent hover:text-gray-700 focus:text-gray-700 transition-colors`
+	active: tw`text-gray-900 dark:text-gray-200 border-black dark:border-gray-200`,
+	default: tw`text-gray-400 dark:text-gray-500 border-transparent hover:text-gray-700 focus:text-gray-300 dark:hover:text-gray-300 dark:focus:text-gray-400 transition-colors`
 } as const
 
 export const BaseTab: BaseLayoutTabComponent = ({
@@ -25,7 +25,7 @@ export const BaseTab: BaseLayoutTabComponent = ({
 	let isActive = link === asPath
 
 	let handleToggle = useCallback(() => {
-		if (innerWidth < 568) toggle()
+		if (window.innerWidth < 568) toggle()
 	}, [])
 
 	if (link === '/' && asPath.startsWith('/search/')) isActive = true
@@ -43,7 +43,7 @@ export const BaseTab: BaseLayoutTabComponent = ({
 				)}
 				onClick={handleToggle}
 			>
-				<Icon className={styles['icon']} />
+				<Icon className={styles.icon} />
 				{title}
 			</a>
 		</Link>

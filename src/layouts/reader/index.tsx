@@ -7,11 +7,11 @@ import type { ReaderLayoutComponent } from './types'
 const key = 'reader-layout'
 
 const twClass = {
-	layout: tw`flex flex-col items-center w-full max-w-[760px] mx-auto py-6 sm:py-12 px-0`,
-	wrapper: tw`flex flex-col items-center w-full max-w-[560px] mx-auto mt-8`
+	layout: tw`flex flex-col items-center w-full max-w-[760px] mx-auto p-0`,
+	wrapper: tw`flex flex-col items-center w-full max-w-[560px] mx-auto`
 } as const
 
-export const ReaderLayout: ReaderLayoutComponent = ({ children, story, isValid }) => {
+export const ReaderLayout: ReaderLayoutComponent = ({ children, story, isValid = true }) => {
 	if (!isValid || typeof story === 'undefined')
 		return (
 			<main key={key} className={twClass.layout}>

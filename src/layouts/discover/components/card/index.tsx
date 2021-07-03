@@ -42,7 +42,7 @@ export const DiscoverCard: DiscoverCardComponent = ({
 		<Link href="/h/[id]" as={`/h/${id}`}>
 			<a
 				role="article"
-				className={tw`relative flex mb-4 bg-gray-100 break-all rounded-lg overflow-hidden`}
+				className={tw`relative flex mb-4 bg-gray-100 dark:bg-gray-700 break-all rounded-lg overflow-hidden`}
 				style={{
 					paddingTop: (height / width) * 100 + '%'
 				}}
@@ -54,6 +54,7 @@ export const DiscoverCard: DiscoverCardComponent = ({
 							imageEffect[safeMode],
 							tw`absolute top-0 z-10 w-full rounded-lg max-w-full m-0 object-fit object-center`
 						)}
+						alt={display}
 						src={link}
 					/>
 				)}

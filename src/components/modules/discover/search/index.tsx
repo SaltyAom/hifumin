@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
 
+import { useRouter } from 'next/router'
+
 import { useAtom } from 'jotai'
 import { searchAtom } from '@stores/search'
 
@@ -19,6 +21,8 @@ import styles from './search-results.module.sass'
 export const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 	let [keyword] = useAtom(searchAtom)
 
+	let { isReady } = useRouter()
+
 	let {
 		stories,
 		fetchMore,
@@ -34,7 +38,7 @@ export const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 	usePageEndObserver(fetchMore, isEnd)
 
 	if (!initial.length && keyword && !stories.length)
-		if (isSearching)
+		if (isSearching || !isReady)
 			return (
 				<section
 					key="searching-layout"
@@ -61,11 +65,12 @@ export const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 							<img
 								className={tw`w-full object-cover object-center rounded`}
 								src="/images/ame.jpg"
+								alt="Not found"
 							/>
 						</div>
 					</div>
 					<h1
-						className={tw`text-3xl font-medium text-gray-900 m-0 mb-3`}
+						className={tw`text-3xl font-medium text-gray-900 dark:text-gray-200 m-0 mb-3`}
 					>
 						Not Found
 					</h1>
@@ -81,7 +86,10 @@ export const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 	return (
 		<>
 			{storyGroups.map((group, index) => (
-				<section key={index} className={tw`flex flex-col flex-1 px-2`}>
+				<section
+					key={index.toString()}
+					className={tw`flex flex-col flex-1 px-2`}
+				>
 					{group.map((story) => (
 						<DiscoverCard key={story.id} story={story} />
 					))}

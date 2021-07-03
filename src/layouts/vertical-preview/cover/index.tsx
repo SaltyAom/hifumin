@@ -11,7 +11,7 @@ import type { VerticalCoverComponent } from './types'
 import styles from './cover.module.sass'
 
 const twClass = {
-	info: tw`flex flex-row flex-1 items-center text-gray-400 text-md`
+	info: tw`flex flex-row flex-1 items-center text-gray-400 dark:text-gray-400 text-md`
 } as const
 
 export const VerticalCover: VerticalCoverComponent = ({
@@ -28,7 +28,7 @@ export const VerticalCover: VerticalCoverComponent = ({
 			className={tw`flex flex-col w-full no-underline cursor-pointer`}
 		>
 			<Page className={styles.page} page={cover} />
-			<h2 className={tw`text-lg sm:text-xl text-gray-700 font-semibold mt-4 mb-2`}>
+			<h2 className={tw`text-lg sm:text-xl text-gray-700 dark:text-gray-200 font-semibold mt-4 mb-2`}>
 				{display}
 			</h2>
 			<footer className={tw`flex flex-row justify-between w-full`}>

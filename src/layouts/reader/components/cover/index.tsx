@@ -2,7 +2,6 @@ import Link from 'next/link'
 
 import tw, { combine } from '@tailwind'
 
-import { ReaderCoverComponent } from './types'
 import { BookOpen, Edit2, Heart } from 'react-feather'
 
 import { Page } from '@atoms'
@@ -12,8 +11,10 @@ import { twClass as sharedStyle } from './components/styles'
 
 import styles from './cover.module.sass'
 
+import type { ReaderCoverComponent } from './types'
+
 const twClass = {
-	content: tw`flex flex-row items-center text-gray-700 text-lg my-1 font-medium capitalize`
+	content: tw`flex flex-row items-center text-gray-700 dark:text-gray-400 text-lg my-1 font-medium capitalize`
 } as const
 
 export const ReaderCover: ReaderCoverComponent = ({
@@ -29,9 +30,9 @@ export const ReaderCover: ReaderCoverComponent = ({
 	},
 	story
 }) => (
-	<header className={tw`flex flex-col md:flex-row w-full my-0 px-4 mb-4 xs:mb-0 xs:my-8 gap-4 md:gap-8`}>
+	<header className={tw`relative flex flex-col md:flex-row w-full my-8 md:my-12 px-4 xs:mb-0 xs:my-8 gap-4 md:gap-8`}>
 		<div
-			className={tw`flex flex-col justify-center items-center`}
+			className={combine(tw`flex flex-col justify-center items-center`, styles.wrapper)}
 			style={{
 				flex: 5
 			}}
@@ -44,8 +45,8 @@ export const ReaderCover: ReaderCoverComponent = ({
 				flex: 6
 			}}
 		>
-			<h3 className={tw`text-sm text-gray-500 font-light mb-2`}>{id}</h3>
-			<h1 className={tw`text-3xl text-gray-900 m-0 mb-2 font-semibold`}>
+			<h3 className={tw`text-sm text-gray-500 dark:text-gray-400 font-light mb-2`}>{id}</h3>
+			<h1 className={tw`text-3xl text-gray-900 dark:text-gray-300 m-0 mb-2 font-semibold`}>
 				{display}
 			</h1>
 			<section className={tw`flex flex-col my-2`}>
@@ -65,7 +66,7 @@ export const ReaderCover: ReaderCoverComponent = ({
 						<a
 							className={combine(
 								styles.tag,
-								tw`inline-block text-md text-gray-800 font-medium capitalize mr-1 mb-1 px-3 py-2 bg-gray-100 no-underline rounded-sm`
+								tw`inline-block text-md text-gray-800 dark:text-gray-300 font-medium capitalize mr-1 mb-1 px-3 py-2 bg-gray-100 dark:bg-gray-700 no-underline rounded-sm`
 							)}
 						>
 							{name}

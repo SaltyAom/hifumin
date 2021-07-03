@@ -59,12 +59,10 @@ const Search: FunctionComponent<DiscoverProps> = ({
 	)
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: true
-	}
-}
+export const getStaticPaths: GetStaticPaths = async () => ({
+	paths: [],
+	fallback: true
+})
 
 export const getStaticProps: GetStaticProps<DiscoverProps> = async (
 	context
@@ -80,7 +78,7 @@ export const getStaticProps: GetStaticProps<DiscoverProps> = async (
 	return {
 		props: {
 			stories: stories.data?.searchHentai.data ?? [],
-			keyword: keyword
+			keyword
 		},
 		revalidate: 3600 * 3
 	}

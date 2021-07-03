@@ -26,7 +26,7 @@ export const Figure: FigureComponent = ({
 			className={combine(
 				className,
 				!isNative ? styles['next-image'] : '',
-				tw`relative w-full m-0 bg-gray-100 overflow-hidden rounded`
+				tw`relative w-full m-0 bg-gray-100 dark:bg-gray-700 overflow-hidden rounded`
 			)}
 			style={{
 				paddingTop:

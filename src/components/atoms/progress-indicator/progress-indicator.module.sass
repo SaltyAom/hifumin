@@ -1,8 +1,7 @@
 $size: 48px
-$color: #000
 
 .loader
-    @apply relative mx-auto my-0
+    @apply relative mx-auto my-0 text-blue-500
     width: $size
     height: $size
 
@@ -20,7 +19,7 @@ $color: #000
     stroke-dasharray: 1, 200
     stroke-dashoffset: 0
     stroke-linecap: round
-    stroke: $color
+    stroke: currentColor
     animation: dash 1.5s ease-in-out infinite
 
 @keyframes rotate 

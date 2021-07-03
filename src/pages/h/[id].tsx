@@ -63,13 +63,22 @@ const Reader: FunctionComponent<ReaderProps> = ({ story, error }) => {
 			<>
 				<OpenGraph title="Opener Studio" />
 				<ReaderLayout isValid={false}>
-					{JSON.stringify(error) || story.error.toString()}
-					<button
-						className={tw`appearance-none text-gray-700 font-medium px-6 py-2 rounded border-none`}
-						onClick={reload}
+					<section
+						className={tw`flex flex-col justify-center h-screen mt-8 py-12`}
 					>
-						Reload
-					</button>
+						<h1
+							className={tw`text-xl text-gray-700 dark:text-gray-300 m-0 mb-4 font-normal`}
+						>
+							{JSON.stringify(error) || story.error.toString()}
+						</h1>
+						<button
+							className={tw`appearance-none text-xl text-gray-700 dark:text-gray-400 bg-gray-300 dark:bg-gray-700 font-medium px-6 py-2 rounded border-none cursor-pointer`}
+							onClick={reload}
+							type="button"
+						>
+							Reload
+						</button>
+					</section>
 				</ReaderLayout>
 			</>
 		)
@@ -84,7 +93,7 @@ const Reader: FunctionComponent<ReaderProps> = ({ story, error }) => {
 	return (
 		<>
 			<OpenGraph title={`${display} - Opener Studio`} />
-			<ReaderLayout isValid={true} story={story.data}>
+			<ReaderLayout isValid story={story.data}>
 				{pages.map((page) => (
 					<Page key={page.link} page={page} />
 				))}

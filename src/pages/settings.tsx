@@ -55,7 +55,7 @@ const Settings = () => {
 			<main
 				className={tw`flex flex-col w-full max-w-[580px] mx-auto px-6 py-4 md:py-12`}
 			>
-				<h1 className={tw`text-4xl text-gray-900 font-semibold my-2`}>
+				<h1 className={tw`text-4xl text-gray-900 dark:text-gray-200 font-semibold my-2`}>
 					Settings
 				</h1>
 				<SettingLabel
@@ -103,8 +103,8 @@ const Settings = () => {
 						!notSupportNetworkDetection
 							? '"Adaptive", selecting the best compression base on your network speed.'
 							: ''
-					].map((label, index) => (
-						<Label small key={index}>
+					].map((label) => (
+						<Label small key={label}>
 							{label}
 						</Label>
 					))}
@@ -130,8 +130,8 @@ const Settings = () => {
 						'Opener do not store or save your browsing history online, your browsing history is saved inside your browser.',
 						'We cannot view or access your browsing history.',
 						'We respect your privacy.'
-					].map((label, index) => (
-						<Label small key={index}>
+					].map((label) => (
+						<Label key={label}>
 							{label}
 						</Label>
 					))}

@@ -1,17 +1,14 @@
 import dynamic from 'next/dynamic'
 
 import { useAtom } from 'jotai'
-import {
-	CompressionType,
-	safeModeAtom
-} from '@stores/settings'
-
-import { Figure } from './components'
+import { CompressionType, safeModeAtom } from '@stores/settings'
 
 import tw, { combine } from '@tailwind'
 
 import { useCompressionType } from '@services/hooks'
 import { imageEffect } from '@services/image-effect'
+
+import { Figure } from './components'
 
 import type { PageComponent } from './types'
 
@@ -51,6 +48,7 @@ export const Page: PageComponent = (props) => {
 					tw`absolute top-0 w-full rounded`
 				)}
 				src={link}
+				alt='Page'
 			/>
 		</Figure>
 	)

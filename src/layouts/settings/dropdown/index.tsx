@@ -38,8 +38,9 @@ export const DropDownSettingLayout: DropDownSettingComponent = ({
 				>
 					<button
 						ref={select}
-						className={tw`appearance-none flex flex-row items-center text-lg text-gray-700 font-semibold w-full m-0 py-2 bg-gray-100 hover:bg-gray-50 focus:bg-gray-50 border-0 rounded transition-colors cursor-pointer`}
+						className={tw`appearance-none flex flex-row items-center text-lg text-gray-700 dark:text-gray-200 font-semibold w-full m-0 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 focus:bg-gray-50 dark:hover:bg-gray-600 dark:focus:bg-gray-600 border-0 rounded transition-colors cursor-pointer`}
 						onClick={toggle}
+						type="button"
 					>
 						<span className={tw`flex-1`}>{selected}</span>
 						<ChevronDown />
@@ -55,7 +56,7 @@ export const DropDownSettingLayout: DropDownSettingComponent = ({
 							className={combine(
 								styles.dropdown,
 								isOpen ? styles['dropdown-open'] : '',
-								tw`flex flex-col bg-white rounded overflow-hidden`
+								tw`flex flex-col bg-white dark:bg-gray-700 rounded overflow-hidden`
 							)}
 							style={{
 								height: isOpen ? options.length * 48 + 8 : 0
@@ -70,10 +71,11 @@ export const DropDownSettingLayout: DropDownSettingComponent = ({
 										className={combine(
 											styles.option,
 											isSelected
-												? ''
-												: tw`hover:bg-gray-100 focus:bg-gray-100`,
-											tw`appearance-none text-lg bg-transparent border-0 rounded-none outline-none transition-colors cursor-pointer`
+												? tw`text-gray-300 dark:text-gray-500 cursor-not-allowed`
+												: tw`hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-600 dark:focus:bg-gray-600 cursor-pointer`,
+											tw`appearance-none text-lg text-gray-900 dark:text-gray-300 bg-transparent border-0 rounded-none outline-none transition-colors`
 										)}
+										type="button"
 										onClick={handleSelect(option)}
 									>
 										{option}
