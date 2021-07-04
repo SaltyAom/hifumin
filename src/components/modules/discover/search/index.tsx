@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -21,14 +21,14 @@ import styles from './search-results.module.sass'
 export const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 	let [keyword] = useAtom(searchAtom)
 
-	let { isReady } = useRouter()
-
 	let {
 		stories,
 		fetchMore,
 		isLoading: isSearching,
 		isEnd
 	} = useSearchHentai(keyword)
+
+	let [pageLoaded, updatePageState] = useState(false)
 
 	let storyGroups = useMemo(
 		() => splitChunk(initial.concat(stories), spaces),
@@ -37,8 +37,28 @@ export const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 
 	usePageEndObserver(fetchMore, isEnd)
 
+	let { events } = useRouter()
+
+	useEffect(() => {
+		let changingRoute = () => {
+			updatePageState(false)
+		}
+
+		let changedRoute = () => {
+			updatePageState(true)
+		}
+
+		events.on('routeChangeStart', changingRoute)
+		events.on('routeChangeComplete', changedRoute)
+
+		return () => {
+			events.off('routeChangeStart', changingRoute)
+			events.off('routeChangeComplete', changingRoute)
+		}
+	}, [])
+
 	if (!initial.length && keyword && !stories.length)
-		if (isSearching || !isReady)
+		if (isSearching || !pageLoaded)
 			return (
 				<section
 					key="searching-layout"

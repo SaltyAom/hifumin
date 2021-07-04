@@ -3,7 +3,7 @@ import { useNetworkStatus } from 'react-adaptive-hooks'
 import { useAtom } from 'jotai'
 import { CompressionType, imageCompressionAtom } from '@stores/settings'
 
-export const useCompressionType = () => {
+const useCompressionType = () => {
 	let [imageCompression] = useAtom(imageCompressionAtom)
 
 	let { effectiveConnectionType = '4g' } = useNetworkStatus()
@@ -32,3 +32,5 @@ export const useCompressionType = () => {
 
 	return CompressionType.native
 }
+
+export default useCompressionType

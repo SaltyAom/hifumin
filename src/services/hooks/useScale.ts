@@ -1,10 +1,4 @@
-import {
-	RefObject,
-	useEffect,
-	useMemo,
-	useRef,
-	useState
-} from 'react'
+import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
 
 import { isServer } from '@services/validation'
 
@@ -13,7 +7,7 @@ interface Dimension {
 	height: number
 }
 
-export const useScale = <T extends HTMLElement = HTMLElement>({
+const useScale = <T extends HTMLElement = HTMLElement>({
 	width,
 	height
 }: Dimension): [RefObject<T>, Dimension] => {
@@ -22,18 +16,6 @@ export const useScale = <T extends HTMLElement = HTMLElement>({
 		height
 	})
 	let element = useRef<T>(null)
-
-	useEffect(() => {
-		scale()
-
-		window.addEventListener('resize', scale, {
-			passive: true
-		})
-
-		return () => {
-			window.removeEventListener('resize', scale)
-		}
-	}, [width, height, element.current])
 
 	let globalWidth = !isServer ? window.innerWidth : 0
 	let globalHeight = !isServer ? window.innerHeight : 0
@@ -56,5 +38,19 @@ export const useScale = <T extends HTMLElement = HTMLElement>({
 		[width, height, globalWidth, globalHeight]
 	)
 
+	useEffect(() => {
+		scale()
+
+		window.addEventListener('resize', scale, {
+			passive: true
+		})
+
+		return () => {
+			window.removeEventListener('resize', scale)
+		}
+	}, [width, height, element.current])
+
 	return [element, dimension]
 }
+
+export default useScale

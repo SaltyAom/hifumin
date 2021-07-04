@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useReducer, useRef } from 'react'
 
-export const useLazyLoad = <T extends HTMLElement = HTMLElement>(): [
+const useLazyLoad = <T extends HTMLElement = HTMLElement>(): [
 	RefObject<T>,
 	boolean
 ] => {
@@ -33,3 +33,5 @@ export const useLazyLoad = <T extends HTMLElement = HTMLElement>(): [
 
 	return [element, isNear]
 }
+
+export default useLazyLoad

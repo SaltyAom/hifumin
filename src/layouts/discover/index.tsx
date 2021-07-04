@@ -55,7 +55,7 @@ export const DiscoverLayout: DiscoverLayoutComponent = ({
 				className={tw`sticky top-[64px] lg:top-0 z-30 mx-2 lg:mx-0 px-2 my-2 lg:my-0 py-2 lg:py-4 bg-transparent`}
 			>
 				<form
-					className={tw`flex flex-row items-center text-gray-600 dark:text-gray-400 pl-4 bg-gray-200 dark:bg-gray-700 rounded-lg`}
+					className={tw`flex flex-row items-center text-gray-600 dark:text-gray-400 pl-4 bg-gray-100 dark:bg-gray-700 rounded-lg`}
 					onSubmit={handleSearch}
 				>
 					<Search />

@@ -1,6 +1,7 @@
+/* eslint-disable no-use-before-define */
 import { useEffect, useRef } from 'react'
 
-export const usePageEndObserver = (callback: Function, shouldStop = false) => {
+const usePageEndObserver = (callback: Function, shouldStop = false) => {
 	let previousObserver = useRef<() => Promise<void>>()
 	let isLoading = useRef(false)
 
@@ -51,3 +52,5 @@ export const usePageEndObserver = (callback: Function, shouldStop = false) => {
 		watchPageEnd()
 	}
 }
+
+export default usePageEndObserver

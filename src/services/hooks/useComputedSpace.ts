@@ -1,14 +1,9 @@
 import { useState, useEffect, RefObject, useCallback } from 'react'
 
-let cardWidth = 220
+const cardWidth = 220
 
-export const useComputedSpace = (layout: RefObject<HTMLElement>) => {
+const useComputedSpace = (layout: RefObject<HTMLElement>) => {
 	let [spaces, updateSpaces] = useState(4)
-
-	useEffect(() => {
-		calculateLayout()
-		window.addEventListener('resize', calculateLayout)
-	}, [])
 
 	let calculateLayout = useCallback(() => {
 		let width = (layout.current?.clientWidth ?? cardWidth) - 48
@@ -24,5 +19,18 @@ export const useComputedSpace = (layout: RefObject<HTMLElement>) => {
 		updateSpaces(available)
 	}, [])
 
+	useEffect(() => {
+		calculateLayout()
+		window.addEventListener('resize', calculateLayout, {
+			passive: true
+		})
+		
+		return () => {
+			window.removeEventListener('resize', calculateLayout)
+		}
+	}, [])
+
 	return spaces
 }
+
+export default useComputedSpace

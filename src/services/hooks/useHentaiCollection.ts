@@ -13,10 +13,11 @@ interface UseHentaiCollectionResult {
 	isEnd: boolean
 }
 
+// eslint-disable-next-line no-unused-vars
 type UseHentaiCollection = (initial: Stories) => UseHentaiCollectionResult
-let tags = ['yuri', 'glasses']
+const tags = ['yuri', 'glasses']
 
-export const useHentaiCollection: UseHentaiCollection = (initial) => {
+const useHentaiCollection: UseHentaiCollection = (initial) => {
 	let [stories, updateStories] = useState(initial)
 	let [isEnd, setAsEnd] = useReducer(() => true, false)
 
@@ -26,7 +27,7 @@ export const useHentaiCollection: UseHentaiCollection = (initial) => {
 	let randomTag = useCallback(() => {
 		if (availableTag.current.length === 0) {
 			availableTag.current = copy(tags)
-			page.current++
+			page.current += 1
 		}
 
 		let [tag] = availableTag.current.splice(
@@ -51,3 +52,5 @@ export const useHentaiCollection: UseHentaiCollection = (initial) => {
 
 	return { stories, fetchMore, isEnd }
 }
+
+export default useHentaiCollection
