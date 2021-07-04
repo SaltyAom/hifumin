@@ -5,6 +5,7 @@ import { AppProps } from 'next/app'
 import { Provider as JotaiProvider } from 'jotai'
 
 import BaseLayout from '@layouts/base'
+import PersistanceProvider from '@layouts/persistance'
 
 import '@styles/init.sass'
 
@@ -17,9 +18,11 @@ const App = ({ Component, pageProps }: AppProps) => {
 
 	return (
 		<JotaiProvider>
-			<BaseLayout>
-				<Component {...pageProps} />
-			</BaseLayout>
+			<PersistanceProvider>
+				<BaseLayout>
+					<Component {...pageProps} />
+				</BaseLayout>
+			</PersistanceProvider>
 		</JotaiProvider>
 	)
 }

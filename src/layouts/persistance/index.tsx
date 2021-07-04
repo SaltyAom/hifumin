@@ -9,7 +9,7 @@ import { knownStoriesAtomBase } from '@stores/knownStory'
 
 import tw, { combine } from '@tailwind'
 
-export const PersistanceProvider: FunctionComponent = ({ children }) => {
+const PersistanceProvider: FunctionComponent = ({ children }) => {
 	let [settings, updateSettings] = useAtom(settingsAtom)
 	let [, updateHistory] = useAtom(historyAtomBase)
 	let [, updateBookmark] = useAtom(bookmarkAtomBase)
@@ -21,7 +21,8 @@ export const PersistanceProvider: FunctionComponent = ({ children }) => {
 		(theme: ThemeMode = themeMode) => {
 			let { documentElement: html } = document
 
-			html.className = theme === ThemeMode.dark ? combine('dark', tw`dark`) : ''
+			html.className =
+				theme === ThemeMode.dark ? combine('dark', tw`dark`) : ''
 		},
 		[themeMode]
 	)
@@ -64,3 +65,5 @@ export const PersistanceProvider: FunctionComponent = ({ children }) => {
 
 	return <>{children}</>
 }
+
+export default PersistanceProvider
