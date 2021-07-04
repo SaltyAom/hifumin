@@ -7,14 +7,14 @@ const bridge = '/api/search'
 export const client = createClient({
 	url,
 	exchanges: [
-		...defaultExchanges,
 		retryExchange({
 			initialDelayMs: 500,
 			maxDelayMs: 3500,
 			randomDelay: true,
-			maxNumberAttempts: 2,
+			maxNumberAttempts: 3,
 			retryIf: (err) => !!err
-		})
+		}),
+		...defaultExchanges
 	]
 })
 

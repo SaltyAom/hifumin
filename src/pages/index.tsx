@@ -2,6 +2,7 @@ import { useMemo, useRef } from 'react'
 import type { FunctionComponent } from 'react'
 
 import { GetStaticProps } from 'next'
+import type { CombinedError } from 'urql'
 
 import { useAtom } from 'jotai'
 import { searchAtom } from '@stores/search'
@@ -20,7 +21,7 @@ import type { Stories } from '@types'
 
 export interface DiscoverProps {
 	stories: Stories
-	keyword?: string
+	error?: CombinedError
 }
 
 const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
@@ -52,7 +53,8 @@ export const getStaticProps: GetStaticProps<DiscoverProps> = async () => {
 
 	return {
 		props: {
-			stories: stories.data?.searchHentai.data ?? []
+			stories: stories.data?.searchHentai.data ?? [],
+			error: stories.error
 		},
 		revalidate: 3600 * 3
 	}
