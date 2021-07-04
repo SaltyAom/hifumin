@@ -1,10 +1,14 @@
-import { useEffect, useReducer } from 'react'
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import { useCallback, useEffect, useReducer } from 'react'
 import type { FunctionComponent } from 'react'
 
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 
-import { Bookmark, Clock, Grid, Menu, Sliders } from 'react-feather'
+import { useAtom } from 'jotai'
+import { themeAtom, searchAtom, ThemeMode } from '@stores'
+
+import { Bookmark, Clock, Grid, Menu, Settings } from 'react-feather'
 
 import tw, { combine } from '@services/tailwind'
 import { isServer } from '@services/validation'
@@ -20,10 +24,13 @@ const sidebars: BaseLayoutTabs = [
 	[Grid, 'Discover', '/'],
 	[Bookmark, 'Bookmark', '/bookmark'],
 	[Clock, 'History', '/history'],
-	[Sliders, 'Settings', '/settings']
+	[Settings, 'Settings', '/settings']
 ] as const
 
 const BaseLayout: FunctionComponent = ({ children }) => {
+	let [theme] = useAtom(themeAtom)
+	let [, updateSearch] = useAtom(searchAtom)
+
 	let [fullSide, toggleFullSide] = useReducer(
 		(v) => !v,
 		isServer
@@ -32,6 +39,10 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 	)
 	let [initial, loaded] = useReducer(() => false, true)
 	let [key, forceUpdate] = useReducer((v) => v + 1, 0)
+
+	let emptySearch = useCallback(() => {
+		updateSearch('')
+	}, [updateSearch])
 
 	useEffect(() => {
 		forceUpdate()
@@ -50,7 +61,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 	return (
 		<>
 			<NextNprogress
-				color="#007aff"
+				color={theme === ThemeMode.light ? '#000' : '#fff'}
 				startPosition={0.3}
 				stopDelayMs={200}
 				height={3}
@@ -82,6 +93,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 						<Link href="/">
 							<a
 								className={tw`text-gray-900 dark:text-gray-200 no-underline`}
+								onClick={emptySearch}
 							>
 								Opener
 							</a>
@@ -112,6 +124,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 							role="heading"
 							aria-level={1}
 							className={tw`text-gray-900 dark:text-gray-300 text-2xl font-medium m-0 no-underline`}
+							onClick={emptySearch}
 						>
 							Opener
 						</a>

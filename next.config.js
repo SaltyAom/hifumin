@@ -13,7 +13,6 @@ const { useEsbuildLoader } = require('./tools/useEsbuild')
 module.exports = withPlugins(
 	[
 		[withPreact],
-		[withAnalyze],
 		[withStyles],
 		[
 			withOffline,
@@ -39,7 +38,8 @@ module.exports = withPlugins(
 					]
 				}
 			}
-		]
+		],
+		[withAnalyze]
 	],
 	{
 		async rewrites() {
@@ -52,7 +52,7 @@ module.exports = withPlugins(
 		},
 		experimental: {
 			modern: true,
-			polyfillsOptimization: true,
+			polyfillsOptimization: true
 			// optimizeCss: true
 		},
 		images: {

@@ -1,9 +1,12 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define */
 import { atom } from 'jotai'
 
-import { historyAtom } from './history'
-import { bookmarkAtom } from './bookmark'
-
 import type { Story } from '@types'
+import { historyAtom } from './history'
+
+import { bookmarkAtom } from './bookmark'
 
 export type KnownStory = ReturnType<typeof composeKnownStory>
 export type KnownStories = Record<number, KnownStory>

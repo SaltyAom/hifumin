@@ -5,9 +5,9 @@ import { useRouter } from 'next/router'
 
 import tw, { combine } from '@tailwind'
 
-import styles from './tab.module.sass'
+import type { BaseLayoutTabComponent } from './types'
 
-import { BaseLayoutTabComponent } from './types'
+import styles from './tab.module.sass'
 
 const twClass = {
 	active: tw`text-gray-900 dark:text-gray-200 border-black dark:border-gray-200`,
@@ -34,6 +34,7 @@ export const BaseTab: BaseLayoutTabComponent = ({
 		<Link href={link}>
 			<a
 				key={title}
+				title={title}
 				className={combine(
 					styles.tab,
 					isActive ? twClass.active : twClass.default,

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import type { FormEvent, ChangeEventHandler } from 'react'
+import type { FormEvent } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -39,16 +39,6 @@ export const DiscoverLayout: DiscoverLayoutComponent = ({
 		if (keyword.current) updateKeyword(keyword.current.value)
 	}, [])
 
-	let handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-		(event) => {
-			if (event.currentTarget.value) return
-
-			updateKeyword('')
-			push('/')
-		},
-		[]
-	)
-
 	return (
 		<>
 			<header
@@ -65,7 +55,6 @@ export const DiscoverLayout: DiscoverLayoutComponent = ({
 						className={tw`w-full text-2xl text-gray-800 dark:text-gray-200 pl-2 py-3 bg-transparent border-0 outline-none`}
 						type="text"
 						placeholder="Find hentai"
-						onChange={handleChange}
 					/>
 				</form>
 			</header>

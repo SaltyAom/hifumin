@@ -1,6 +1,13 @@
-import { FunctionComponent, useCallback, useEffect } from 'react'
+import {
+	FunctionComponent,
+	useCallback,
+	useEffect,
+	useReducer,
+	useState
+} from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
 
 import type { OperationResult } from 'urql'
 
@@ -20,18 +27,33 @@ import type { GetHentaiById, GetHentaiByIdVariables } from '@services/graphql'
 import type { Story } from '@types'
 
 interface ReaderProps {
-	story: HentaiQuery<Story> | undefined
+	story: HentaiQuery<Story> | null
 	error:
 		| OperationResult<GetHentaiById, GetHentaiByIdVariables>['error']
 		| undefined
 }
 
-const Reader: FunctionComponent<ReaderProps> = ({ story, error }) => {
+const Reader: FunctionComponent<ReaderProps> = ({
+	story: initialStory,
+	error
+}) => {
 	let [collectHistory] = useAtom(collectHistoryAtom)
 	let [, dispatchHistory] = useAtom(historyAtom)
 
+	let {
+		query: { id }
+	} = useRouter()
+
+	let [story, updateClientStory] = useState(initialStory)
+	let [isRetried, updateRetried] = useReducer(() => true, false)
+
 	useEffect(() => {
-		if (typeof story === 'undefined' || !story.success) return
+		updateClientStory(initialStory)
+	}, [initialStory])
+
+	useEffect(() => {
+		if (typeof story === 'undefined') return
+		if (!story || !story.success) return
 
 		if (collectHistory)
 			dispatchHistory({
@@ -39,6 +61,36 @@ const Reader: FunctionComponent<ReaderProps> = ({ story, error }) => {
 				story: story.data
 			})
 	}, [story])
+
+	useEffect(() => {
+		// eslint-disable-next-line no-console
+		if (isRetried || !error) return
+		if (!id) return updateRetried()
+
+		// ? Stop if page change, preventing memory leak
+		let controller = new AbortController()
+		let done = false
+
+		let retry = async () => {
+			let clientStory: HentaiQuery<Story> | null = await fetch(
+				`/api/story/${id}`,
+				{
+					signal: controller.signal
+				}
+			).then((s) => s.json())
+
+			done = true
+
+			if (clientStory) updateClientStory(clientStory)
+			else updateRetried()
+		}
+
+		retry()
+
+		return () => {
+			if (!done) controller.abort()
+		}
+	}, [error])
 
 	let reload = useCallback(() => {
 		window.location.reload()
@@ -58,18 +110,20 @@ const Reader: FunctionComponent<ReaderProps> = ({ story, error }) => {
 			</>
 		)
 
-	if (error || !story.success)
+	if (error || !story?.success)
 		return (
 			<>
 				<OpenGraph title="Opener Studio" />
 				<ReaderLayout isValid={false}>
 					<section
-						className={tw`flex flex-col justify-center h-screen mt-8 py-12`}
+						className={tw`flex flex-col justify-center h-screen w-full mt-8 py-12`}
 					>
 						<h1
 							className={tw`text-xl text-gray-700 dark:text-gray-300 m-0 mb-4 font-normal`}
 						>
-							{JSON.stringify(error) || story.error.toString()}
+							{error?.message ||
+								story?.error.toString() ||
+								`Something went wrong, but usually nHentai API went down, this usually takes 2-3 hours to resolve`}
 						</h1>
 						<button
 							className={tw`appearance-none text-xl text-gray-700 dark:text-gray-400 bg-gray-300 dark:bg-gray-700 font-medium px-6 py-2 rounded border-none cursor-pointer`}
@@ -122,7 +176,7 @@ export const getStaticProps: GetStaticProps<ReaderProps> = async (context) => {
 
 	return {
 		props: {
-			story: story.data?.getHentaiById,
+			story: story.data?.getHentaiById || null,
 			error: JSON.parse(
 				JSON.stringify(story.error, (_, v) =>
 					typeof v === 'undefined' ? null : v

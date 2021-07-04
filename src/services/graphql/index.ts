@@ -1,11 +1,21 @@
 import { createClient, defaultExchanges } from 'urql'
+import { retryExchange } from '@urql/exchange-retry'
 
 const url = 'https://api.opener.studio/graphql'
 const bridge = '/api/search'
 
 export const client = createClient({
 	url,
-	exchanges: defaultExchanges
+	exchanges: [
+		...defaultExchanges,
+		retryExchange({
+			initialDelayMs: 500,
+			maxDelayMs: 3500,
+			randomDelay: true,
+			maxNumberAttempts: 2,
+			retryIf: (err) => !!err
+		})
+	]
 })
 
 export const apiFetcher = <T extends Object>(

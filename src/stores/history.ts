@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
 import { atom } from 'jotai'
-
-import { composeKnownStory, knownStoriesAtom, KnownStory } from './knownStory'
 
 import dayjs from 'dayjs'
 
 import type { Story } from '@types'
+
+import { composeKnownStory, knownStoriesAtom } from './knownStory'
+import type { KnownStory } from './knownStory'
 
 export interface History {
 	id: number
@@ -12,6 +14,7 @@ export interface History {
 }
 export type Histories = History[]
 
+// eslint-disable-next-line no-shadow
 export enum HistoryActions {
 	add,
 	remove

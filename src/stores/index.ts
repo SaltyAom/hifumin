@@ -8,3 +8,5 @@ export {
 	CompressionType,
 	ReaderType
 } from './settings'
+export { searchAtom } from './search'
+export { themeAtom } from './theme'

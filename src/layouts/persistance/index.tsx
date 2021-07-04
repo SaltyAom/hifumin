@@ -6,6 +6,7 @@ import { bookmarkAtomBase } from '@stores/bookmark'
 import { settingsAtom, ThemeMode } from '@stores/settings'
 import { getHistory, historyAtomBase } from '@stores/history'
 import { knownStoriesAtomBase } from '@stores/knownStory'
+import { themeAtom } from '@stores/theme'
 
 import tw, { combine } from '@tailwind'
 
@@ -14,12 +15,15 @@ const PersistanceProvider: FunctionComponent = ({ children }) => {
 	let [, updateHistory] = useAtom(historyAtomBase)
 	let [, updateBookmark] = useAtom(bookmarkAtomBase)
 	let [, updateKnownStory] = useAtom(knownStoriesAtomBase)
+	let [, updateTheme] = useAtom(themeAtom)
 
 	let { themeMode } = useMemo(() => settings, [settings])
 
 	let applyTheme = useCallback(
 		(theme: ThemeMode = themeMode) => {
 			let { documentElement: html } = document
+
+			updateTheme(theme)
 
 			html.className =
 				theme === ThemeMode.dark ? combine('dark', tw`dark`) : ''
