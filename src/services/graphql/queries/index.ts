@@ -13,18 +13,33 @@ import type {
 	SearchHentaiVariables
 } from './types'
 
+const removeTypeName = <T extends Object>(object: T): T =>
+	JSON.parse(
+		JSON.stringify(object, (key, value) => {
+			if (key === '__typename') return undefined
+
+			return value
+		})
+	)
+
 export const getPreviews = ({ keyword, page = 1 }: SearchHentaiVariables) =>
 	query<SearchHentai, SearchHentaiVariables>(GET_PREVIEWS_QUERY, {
 		keyword,
 		page
-	}).toPromise()
+	})
+		.toPromise()
+		.then(removeTypeName)
 
 export const getSinglePreviewById = ({ id }: GetHentaiByIdVariables) =>
 	query<GetHentaiById, GetHentaiByIdVariables>(GET_SINGLE_PREVIEW_QUERY, {
 		id
-	}).toPromise()
+	})
+		.toPromise()
+		.then(removeTypeName)
 
 export const getHentaiReaderById = ({ id }: GetHentaiByIdVariables) =>
 	query<GetHentaiById, GetHentaiByIdVariables>(GET_HENTAI_READER_BY_ID, {
 		id
-	}).toPromise()
+	})
+		.toPromise()
+		.then(removeTypeName)
