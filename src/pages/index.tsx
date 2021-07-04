@@ -23,7 +23,7 @@ export interface DiscoverProps {
 	stories: Stories
 	// ? Also used in search page
 	keyword?: string
-	error?: CombinedError
+	error?: CombinedError | null
 }
 
 const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
@@ -56,7 +56,7 @@ export const getStaticProps: GetStaticProps<DiscoverProps> = async () => {
 	return {
 		props: {
 			stories: stories.data?.searchHentai.data ?? [],
-			error: stories.error
+			error: stories.error || null
 		},
 		revalidate: 3600 * 3
 	}

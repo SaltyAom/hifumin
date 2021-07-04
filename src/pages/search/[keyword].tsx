@@ -21,7 +21,7 @@ let getKeyword = (keyword: string) => decodeURI(keyword.replace('/search/', ''))
 
 const Search: FunctionComponent<DiscoverProps> = ({
 	stories: initial,
-	keyword
+	keyword: initialKeyword
 }) => {
 	let [search, updateSearch] = useAtom(searchAtom)
 	let [keywordChange, notifyKeywordChange] = useReducer(() => true, false)
