@@ -21,6 +21,8 @@ import type { Stories } from '@types'
 
 export interface DiscoverProps {
 	stories: Stories
+	// ? Also used in search page
+	keyword?: string
 	error?: CombinedError
 }
 
