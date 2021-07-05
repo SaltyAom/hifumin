@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
 import { DiscoverCard } from '@layouts/discover'
+import StoryError from '@atoms/story-error'
 
 import tw from '@tailwind'
 
@@ -9,7 +10,11 @@ import { splitChunk } from '@services/array'
 
 import type { DiscoverComponents } from '@types'
 
-const DiscoverResults: DiscoverComponents = ({ initial = [], spaces }) => {
+const DiscoverResults: DiscoverComponents = ({
+	initial = [],
+	spaces,
+	error = null
+}) => {
 	let { stories, fetchMore, isEnd } = useHentaiCollection(initial)
 
 	let storyGroups = useMemo(
@@ -19,10 +24,15 @@ const DiscoverResults: DiscoverComponents = ({ initial = [], spaces }) => {
 
 	usePageEndObserver(fetchMore, isEnd)
 
+	if (error) return <StoryError error={error?.message || ''} />
+
 	return (
 		<>
 			{storyGroups.map((group, index) => (
-				<section key={index.toString()} className={tw`flex flex-col flex-1 px-2`}>
+				<section
+					key={index.toString()}
+					className={tw`flex flex-col flex-1 px-2`}
+				>
 					{group.map((story) => (
 						<DiscoverCard key={story.id} story={story} />
 					))}

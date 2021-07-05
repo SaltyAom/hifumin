@@ -30,7 +30,10 @@ export interface DiscoverProps {
 	error?: CombinedError | null
 }
 
-const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
+const Discover: FunctionComponent<DiscoverProps> = ({
+	stories: initial,
+	error
+}) => {
 	let [keyword] = useAtom(searchAtom)
 
 	let layout = useRef<HTMLElement>(null)
@@ -38,7 +41,13 @@ const Discover: FunctionComponent<DiscoverProps> = ({ stories: initial }) => {
 
 	let search = useMemo(() => <SearchResults spaces={spaces} />, [spaces])
 	let discover = useMemo(
-		() => <DiscoverResults initial={initial} spaces={spaces} />,
+		() => (
+			<DiscoverResults
+				initial={initial}
+				spaces={spaces}
+				error={error || null}
+			/>
+		),
 		[spaces, initial]
 	)
 

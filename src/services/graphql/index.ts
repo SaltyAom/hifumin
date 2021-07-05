@@ -9,9 +9,9 @@ export const client = createClient({
 	exchanges: [
 		retryExchange({
 			initialDelayMs: 500,
-			maxDelayMs: 3500,
+			maxDelayMs: 8000,
 			randomDelay: true,
-			maxNumberAttempts: 3,
+			maxNumberAttempts: 2,
 			retryIf: (err) => !!err
 		}),
 		...defaultExchanges

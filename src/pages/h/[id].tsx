@@ -17,7 +17,7 @@ import { HistoryActions, historyAtom } from '@stores/history'
 
 import ReaderLayout from '@layouts/reader'
 
-import { Page, ProgressIndicator, OpenGraph } from '@atoms'
+import { Page, ProgressIndicator, OpenGraph, StoryError } from '@atoms'
 
 import tw from '@tailwind'
 import { getHentaiReaderById, HentaiQuery } from '@services/graphql'
@@ -34,7 +34,7 @@ interface ReaderProps {
 
 const Reader: FunctionComponent<ReaderProps> = ({
 	story: initialStory,
-	error
+	error = null
 }) => {
 	let [collectHistory] = useAtom(collectHistoryAtom)
 	let [, dispatchHistory] = useAtom(historyAtom)
@@ -91,10 +91,6 @@ const Reader: FunctionComponent<ReaderProps> = ({
 		}
 	}, [error])
 
-	let reload = useCallback(() => {
-		window.location.reload()
-	}, [])
-
 	if (typeof story === 'undefined')
 		return (
 			<>
@@ -111,29 +107,11 @@ const Reader: FunctionComponent<ReaderProps> = ({
 
 	if (error || !story?.success)
 		return (
-			<>
-				<OpenGraph title="Opener Studio" />
-				<ReaderLayout isValid={false}>
-					<section
-						className={tw`flex flex-col justify-center h-screen w-full mt-8 py-12`}
-					>
-						<h1
-							className={tw`text-xl text-gray-700 dark:text-gray-300 m-0 mb-4 font-normal`}
-						>
-							{error?.message ||
-								story?.error.toString() ||
-								`Something went wrong, but usually nHentai API went down, this usually takes 2-3 hours to resolve`}
-						</h1>
-						<button
-							className={tw`appearance-none text-xl text-gray-700 dark:text-gray-400 bg-gray-300 dark:bg-gray-700 font-medium px-6 py-2 rounded border-none cursor-pointer`}
-							onClick={reload}
-							type="button"
-						>
-							Reload
-						</button>
-					</section>
-				</ReaderLayout>
-			</>
+			<ReaderLayout isValid={false}>
+				<section className={tw`flex justify-center h-full-app`}>
+					<StoryError error={error?.message || ''} />
+				</section>
+			</ReaderLayout>
 		)
 
 	let {

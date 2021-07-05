@@ -10,7 +10,7 @@ import { themeAtom, searchAtom, ThemeMode } from '@stores'
 
 import { Bookmark, Clock, Grid, Menu, Settings } from 'react-feather'
 
-import tw, { combine } from '@services/tailwind'
+import tw, { combine } from '@tailwind'
 import { isServer } from '@services/validation'
 
 import { BaseTab } from './components'
@@ -76,7 +76,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 						tw(
 							`z-50 fixed lg:sticky top-0 flex flex-col justify-start py-4 ${
 								fullSide ? 'w-[240px]' : 'w-0 lg:w-[72px]'
-							} text-xl h-screen border-0 border-solid md:border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden`
+							} text-xl h-screen border-0 border-solid md:border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 sm:dark:bg-gray-900 overflow-hidden`
 						)
 					)}
 				>

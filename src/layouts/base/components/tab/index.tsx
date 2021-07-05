@@ -25,7 +25,7 @@ export const BaseTab: BaseLayoutTabComponent = ({
 	let isActive = link === asPath
 
 	let handleToggle = useCallback(() => {
-		if (window.innerWidth < 568) toggle()
+		if (window.innerWidth < 1024) toggle()
 	}, [])
 
 	if (link === '/' && asPath.startsWith('/search/')) isActive = true
