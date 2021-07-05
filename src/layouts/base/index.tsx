@@ -142,7 +142,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 					aria-label="Hide sidebar"
 				/>
 
-				<section className={tw`flex flex-col flex-1 px-0 lg:px-6`}>
+				<section className={tw`flex flex-col flex-1 px-0`}>
 					{children}
 				</section>
 			</section>
