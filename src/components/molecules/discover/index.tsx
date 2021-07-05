@@ -7,9 +7,9 @@ import tw from '@tailwind'
 import { useHentaiCollection, usePageEndObserver } from '@services/hooks'
 import { splitChunk } from '@services/array'
 
-import type { DiscoverComponents } from '../types'
+import type { DiscoverComponents } from '@types'
 
-export const DiscoverResults: DiscoverComponents = ({ initial = [], spaces }) => {
+const DiscoverResults: DiscoverComponents = ({ initial = [], spaces }) => {
 	let { stories, fetchMore, isEnd } = useHentaiCollection(initial)
 
 	let storyGroups = useMemo(
@@ -31,3 +31,5 @@ export const DiscoverResults: DiscoverComponents = ({ initial = [], spaces }) =>
 		</>
 	)
 }
+
+export default DiscoverResults

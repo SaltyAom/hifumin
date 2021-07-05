@@ -1,46 +1,24 @@
 import tw, { combine } from '@tailwind'
 
-import { VerticalSettingLayout } from '../vertical'
+import { VerticalSetting } from '@layouts/settings'
+import { Switch } from '@components/atoms'
 
 import type { SwitchSettingComponent } from './types'
 
-import styles from './switch.module.sass'
-
-export const SwitchSettingLayout: SwitchSettingComponent = ({
+const SwitchSetting: SwitchSettingComponent = ({
 	children,
 	value,
 	update,
-	footer
-}) => {
-	let toggle = () => {
-		update(!value)
-	}
+	footer,
+	className = ''
+}) => (
+	<VerticalSetting
+		className={combine(className, tw`!flex-row items-center`)}
+		action={<Switch value={value} update={update} />}
+		footer={footer}
+	>
+		{children}
+	</VerticalSetting>
+)
 
-	return (
-		<VerticalSettingLayout
-			className={tw`flex-row`}
-			action={
-				<button
-					className={combine(
-						styles.switch,
-						value ? tw`bg-gray-900 dark:bg-blue-600` : tw`bg-gray-200 dark:bg-gray-600`,
-						tw`appearance-none border-0 rounded-full transition-colors cursor-pointer`
-					)}
-					onClick={toggle}
-					type="button"
-				>
-					<div
-						className={combine(
-							styles.toggler,
-							value ? styles['toggler-active'] : '',
-							tw`bg-white rounded-full`
-						)}
-					/>
-				</button>
-			}
-			footer={footer}
-		>
-			{children}
-		</VerticalSettingLayout>
-	)
-}
+export default SwitchSetting

@@ -1,11 +1,9 @@
 import type { FunctionComponent } from 'react'
 
-import type { VerticalSettingLayoutProps } from '../vertical/types'
+import type { VerticalSettingLayoutProps } from '@layouts/settings/vertical/types'
+import type { SwitchProps } from '@components/atoms/switch/types'
 
-export interface SwitchSettingProps extends Omit<VerticalSettingLayoutProps, 'action'> {
-	value: boolean
-	update: (updated: boolean) => void
-}
+export type SwitchSettingProps = Omit<VerticalSettingLayoutProps, 'action'> &
+	SwitchProps
 
-export type SwitchSettingComponent =
-	FunctionComponent<SwitchSettingProps>
+export type SwitchSettingComponent = FunctionComponent<SwitchSettingProps>

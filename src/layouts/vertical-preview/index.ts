@@ -1,4 +1,4 @@
-export { VerticalCover } from './cover'
-export { VerticalGallery } from './gallery'
-export { VerticalGroup } from './group'
-export { VerticalLayout } from './layout'
+export { default as VerticalCover } from './cover'
+export { default as VerticalGallery } from './gallery'
+export { default as VerticalGroup } from './group'
+export { default as VerticalLayout } from './layout'

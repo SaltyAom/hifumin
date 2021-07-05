@@ -1,1 +1,1 @@
-export { ReaderCover } from './cover'
+export { default as ReaderCover } from './cover'

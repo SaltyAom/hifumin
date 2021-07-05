@@ -2,7 +2,7 @@ import { useAtom } from 'jotai'
 import { historyAtom } from '@stores/history'
 import { knownStoriesAtom } from '@stores/knownStory'
 
-import { OpenGraph } from '@components/modules/opengraph'
+import OpenGraph from '@atoms/opengraph'
 
 import dayjs from 'dayjs'
 import groupBy from 'lodash/groupBy'

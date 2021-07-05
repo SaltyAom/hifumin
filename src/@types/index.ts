@@ -12,3 +12,4 @@ export type {
 	Tags,
 	Title
 } from './story'
+export type { DiscoverComponents, DiscoverProps } from './discover'

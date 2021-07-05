@@ -20,7 +20,7 @@ const twClass = {
 	imageIcon: tw`w-[21px] h-[21px] mr-2`
 }
 
-export const DiscoverCard: DiscoverCardComponent = ({
+const DiscoverCard: DiscoverCardComponent = ({
 	story: {
 		id,
 		title: { display },
@@ -93,3 +93,5 @@ export const DiscoverCard: DiscoverCardComponent = ({
 		</Link>
 	)
 }
+
+export default DiscoverCard

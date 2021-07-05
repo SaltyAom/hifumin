@@ -14,7 +14,7 @@ const twClass = {
 	info: tw`flex flex-row flex-1 items-center text-gray-400 dark:text-gray-400 text-md`
 } as const
 
-export const VerticalCover: VerticalCoverComponent = ({
+const VerticalCover: VerticalCoverComponent = ({
 	story: {
 		id,
 		title: { display },
@@ -44,3 +44,5 @@ export const VerticalCover: VerticalCoverComponent = ({
 		</a>
 	</Link>
 )
+
+export default VerticalCover

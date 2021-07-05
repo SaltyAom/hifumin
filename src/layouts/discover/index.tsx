@@ -13,10 +13,7 @@ import { isNhentai } from '@services/validation'
 
 import type { DiscoverLayoutComponent } from './types'
 
-export const DiscoverLayout: DiscoverLayoutComponent = ({
-	children,
-	layoutRef
-}) => {
+const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 	let [sharedKeyword, updateKeyword] = useAtom(searchAtom)
 	let keyword = useRef<HTMLInputElement>(null)
 
@@ -69,3 +66,4 @@ export const DiscoverLayout: DiscoverLayoutComponent = ({
 }
 
 export { DiscoverCard } from './components'
+export default DiscoverLayout

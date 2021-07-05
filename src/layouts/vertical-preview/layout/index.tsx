@@ -2,7 +2,7 @@ import tw from '@tailwind'
 
 import type { VerticalLayoutComponent } from './types'
 
-export const VerticalLayout: VerticalLayoutComponent = ({
+const VerticalLayout: VerticalLayoutComponent = ({
 	title,
 	children
 }) => (
@@ -13,3 +13,5 @@ export const VerticalLayout: VerticalLayoutComponent = ({
 		{children}
 	</section>
 )
+
+export default VerticalLayout

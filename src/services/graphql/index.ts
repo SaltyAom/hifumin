@@ -44,3 +44,5 @@ export type {
 	SearchHentai,
 	SearchHentaiVariables
 } from './queries/types'
+
+export default client

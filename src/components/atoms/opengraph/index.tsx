@@ -7,7 +7,7 @@ import { isServer } from '@services/validation'
 
 import type { OpenGraphComponent } from './types'
 
-export const OpenGraph: OpenGraphComponent = ({
+const OpenGraph: OpenGraphComponent = ({
 	title = 'Opener Studio',
 	alternativeTitle = [],
 	description = 'Pinterest but for hentai and 6 digit code.',
@@ -102,3 +102,5 @@ export const OpenGraph: OpenGraphComponent = ({
 		</Head>
 	)
 }
+
+export default OpenGraph

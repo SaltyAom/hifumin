@@ -1,4 +1,4 @@
-export { DropDownSettingLayout } from './dropdown'
-export { SettingLabel } from './label'
-export { SwitchSettingLayout } from './switch'
-export { VerticalSettingLayout } from './vertical'
+export { default as SettingLabels, SettingLabel } from './label'
+export { default as VerticalSetting } from './vertical'
+export { default as DropDownSetting } from './dropdown'
+export { default as SwitchSetting } from './switch'

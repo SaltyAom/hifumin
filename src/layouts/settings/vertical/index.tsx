@@ -4,7 +4,7 @@ import { Spacer } from '@components/atoms'
 
 import { VerticalSettingLayoutComponent } from './types'
 
-export const VerticalSettingLayout: VerticalSettingLayoutComponent = ({
+const VerticalSetting: VerticalSettingLayoutComponent = ({
 	children,
 	action,
 	footer,
@@ -24,3 +24,5 @@ export const VerticalSettingLayout: VerticalSettingLayoutComponent = ({
 		{typeof footer !== 'undefined' ? <Spacer small /> : null}
 	</section>
 )
+
+export default VerticalSetting

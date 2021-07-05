@@ -9,10 +9,10 @@ import { searchAtom } from '@stores/search'
 
 import type { DiscoverProps } from '@pages/index'
 
-import { DiscoverLayout } from '@layouts/discover'
+import DiscoverLayout from '@layouts/discover'
 
-import { SearchResults } from '@components/modules/discover'
-import { OpenGraph } from '@components/modules/opengraph'
+import SearchResults from '@molecules/search'
+import OpenGraph from '@atoms/opengraph'
 
 import { getPreviews } from '@services/graphql'
 import { useComputedSpace } from '@services/hooks'

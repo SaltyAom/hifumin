@@ -9,7 +9,7 @@ import {
 	VerticalGroup
 } from '@layouts/vertical-preview'
 
-import { OpenGraph } from '@components/modules/opengraph'
+import OpenGraph from '@atoms/opengraph'
 
 const Bookmark = () => {
 	let [bookmarks] = useAtom(bookmarkAtom)

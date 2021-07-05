@@ -2,7 +2,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 import { languageCode } from '@services/constants'
 
-import { OpenGraph } from '@components/modules/opengraph'
+import OpenGraph from '@components/atoms/opengraph'
 
 class OpenerDocument extends Document {
 	render() {

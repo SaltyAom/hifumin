@@ -17,7 +17,7 @@ const twClass = {
 	content: tw`flex flex-row items-center text-gray-700 dark:text-gray-400 text-lg my-1 font-medium capitalize`
 } as const
 
-export const ReaderCover: ReaderCoverComponent = ({
+const ReaderCover: ReaderCoverComponent = ({
 	story: {
 		id,
 		title: { display },
@@ -80,3 +80,5 @@ export const ReaderCover: ReaderCoverComponent = ({
 		</div>
 	</header>
 )
+
+export default ReaderCover

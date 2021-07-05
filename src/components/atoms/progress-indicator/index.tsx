@@ -3,7 +3,7 @@ import { themeAtom, ThemeMode } from '@stores'
 
 import styles from './progress-indicator.module.sass'
 
-export const ProgressIndicator = () => {
+const ProgressIndicator = () => {
 	let [theme] = useAtom(themeAtom)
 
 	return (
@@ -23,3 +23,5 @@ export const ProgressIndicator = () => {
 		</div>
 	)
 }
+
+export default ProgressIndicator

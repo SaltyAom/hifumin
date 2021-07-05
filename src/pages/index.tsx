@@ -2,15 +2,17 @@ import { useMemo, useRef } from 'react'
 import type { FunctionComponent } from 'react'
 
 import { GetStaticProps } from 'next'
+import dynamic from 'next/dynamic'
+
 import type { CombinedError } from 'urql'
 
 import { useAtom } from 'jotai'
 import { searchAtom } from '@stores/search'
 
-import { DiscoverLayout } from '@layouts/discover'
+import DiscoverLayout from '@layouts/discover'
 
-import { DiscoverResults, SearchResults } from '@components/modules/discover'
-import { OpenGraph } from '@components/modules/opengraph'
+import OpenGraph from '@atoms/opengraph'
+import DiscoverResults from '@molecules/discover'
 
 import { useComputedSpace } from '@services/hooks'
 import { getPreviews } from '@services/graphql'
@@ -18,6 +20,8 @@ import { randomPick } from '@services/random'
 import { tags } from '@services/data'
 
 import type { Stories } from '@types'
+
+const SearchResults = dynamic(() => import('@components/molecules/search'))
 
 export interface DiscoverProps {
 	stories: Stories

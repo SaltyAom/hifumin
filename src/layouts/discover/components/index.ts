@@ -1,1 +1,1 @@
-export { DiscoverCard } from './card'
+export { default as DiscoverCard } from './card'

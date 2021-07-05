@@ -14,11 +14,11 @@ import { ProgressIndicator } from '@components/atoms'
 import { usePageEndObserver, useSearchHentai } from '@services/hooks'
 import { splitChunk } from '@services/array'
 
-import type { DiscoverComponents } from '../types'
+import type { DiscoverComponents } from '@types'
 
 import styles from './search-results.module.sass'
 
-export const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
+const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 	let [keyword] = useAtom(searchAtom)
 
 	let {
@@ -118,3 +118,5 @@ export const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 		</>
 	)
 }
+
+export default SearchResults

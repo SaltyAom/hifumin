@@ -15,10 +15,9 @@ import { useAtom } from 'jotai'
 import { collectHistoryAtom } from '@stores/settings'
 import { HistoryActions, historyAtom } from '@stores/history'
 
-import { ReaderLayout } from '@layouts/reader'
+import ReaderLayout from '@layouts/reader'
 
-import { OpenGraph } from '@components/modules/opengraph'
-import { Page, ProgressIndicator } from '@atoms'
+import { Page, ProgressIndicator, OpenGraph } from '@atoms'
 
 import tw from '@tailwind'
 import { getHentaiReaderById, HentaiQuery } from '@services/graphql'

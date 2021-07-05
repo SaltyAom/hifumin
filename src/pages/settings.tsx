@@ -12,14 +12,13 @@ import {
 } from '@stores/settings'
 
 import {
-	DropDownSettingLayout,
-	SwitchSettingLayout,
-	SettingLabel
+	DropDownSetting,
+	SwitchSetting,
+	SettingLabel,
+	SettingLabels
 } from '@layouts/settings'
-import { Label } from '@layouts/settings/label'
 
-import { Spacer } from '@atoms'
-import { OpenGraph } from '@components/modules/opengraph'
+import { Spacer, OpenGraph } from '@atoms'
 
 import tw from '@tailwind'
 
@@ -55,44 +54,46 @@ const Settings = () => {
 			<main
 				className={tw`flex flex-col w-full max-w-[580px] mx-auto px-6 py-4 md:py-12`}
 			>
-				<h1 className={tw`text-4xl text-gray-900 dark:text-gray-200 font-semibold my-2`}>
+				<h1
+					className={tw`text-4xl text-gray-900 dark:text-gray-200 font-semibold my-2`}
+				>
 					Settings
 				</h1>
-				<SettingLabel
+				<SettingLabels
 					details={[
 						'Customize how platform should behave to fit your preference.'
 					]}
 				/>
 				<Spacer />
 
-				<DropDownSettingLayout
+				<DropDownSetting
 					selected={ThemeMode[settings.themeMode]}
 					options={enumToArrayDetail(ThemeMode)}
 					update={updateDropDown('themeMode', ThemeMode)}
 				>
-					<SettingLabel
+					<SettingLabels
 						title="Theme Mode"
 						details={[
 							'Set color theme.',
 							'Choosing "adaptive" will use the system setting.'
 						]}
 					/>
-				</DropDownSettingLayout>
+				</DropDownSetting>
 
-				<DropDownSettingLayout
+				<DropDownSetting
 					selected={SafeMode[settings.safeMode]}
 					options={enumToArrayDetail(SafeMode)}
 					update={updateDropDown('safeMode', SafeMode)}
 				>
-					<SettingLabel
+					<SettingLabels
 						title="Safe Mode"
 						details={[
 							'Hide the image when the sudden attack come in.'
 						]}
 					/>
-				</DropDownSettingLayout>
+				</DropDownSetting>
 
-				<DropDownSettingLayout
+				<DropDownSetting
 					selected={CompressionType[settings.compressionType]}
 					options={enumToArrayDetail(CompressionType)}
 					update={updateDropDown('compressionType', CompressionType)}
@@ -100,30 +101,30 @@ const Settings = () => {
 						'"Native", using an original image.',
 						'"Compact", using a compressed image, some delay but lesser network usage.',
 						'"Heavy", using a heavy compressed image, more delay but least network usage.',
-						!notSupportNetworkDetection
-							? '"Adaptive", selecting the best compression base on your network speed.'
-							: ''
+						notSupportNetworkDetection
+							? ''
+							: '"Adaptive", selecting the best compression base on your network speed.'
 					].map((label) => (
-						<Label small key={label}>
+						<SettingLabel small key={label}>
 							{label}
-						</Label>
+						</SettingLabel>
 					))}
 				>
-					<SettingLabel
+					<SettingLabels
 						title="Image compression"
 						details={['Select how the image should be displayed.']}
 					/>
-				</DropDownSettingLayout>
+				</DropDownSetting>
 
 				{/* <DropDownSettingLayout
-				selected={ReaderType[settings.readerType]}
-				options={enumToArrayDetail(ReaderType)}
-				update={updateDropDown('readerType', ReaderType)}
-			>
-				<SettingLabel title="Reader Type" details={['reader type']} />
-			</DropDownSettingLayout> */}
+					selected={ReaderType[settings.readerType]}
+					options={enumToArrayDetail(ReaderType)}
+					update={updateDropDown('readerType', ReaderType)}
+				>
+					<SettingLabel title="Reader Type" details={['reader type']} />
+				</DropDownSettingLayout> */}
 
-				<SwitchSettingLayout
+				<SwitchSetting
 					value={settings.collectHistory}
 					update={updateSwitch('collectHistory')}
 					footer={[
@@ -131,16 +132,14 @@ const Settings = () => {
 						'We cannot view or access your browsing history.',
 						'We respect your privacy.'
 					].map((label) => (
-						<Label key={label}>
-							{label}
-						</Label>
+						<SettingLabel key={label}>{label}</SettingLabel>
 					))}
 				>
-					<SettingLabel
+					<SettingLabels
 						title="Save History"
 						details={['Save browsing history']}
 					/>
-				</SwitchSettingLayout>
+				</SwitchSetting>
 			</main>
 		</>
 	)

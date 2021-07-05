@@ -14,7 +14,7 @@ import type { PageComponent } from './types'
 
 const Image = dynamic(() => import('next/image'))
 
-export const Page: PageComponent = (props) => {
+const Page: PageComponent = (props) => {
 	let {
 		page: {
 			link,
@@ -48,8 +48,10 @@ export const Page: PageComponent = (props) => {
 					tw`absolute top-0 w-full rounded`
 				)}
 				src={link}
-				alt='Page'
+				alt="Page"
 			/>
 		</Figure>
 	)
 }
+
+export default Page
