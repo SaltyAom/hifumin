@@ -35,7 +35,8 @@ export function reportWebVitals({
 	label,
 	value
 }: NextWebVitalsMetric) {
-	if (isProduction && !isServer)
+	// @ts-ignore
+	if (isProduction && !isServer && typeof window.gtag !== "undefined")
 		// @ts-ignore
 		window.gtag('event', name, {
 			event_category:

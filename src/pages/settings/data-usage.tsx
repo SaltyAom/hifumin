@@ -10,7 +10,7 @@ import {
 	SettingLayout
 } from '@layouts/settings'
 
-const Settings = () => {
+const DataUsageSetting = () => {
 	let [settings, updateSettings] = useAtom(settingsAtom)
 
 	let updateSwitch = useCallback(
@@ -51,4 +51,4 @@ const Settings = () => {
 	)
 }
 
-export default Settings
+export default DataUsageSetting

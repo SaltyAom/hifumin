@@ -14,7 +14,7 @@ import {
 
 import { Enum, enumToArrayDetail } from '@services/array'
 
-const Settings = () => {
+const PerformanceSetting = () => {
 	let [settings, updateSettings] = useAtom(settingsAtom)
 
 	const { unsupported: notSupportNetworkDetection } = useNetworkStatus()
@@ -32,9 +32,7 @@ const Settings = () => {
 	return (
 		<SettingLayout
 			title="Networking"
-			labels={[
-				'Customize your network usage.'
-			]}
+			labels={['Customize your network usage.']}
 		>
 			<DropDownSetting
 				selected={CompressionType[settings.compressionType]}
@@ -62,4 +60,4 @@ const Settings = () => {
 	)
 }
 
-export default Settings
+export default PerformanceSetting

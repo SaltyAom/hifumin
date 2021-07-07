@@ -16,7 +16,7 @@ import {
 
 import { Enum, enumToArrayDetail } from '@services/array'
 
-const Settings = () => {
+const AppearanceSetting = () => {
 	let [settings, updateSettings] = useAtom(settingsAtom)
 
 	let updateDropDown = useCallback(
@@ -32,9 +32,7 @@ const Settings = () => {
 	return (
 		<SettingLayout
 			title="Preference"
-			labels={[
-				'Adjust platform appearance behavior.'
-			]}
+			labels={['Adjust platform appearance behavior.']}
 		>
 			<DropDownSetting
 				selected={ThemeMode[settings.themeMode]}
@@ -72,4 +70,4 @@ const Settings = () => {
 	)
 }
 
-export default Settings
+export default AppearanceSetting

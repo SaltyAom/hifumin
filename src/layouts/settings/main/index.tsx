@@ -2,7 +2,14 @@ import { useRouter } from 'next/router'
 
 import { SettingPage, SettingPagePath } from '@stores/setting-page'
 
-import { Activity, File, ChevronLeft, Edit3 } from 'react-feather'
+import {
+	Activity,
+	File,
+	ChevronLeft,
+	Edit3,
+	Heart,
+	Filter
+} from 'react-feather'
 import Spacer from '@atoms/spacer'
 import OpenGraph from '@atoms/opengraph'
 
@@ -22,7 +29,17 @@ export const settings = [
 		tw`bg-red-400`
 	],
 	[SettingPagePath[SettingPage.Performance], <Activity />, tw`bg-blue-400`],
-	[SettingPagePath[SettingPage.DataUsage], <File />, tw`bg-green-400`]
+	[SettingPagePath[SettingPage.DataUsage], <File />, tw`bg-green-400`],
+	// [
+	// 	SettingPagePath[SettingPage.Preference],
+	// 	<Heart fill="#fff" />,
+	// 	tw`bg-red-400`
+	// ],
+	// [
+	// 	SettingPagePath[SettingPage.Filter],
+	// 	<Filter fill="currentColor" />,
+	// 	tw`bg-indigo-400`
+	// ]
 ] as const
 
 const MainSettingLayout: SettingLayoutComponent = ({
@@ -34,7 +51,7 @@ const MainSettingLayout: SettingLayoutComponent = ({
 
 	return (
 		<>
-			<OpenGraph title="Settings - Opener Studio" />
+			<OpenGraph title={`${title} - Opener Studio`} />
 			<section className={tw`flex flex-row`}>
 				<div
 					className={tw`relative hidden sm:flex flex-col w-full max-w-[220px] md:max-w-[240px] h-screen`}
