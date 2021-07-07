@@ -4,6 +4,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { languageCode } from '@services/constants'
 
 import OpenGraph from '@components/atoms/opengraph'
+import { isProduction, isServer } from '@services/validation'
 
 const clarity = `(function(c,l,a,r,i,t,y){
 	c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -20,7 +21,7 @@ class OpenerDocument extends Document {
 					<OpenGraph />
 					<meta name="referrer" content="same-origin" />
 
-					{process.env.NODE_ENV === 'production' ? (
+					{isProduction && !isServer ? (
 						<>
 							<script
 								type="text/javascript"

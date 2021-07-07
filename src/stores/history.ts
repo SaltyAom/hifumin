@@ -5,8 +5,8 @@ import dayjs from 'dayjs'
 
 import type { Story } from '@types'
 
-import { composeKnownStory, knownStoriesAtom } from './knownStory'
-import type { KnownStory } from './knownStory'
+import { composeKnownStory, knownStoriesAtom } from './known-story'
+import type { KnownStory } from './known-story'
 
 export interface History {
 	id: number

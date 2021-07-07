@@ -1,9 +1,5 @@
-import { useState, useEffect } from 'react'
-
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-
-import { isServer } from '@services/validation'
 
 import type { OpenGraphComponent } from './types'
 
@@ -26,26 +22,6 @@ const OpenGraph: OpenGraphComponent = ({
 	id = 0
 }) => {
 	let { asPath = '/' } = useRouter() ?? { asPath: '/' }
-
-	let [isDarkTheme, updateIsDarkTheme] = useState(
-		isServer
-			? true
-			: window.matchMedia &&
-					window.matchMedia('(prefers-color-scheme: dark)').matches
-	)
-
-	useEffect(() => {
-		updateIsDarkTheme(
-			window.matchMedia &&
-				window.matchMedia('(prefers-color-scheme: dark)').matches
-		)
-
-		window
-			.matchMedia('(prefers-color-scheme: dark)')
-			.addEventListener('change', ({ matches }) => {
-				updateIsDarkTheme(matches)
-			})
-	}, [])
 
 	return (
 		<Head>
@@ -94,11 +70,6 @@ const OpenGraph: OpenGraphComponent = ({
 			<meta name="twitter:site" content={twitterDevAccount} />
 			<meta name="twitter:image" content={image.link} />
 			<meta name="twitter:creator" content={twitterDevAccount} />
-
-			<meta
-				name="theme-color"
-				content={isDarkTheme ? '#2d3748' : '#fff'}
-			/>
 		</Head>
 	)
 }

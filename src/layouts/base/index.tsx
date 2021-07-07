@@ -4,6 +4,7 @@ import type { FunctionComponent } from 'react'
 
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 
 import { useAtom } from 'jotai'
 import { themeAtom, searchAtom, ThemeMode } from '@stores'
@@ -60,6 +61,12 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 
 	return (
 		<>
+			<Head>
+				<meta
+					name="theme-color"
+					content={theme === ThemeMode.light ? '#fff' : '#101827'}
+				/>
+			</Head>
 			<NextNprogress
 				color={theme === ThemeMode.light ? '#000' : '#fff'}
 				startPosition={0.3}

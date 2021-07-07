@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai'
 import { historyAtom } from '@stores/history'
-import { knownStoriesAtom } from '@stores/knownStory'
+import { knownStoriesAtom } from '@stores/known-story'
 
 import OpenGraph from '@atoms/opengraph'
 

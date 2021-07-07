@@ -18,7 +18,7 @@ module.exports = (nextConfig = {}) => ({
                         ...use.options.modules,
                         mode: 'local',
                         localIdentName: '[path][name]__[local]',
-                        getLocalIdent: ({ resourcePath }, localIdentName, className) =>
+                        getLocalIdent: ({ resourcePath = '' }, localIdentName = '', className = '') =>
                             process.env.NODE_ENV === 'production'
                                 ? oneClassName(resourcePath + className + localIdentName)
                                 : `${className}_${oneClassName(resourcePath)}`

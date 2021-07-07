@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 
+import { SettingPage, SettingPagePath } from '@stores/setting-page'
+
+import { Activity, File, ChevronLeft, Edit3 } from 'react-feather'
+import Spacer from '@atoms/spacer'
 import OpenGraph from '@atoms/opengraph'
 
 import tw, { combine } from '@tailwind'
 
-import { Heart, Activity, File, ChevronLeft } from 'react-feather'
-
-import { Spacer } from '@atoms'
 import { SettingTab } from './components'
 import { SettingLabels } from '..'
 
@@ -15,9 +16,13 @@ import type { SettingLayoutComponent } from './types'
 import styles from './main.module.sass'
 
 export const settings = [
-	['preference', <Heart fill="currentColor" />, tw`bg-red-400`],
-	['networking', <Activity />, tw`bg-blue-400`],
-	['data usage', <File />, tw`bg-green-400`]
+	[
+		SettingPagePath[SettingPage.Appearance],
+		<Edit3 fill="currentColor" />,
+		tw`bg-red-400`
+	],
+	[SettingPagePath[SettingPage.Performance], <Activity />, tw`bg-blue-400`],
+	[SettingPagePath[SettingPage.DataUsage], <File />, tw`bg-green-400`]
 ] as const
 
 const MainSettingLayout: SettingLayoutComponent = ({

@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai'
 import { bookmarkAtom } from '@stores/bookmark'
-import { knownStoriesAtom } from '@stores/knownStory'
+import { knownStoriesAtom } from '@stores/known-story'
 
 import {
 	VerticalLayout,

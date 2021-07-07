@@ -2,7 +2,7 @@ import { atom } from 'jotai'
 
 import type { Story } from '@types'
 
-import { knownStoriesAtom } from './knownStory'
+import { knownStoriesAtom } from './known-story'
 
 export const bookmarkAtomBase = atom<number[], number[]>(
 	[],

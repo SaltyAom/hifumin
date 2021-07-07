@@ -10,8 +10,6 @@ import {
 
 import {
 	DropDownSetting,
-	SwitchSetting,
-	SettingLabel,
 	SettingLabels,
 	SettingLayout
 } from '@layouts/settings'
@@ -28,15 +26,6 @@ const Settings = () => {
 					[key]: enums[selected]
 				})
 			},
-		[updateSettings]
-	)
-
-	let updateSwitch = useCallback(
-		(key: keyof SettingsAtom) => (updated: boolean) => {
-			updateSettings({
-				[key]: updated
-			})
-		},
 		[updateSettings]
 	)
 
@@ -79,23 +68,6 @@ const Settings = () => {
 				>
 					<SettingLabel title="Reader Type" details={['reader type']} />
 				</DropDownSettingLayout> */}
-
-			<SwitchSetting
-				value={settings.collectHistory}
-				update={updateSwitch('collectHistory')}
-				footer={[
-					'Opener do not store or save your browsing history online, your browsing history is saved inside your browser.',
-					'We cannot view or access your browsing history.',
-					'We respect your privacy.'
-				].map((label) => (
-					<SettingLabel key={label}>{label}</SettingLabel>
-				))}
-			>
-				<SettingLabels
-					title="Save History"
-					details={['Save browsing history']}
-				/>
-			</SwitchSetting>
 		</SettingLayout>
 	)
 }

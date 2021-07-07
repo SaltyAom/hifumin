@@ -22,7 +22,10 @@ export const BaseTab: BaseLayoutTabComponent = ({
 }) => {
 	let { asPath } = useRouter()
 
-	let isActive = link === asPath
+	let isActive = link !== '/' && asPath.startsWith(link)
+
+	if(link === "/" && asPath === "/")
+		isActive = true
 
 	let handleToggle = useCallback(() => {
 		if (window.innerWidth < 1024) toggle()

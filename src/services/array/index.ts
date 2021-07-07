@@ -8,7 +8,7 @@ export const splitChunk = <T extends any[]>(
 ): Array<T> => {
 	let newChunk: T[] = Array(chunk).fill([])
 
-	if(data)
+	if (data)
 		data.forEach((item, index) => {
 			let column = index % chunk
 
@@ -42,3 +42,7 @@ export const enumToArrayValue = <T = string>(enums: Enum) => {
 
 	return arr
 }
+
+export const getKeyByValue = <T = Enum>(object: T, value: keyof T) =>
+	// @ts-ignore
+	Object.keys(object).find((key) => object[key] === value)
