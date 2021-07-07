@@ -67,14 +67,6 @@ const FilterSetting = () => {
 			>
 				<SettingLabels title="Use default filter" />
 			</SwitchSetting>
-			<form className={tw`w-2/4 m-0 p-0`} onSubmit={requestAddingFilter}>
-				<TextBox
-					inputRef={filterRef}
-					name="setting-filter"
-					placeholder="Your filter"
-					suffix={<Plus />}
-				/>
-			</form>
 			<section
 				className={tw(
 					`flex flex-col transition-opacity ${
@@ -84,6 +76,17 @@ const FilterSetting = () => {
 					}`
 				)}
 			>
+				<form
+					className={tw`w-2/4 m-0 p-0`}
+					onSubmit={requestAddingFilter}
+				>
+					<TextBox
+						inputRef={filterRef}
+						name="setting-filter"
+						placeholder="Your filter"
+						suffix={<Plus />}
+					/>
+				</form>
 				<section className={tw`flex-row flex-nowrap w-full my-2`}>
 					{filterList.map((tag) => (
 						<Chip
