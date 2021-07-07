@@ -97,7 +97,7 @@ const PreferenceSetting = () => {
 			>
 				<SettingLabels title="Use default preference" />
 			</SwitchSetting>
-			<section className={tw(`flex flex-col transition-opacity ${useDefaultPreference ? 'opacity-50 pointer-events-none cursor-not-allowed' : ''}`)}>
+			<section className={tw(`flex flex-col w-full transition-opacity ${useDefaultPreference ? 'opacity-50 pointer-events-none cursor-not-allowed' : ''}`)}>
 				<form
 					className={tw`w-2/4 m-0 p-0`}
 					onSubmit={requestAddingPreference}

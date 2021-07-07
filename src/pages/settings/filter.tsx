@@ -69,7 +69,7 @@ const FilterSetting = () => {
 			</SwitchSetting>
 			<section
 				className={tw(
-					`flex flex-col transition-opacity ${
+					`flex flex-col w-full transition-opacity ${
 						useDefaultFilter
 							? 'opacity-50 pointer-events-none cursor-not-allowed'
 							: ''
