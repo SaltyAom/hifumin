@@ -1,9 +1,11 @@
-import { useState, useRef, useCallback, useReducer } from 'react'
+import { useState, useRef, useCallback, useReducer, useMemo, useEffect } from 'react'
 
-import { getPreviews } from '@services/graphql'
+import { useAtom } from 'jotai'
+import { preferenceAtom } from '@stores/settings'
 
 import { copy } from '@services/array'
 import { randomBetween } from '@services/random'
+import { tags as defaultPreference } from '@services/data'
 
 import type { Stories } from '@types'
 
@@ -15,9 +17,18 @@ interface UseHentaiCollectionResult {
 
 // eslint-disable-next-line no-unused-vars
 type UseHentaiCollection = (initial: Stories) => UseHentaiCollectionResult
-const tags = ['yuri', 'glasses']
 
 const useHentaiCollection: UseHentaiCollection = (initial) => {
+	let [{ useDefaultPreference, preferenceList }] = useAtom(preferenceAtom)
+
+	let tags = useMemo(
+		() =>
+			useDefaultPreference || !preferenceList.length
+				? defaultPreference
+				: preferenceList,
+		[useDefaultPreference, preferenceList]
+	)
+
 	let [stories, updateStories] = useState(initial)
 	let [isEnd, setAsEnd] = useReducer(() => true, false)
 
@@ -36,19 +47,23 @@ const useHentaiCollection: UseHentaiCollection = (initial) => {
 		)
 
 		return tag
-	}, [])
+	}, [tags])
+
+	useEffect(() => {
+		availableTag.current = copy(tags)
+	}, [tags])
 
 	let fetchMore = useCallback(async () => {
-		let fetched = await getPreviews({
-			keyword: randomTag(),
-			page: page.current
-		})
+		let tag = randomTag()
 
-		let newStories = fetched.data?.searchHentai.data ?? []
+		let newStories: Stories = await fetch(
+			`/api/preview/${tag}/${page.current}`
+		).then((res) => res.json())
 
-		if (newStories.length) updateStories(stories.concat(newStories))
+		if (newStories)
+			updateStories(stories.concat(newStories))
 		else setAsEnd()
-	}, [stories])
+	}, [stories, tags])
 
 	return { stories, fetchMore, isEnd }
 }

@@ -1,11 +1,7 @@
-import { useCallback } from 'react'
-
-import { useAtom } from 'jotai'
 import {
 	SafeMode,
-	SettingsAtom,
-	settingsAtom,
-	ThemeMode
+	ThemeMode,
+	useSettings
 } from '@stores/settings'
 
 import {
@@ -14,20 +10,10 @@ import {
 	SettingLayout
 } from '@layouts/settings'
 
-import { Enum, enumToArrayDetail } from '@services/array'
+import { enumToArrayDetail } from '@services/array'
 
 const AppearanceSetting = () => {
-	let [settings, updateSettings] = useAtom(settingsAtom)
-
-	let updateDropDown = useCallback(
-		<T extends Enum>(key: keyof SettingsAtom, enums: T) =>
-			(selected: keyof T) => {
-				updateSettings({
-					[key]: enums[selected]
-				})
-			},
-		[updateSettings]
-	)
+	let { settings, updateDropDown } = useSettings()
 
 	return (
 		<SettingLayout

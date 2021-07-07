@@ -1,7 +1,4 @@
-import { useCallback } from 'react'
-
-import { useAtom } from 'jotai'
-import { SettingsAtom, settingsAtom } from '@stores/settings'
+import { useSettings } from '@stores/settings'
 
 import {
 	SwitchSetting,
@@ -11,16 +8,7 @@ import {
 } from '@layouts/settings'
 
 const DataUsageSetting = () => {
-	let [settings, updateSettings] = useAtom(settingsAtom)
-
-	let updateSwitch = useCallback(
-		(key: keyof SettingsAtom) => (updated: boolean) => {
-			updateSettings({
-				[key]: updated
-			})
-		},
-		[updateSettings]
-	)
+	let { settings, updateSwitch } = useSettings()
 
 	return (
 		<SettingLayout

@@ -30,16 +30,16 @@ export const settings = [
 	],
 	[SettingPagePath[SettingPage.Performance], <Activity />, tw`bg-blue-400`],
 	[SettingPagePath[SettingPage.DataUsage], <File />, tw`bg-green-400`],
-	// [
-	// 	SettingPagePath[SettingPage.Preference],
-	// 	<Heart fill="#fff" />,
-	// 	tw`bg-red-400`
-	// ],
-	// [
-	// 	SettingPagePath[SettingPage.Filter],
-	// 	<Filter fill="currentColor" />,
-	// 	tw`bg-indigo-400`
-	// ]
+	[
+		SettingPagePath[SettingPage.Preference],
+		<Heart fill="#fff" />,
+		tw`bg-red-400`
+	],
+	[
+		SettingPagePath[SettingPage.Filter],
+		<Filter fill="currentColor" />,
+		tw`bg-indigo-400`
+	]
 ] as const
 
 const MainSettingLayout: SettingLayoutComponent = ({
@@ -93,7 +93,7 @@ const MainSettingLayout: SettingLayoutComponent = ({
 						{title}
 					</h1>
 					<SettingLabels details={labels} />
-					<Spacer />
+					<Spacer small />
 
 					{children}
 				</main>

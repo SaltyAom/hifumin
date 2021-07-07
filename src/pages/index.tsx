@@ -53,7 +53,7 @@ const Discover: FunctionComponent<DiscoverProps> = ({
 
 	return (
 		<>
-			<OpenGraph title={`${keyword || 'Search'} - Opener Studio`} />
+			<OpenGraph title={`${keyword || 'Discover'} - Opener Studio`} />
 			<DiscoverLayout layoutRef={layout}>
 				{keyword ? search : discover}
 			</DiscoverLayout>

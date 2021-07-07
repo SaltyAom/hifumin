@@ -1,0 +1,18 @@
+$easing-out-expo: cubic-bezier(0.16, 1, 0.3, 1)
+
+.textbox
+    &:hover,
+    &:focus,
+    &:not(:placeholder-shown)
+        & + .placeholder
+            @apply text-base
+            transform: translateY(calc(-2.5rem))
+
+    .placeholder
+        &:hover,
+        &:focus
+            @apply text-base
+            transform: translateY(calc(-2.5rem))
+
+.placeholder
+    transition: transform .24s $easing-out-expo, font-size .24s $easing-out-expo

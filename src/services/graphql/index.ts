@@ -2,7 +2,6 @@ import { createClient, defaultExchanges } from 'urql'
 import { retryExchange } from '@urql/exchange-retry'
 
 const url = 'https://api.opener.studio/graphql'
-const bridge = '/api/search'
 
 export const client = createClient({
 	url,
@@ -19,13 +18,15 @@ export const client = createClient({
 })
 
 export const apiFetcher = <T extends Object>(
-	args: globalThis.RequestInit
-): Promise<T> => fetch(bridge, args).then((res) => res.json())
+	endpointUrl: string,
+	args: globalThis.RequestInit = {}
+): Promise<T> => fetch(endpointUrl, args).then((res) => res.json())
 
 export const jsonApiFetcher = <T extends Object>(
-	args: globalThis.RequestInit
+	endpointUrl: string,
+	args: globalThis.RequestInit = {}
 ): Promise<T> =>
-	apiFetcher({
+	apiFetcher(endpointUrl, {
 		...args,
 		method: 'post',
 		headers: {

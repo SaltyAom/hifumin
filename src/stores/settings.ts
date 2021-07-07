@@ -1,5 +1,9 @@
-import { atom } from 'jotai'
+import { useCallback } from 'react'
+
+import { atom, useAtom } from 'jotai'
 import { merge } from '@stores/operations'
+
+import type { Enum } from '@services/array'
 
 export enum ThemeMode {
 	adaptive,
@@ -69,3 +73,49 @@ export const imageCompressionAtom = atom(
 export const collectHistoryAtom = atom(
 	(get) => get(settingsAtom).collectHistory
 )
+export const preferenceAtom = atom((get) => {
+	let { preferenceList, useDefaultPreference, filterList, useDefaultFilter } =
+		get(settingsAtom)
+
+	return {
+		preferenceList,
+		useDefaultPreference,
+		filterList,
+		useDefaultFilter
+	}
+})
+
+export const useSettings = () => {
+	let [settings, updateSettings] = useAtom(settingsAtom)
+
+	let updateDropDown = useCallback(
+		<T extends Enum>(key: keyof SettingsAtom, enums: T) =>
+			(selected: keyof T) => {
+				updateSettings({
+					[key]: enums[selected]
+				})
+			},
+		[updateSettings]
+	)
+
+	let updateSwitch = useCallback(
+		(key: keyof SettingsAtom) => (updated: boolean) => {
+			updateSettings({
+				[key]: updated
+			})
+		},
+		[updateSettings]
+	)
+
+	let updateSetting = useCallback(
+		<T extends keyof SettingsAtom>(key: T) =>
+			(value: SettingsAtom[T]) => {
+				updateSettings({
+					[key]: value
+				})
+			},
+		[updateSettings]
+	)
+
+	return { settings, updateDropDown, updateSwitch, updateSetting }
+}

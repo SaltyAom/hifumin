@@ -1,5 +1,8 @@
 import { useMemo } from 'react'
 
+import { useAtom } from 'jotai'
+import { preferenceAtom } from '@stores/settings'
+
 import { DiscoverCard } from '@layouts/discover'
 import StoryError from '@atoms/story-error'
 
@@ -16,10 +19,21 @@ const DiscoverResults: DiscoverComponents = ({
 	error = null
 }) => {
 	let { stories, fetchMore, isEnd } = useHentaiCollection(initial)
+	let [{ useDefaultFilter, filterList }] = useAtom(preferenceAtom)
 
 	let storyGroups = useMemo(
-		() => splitChunk(stories, spaces),
-		[stories, spaces]
+		() =>
+			splitChunk(
+				stories.filter((story) => {
+					let filters = useDefaultFilter ? [] : filterList
+
+					return !story.metadata.tags.some(({ name: tag }) =>
+						filters.includes(tag)
+					)
+				}),
+				spaces
+			),
+		[stories, spaces, useDefaultFilter, filterList]
 	)
 
 	usePageEndObserver(fetchMore, isEnd)

@@ -1,9 +1,6 @@
-import { useCallback } from 'react'
-
 import { useNetworkStatus } from 'react-adaptive-hooks'
 
-import { useAtom } from 'jotai'
-import { CompressionType, SettingsAtom, settingsAtom } from '@stores/settings'
+import { CompressionType, useSettings } from '@stores/settings'
 
 import {
 	DropDownSetting,
@@ -12,22 +9,12 @@ import {
 	SettingLayout
 } from '@layouts/settings'
 
-import { Enum, enumToArrayDetail } from '@services/array'
+import { enumToArrayDetail } from '@services/array'
 
 const PerformanceSetting = () => {
-	let [settings, updateSettings] = useAtom(settingsAtom)
+	let { settings, updateDropDown } = useSettings()
 
 	const { unsupported: notSupportNetworkDetection } = useNetworkStatus()
-
-	let updateDropDown = useCallback(
-		<T extends Enum>(key: keyof SettingsAtom, enums: T) =>
-			(selected: keyof T) => {
-				updateSettings({
-					[key]: enums[selected]
-				})
-			},
-		[updateSettings]
-	)
 
 	return (
 		<SettingLayout

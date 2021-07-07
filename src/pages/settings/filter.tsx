@@ -1,41 +1,100 @@
-import {
-	settingPageAtom,
-	SettingPagePath,
-	SettingPage
-} from '@stores/setting-page'
+import { useRef, useCallback } from 'react'
+import type { FormEvent } from 'react'
 
-import { SettingLayout, SettingTab, settings } from '@layouts/settings'
+import { useSettings } from '@stores/settings'
+
+import { SettingLayout, SwitchSetting, SettingLabels } from '@layouts/settings'
+
+import { Plus } from 'react-feather'
+import { TextBox, Chip } from '@atoms'
 
 import tw from '@tailwind'
 
 const FilterSetting = () => {
+	let {
+		settings: { useDefaultFilter, filterList },
+		updateSwitch,
+		updateSetting
+	} = useSettings()
+
+	let filterRef = useRef<HTMLInputElement>(null)
+
+	let addFilter = useCallback(
+		(filter: string) => {
+			if (!filterList.includes(filter))
+				updateSetting('filterList')([...filterList, filter])
+		},
+		[filterList]
+	)
+
+	let removeFilter = useCallback(
+		(filter: string) => {
+			let newFilter = [...filterList]
+
+			let filterIndex = newFilter.indexOf(filter)
+
+			if (filterIndex === -1) return
+
+			newFilter.splice(filterIndex, 1)
+
+			updateSetting('filterList')(newFilter)
+		},
+		[filterList]
+	)
+
+	let requestAddingFilter = useCallback(
+		(event: FormEvent) => {
+			event.preventDefault()
+
+			let input = filterRef.current
+			if (!input || !input.value) return
+
+			addFilter(input.value)
+
+			input.value = ''
+		},
+		[filterList]
+	)
+
 	return (
 		<SettingLayout
 			title="Filter"
-			labels={[
-				'Remove unwanted tags or keyword from your discover page.'
-			]}
+			labels={['Remove unwanted tags or keyword from your discover.']}
 		>
-			<section
-				className={tw`flex sm:hidden flex-col gap-1 w-full rounded-lg`}
+			<SwitchSetting
+				value={useDefaultFilter}
+				update={updateSwitch('useDefaultFilter')}
 			>
-				{settings.map(([label, icon, color], index) => (
-					<>
-						{index !== 0 ? (
-							<div
-								aria-hidden
-								className={tw`w-full h-[1px] bg-gray-200 dark:bg-gray-600`}
-							/>
-						) : null}
-						<SettingTab
-							href={label.replace(' ', '-')}
-							icon={icon}
-							color={color}
-						>
-							{label}
-						</SettingTab>
-					</>
-				))}
+				<SettingLabels title="Use default filter" />
+			</SwitchSetting>
+			<form className={tw`w-2/4 m-0 p-0`} onSubmit={requestAddingFilter}>
+				<TextBox
+					inputRef={filterRef}
+					name="setting-filter"
+					placeholder="Your filter"
+					suffix={<Plus />}
+				/>
+			</form>
+			<section
+				className={tw(
+					`flex flex-col transition-opacity ${
+						useDefaultFilter
+							? 'opacity-50 pointer-events-none cursor-not-allowed'
+							: ''
+					}`
+				)}
+			>
+				<section className={tw`flex-row flex-nowrap w-full my-2`}>
+					{filterList.map((tag) => (
+						<Chip
+							key={tag}
+							className={tw`mr-1 mb-1`}
+							value={tag}
+							removable
+							onRemove={removeFilter}
+						/>
+					))}
+				</section>
 			</section>
 		</SettingLayout>
 	)

@@ -10,7 +10,7 @@ const VerticalSetting: VerticalSettingLayoutComponent = ({
 	footer,
 	className = ''
 }) => (
-	<section className={tw`flex flex-col items-start`}>
+	<section className={tw`flex flex-col items-start w-full`}>
 		<section
 			className={combine(
 				tw`flex flex-col items-start sm:items-center sm:flex-row w-full my-3`,
