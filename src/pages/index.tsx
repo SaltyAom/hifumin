@@ -39,13 +39,17 @@ const Discover: FunctionComponent<DiscoverProps> = ({
 	let layout = useRef<HTMLElement>(null)
 	let spaces = useComputedSpace(layout)
 
-	let search = useMemo(() => <SearchResults spaces={spaces} />, [spaces])
+	let search = useMemo(
+		() => <SearchResults spaces={spaces} layoutRef={layout} />,
+		[spaces]
+	)
 	let discover = useMemo(
 		() => (
 			<DiscoverResults
 				initial={initial}
 				spaces={spaces}
 				error={error || null}
+				layoutRef={layout}
 			/>
 		),
 		[spaces, initial]
@@ -54,7 +58,7 @@ const Discover: FunctionComponent<DiscoverProps> = ({
 	return (
 		<>
 			<OpenGraph title={`${keyword || 'Discover'} - Opener Studio`} />
-			<DiscoverLayout layoutRef={layout}>
+			<DiscoverLayout key="discover" layoutRef={layout}>
 				{keyword ? search : discover}
 			</DiscoverLayout>
 		</>

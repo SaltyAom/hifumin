@@ -11,24 +11,28 @@ import tw, { combine } from '@tailwind'
 
 import { ProgressIndicator } from '@components/atoms'
 
-import { usePageEndObserver, useSearchHentai } from '@services/hooks'
+import {
+	usePageEndObserver,
+	useSearchHentai,
+	useWindowSize
+} from '@services/hooks'
 import { splitChunk } from '@services/array'
 
 import type { DiscoverComponents } from '@types'
 
 import styles from './search-results.module.sass'
 
-const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
+const SearchResults: DiscoverComponents = ({
+	initial = [],
+	spaces,
+	layoutRef
+}) => {
 	let [keyword] = useAtom(searchAtom)
 
-	let {
-		stories,
-		fetchMore,
-		isLoading: isSearching,
-		isEnd
-	} = useSearchHentai(keyword)
+	let { stories, fetchMore, isLoading, isEnd } = useSearchHentai(keyword)
 
 	let [pageLoaded, updatePageState] = useState(false)
+	let [windowSize] = useWindowSize()
 
 	let storyGroups = useMemo(
 		() => splitChunk(initial.concat(stories), spaces),
@@ -57,8 +61,16 @@ const SearchResults: DiscoverComponents = ({ initial = [], spaces }) => {
 		}
 	}, [])
 
+	useEffect(() => {
+		let layout = layoutRef.current
+
+		if (!layout) return
+
+		if (layout.clientHeight < window.innerHeight && !isLoading) fetchMore()
+	}, [layoutRef, fetchMore, isLoading, windowSize])
+
 	if (!initial.length && keyword && !stories.length)
-		if (isSearching || !pageLoaded)
+		if (isLoading || !pageLoaded)
 			return (
 				<section
 					key="searching-layout"

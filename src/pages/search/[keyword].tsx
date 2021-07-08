@@ -48,11 +48,12 @@ const Search: FunctionComponent<DiscoverProps> = ({
 					search || initialKeyword || 'Search'
 				} - Opener Studio`}
 			/>
-			<DiscoverLayout layoutRef={layout}>
+			<DiscoverLayout key="discover" layoutRef={layout}>
 				<SearchResults
 					key={search}
 					initial={keywordChange ? [] : initial}
 					spaces={spaces}
+					layoutRef={layout}
 				/>
 			</DiscoverLayout>
 		</>

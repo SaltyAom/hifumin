@@ -27,7 +27,8 @@ const TextBox: TextBoxComponent = ({
 				id={id}
 				name={name}
 				className={combine(
-					tw`text-inherit placeholder-transparent appearance-none flex flex-1 text-xl border-0 bg-transparent`,
+					tw`text-inherit placeholder-transparent appearance-none text-xl border-0 bg-transparent overflow-hidden`,
+					suffix ? styles['with-suffix'] : '',
 					styles.textbox
 				)}
 				onChange={onChange}
@@ -45,7 +46,7 @@ const TextBox: TextBoxComponent = ({
 			</label>
 			{suffix ? (
 				<button
-					className={tw`appearance-none placeholder-gray-500 dark:placeholder-gray-400 dark:text-gray-200 border-0 bg-transparent cursor-pointer`}
+					className={tw`appearance-none w-[36px] placeholder-gray-500 dark:placeholder-gray-400 dark:text-gray-200 border-0 bg-transparent cursor-pointer`}
 					type="submit"
 				>
 					{suffix}

@@ -1,4 +1,11 @@
-import { useState, useRef, useCallback, useReducer, useMemo, useEffect } from 'react'
+import {
+	useState,
+	useRef,
+	useCallback,
+	useReducer,
+	useMemo,
+	useEffect
+} from 'react'
 
 import { useAtom } from 'jotai'
 import { preferenceAtom } from '@stores/settings'
@@ -13,6 +20,7 @@ interface UseHentaiCollectionResult {
 	stories: Stories
 	fetchMore: () => Promise<void>
 	isEnd: boolean
+	isLoading: boolean
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -30,6 +38,7 @@ const useHentaiCollection: UseHentaiCollection = (initial) => {
 	)
 
 	let [stories, updateStories] = useState(initial)
+	let [isLoading, updateLoading] = useState(false)
 	let [isEnd, setAsEnd] = useReducer(() => true, false)
 
 	let availableTag = useRef(copy(tags))
@@ -54,18 +63,20 @@ const useHentaiCollection: UseHentaiCollection = (initial) => {
 	}, [tags])
 
 	let fetchMore = useCallback(async () => {
+		updateLoading(true)
 		let tag = randomTag()
 
 		let newStories: Stories = await fetch(
 			`/api/preview/${tag}/${page.current}`
 		).then((res) => res.json())
 
-		if (newStories)
-			updateStories(stories.concat(newStories))
+		if (newStories) updateStories(stories.concat(newStories))
 		else setAsEnd()
+
+		updateLoading(false)
 	}, [stories, tags])
 
-	return { stories, fetchMore, isEnd }
+	return { stories, fetchMore, isEnd, isLoading }
 }
 
 export default useHentaiCollection

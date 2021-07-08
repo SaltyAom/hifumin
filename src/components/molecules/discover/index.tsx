@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 
 import { useAtom } from 'jotai'
 import { preferenceAtom } from '@stores/settings'
@@ -8,7 +8,11 @@ import StoryError from '@atoms/story-error'
 
 import tw from '@tailwind'
 
-import { useHentaiCollection, usePageEndObserver } from '@services/hooks'
+import {
+	useHentaiCollection,
+	usePageEndObserver,
+	useWindowSize
+} from '@services/hooks'
 import { splitChunk } from '@services/array'
 
 import type { DiscoverComponents } from '@types'
@@ -16,10 +20,12 @@ import type { DiscoverComponents } from '@types'
 const DiscoverResults: DiscoverComponents = ({
 	initial = [],
 	spaces,
-	error = null
+	error = null,
+	layoutRef
 }) => {
-	let { stories, fetchMore, isEnd } = useHentaiCollection(initial)
+	let { stories, fetchMore, isEnd, isLoading } = useHentaiCollection(initial)
 	let [{ useDefaultFilter, filterList }] = useAtom(preferenceAtom)
+	let [windowSize] = useWindowSize()
 
 	let storyGroups = useMemo(
 		() =>
@@ -37,6 +43,14 @@ const DiscoverResults: DiscoverComponents = ({
 	)
 
 	usePageEndObserver(fetchMore, isEnd)
+
+	useEffect(() => {
+		let layout = layoutRef.current
+
+		if (!layout) return
+
+		if (layout.clientHeight < window.innerHeight && !isLoading) fetchMore()
+	}, [layoutRef, fetchMore, isLoading, windowSize])
 
 	if (error) return <StoryError error={error?.message || ''} />
 
