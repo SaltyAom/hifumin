@@ -226,7 +226,7 @@ const Source = () => {
 	return (
 		<>
 			<OpenGraph
-				title={`(${hentais.length}) - Source}`}
+				title={`(${hentais.length}) - Source`}
 				description="Find original source from image"
 			/>
 			<section key="layout" className={tw`hidden`}>
@@ -254,9 +254,9 @@ const Source = () => {
 						className={tw`flex flex-col justify-center items-start mt-8 sm:mt-0 sm:ml-12`}
 					>
 						<h1
-							className={tw`text-3xl text-gray-800 font-medium mt-0 mb-6`}
+							className={tw`text-2xl sm:text-3xl text-gray-800 dark:text-gray-300 font-medium mt-0 mb-6`}
 						>
-							Found {hentais.length} similarity
+							Found {hentais.length} similar stories.
 						</h1>
 						<button
 							className={tw`flex flex-row justify-center items-center appearance-none text-xl text-gray-800 dark:text-gray-200 font-medium mt-4 mb-2 px-6 py-3 border-0 bg-gray-200 dark:bg-gray-700 rounded cursor-pointer`}
