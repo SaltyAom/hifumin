@@ -23,7 +23,7 @@ const DiscoverResults: DiscoverComponents = ({
 	error = null,
 	layoutRef
 }) => {
-	let { stories, fetchMore, isEnd, isLoading } = useHentaiCollection(initial)
+	let { stories, fetchMore, isEnd, isLoading } = useHentaiCollection(initial, error)
 	let [{ useDefaultFilter, filterList }] = useAtom(preferenceAtom)
 	let [windowSize] = useWindowSize()
 

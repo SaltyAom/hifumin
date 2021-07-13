@@ -10,6 +10,8 @@ import {
 import { useAtom } from 'jotai'
 import { preferenceAtom } from '@stores/settings'
 
+import type { CombinedError } from 'urql'
+
 import { copy } from '@services/array'
 import { randomBetween } from '@services/random'
 import { tags as defaultPreference } from '@services/data'
@@ -23,10 +25,14 @@ interface UseHentaiCollectionResult {
 	isLoading: boolean
 }
 
-// eslint-disable-next-line no-unused-vars
-type UseHentaiCollection = (initial: Stories) => UseHentaiCollectionResult
+type UseHentaiCollection = (
+	// eslint-disable-next-line no-unused-vars
+	initial: Stories,
+	// eslint-disable-next-line no-unused-vars
+	error: CombinedError | null
+) => UseHentaiCollectionResult
 
-const useHentaiCollection: UseHentaiCollection = (initial) => {
+const useHentaiCollection: UseHentaiCollection = (initial, error = null) => {
 	let [{ useDefaultPreference, preferenceList }] = useAtom(preferenceAtom)
 
 	let tags = useMemo(
@@ -61,6 +67,10 @@ const useHentaiCollection: UseHentaiCollection = (initial) => {
 	useEffect(() => {
 		availableTag.current = copy(tags)
 	}, [tags])
+
+	useEffect(() => {
+		if (error) setAsEnd()
+	}, [error])
 
 	let fetchMore = useCallback(async () => {
 		updateLoading(true)

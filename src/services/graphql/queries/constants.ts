@@ -41,6 +41,36 @@ export const GET_HENTAI_READER_BY_ID = `
   }
 `
 
+export const GET_SIMILAR_HENTAI_BY_ID = `
+  query getHentaiReaderById($id: Int!) {
+    getHentaiById(id: $id) {
+      success
+      data {
+        id
+        title {
+          display
+        }
+        metadata {
+          language
+        }
+        images {
+          cover {
+            link
+            info {
+              width
+              height
+            }
+          }
+        }
+        info {
+          amount
+          favorite
+        }    
+      }
+    }
+  }
+`
+
 export const GET_SINGLE_PREVIEW_QUERY = `
   query getPreview($id: Int!) {
     searchHentai(keyword: $id) {

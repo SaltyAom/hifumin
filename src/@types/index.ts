@@ -1,3 +1,10 @@
+export type { DiscoverComponents, DiscoverProps } from './discover'
+export type {
+	Similarity,
+	Similarities,
+	CombinedSimilarity,
+	CombinedSimilarities
+} from './similarity'
 export type {
 	Story,
 	Stories,
@@ -12,4 +19,3 @@ export type {
 	Tags,
 	Title
 } from './story'
-export type { DiscoverComponents, DiscoverProps } from './discover'

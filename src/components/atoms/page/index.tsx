@@ -16,6 +16,7 @@ const Image = dynamic(() => import('next/image'))
 
 const Page: PageComponent = (props) => {
 	let {
+		className = '',
 		page: {
 			link,
 			info: { width, height }
@@ -32,6 +33,7 @@ const Page: PageComponent = (props) => {
 		return (
 			<Figure {...props}>
 				<Image
+					className={className}
 					quality={isCompact ? 85 : 60}
 					src={link}
 					width={width}
@@ -45,7 +47,8 @@ const Page: PageComponent = (props) => {
 			<img
 				className={combine(
 					imageEffect[safeMode],
-					tw`absolute top-0 w-full rounded`
+					tw`absolute top-0 w-full rounded`,
+					className
 				)}
 				src={link}
 				alt="Page"

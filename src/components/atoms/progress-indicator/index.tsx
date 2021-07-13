@@ -1,13 +1,15 @@
 import { useAtom } from 'jotai'
 import { themeAtom, ThemeMode } from '@stores'
 
+import { combine } from '@tailwind'
+
 import styles from './progress-indicator.module.sass'
 
-const ProgressIndicator = () => {
+const ProgressIndicator = ({ className = '' }) => {
 	let [theme] = useAtom(themeAtom)
 
 	return (
-		<div className={styles.loader}>
+		<div className={combine(styles.loader, className)}>
 			<svg className={styles.circular} viewBox="25 25 50 50">
 				<circle
 					className={styles.path}

@@ -9,7 +9,6 @@ export interface Page {
 
 export type Pages = Page[]
 
-
 export interface Image {
     cover: Page
     pages: Pages

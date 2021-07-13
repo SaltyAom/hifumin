@@ -36,7 +36,11 @@ export const jsonApiFetcher = <T extends Object>(
 
 export const { query } = client
 
-export { getPreviews, getHentaiReaderById } from './queries'
+export {
+	getPreviews,
+	getHentaiReaderById,
+	getSimiliarHentaiById
+} from './queries'
 
 export type {
 	HentaiQuery,

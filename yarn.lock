@@ -7323,6 +7323,11 @@ react-adaptive-hooks@^0.0.8:
   resolved "https://registry.yarnpkg.com/react-adaptive-hooks/-/react-adaptive-hooks-0.0.8.tgz#f23d9232eb7f6f4d782c631bbf029f15b4d01eb1"
   integrity sha512-akbhO9JrE3ACpjNJpvHKgeWtM9YSNH73tBuBeSCxECGG8SkXMm1ZW51Dr2957zUMK3Mxx8G/MYejoHGWZNCQAg==
 
+react-circular-progressbar@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-circular-progressbar/-/react-circular-progressbar-2.0.4.tgz#5b04a9cf6be8c522c180e4e99ec6db63677335b0"
+  integrity sha512-OfX0ThSxRYEVGaQSt0DlXfyl5w4DbXHsXetyeivmoQrh9xA9bzVPHNf8aAhOIiwiaxX2WYWpLDB3gcpsDJ9oww==
+
 "react-dom@npm:@preact/compat", "react@npm:@preact/compat":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@preact/compat/-/compat-0.0.4.tgz#f329e41caa330199eaf779c9bc9cf9556e3984a0"

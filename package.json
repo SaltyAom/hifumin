@@ -24,6 +24,7 @@
 		"preact": "^10.5.14",
 		"react": "npm:@preact/compat",
 		"react-adaptive-hooks": "^0.0.8",
+		"react-circular-progressbar": "^2.0.4",
 		"react-dom": "npm:@preact/compat",
 		"react-feather": "^2.0.9",
 		"swr": "^0.5.6",

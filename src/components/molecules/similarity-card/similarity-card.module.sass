@@ -1,0 +1,9 @@
+$easing-out-expo: cubic-bezier(0.16, 1, 0.3, 1)
+
+.card
+    transition: box-shadow .48s $easing-out-expo, transform .48s $easing-out-expo
+
+    &:hover,
+    &:focus
+        transform: translateY(-8px)
+        box-shadow: 0 8px 25px rgba(0,0,0,.375)

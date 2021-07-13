@@ -1,5 +1,6 @@
 export { default as Chip } from './chip'
 export { default as Dropdown } from './dropdown'
+export { default as Language } from './language'
 export { default as OpenGraph } from './opengraph'
 export { default as Page } from './page'
 export { default as ProgressIndicator } from './progress-indicator'

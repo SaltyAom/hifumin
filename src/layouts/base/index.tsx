@@ -9,7 +9,14 @@ import Head from 'next/head'
 import { useAtom } from 'jotai'
 import { themeAtom, searchAtom, ThemeMode } from '@stores'
 
-import { Bookmark, Clock, Grid, Menu, Settings } from 'react-feather'
+import {
+	Bookmark,
+	Clock,
+	Grid,
+	Menu,
+	Settings,
+	Image as ImageIcon
+} from 'react-feather'
 
 import tw, { combine } from '@tailwind'
 import { isServer } from '@services/validation'
@@ -23,6 +30,7 @@ const NextNprogress = dynamic(() => import('nextjs-progressbar'))
 
 const sidebars: BaseLayoutTabs = [
 	[Grid, 'Discover', '/'],
+	[ImageIcon, 'Source', '/source'],
 	[Bookmark, 'Bookmark', '/bookmark'],
 	[Clock, 'History', '/history'],
 	[Settings, 'Settings', '/settings']

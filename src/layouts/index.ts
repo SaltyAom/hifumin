@@ -9,6 +9,7 @@ export {
 	SettingLabel,
 	SettingLabels
 } from './settings'
+export { default as SimilarityLayout } from './similarity-layout'
 export {
 	VerticalGallery,
 	VerticalCover,

@@ -2,6 +2,7 @@ import { query } from '..'
 
 import {
 	GET_HENTAI_READER_BY_ID,
+	GET_SIMILAR_HENTAI_BY_ID,
 	GET_PREVIEWS_QUERY,
 	GET_SINGLE_PREVIEW_QUERY
 } from './constants'
@@ -39,6 +40,13 @@ export const getSinglePreviewById = ({ id }: GetHentaiByIdVariables) =>
 
 export const getHentaiReaderById = ({ id }: GetHentaiByIdVariables) =>
 	query<GetHentaiById, GetHentaiByIdVariables>(GET_HENTAI_READER_BY_ID, {
+		id
+	})
+		.toPromise()
+		.then(removeTypeName)
+
+export const getSimiliarHentaiById = ({ id }: GetHentaiByIdVariables) =>
+	query<GetHentaiById, GetHentaiByIdVariables>(GET_SIMILAR_HENTAI_BY_ID, {
 		id
 	})
 		.toPromise()
