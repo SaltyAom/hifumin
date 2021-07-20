@@ -37,7 +37,7 @@ WORKDIR /usr/app/
 COPY --from=modules /usr/app/node_modules node_modules
 COPY --from=builder /usr/app/.next .next
 COPY package.json .
-COPY public .
+COPY public public
 
 ENV NODE_ENV production
 
