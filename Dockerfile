@@ -2,7 +2,8 @@ FROM node:16-alpine as builder
 
 WORKDIR /usr/app
 
-COPY package.json yarn.lock .
+COPY package.json .
+COPY yarn.lock
 
 RUN yarn --frozen-lockfile
 
@@ -36,6 +37,7 @@ WORKDIR /usr/app/
 COPY --from=modules /usr/app/node_modules node_modules
 COPY --from=builder /usr/app/.next .next
 COPY package.json .
+COPY public .
 
 ENV NODE_ENV production
 
