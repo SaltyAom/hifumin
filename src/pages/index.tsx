@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps<DiscoverProps> = async () => {
 			stories: stories.data?.searchHentai.data ?? [],
 			error: stories.error || null
 		},
-		revalidate: 3600 * 3
+		revalidate: stories.data?.searchHentai.success || false ? 3600 * 3 : 300
 	}
 }
 

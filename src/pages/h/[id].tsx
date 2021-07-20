@@ -1,9 +1,4 @@
-import {
-	FunctionComponent,
-	useEffect,
-	useReducer,
-	useState
-} from 'react'
+import { FunctionComponent, useEffect, useReducer, useState } from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -159,7 +154,7 @@ export const getStaticProps: GetStaticProps<ReaderProps> = async (context) => {
 				)
 			)
 		},
-		revalidate: 3600
+		revalidate: story.data?.getHentaiById.success || false ? 3600 : 300
 	}
 }
 

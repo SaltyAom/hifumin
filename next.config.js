@@ -4,41 +4,19 @@ const withOffline = require('next-offline')
 const withAnalyze = require('@next/bundle-analyzer')({
 	enabled: process.env.ANALYZE === 'true'
 })
-const withPreact = require('next-plugin-preact')
 const withPlugins = require('next-compose-plugins')
 
 const withStyles = require('./tools/withStyles')
-const { useEsbuildLoader } = require('./tools/useEsbuild')
+const withEsbuild = require('./tools/withEsbuild')
+const withPreact = require('./tools/withPreact')
+const offlineConfig = require('./tools/withOffline')
 
 module.exports = withPlugins(
 	[
-		[withPreact],
 		[withStyles],
-		[
-			withOffline,
-			{
-				workboxOpts: {
-					swDest: 'static/service-worker.js',
-					runtimeCaching: [
-						{
-							urlPattern: /^https?.*/,
-							handler: 'NetworkFirst',
-							options: {
-								cacheName: 'https-calls',
-								networkTimeoutSeconds: 15,
-								expiration: {
-									maxEntries: 150,
-									maxAgeSeconds: 6 * 60 * 60 // 6 hours
-								},
-								cacheableResponse: {
-									statuses: [0, 200]
-								}
-							}
-						}
-					]
-				}
-			}
-		],
+        [withEsbuild],
+		[withPreact],
+        [withOffline, offlineConfig],
 		[withAnalyze]
 	],
 	{
@@ -63,8 +41,6 @@ module.exports = withPlugins(
 			loader: 'default'
 		},
 		webpack(config) {
-			useEsbuildLoader(config)
-
 			config.resolve.alias = {
 				...config.resolve.alias,
 				'@pages': join(__dirname, 'src/pages'),
