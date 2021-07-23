@@ -4,8 +4,6 @@ import { ReaderCover } from './components'
 
 import type { ReaderLayoutComponent } from './types'
 
-const key = 'reader-layout'
-
 const twClass = {
 	layout: tw`flex flex-col items-center w-full max-w-[760px] mx-auto p-0`,
 	wrapper: tw`flex flex-col items-center w-full max-w-[560px] mx-auto`
@@ -14,13 +12,13 @@ const twClass = {
 const ReaderLayout: ReaderLayoutComponent = ({ children, story, isValid = true }) => {
 	if (!isValid || typeof story === 'undefined')
 		return (
-			<main key={key} className={twClass.layout}>
+			<article className={twClass.layout}>
 				<section className={twClass.wrapper}>{children}</section>
-			</main>
+			</article>
 		)
 
 	return (
-		<article key={key} className={twClass.layout}>
+		<article className={twClass.layout}>
 			<ReaderCover story={story} />
 			<section className={twClass.wrapper}>{children}</section>
 		</article>
