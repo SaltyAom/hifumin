@@ -1,11 +1,11 @@
 import dynamic from 'next/dynamic'
 
 import { useAtom } from 'jotai'
-import { CompressionType, safeModeAtom } from '@stores/settings'
+import { CompressionType, SafeMode, safeModeAtom } from '@stores/settings'
 
 import tw, { combine } from '@tailwind'
 
-import { useCompressionType } from '@services/hooks'
+import { useCompressionType, useRefState, useBlurImage } from '@services/hooks'
 import { imageEffect } from '@services/image-effect'
 
 import { Figure } from './components'
@@ -17,6 +17,7 @@ const Image = dynamic(() => import('next/image'))
 const Page: PageComponent = (props) => {
 	let {
 		className = '',
+		page,
 		page: {
 			link,
 			info: { width, height }
@@ -26,33 +27,55 @@ const Page: PageComponent = (props) => {
 	let [safeMode] = useAtom(safeModeAtom)
 	let compression = useCompressionType()
 
+	let [target, targetRef] = useRefState<HTMLCanvasElement>()
+	useBlurImage({
+		page,
+		target,
+		shouldBlur: safeMode === SafeMode.blur
+	})
+
 	let isCompact = compression === CompressionType.compact
 	let isHeavy = compression === CompressionType.heavy
 
 	if (isCompact || isHeavy)
 		return (
 			<Figure {...props}>
-				<Image
-					className={className}
-					quality={isCompact ? 85 : 60}
-					src={link}
-					width={width}
-					height={height}
-				/>
+				{safeMode === SafeMode.blur ? (
+					<canvas className={className} ref={targetRef} />
+				) : (
+					<Image
+						className={className}
+						quality={isCompact ? 85 : 60}
+						src={link}
+						width={width}
+						height={height}
+					/>
+				)}
 			</Figure>
 		)
 
 	return (
 		<Figure {...props}>
-			<img
-				className={combine(
-					imageEffect[safeMode],
-					tw`absolute top-0 w-full rounded`,
-					className
-				)}
-				src={link}
-				alt="Page"
-			/>
+			{safeMode === SafeMode.blur ? (
+				<canvas
+					className={combine(
+						imageEffect[safeMode],
+						tw`absolute top-0 w-full h-full rounded`,
+						className
+					)}
+					ref={targetRef}
+				/>
+			) : (
+				<img
+					className={combine(
+						imageEffect[safeMode],
+						tw`absolute top-0 w-full rounded`,
+						className
+					)}
+					src={link}
+					alt="Page"
+				/>
+			)}
 		</Figure>
 	)
 }

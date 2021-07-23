@@ -31,7 +31,9 @@ const usePageEndObserver = (callback: Function, shouldStop = false) => {
 	}
 
 	let pageEndObserver = async () => {
-		if (shouldStop) return
+		if (shouldStop) {
+			return
+		}
 
 		stopWatchingPageEnd()
 

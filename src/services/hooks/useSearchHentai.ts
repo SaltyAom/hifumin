@@ -15,6 +15,7 @@ const useSearchHentai = (keyword: string) => {
 	let [isLoading, setLoading] = useState(false)
 
 	let fetchMore = useCallback(async () => {
+		if (isEnd) return
 		if (isLoading || !keyword) return
 
 		setLoading(true)

@@ -24,15 +24,21 @@ const ReaderCover: ReaderCoverComponent = ({
 		images: { cover },
 		metadata: {
 			tags,
-			artist: { name: artistName }
+			artist: { name: artistName },
+			language
 		},
 		info: { amount, favorite }
 	},
 	story
 }) => (
-	<header className={tw`relative flex flex-col md:flex-row w-full my-8 md:my-12 px-4 xs:mb-0 xs:my-8 gap-4 md:gap-8`}>
+	<header
+		className={tw`relative flex flex-col md:flex-row w-full my-8 md:my-12 px-4 xs:mb-0 xs:my-8 gap-4 md:gap-8`}
+	>
 		<div
-			className={combine(tw`flex flex-col justify-center items-center`, styles.wrapper)}
+			className={combine(
+				tw`flex flex-col justify-center items-center`,
+				styles.wrapper
+			)}
 			style={{
 				flex: 5
 			}}
@@ -45,8 +51,14 @@ const ReaderCover: ReaderCoverComponent = ({
 				flex: 6
 			}}
 		>
-			<h3 className={tw`text-sm text-gray-500 dark:text-gray-400 font-light mb-2`}>{id}</h3>
-			<h1 className={tw`text-3xl text-gray-900 dark:text-gray-300 m-0 mb-2 font-semibold`}>
+			<h3
+				className={tw`text-sm text-gray-500 dark:text-gray-400 font-light mb-2`}
+			>
+				{id}
+			</h3>
+			<h1
+				className={tw`text-3xl text-gray-900 dark:text-gray-300 m-0 mb-2 font-semibold`}
+			>
 				{display}
 			</h1>
 			<section className={tw`flex flex-col my-2`}>
@@ -58,6 +70,14 @@ const ReaderCover: ReaderCoverComponent = ({
 				</h5>
 				<h5 className={twClass.content}>
 					<Edit2 className={sharedStyle.contentIcon} /> {artistName}
+				</h5>
+				<h5 className={twClass.content}>
+					<img
+						className={tw`mr-2`}
+						src="/icons/language@black.svg"
+						alt="Language"
+					/>
+					{language}
 				</h5>
 			</section>
 			<section className={combine(styles.tags, tw`block my-2`)}>

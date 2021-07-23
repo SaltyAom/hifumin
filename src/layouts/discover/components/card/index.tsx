@@ -6,8 +6,8 @@ import { BookOpen, Heart } from 'react-feather'
 
 import tw, { combine } from '@tailwind'
 
-import { useLazyLoad } from '@services/hooks'
-import { safeModeAtom } from '@stores/settings'
+import { useLazyLoad, useRefState, useBlurImage } from '@services/hooks'
+import { SafeMode, safeModeAtom } from '@stores/settings'
 import { imageEffect } from '@services/image-effect'
 
 import { DiscoverCardComponent } from './types'
@@ -25,6 +25,7 @@ const DiscoverCard: DiscoverCardComponent = ({
 		id,
 		title: { display },
 		images: {
+			cover,
 			cover: {
 				link,
 				info: { width, height }
@@ -37,6 +38,12 @@ const DiscoverCard: DiscoverCardComponent = ({
 	let [safeMode] = useAtom(safeModeAtom)
 
 	let [lazyElement, shouldLoad] = useLazyLoad<HTMLAnchorElement>()
+	let [target, targetRef] = useRefState<HTMLCanvasElement>()
+	useBlurImage({
+		page: cover,
+		target,
+		shouldBlur: safeMode === SafeMode.blur
+	})
 
 	return (
 		<Link href="/h/[id]" as={`/h/${id}`}>
@@ -48,16 +55,25 @@ const DiscoverCard: DiscoverCardComponent = ({
 				}}
 				ref={lazyElement}
 			>
-				{shouldLoad && (
-					<img
-						className={combine(
-							imageEffect[safeMode],
-							tw`absolute top-0 z-10 w-full rounded-lg max-w-full m-0 object-fit object-center`
-						)}
-						alt={display}
-						src={link}
-					/>
-				)}
+				{shouldLoad &&
+					(safeMode === SafeMode.blur ? (
+						<canvas
+							className={combine(
+								imageEffect[safeMode],
+								tw`absolute top-0 z-10 !w-full !h-full rounded-lg max-w-full m-0`
+							)}
+							ref={targetRef}
+						/>
+					) : (
+						<img
+							className={combine(
+								imageEffect[safeMode],
+								tw`absolute top-0 z-10 w-full rounded-lg max-w-full m-0 object-fit object-center`
+							)}
+							alt={display}
+							src={link}
+						/>
+					))}
 				<header
 					className={combine(
 						styles.card,

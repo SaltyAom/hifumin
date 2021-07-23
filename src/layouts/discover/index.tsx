@@ -39,7 +39,7 @@ const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 	return (
 		<>
 			<header
-				className={tw`sticky top-[64px] lg:top-0 z-30 mx-2 lg:mx-0 px-2 my-2 lg:my-0 py-2 lg:py-4 bg-transparent`}
+				className={tw`sticky top-[64px] lg:top-0 z-30 mx-2 lg:mx-0 px-2 my-2 lg:my-0 py-2 lg:px-6 lg:py-4 bg-white dark:bg-gray-800`}
 			>
 				<form
 					className={tw`flex flex-row items-center text-gray-600 dark:text-gray-400 pl-4 bg-gray-100 dark:bg-gray-700 rounded-lg`}
@@ -57,7 +57,7 @@ const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 			</header>
 			<main
 				ref={layoutRef}
-				className={tw`flex flex-1 flex-row px-2 lg:px-0`}
+				className={tw`flex flex-1 flex-row px-2 lg:px-4`}
 			>
 				{children}
 			</main>
