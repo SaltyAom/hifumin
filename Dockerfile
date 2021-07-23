@@ -23,7 +23,7 @@ COPY package.json .
 COPY yarn.lock .
 
 RUN yarn --frozen-lockfile --production
-RUN npm install -g npm@7.20.0
+# RUN npm install -g npm@7.20.0
 # RUN npm prune --production
 RUN /usr/local/bin/node-prune
 
@@ -38,6 +38,7 @@ COPY --from=modules /usr/app/node_modules node_modules
 COPY --from=builder /usr/app/.next .next
 COPY package.json .
 COPY public public
+COPY next.config.production.js next.config.js
 
 ENV NODE_ENV production
 

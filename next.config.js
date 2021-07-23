@@ -34,13 +34,7 @@ module.exports = withPlugins(
 			// optimizeCss: true
 		},
 		images: {
-			domains: [
-				'atago.opener.studio',
-				'opener.studio',
-				'nhentai.net',
-				'i.nhentai.net',
-				't.nhentai.net'
-			],
+			domains: ['i.nhentai.net', 't.nhentai.net'],
 			deviceSizes: [360, 568, 760],
 			imageSizes: [16, 32, 48, 64, 96],
 			path: '/_next/image',

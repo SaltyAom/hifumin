@@ -14,7 +14,8 @@ export const Figure: FigureComponent = ({
 	lazyLoad = true,
 	page: {
 		info: { width, height }
-	}
+	},
+	isBlur = false
 }) => {
 	let [element, shouldLoad] = useLazyLoad()
 
@@ -30,7 +31,9 @@ export const Figure: FigureComponent = ({
 			)}
 			style={{
 				paddingTop:
-					isNative || !shouldLoad ? (height / width) * 100 + '%' : 0
+					isBlur || isNative || !shouldLoad
+						? (height / width) * 100 + '%'
+						: 0
 			}}
 			ref={element}
 		>

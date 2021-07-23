@@ -37,26 +37,11 @@ const Page: PageComponent = (props) => {
 	let isCompact = compression === CompressionType.compact
 	let isHeavy = compression === CompressionType.heavy
 
-	if (isCompact || isHeavy)
-		return (
-			<Figure {...props}>
-				{safeMode === SafeMode.blur ? (
-					<canvas className={className} ref={targetRef} />
-				) : (
-					<Image
-						className={className}
-						quality={isCompact ? 85 : 60}
-						src={link}
-						width={width}
-						height={height}
-					/>
-				)}
-			</Figure>
-		)
+	let isBlur = safeMode === SafeMode.blur
 
-	return (
-		<Figure {...props}>
-			{safeMode === SafeMode.blur ? (
+	if (isBlur)
+		return (
+			<Figure {...props} isBlur>
 				<canvas
 					className={combine(
 						imageEffect[safeMode],
@@ -65,17 +50,33 @@ const Page: PageComponent = (props) => {
 					)}
 					ref={targetRef}
 				/>
-			) : (
-				<img
-					className={combine(
-						imageEffect[safeMode],
-						tw`absolute top-0 w-full rounded`,
-						className
-					)}
+			</Figure>
+		)
+
+	if (isCompact || isHeavy)
+		return (
+			<Figure {...props}>
+				<Image
+					className={className}
+					quality={isCompact ? 85 : 60}
 					src={link}
-					alt="Page"
+					width={width}
+					height={height}
 				/>
-			)}
+			</Figure>
+		)
+
+	return (
+		<Figure {...props}>
+			<img
+				className={combine(
+					imageEffect[safeMode],
+					tw`absolute top-0 w-full rounded`,
+					className
+				)}
+				src={link}
+				alt="Page"
+			/>
 		</Figure>
 	)
 }
