@@ -1,6 +1,7 @@
 import { useMemo, useEffect, useState } from 'react'
 
 import { useAtom } from 'jotai'
+import { persistedDiscoveredAtom } from '@stores/discover'
 import { preferenceAtom } from '@stores/settings'
 
 import { DiscoverCard } from '@layouts/discover'
@@ -19,15 +20,24 @@ import { randomBetween } from '@services/random'
 import type { DiscoverComponents } from '@types'
 
 const DiscoverResults: DiscoverComponents = ({
-	initial = [],
+	// initial = [],
 	spaces,
 	error = null,
 	layoutRef
 }) => {
+	let [persistedStories, updatePersistedStories] = useAtom(
+		persistedDiscoveredAtom
+	)
+
 	let { stories, fetchMore, isEnd, isLoading } = useHentaiCollection(
-		initial,
+		persistedStories,
 		error
 	)
+
+	useEffect(() => {
+		if (!persistedStories.length) updatePersistedStories(stories)
+	}, [stories, persistedStories])
+
 	let [{ useDefaultFilter, filterList }] = useAtom(preferenceAtom)
 	let [windowSize] = useWindowSize()
 

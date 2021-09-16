@@ -65,7 +65,7 @@ class OpenerDocument extends Document {
 					<meta name="format-detection" content="telephone=no" />
 					<meta name="apple-touch-fullscreen" content="yes" />
 				</Head>
-				<body>
+				<body id="body">
 					<Main />
 					<NextScript />
 				</body>

@@ -1,8 +1,4 @@
-import {
-	SafeMode,
-	ThemeMode,
-	useSettings
-} from '@stores/settings'
+import { SafeMode, ThemeMode, useSettings } from '@stores/settings'
 
 import {
 	DropDownSetting,

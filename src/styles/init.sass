@@ -1,11 +1,16 @@
 *
     box-sizing: border-box
 
+@font-face
+    font-family: somatic
+    src: local('Somatic'), local('Somatic Rounded'), url('/fonts/somatic.otf') format('opentype')
+    font-display: swap
+
 input, button, a
     -webkit-tap-highlight-color: transparent
     outline: none
-    
-body
+
+#body
     @apply font-sans m-0 bg-white dark:bg-gray-800
 
 #__next
