@@ -30,7 +30,7 @@ RUN /usr/local/bin/node-prune
 # * ====================
 FROM alpine:latest as main
 
-RUN apk --no-cache add nodejs=14.17.1-r0
+RUN apk --no-cache add nodejs
 
 WORKDIR /usr/app/
 
