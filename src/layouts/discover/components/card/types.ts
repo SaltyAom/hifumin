@@ -1,6 +1,6 @@
-import { FunctionComponent } from "react"
+import type { FunctionComponent } from "react"
 
-import { Story } from "@types"
+import type { Story } from "@types"
 
 export interface DiscoverCardProps {
     story: Story

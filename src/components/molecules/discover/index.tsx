@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 
 import { useAtom } from 'jotai'
 import { preferenceAtom } from '@stores/settings'
@@ -14,6 +14,7 @@ import {
 	useWindowSize
 } from '@services/hooks'
 import { splitChunk } from '@services/array'
+import { randomBetween } from '@services/random'
 
 import type { DiscoverComponents } from '@types'
 
@@ -29,6 +30,12 @@ const DiscoverResults: DiscoverComponents = ({
 	)
 	let [{ useDefaultFilter, filterList }] = useAtom(preferenceAtom)
 	let [windowSize] = useWindowSize()
+
+	let [gaps, updateGap] = useState(
+		Array(spaces)
+			.fill(0)
+			.map(() => randomBetween(0, 180))
+	)
 
 	let storyGroups = useMemo(
 		() =>
@@ -55,14 +62,27 @@ const DiscoverResults: DiscoverComponents = ({
 		if (layout.clientHeight < window.innerHeight && !isLoading) fetchMore()
 	}, [layoutRef, fetchMore, isLoading, windowSize])
 
+	useEffect(() => {
+		updateGap(
+			Array(spaces)
+				.fill(0)
+				.map(() => randomBetween(0, 120))
+		)
+	}, [spaces])
+
 	if (isLoading && !stories.length)
 		return (
 			<>
-				{storyGroups.map(() => (
+				{storyGroups.map((_, i) => (
 					<section className={tw`flex flex-col flex-1 gap-4`}>
+						<section
+							style={{
+								height: gaps[i]
+							}}
+						/>
 						{Array(8)
 							.fill(0)
-							.map((_, index) => (
+							.map((__, index) => (
 								// eslint-disable-next-line jsx-a11y/anchor-has-content
 								<a
 									key={index.toString()}
@@ -87,6 +107,11 @@ const DiscoverResults: DiscoverComponents = ({
 					key={index.toString()}
 					className={tw`flex flex-col flex-1 gap-4`}
 				>
+					<section
+						style={{
+							height: gaps[index]
+						}}
+					/>
 					{group.map((story) => (
 						<DiscoverCard key={story.id} story={story} />
 					))}

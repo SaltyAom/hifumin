@@ -10,7 +10,7 @@ import { useLazyLoad, useRefState, useBlurImage } from '@services/hooks'
 import { SafeMode, safeModeAtom } from '@stores/settings'
 import { imageEffect } from '@services/image-effect'
 
-import { DiscoverCardComponent } from './types'
+import type { DiscoverCardComponent } from './types'
 
 import styles from './card.module.sass'
 

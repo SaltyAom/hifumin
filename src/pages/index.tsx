@@ -12,7 +12,7 @@ import DiscoverResults from '@molecules/discover'
 
 import { useComputedSpace } from '@services/hooks'
 
-const SearchResults = dynamic(() => import('@components/molecules/search'))
+const SearchResults = dynamic(() => import('@molecules/search'))
 
 const Discover = () => {
 	let [keyword] = useAtom(searchAtom)

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect } from 'react'
+import { useCallback, useRef, useEffect, ChangeEventHandler } from 'react'
 import type { FormEvent } from 'react'
 
 import { useRouter } from 'next/router'
@@ -12,17 +12,21 @@ import tw from '@tailwind'
 
 import { isNhentai } from '@services/validation'
 
+import { SearchHeader } from './components'
+
 import type { DiscoverLayoutComponent } from './types'
 
 const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 	let [sharedKeyword, updateKeyword] = useAtom(searchAtom)
 	let keyword = useRef<HTMLInputElement>(null)
 
-
-	let { push } = useRouter()
+	let { push, asPath } = useRouter()
 
 	useEffect(() => {
 		if (!sharedKeyword) return
+
+		if(!asPath.includes(sharedKeyword))
+			window.history.pushState('Opener Studio', `${sharedKeyword} - Opener Studio`, `/search/${sharedKeyword}`)
 
 		if (isNhentai(sharedKeyword)) {
 			push(`/h/${sharedKeyword}`)
@@ -34,15 +38,15 @@ const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 		event.preventDefault()
 
 		if (keyword.current) updateKeyword(keyword.current.value)
+		if (keyword.current?.value === "")
+			window.history.pushState('Opener Studio', `Search - Opener Studio`, `/`)
 	}, [])
 
 	return (
 		<>
-			<header
-				className={tw`sticky top-[64px] lg:top-0 z-30 lg:mx-0 px-2 my-2 lg:my-0 py-2 lg:px-4 lg:py-4 bg-white dark:bg-gray-800`}
-			>
+			<SearchHeader expanded={sharedKeyword === ''}>
 				<form
-					className={tw`flex flex-row items-center text-gray-600 dark:text-gray-400 pl-4 bg-gray-100 dark:bg-gray-700 rounded-lg`}
+					className={tw`flex flex-row items-center w-full text-gray-600 dark:text-gray-400 pl-4 bg-gray-100 dark:bg-gray-700 rounded-lg`}
 					onSubmit={handleSearch}
 				>
 					<Search />
@@ -51,13 +55,13 @@ const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 						defaultValue={sharedKeyword}
 						className={tw`w-full text-2xl text-gray-800 dark:text-gray-200 pl-2 py-3 bg-transparent border-0 outline-none`}
 						type="text"
-						placeholder="Find hentai"
+						placeholder="Find hentai or 6 digits code"
 					/>
 				</form>
-			</header>
+			</SearchHeader>
 			<main
 				ref={layoutRef}
-				className={tw`flex flex-1 flex-row gap-4 px-2 lg:px-4`}
+				className={tw`flex flex-1 flex-row gap-4 px-4`}
 			>
 				{children}
 			</main>

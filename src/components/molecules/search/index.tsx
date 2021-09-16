@@ -9,7 +9,7 @@ import { DiscoverCard } from '@layouts/discover'
 
 import tw, { combine } from '@tailwind'
 
-import { ProgressIndicator } from '@components/atoms'
+import { ProgressIndicator } from '@atoms'
 
 import {
 	usePageEndObserver,

@@ -9,13 +9,13 @@ interface UseBlurImageProps {
 	shouldBlur: boolean
 	page: Page
 	target: HTMLCanvasElement | null
-	onError: GlobalEventHandlers['onerror']
+	onError?: GlobalEventHandlers['onerror']
 }
 
 // eslint-disable-next-line no-unused-vars
 type UseBlurImage = (input: UseBlurImageProps) => void
 
-const useBlurImage: UseBlurImage = ({ page, shouldBlur, target, onError }) => {
+const useBlurImage: UseBlurImage = ({ page, shouldBlur, target, onError = () => {} }) => {
 	useEffect(() => {
 		if (!shouldBlur || !target || !page) return
 

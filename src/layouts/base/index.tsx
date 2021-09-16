@@ -5,6 +5,7 @@ import type { FunctionComponent } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { useAtom } from 'jotai'
 import { themeAtom, searchAtom, ThemeMode } from '@stores'
@@ -48,6 +49,8 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 	)
 	let [initial, loaded] = useReducer(() => false, true)
 	let [key, forceUpdate] = useReducer((v) => v + 1, 0)
+
+	let { asPath } = useRouter()
 
 	let emptySearch = useCallback(() => {
 		updateSearch('')
