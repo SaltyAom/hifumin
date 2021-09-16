@@ -20,16 +20,15 @@ const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 	let [sharedKeyword, updateKeyword] = useAtom(searchAtom)
 	let keyword = useRef<HTMLInputElement>(null)
 
-	let { push, asPath } = useRouter()
+	let { push } = useRouter()
 
 	useEffect(() => {
 		if (!sharedKeyword) return
 
-		if(!asPath.includes(sharedKeyword))
-			window.history.pushState('Opener Studio', `${sharedKeyword} - Opener Studio`, `/search/${sharedKeyword}`)
+		push('/search/[keyword]', `/search/${sharedKeyword}`)
 
 		if (isNhentai(sharedKeyword)) {
-			push(`/h/${sharedKeyword}`)
+			push('/h/[id]', `/h/${sharedKeyword}`)
 			updateKeyword('')
 		}
 	}, [sharedKeyword])
@@ -38,8 +37,12 @@ const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 		event.preventDefault()
 
 		if (keyword.current) updateKeyword(keyword.current.value)
-		if (keyword.current?.value === "")
-			window.history.pushState('Opener Studio', `Search - Opener Studio`, `/`)
+		if (keyword.current?.value === '')
+			window.history.pushState(
+				'Opener Studio',
+				`Search - Opener Studio`,
+				`/`
+			)
 	}, [])
 
 	return (

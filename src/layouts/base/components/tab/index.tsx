@@ -3,6 +3,9 @@ import { useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import { useAtom } from 'jotai'
+import { searchAtom } from '@stores'
+
 import tw, { combine } from '@tailwind'
 
 import type { BaseLayoutTabComponent } from './types'
@@ -20,16 +23,19 @@ export const BaseTab: BaseLayoutTabComponent = ({
 	link,
 	toggle
 }) => {
+	let [, updateSearch] = useAtom(searchAtom)
+
 	let { asPath } = useRouter()
 
 	let isActive = link !== '/' && asPath.startsWith(link)
 
-	if(link === "/" && asPath === "/")
-		isActive = true
+	if (link === '/' && asPath === '/') isActive = true
 
 	let handleToggle = useCallback(() => {
+		if (asPath.startsWith('/search')) updateSearch('')
+
 		if (window.innerWidth < 1024) toggle()
-	}, [])
+	}, [asPath])
 
 	if (link === '/' && asPath.startsWith('/search/')) isActive = true
 

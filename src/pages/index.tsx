@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 import { useAtom } from 'jotai'
 import { searchAtom } from '@stores/search'
@@ -10,21 +10,28 @@ import DiscoverResults from '@molecules/discover'
 
 import { useComputedSpace } from '@services/hooks'
 
+import tw from '@tailwind'
+import { ProgressIndicator } from '@components/atoms'
+
 const Discover = () => {
-	let [keyword, updateKeyword] = useAtom(searchAtom)
+	let [keyword] = useAtom(searchAtom)
 
 	let layout = useRef<HTMLElement>(null)
 	let spaces = useComputedSpace(layout)
-
-	useEffect(() => {
-		updateKeyword('')
-	}, [])
 
 	return (
 		<>
 			<OpenGraph title={`${keyword || 'Discover'} - Opener Studio`} />
 			<DiscoverLayout key="discover" layoutRef={layout}>
-				<DiscoverResults spaces={spaces} layoutRef={layout} />
+				{keyword ? (
+					<section
+						className={tw`flex justify-center items-center w-full h-full-app`}
+					>
+						<ProgressIndicator />
+					</section>
+				) : (
+					<DiscoverResults spaces={spaces} layoutRef={layout} />
+				)}
 			</DiscoverLayout>
 		</>
 	)
