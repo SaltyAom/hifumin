@@ -7,6 +7,8 @@ import {
 	SettingLayout
 } from '@layouts/settings'
 
+import { settings as Settings } from '@services/settings'
+
 const DataUsageSetting = () => {
 	let { settings, updateSwitch } = useSettings()
 
@@ -30,10 +32,7 @@ const DataUsageSetting = () => {
 					<SettingLabel key={label}>{label}</SettingLabel>
 				))}
 			>
-				<SettingLabels
-					title="Save History"
-					details={['Save browsing history']}
-				/>
+				<SettingLabels {...Settings['data-usage'].history} />
 			</SwitchSetting>
 		</SettingLayout>
 	)

@@ -9,4 +9,5 @@ export {
 	ReaderType
 } from './settings'
 export { searchAtom } from './search'
+export { searchSettingAtom, searchKeywordAtom } from './search-settings'
 export { themeAtom } from './theme'

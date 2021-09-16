@@ -8,6 +8,8 @@ import {
 
 import { enumToArrayDetail } from '@services/array'
 
+import { settings as Settings } from '@services/settings'
+
 const AppearanceSetting = () => {
 	let { settings, updateDropDown } = useSettings()
 
@@ -21,13 +23,7 @@ const AppearanceSetting = () => {
 				options={enumToArrayDetail(ThemeMode)}
 				update={updateDropDown('themeMode', ThemeMode)}
 			>
-				<SettingLabels
-					title="Theme Mode"
-					details={[
-						'Set color theme.',
-						'Choosing "adaptive" will use the system setting.'
-					]}
-				/>
+				<SettingLabels {...Settings.appearance.theme} />
 			</DropDownSetting>
 
 			<DropDownSetting
@@ -35,10 +31,7 @@ const AppearanceSetting = () => {
 				options={enumToArrayDetail(SafeMode)}
 				update={updateDropDown('safeMode', SafeMode)}
 			>
-				<SettingLabels
-					title="Safe Mode"
-					details={['Hide the image when the sudden attack come in.']}
-				/>
+				<SettingLabels {...Settings.appearance.safe} />
 			</DropDownSetting>
 
 			{/* <DropDownSettingLayout

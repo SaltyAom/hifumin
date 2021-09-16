@@ -12,6 +12,8 @@ import tw from '@tailwind'
 
 import { tags as defaultTags } from '@services/data'
 
+import { settings as Settings } from '@services/settings'
+
 const distinctTags = (tags: string[]) => {
 	let system: string[] = []
 	let custom: string[] = []
@@ -95,9 +97,17 @@ const PreferenceSetting = () => {
 				value={useDefaultPreference}
 				update={updateSwitch('useDefaultPreference')}
 			>
-				<SettingLabels title="Use default preference" />
+				<SettingLabels {...Settings.preference.preference} />
 			</SwitchSetting>
-			<section className={tw(`flex flex-col w-full transition-opacity ${useDefaultPreference ? 'opacity-50 pointer-events-none cursor-not-allowed' : ''}`)}>
+			<section
+				className={tw(
+					`flex flex-col w-full transition-opacity ${
+						useDefaultPreference
+							? 'opacity-50 pointer-events-none cursor-not-allowed'
+							: ''
+					}`
+				)}
+			>
 				<form
 					className={tw`w-2/4 m-0 p-0`}
 					onSubmit={requestAddingPreference}

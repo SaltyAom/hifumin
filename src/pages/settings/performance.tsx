@@ -11,6 +11,8 @@ import {
 
 import { enumToArrayDetail } from '@services/array'
 
+import { settings as Settings } from '@services/settings'
+
 const PerformanceSetting = () => {
 	let { settings, updateDropDown } = useSettings()
 
@@ -38,10 +40,7 @@ const PerformanceSetting = () => {
 					</SettingLabel>
 				))}
 			>
-				<SettingLabels
-					title="Image compression"
-					details={['Select how the image should be displayed.']}
-				/>
+				<SettingLabels {...Settings.performance.compression} />
 			</DropDownSetting>
 		</SettingLayout>
 	)

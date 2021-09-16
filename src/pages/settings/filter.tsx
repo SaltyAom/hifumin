@@ -10,6 +10,8 @@ import { TextBox, Chip } from '@atoms'
 
 import tw from '@tailwind'
 
+import { settings as Settings } from '@services/settings'
+
 const FilterSetting = () => {
 	let {
 		settings: { useDefaultFilter, filterList },
@@ -65,7 +67,7 @@ const FilterSetting = () => {
 				value={useDefaultFilter}
 				update={updateSwitch('useDefaultFilter')}
 			>
-				<SettingLabels title="Use default filter" />
+				<SettingLabels {...Settings.filter.filter} />
 			</SwitchSetting>
 			<section
 				className={tw(

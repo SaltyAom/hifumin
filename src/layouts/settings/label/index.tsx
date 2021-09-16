@@ -2,7 +2,10 @@ import tw from '@tailwind'
 
 import type { SettingLabelComponent, SettingLabelsComponent } from './types'
 
-export const SettingLabel: SettingLabelComponent = ({ children, small = false }) => (
+export const SettingLabel: SettingLabelComponent = ({
+	children,
+	small = false
+}) => (
 	<p
 		className={tw(
 			`${
@@ -17,19 +20,21 @@ export const SettingLabel: SettingLabelComponent = ({ children, small = false })
 )
 
 const SettingLabels: SettingLabelsComponent = ({
+	id,
 	title = '',
-	details = []
+	labels = []
 }) => (
 	<>
 		{title ? (
 			<h2
+				id={id}
 				className={tw`text-2xl text-gray-800 dark:text-gray-200 medium my-1`}
 			>
 				{title}
 			</h2>
 		) : null}
-		{details.map((detail) => (
-			<SettingLabel key={detail}>{detail}</SettingLabel>
+		{labels.map((label) => (
+			<SettingLabel key={label}>{label}</SettingLabel>
 		))}
 	</>
 )

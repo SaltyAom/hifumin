@@ -39,7 +39,7 @@ const sidebars: BaseLayoutTabs = [
 
 const BaseLayout: FunctionComponent = ({ children }) => {
 	let [theme] = useAtom(themeAtom)
-	let [search, updateSearch] = useAtom(searchAtom)
+	let [, updateSearch] = useAtom(searchAtom)
 
 	let [fullSide, toggleFullSide] = useReducer(
 		(v) => !v,
@@ -49,8 +49,6 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 	)
 	let [initial, loaded] = useReducer(() => false, true)
 	let [key, forceUpdate] = useReducer((v) => v + 1, 0)
-
-	let { asPath } = useRouter()
 
 	let emptySearch = useCallback(() => {
 		updateSearch('')
@@ -122,16 +120,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 							key={title}
 							Icon={Icon}
 							title={title}
-							link={
-								// eslint-disable-next-line no-nested-ternary
-								link === '/' &&
-								search !== '' &&
-								!asPath.startsWith('/search')
-									? isNhentai(search)
-										? `/h/${search}`
-										: `/search/${search}`
-									: link
-							}
+							link={link}
 							toggle={toggleFullSide}
 						/>
 					))}

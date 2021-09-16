@@ -8,7 +8,7 @@ import {
 	ChevronLeft,
 	Edit3,
 	Heart,
-	Filter
+	Filter,
 } from 'react-feather'
 import Spacer from '@atoms/spacer'
 import OpenGraph from '@atoms/opengraph'
@@ -16,7 +16,7 @@ import OpenGraph from '@atoms/opengraph'
 import tw, { combine } from '@tailwind'
 
 import { SettingTab } from './components'
-import { SettingLabels } from '..'
+import { SearchSetting, SettingLabels } from '..'
 
 import type { SettingLayoutComponent } from './types'
 
@@ -54,11 +54,12 @@ const MainSettingLayout: SettingLayoutComponent = ({
 			<OpenGraph title={`${title} - Opener Studio`} />
 			<section className={tw`flex flex-row`}>
 				<div
-					className={tw`relative hidden sm:flex flex-col w-full max-w-[220px] md:max-w-[240px] h-screen`}
+					className={tw`relative hidden sm:flex flex-col w-full max-w-[220px] md:max-w-[260px] h-screen`}
 				>
 					<aside
 						className={tw`fixed t-0 flex flex-col gap-1 max-w-[220px] md:max-w-[240px] w-full h-screen px-3 py-5 bg-white dark:bg-gray-900 border-0 border-r border-solid border-gray-200 dark:border-gray-700 overflow-x-hidden overflow-y-auto`}
 					>
+						<SearchSetting tint dense />
 						{settings.map(([label, icon, color]) => (
 							<SettingTab
 								href={label.replace(' ', '-')}
@@ -92,7 +93,7 @@ const MainSettingLayout: SettingLayoutComponent = ({
 					>
 						{title}
 					</h1>
-					<SettingLabels details={labels} />
+					<SettingLabels id="settings" labels={labels} />
 					<Spacer small />
 
 					{children}

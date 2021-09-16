@@ -10,6 +10,7 @@ import {
 } from '@stores/setting-page'
 
 import { SettingLayout, SettingTab, settings } from '@layouts/settings'
+import SearchSetting from '@layouts/settings/search'
 
 import tw from '@tailwind'
 
@@ -37,6 +38,7 @@ const Settings = () => {
 				'Customize how platform should behave to fit your preference.'
 			]}
 		>
+			<SearchSetting />
 			<section
 				className={tw`flex sm:hidden flex-col gap-1 w-full rounded-lg`}
 			>
