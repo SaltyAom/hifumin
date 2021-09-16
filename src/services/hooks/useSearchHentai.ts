@@ -5,7 +5,7 @@ import { isNhentai } from '@services/validation'
 
 import { Stories } from '@types'
 
-const useSearchHentai = (keyword: string) => {
+const useSearchHentai = (keyword: string, block = false) => {
 	let [stories, appendStories] = useReducer<Reducer<Stories, Stories>>(
 		(currentStories, newStories) => currentStories.concat(newStories),
 		[]
@@ -15,6 +15,9 @@ const useSearchHentai = (keyword: string) => {
 	let [isLoading, setLoading] = useState(false)
 
 	let fetchMore = useCallback(async () => {
+		if (block)
+			return
+
 		if (isEnd) return
 		if (isLoading || !keyword) return
 
@@ -29,7 +32,7 @@ const useSearchHentai = (keyword: string) => {
 
 		setLoading(false)
 		updatePage(page + 1)
-	}, [page, keyword])
+	}, [page, keyword, block])
 
 	useEffect(() => {
 		updatePage(1)

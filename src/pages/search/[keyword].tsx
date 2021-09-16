@@ -4,10 +4,10 @@ import type { FunctionComponent } from 'react'
 import { useRouter } from 'next/router'
 import type { GetStaticPaths, GetStaticProps } from 'next'
 
+import type { CombinedError } from 'urql'
+
 import { useAtom } from 'jotai'
 import { searchAtom } from '@stores/search'
-
-import type { DiscoverProps } from '@pages/index'
 
 import DiscoverLayout from '@layouts/discover'
 
@@ -17,7 +17,16 @@ import OpenGraph from '@atoms/opengraph'
 import { getPreviews } from '@services/graphql'
 import { useComputedSpace } from '@services/hooks'
 
+import type { Stories } from '@types'
+
 let getKeyword = (keyword: string) => decodeURI(keyword.replace('/search/', ''))
+
+export interface DiscoverProps {
+	stories: Stories
+	// ? Also used in search page
+	keyword?: string
+	error?: CombinedError | null
+}
 
 const Search: FunctionComponent<DiscoverProps> = ({
 	stories: initial,

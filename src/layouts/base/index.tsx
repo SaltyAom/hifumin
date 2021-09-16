@@ -19,7 +19,7 @@ import {
 } from 'react-feather'
 
 import tw, { combine } from '@tailwind'
-import { isServer } from '@services/validation'
+import { isNhentai, isServer } from '@services/validation'
 
 import { BaseTab } from './components'
 import type { BaseLayoutTabs } from './components'
@@ -38,7 +38,7 @@ const sidebars: BaseLayoutTabs = [
 
 const BaseLayout: FunctionComponent = ({ children }) => {
 	let [theme] = useAtom(themeAtom)
-	let [, updateSearch] = useAtom(searchAtom)
+	let [search, updateSearch] = useAtom(searchAtom)
 
 	let [fullSide, toggleFullSide] = useReducer(
 		(v) => !v,
@@ -116,9 +116,17 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 					</h1>
 					{sidebars.map(([Icon, title, link]) => (
 						<BaseTab
+							key={title}
 							Icon={Icon}
 							title={title}
-							link={link}
+							link={
+								// eslint-disable-next-line no-nested-ternary
+								link === '/' && search !== ''
+									? isNhentai(search)
+										? `/h/${search}`
+										: `/search/${search}`
+									: link
+							}
 							toggle={toggleFullSide}
 						/>
 					))}

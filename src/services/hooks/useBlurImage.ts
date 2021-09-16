@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useEffect } from 'react'
 
 import type StackBlur from 'stackblur-canvas'
@@ -8,12 +9,13 @@ interface UseBlurImageProps {
 	shouldBlur: boolean
 	page: Page
 	target: HTMLCanvasElement | null
+	onError: GlobalEventHandlers['onerror']
 }
 
 // eslint-disable-next-line no-unused-vars
 type UseBlurImage = (input: UseBlurImageProps) => void
 
-const useBlurImage: UseBlurImage = ({ page, shouldBlur, target }) => {
+const useBlurImage: UseBlurImage = ({ page, shouldBlur, target, onError }) => {
 	useEffect(() => {
 		if (!shouldBlur || !target || !page) return
 
@@ -28,6 +30,7 @@ const useBlurImage: UseBlurImage = ({ page, shouldBlur, target }) => {
 			image.height = height
 
 			image.src = `/_next/image?url=${encodeURI(link)}&w=568&q=1`
+			image.onerror = onError
 
 			const [stackBlur]: [typeof StackBlur, void] = await Promise.all([
 				// eslint-disable-next-line global-require

@@ -49,7 +49,7 @@ const DiscoverCard: DiscoverCardComponent = ({
 		<Link href="/h/[id]" as={`/h/${id}`}>
 			<a
 				role="article"
-				className={tw`relative flex mb-4 bg-gray-100 dark:bg-gray-700 break-all rounded-lg overflow-hidden`}
+				className={tw`relative flex bg-gray-100 dark:bg-gray-700 break-all rounded-lg overflow-hidden`}
 				style={{
 					paddingTop: (height / width) * 100 + '%'
 				}}

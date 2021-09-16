@@ -1,4 +1,3 @@
-import { isServer } from '@services/validation'
 import { useState, useEffect, RefObject, useCallback } from 'react'
 
 const cardWidth = 220

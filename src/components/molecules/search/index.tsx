@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useReducer, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -28,8 +28,9 @@ const SearchResults: DiscoverComponents = ({
 	layoutRef
 }) => {
 	let [keyword] = useAtom(searchAtom)
+	let [isInit, init] = useReducer(() => true, false)
 
-	let { stories, fetchMore, isLoading, isEnd } = useSearchHentai(keyword)
+	let { stories, fetchMore, isLoading, isEnd } = useSearchHentai(keyword, !isInit)
 
 	let [pageLoaded, updatePageState] = useState(false)
 	let [windowSize] = useWindowSize()
@@ -39,9 +40,13 @@ const SearchResults: DiscoverComponents = ({
 		[stories, spaces, initial]
 	)
 
-	usePageEndObserver(fetchMore, isEnd)
+	usePageEndObserver(fetchMore, stories.length > 0 && isEnd)
 
 	let { events } = useRouter()
+
+	useEffect(() => {
+		init()
+	}, [initial])
 
 	useEffect(() => {
 		let changingRoute = () => {
@@ -120,7 +125,7 @@ const SearchResults: DiscoverComponents = ({
 			{storyGroups.map((group, index) => (
 				<section
 					key={index.toString()}
-					className={tw`flex flex-col flex-1 px-2`}
+					className={tw`flex flex-col flex-1 gap-4`}
 				>
 					{group.map((story) => (
 						<DiscoverCard key={story.id} story={story} />
