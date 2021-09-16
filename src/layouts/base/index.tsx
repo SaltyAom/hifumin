@@ -124,7 +124,9 @@ const BaseLayout: FunctionComponent = ({ children }) => {
 							title={title}
 							link={
 								// eslint-disable-next-line no-nested-ternary
-								link === '/' && search !== ''
+								link === '/' &&
+								search !== '' &&
+								!asPath.startsWith('/search')
 									? isNhentai(search)
 										? `/h/${search}`
 										: `/search/${search}`

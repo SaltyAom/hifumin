@@ -92,7 +92,11 @@ const ReaderCover: ReaderCoverComponent = ({
 				</section>
 				<section className={combine(styles.tags, tw`block my-2`)}>
 					{tags.map(({ name }) => (
-						<Link href="/search/[keyword]" as={`/search/${name}`}>
+						<Link
+							key={name}
+							href="/search/[keyword]"
+							as={`/search/${name}`}
+						>
 							<a
 								className={combine(
 									styles.tag,
