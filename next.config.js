@@ -6,16 +6,13 @@ const withAnalyze = require('@next/bundle-analyzer')({
 })
 const withPlugins = require('next-compose-plugins')
 
-const withStyles = require('./tools/withStyles')
-const withEsbuild = require('./tools/withEsbuild')
-const withPreact = require('./tools/withPreact')
+const useStyles = require('./tools/useStyles')
+const useEsbuild = require('./tools/useEsbuild')
+const usePreact = require('./tools/usePreact')
 const offlineConfig = require('./tools/withOffline')
 
 module.exports = withPlugins(
 	[
-		[withStyles],
-		[withEsbuild],
-		[withPreact],
 		[withOffline, offlineConfig],
 		[withAnalyze]
 	],
@@ -40,7 +37,11 @@ module.exports = withPlugins(
 			path: '/_next/image',
 			loader: 'default'
 		},
-		webpack(config) {
+		webpack(config, options) {
+			// useEsbuild(config, options)
+			usePreact(config, options)
+			useStyles(config, options)
+
 			config.resolve.alias = {
 				...config.resolve.alias,
 				'@pages': join(__dirname, 'src/pages'),
