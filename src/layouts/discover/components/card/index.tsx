@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { useAtom } from 'jotai'
 
@@ -71,6 +72,11 @@ const DiscoverCard: DiscoverCardComponent = ({
 								tw`absolute top-0 z-10 w-full rounded-lg max-w-full m-0 object-fit object-center`
 							)}
 							alt={display}
+							/* Using native image without compression,
+							since first paint is critical.
+							Beside nh already delivered low quality img,
+							lower than Next img itself
+							*/
 							src={link}
 						/>
 					))}

@@ -29,7 +29,8 @@ const useBlurImage: UseBlurImage = ({ page, shouldBlur, target, onError = () => 
 			image.width = width
 			image.height = height
 
-			image.src = `/_next/image?url=${encodeURI(link)}&w=568&q=1`
+			// Use self for rendering in canvas
+			image.src = `/_next/image?url=${encodeURI(link)}&w=360&q=1`
 			image.onerror = onError
 
 			const [stackBlur]: [typeof StackBlur, void] = await Promise.all([
