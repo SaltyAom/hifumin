@@ -35,6 +35,7 @@
   "type": "module",
   "dependencies": {
     "@saltyaom/gq": "^1.1.3",
+    "@sveltejs/adapter-netlify": "^1.0.0-next.36",
     "svelte-feather-icons": "^3.5.0",
     "svelte-tiny-virtual-list": "^1.1.7"
   }
