@@ -9,7 +9,6 @@
     let [width, height] = size
     let className = $$props['class'] || ''
 
-
     const handleIntersection = () => {
         intersected = true
     }

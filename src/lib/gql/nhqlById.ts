@@ -1,7 +1,7 @@
 import gql from '@saltyaom/gq'
 
 export interface NhqlByIdData {
-    id: string
+    id: number
     title: {
         display: string
     }

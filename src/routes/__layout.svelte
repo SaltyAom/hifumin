@@ -16,7 +16,7 @@
     const isNumeric = (n: string) => !isNaN(+n) && isFinite(+n)
 
     const find = () => {
-        if(!search) return goto('/')
+        if (!search) return goto('/')
         if (isNumeric(search)) return goto(`/h/${search}`)
 
         goto(`/search/${search}`)

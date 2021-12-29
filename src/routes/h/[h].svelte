@@ -2,12 +2,6 @@
     import nhqlById from '$lib/gql/nhqlById'
     import type { NhqlByIdData } from '$lib/gql/nhqlById'
 
-    import {
-        GlobeIcon,
-        BookOpenIcon,
-        HeartIcon,
-        PenToolIcon
-    } from 'svelte-feather-icons'
     import Image from '$lib/atoms/image.svelte'
 
     export async function load({ page }) {
@@ -28,7 +22,32 @@
 </script>
 
 <script lang="ts">
+    import intersect from '$lib/use/intersect'
+
+    import nhqlComment from '$lib/gql/nhqlComment'
+    import type { NhqlCommentData } from '$lib/gql/nhqlComment'
+
+    import ReaderHeader from '$lib/atoms/reader-header.svelte'
+
+    import Comment from '$lib/atoms/comment.svelte'
+    import SkeletonComment from '$lib/skeletons/comment.svelte'
+
     export let nhql: NhqlByIdData
+
+    let comments: NhqlCommentData['comments'] | null = null
+    let allLoaded = false
+    let batch = 1
+
+    const loadComment = async () => {
+        if (allLoaded) return
+
+        const response = await nhqlComment({ id: nhql.id, batch })
+
+        if (!response.comments || !response?.comments.length) allLoaded = true
+
+        comments = [...(comments || []), ...response?.comments] || []
+        batch++
+    }
 </script>
 
 <svelte:head>
@@ -40,70 +59,11 @@
         class="relative flex items-center w-full min-h-app bg-cover bg-center overflow-hidden py-4 bg-white"
     >
         <div
-            class="absolute w-full h-full bg-cover bg-center blur-3xl brightness-60"
+            class="absolute w-full h-full bg-cover bg-center blur-3xl brightness-60 bg-gray-100"
             style="background-image: url({nhql.images.cover.link})"
         />
 
-        <header
-            class="z-20 flex flex-col md:flex-row items-center gap-8 w-11/12 md:w-full max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-3xl"
-        >
-            <div class="w-full md:min-w-[300px]">
-                <Image
-                    intersected
-                    src={nhql.images.cover.link}
-                    alt={nhql.title.display}
-                    parentClass="rounded-xl shadow-2xl overflow-hidden"
-                    size={[
-                        nhql.images.cover.info.width,
-                        nhql.images.cover.info.height
-                    ]}
-                />
-            </div>
-
-            <section class="flex flex-col gap-2">
-                <h6 class="text-sm text-gray-400">{nhql.id}</h6>
-                <h1 class="text-2xl text-gray-800">{nhql.title.display}</h1>
-
-                <h4
-                    class="flex items-center gap-1 text-gray-700 capitalize mt-2"
-                >
-                    <PenToolIcon size="21" />
-                    {nhql.metadata.artist.name} ({nhql.metadata.artist.count})
-                </h4>
-
-                <div class="flex flex-col gap-1.5 text-gray-500 my-2">
-                    <h5 class="flex items-center gap-1 capitalize">
-                        <GlobeIcon size="21" />
-                        {nhql.metadata.language}
-                    </h5>
-                    <h5 class="flex items-center gap-1 capitalize">
-                        <BookOpenIcon size="21" />
-                        {nhql.info.amount}
-                    </h5>
-                    <h5 class="flex items-center gap-1 capitalize">
-                        <HeartIcon size="21" />
-                        {!Intl
-                            ? nhql.info.favorite
-                            : Intl.NumberFormat().format(nhql.info.favorite)}
-                    </h5>
-                </div>
-
-                <h4 class="text-gray-500">
-                    Tags ({nhql.metadata.tags.length})
-                </h4>
-
-                <div
-                    class="flex flex-wrap w-full gap-1 md:max-h-[17.5ch] overflow-x-hidden overflow-y-auto snap-y snap-mandatory"
-                >
-                    {#each nhql.metadata.tags as { name } (name)}
-                        <a
-                            class="bg-gray-100 px-2 py-1 rounded-sm snap-start"
-                            href={`/search/${name}`}>{name}</a
-                        >
-                    {/each}
-                </div>
-            </section>
-        </header>
+        <ReaderHeader {nhql} />
     </div>
 
     <main class="flex flex-col w-full max-w-2xl mx-auto py-8">
@@ -115,4 +75,37 @@
             />
         {/each}
     </main>
+
+    <footer
+        use:intersect
+        on:intersect={loadComment}
+        class="flex flex-col gap-5 w-full max-w-2xl mx-auto px-4 lg:px-0 py-8 border-t"
+    >
+        {#if comments}
+            <h4 class="text-xl text-gray-700 mb-2">
+                <!-- {comments.length} -->
+                {' '}Comments
+            </h4>
+            {#each comments as comment (comment.created)}
+                <Comment {comment} />
+            {/each}
+            {#if !allLoaded}
+                <div
+                    class="opacity-0"
+                    use:intersect={{
+                        loop: true
+                    }}
+                    on:intersect={loadComment}
+                />
+                {#each Array(4).fill(0) as _, index (index)}
+                    <SkeletonComment />
+                {/each}
+            {/if}
+        {:else}
+            <div class="w-36 h-6 mb-3 bg-gray-100 rounded" />
+            {#each Array(10).fill(0) as _, index (index)}
+                <SkeletonComment />
+            {/each}
+        {/if}
+    </footer>
 </article>

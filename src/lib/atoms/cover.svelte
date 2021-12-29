@@ -1,17 +1,17 @@
 <script lang="ts">
     import Image from './image.svelte'
-    import {
-        GlobeIcon,
-        BookOpenIcon,
-        HeartIcon,
-    } from 'svelte-feather-icons'
+    import { GlobeIcon, BookOpenIcon, HeartIcon } from 'svelte-feather-icons'
 
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
     export let hentai: NhqlSearchData
 </script>
 
-<a class="cover relative rounded overflow-hidden" href={`/h/${hentai.id}`}>
+<a
+    sveltekit:prefetch
+    class="cover relative rounded overflow-hidden"
+    href={`/h/${hentai.id}`}
+>
     <div
         class="detail z-50 absolute flex flex-col justify-end gap-1 w-full h-full text-white text-lg p-3"
     >

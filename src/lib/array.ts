@@ -1,6 +1,6 @@
 const cardWidth = 220
 
-export const getTotalMasonry = (layout = 1920): number => {
+export const getTotalMasonry = (layout = 0): number => {
     let width = layout - 64 - 48
 
     if (width < cardWidth) width = cardWidth

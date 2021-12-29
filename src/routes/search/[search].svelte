@@ -17,16 +17,33 @@
 </script>
 
 <script lang="ts">
+    import { page as sveltePage } from '$app/stores'
+
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
 
     export let nhql: NhqlSearchData[]
-    export let hentais: NhqlSearchData[] = nhql
     export let search: string
 
+    let hentais: NhqlSearchData[] = nhql
     let page = 2
     let isLoading = false
     let over = false
+
+    sveltePage.subscribe(async (newPage) => {
+        if (!newPage) return
+
+        isLoading = true
+
+        try {
+            hentais = await nhqlSearch(newPage.params.search)
+        } catch (err) {
+        } finally {
+            page = 2
+            isLoading = false
+            over = false
+        }
+    })
 
     let layoutWidth: number
     $: totalMasonry = getTotalMasonry(layoutWidth)
@@ -70,12 +87,27 @@
 
 <main class="flex gap-4 w-full p-4" bind:clientWidth={layoutWidth}>
     {#if !layoutWidth}
-        <h1>Loading</h1>
+        {#each Array(totalMasonry).fill(0) as _}
+            <div class="flex flex-col flex-1 w-full gap-4">
+                {#each Array(~~(50 / totalMasonry)).fill(0) as __}
+                    <figure
+                        class="w-full rounded bg-gray-50"
+                        style="padding-bottom: 145%"
+                    />
+                {/each}
+            </div>
+        {/each}
     {:else}
         {#each chunkHentais as row, index (index)}
             <div class="flex flex-col flex-1 w-full gap-4">
                 {#each row as hentai (hentai.id)}
-                    <Cover hentai={hentai} />
+                    <Cover {hentai} />
+                {/each}
+                {#each Array(~~(25 / totalMasonry)).fill(0) as __}
+                    <figure
+                        class="w-full rounded bg-gray-50"
+                        style="padding-bottom: 145%"
+                    />
                 {/each}
             </div>
         {/each}
