@@ -1,26 +1,60 @@
 <script lang="ts">
     import intersect from '$lib/use/intersect'
 
+    import { RefreshCwIcon } from 'svelte-feather-icons'
+
     export let intersected = false
 
-    export let size: [number, number]
+    export let width: number
+    export let height: number
     export let parentClass: string = ''
-    
-    let [width, height] = size
+    export let autoReload = false
+
+    let error = false
+
     let className = $$props['class'] || ''
 
     const handleIntersection = () => {
         intersected = true
+    }
+
+    const handleError = () => {
+        error = true
+
+        if (autoReload)
+            setTimeout(() => {
+                error = false
+            }, 500)
+    }
+
+    const reloadImage = () => {
+        error = false
     }
 </script>
 
 <figure
     use:intersect
     on:intersect={handleIntersection}
-    style="padding-bottom:{height/width * 100}%"
+    style="padding-bottom:{(height / width) * 100}%"
     class={`relative bg-gray-50 overflow-hidden ${parentClass}`}
 >
     {#if intersected}
-        <img {...$$props} class={`absolute w-full h-full ${className}`} />
+        {#if error}
+            <button
+                {...$$props}
+                class={`absolute flex flex-col justify-center items-center gap-2 w-full h-full text-gray-500 ${className}`}
+                on:click={reloadImage}
+            >
+                <RefreshCwIcon class="w-6 h-6" strokeWidth={1} />
+                <p class="text-sm font-light">Reload</p>
+            </button>
+        {:else}
+            <img
+                {...$$props}
+                class={`absolute w-full ${className}`}
+                on:error={handleError}
+                alt={$$props.alt || ''}
+            />
+        {/if}
     {/if}
 </figure>

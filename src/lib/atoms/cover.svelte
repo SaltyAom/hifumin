@@ -29,15 +29,14 @@
             </p>
             <p class="flex flex-1 items-center gap-1 capitalize">
                 <HeartIcon size="21" />
-                {!Intl
-                    ? hentai.info.favorite
-                    : Intl.NumberFormat().format(hentai.info.favorite)}
+                {Intl.NumberFormat().format(hentai.info.favorite)}
             </p>
         </div>
     </div>
     <Image
         parentClass="image"
         src={hentai.images.cover.link}
-        size={[hentai.images.cover.info.width, hentai.images.cover.info.height]}
+        width={hentai.images.cover.info.width}
+        height={hentai.images.cover.info.height}
     />
 </a>

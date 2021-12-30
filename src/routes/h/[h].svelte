@@ -48,6 +48,19 @@
         comments = [...(comments || []), ...response?.comments] || []
         batch++
     }
+
+    const reload: svelte.JSX.EventHandler<Event, HTMLImageElement> = (
+        event
+    ) => {
+        const image = event.target as HTMLImageElement
+        const src = image.src.toString()
+
+        image.src = ''
+
+        setTimeout(() => {
+            image.src = src
+        }, 500)
+    }
 </script>
 
 <svelte:head>
@@ -58,9 +71,11 @@
     <div
         class="relative flex items-center w-full min-h-app bg-cover bg-center overflow-hidden py-4 bg-white"
     >
-        <div
-            class="absolute w-full h-full bg-cover bg-center blur-3xl brightness-60 bg-gray-100"
-            style="background-image: url({nhql.images.cover.link})"
+        <img
+            class="absolute w-full h-full object-cover object-center blur-3xl brightness-60"
+            src={nhql.images.cover.link}
+            alt={nhql.title.display}
+            on:error={reload}
         />
 
         <ReaderHeader {nhql} />
@@ -70,7 +85,8 @@
         {#each nhql.images.pages as { link: src, info: { width, height } }, index (src)}
             <Image
                 {src}
-                size={[width, height]}
+                {width}
+                {height}
                 alt={`Page ${index + 1}, ${nhql.title.display}`}
             />
         {/each}
