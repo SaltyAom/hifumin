@@ -4,10 +4,8 @@
 
     import Image from '$lib/atoms/image.svelte'
 
-    export async function load({ page }) {
-        const {
-            params: { h }
-        } = page
+    export async function load({ params }) {
+        const { h } = params
 
         const nhql = await nhqlById(+h)
 

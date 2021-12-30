@@ -2,7 +2,7 @@
     import nhqlSearch from '$lib/gql/nhqlSearch'
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
-    export async function load({ page }) {
+    export async function load({ params }) {
         return {
             props: {
                 nhql: await nhqlSearch('yuri')

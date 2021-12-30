@@ -2,10 +2,8 @@
     import nhqlSearch from '$lib/gql/nhqlSearch'
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
-    export async function load({ page }) {
-        const {
-            params: { search }
-        } = page
+    export async function load({ params }) {
+        const { search } = params
 
         return {
             props: {
