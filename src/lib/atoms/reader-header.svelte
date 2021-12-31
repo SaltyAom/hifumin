@@ -24,6 +24,7 @@
             parentClass="rounded-xl shadow-2xl overflow-hidden"
             width={nhql.images.cover.info.width}
             height={nhql.images.cover.info.height}
+            autoReload
         />
     </div>
 

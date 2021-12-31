@@ -20,9 +20,10 @@
             width={40}
             height={40}
             src={avatar}
-            class="object-cover object-center"
-            parentClass="w-10 h-10 rounded-full overflow-hidden"
+            class="w-full h-full object-cover object-center"
+            parentClass="w-10 h-10 h-full rounded-full overflow-hidden"
             alt={username}
+            autoReload
         />
     </div>
     <section class="flex flex-col gap-0.5 text-sm break-words w-full">

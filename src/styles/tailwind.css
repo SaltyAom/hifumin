@@ -6,6 +6,10 @@
     min-height: calc(100vh - 4rem);
 }
 
+.h-app {
+    height: calc(100vh - 4rem);
+}
+
 #masonry {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))
 }

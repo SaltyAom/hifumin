@@ -9,8 +9,11 @@
     export let height: number
     export let parentClass: string = ''
     export let autoReload = false
+    export let src: string
 
     let error = false
+
+    let { width: _w, height: _h, ...props } = $$props
 
     let className = $$props['class'] || ''
 
@@ -41,7 +44,8 @@
     {#if intersected}
         {#if error}
             <button
-                {...$$props}
+                {...props}
+                {src}
                 class={`absolute flex flex-col justify-center items-center gap-2 w-full h-full text-gray-500 ${className}`}
                 on:click={reloadImage}
             >
@@ -50,8 +54,9 @@
             </button>
         {:else}
             <img
-                {...$$props}
-                class={`absolute w-full ${className}`}
+                {...props}
+                {src}
+                class={`absolute w-full h-full ${className}`}
                 on:error={handleError}
                 alt={$$props.alt || ''}
             />

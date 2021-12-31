@@ -1,0 +1,131 @@
+<script context="module" lang="ts">
+    import nhqlById from '$lib/gql/nhqlById'
+    import type { NhqlByIdData } from '$lib/gql/nhqlById'
+
+    import Image from '$lib/atoms/image.svelte'
+
+    export async function load({ params }) {
+        const { h } = params
+
+        const nhql = await nhqlById(+h)
+
+        if (!nhql) return
+
+        return {
+            props: {
+                nhql
+            }
+        }
+    }
+</script>
+
+<script lang="ts">
+    import controller from '$lib/stores/controller'
+
+    import ReaderHeader from '$lib/atoms/reader-header.svelte'
+    import ReaderMode from '$lib/molecules/reader-mode.svelte'
+
+    import Comment from '$lib/organisms/comment.svelte'
+
+    export let nhql: NhqlByIdData
+
+    const reload: svelte.JSX.EventHandler<Event, HTMLImageElement> = (
+        event
+    ) => {
+        const image = event.target as HTMLImageElement
+        const src = image.src.toString()
+
+        image.src = ''
+
+        setTimeout(() => {
+            image.src = src
+        }, 500)
+    }
+</script>
+
+<svelte:head>
+    <title>{nhql.title.display} - Opener Lite</title>
+</svelte:head>
+
+<article class="flex flex-col w-full mx-auto">
+    <div
+        class="relative flex items-center w-full min-h-app bg-cover bg-center overflow-hidden py-4 bg-white"
+    >
+        <img
+            class="absolute w-full h-full object-cover object-center blur-3xl brightness-60 pointer-events-none no-user-select"
+            src={nhql.images.cover.link}
+            alt={nhql.title.display}
+            on:error={reload}
+        />
+
+        <ReaderHeader {nhql} />
+    </div>
+
+    <ReaderMode />
+
+    <main
+        id={$controller.type === 'click' ? 'interactive' : 'scroll'}
+        class="w-full mx-auto pb-8"
+    >
+        {#if $controller.type === 'scroll'}
+            {#each nhql.images.pages as { link: src, info: { width, height } }, index (src)}
+                <Image
+                    {src}
+                    {width}
+                    {height}
+                    id={`page-${index + 1}`}
+                    alt={`Page ${index + 1}, ${nhql.title.display}`}
+                />
+            {/each}
+        {:else}
+            {#each nhql.images.pages as { link: src, info: { width, height } }, index (src)}
+                <a
+                    class="cover relative rounded overflow-hidden"
+                    href={`/h/${nhql.id}/${index + 1}`}
+                >
+                    <div
+                        class="overlay z-10 absolute flex justify-center items-end w-full h-full text-white text-lg font-medium bg-black bg-opacity-60 pb-3 opacity-0"
+                    >
+                        <p>Page {index + 1}</p>
+                    </div>
+                    <Image
+                        {src}
+                        {width}
+                        {height}
+                        id={`page-${index + 1}`}
+                        alt={`Page ${index + 1}, ${nhql.title.display}`}
+                        autoReload
+                    />
+                </a>
+            {/each}
+        {/if}
+    </main>
+
+    <Comment id={nhql.id} />
+</article>
+
+<style>
+    #interactive {
+        @apply grid max-w-6xl gap-4 px-2;
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    }
+
+    #scroll {
+        @apply flex flex-col max-w-2xl;
+    }
+
+    .overlay {
+        @apply transition-opacity;
+    }
+
+    .cover:hover > .overlay,
+    .cover:focus > .overlay {
+        @apply opacity-100;
+    }
+
+    @media (min-width: 568px) {
+        #interactive {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+    }
+</style>
