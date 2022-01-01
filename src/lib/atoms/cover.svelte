@@ -13,7 +13,7 @@
     href={`/h/${hentai.id}`}
 >
     <div
-        class="detail z-50 absolute flex flex-col justify-end gap-1 w-full h-full text-white text-lg p-3"
+        class="detail z-10 absolute flex flex-col justify-end gap-1 w-full h-full text-white text-lg p-3"
     >
         <h4 class="text-xl font-medium">{hentai.title.display}</h4>
 

@@ -24,22 +24,19 @@
         batch++
     }
 
-    const reload: svelte.JSX.EventHandler<Event, HTMLImageElement> = (
-        event
-    ) => {
-        const image = event.target as HTMLImageElement
-        const src = image.src.toString()
+    $: {
+        id
 
-        image.src = ''
-
-        setTimeout(() => {
-            image.src = src
-        }, 500)
+        allLoaded = false
+        batch = 1
+        comments = null
     }
 </script>
 
 <footer
-    use:intersect
+    use:intersect={{
+        loop: !allLoaded
+    }}
     on:intersect={loadComment}
     class="flex flex-col gap-5 w-full max-w-2xl mx-auto px-4 lg:px-0 py-8 border-t"
 >

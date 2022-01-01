@@ -5,7 +5,7 @@
 </script>
 
 <section
-    class="flex justify-between items-center max-w-2xl w-full my-3 mx-auto"
+    class="flex justify-end items-center max-w-2xl w-full my-3 mx-auto"
 >
     <div class="flex items-center gap-1 text-gray-400">
         <ReaderButton type="scroll" label="Scroll">

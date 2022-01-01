@@ -44,7 +44,7 @@
 </script>
 
 <svelte:head>
-    <title>{nhql.title.display} - Opener Lite</title>
+    <title>{nhql.title.display} - Narumin</title>
 </svelte:head>
 
 <article class="flex flex-col w-full mx-auto">
@@ -125,7 +125,7 @@
 
     @media (min-width: 568px) {
         #interactive {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         }
     }
 </style>

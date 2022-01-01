@@ -94,7 +94,7 @@
         <a
             class="w-8 h-8 p-1"
             on:click|preventDefault={prevPage}
-            href={page > 1 ? `/h/${id}/${page + 1}` : `/h/${id}`}
+            href={page > 1 ? `/h/${id}/${page - 1}` : `/h/${id}`}
         >
             <ChevronLeftIcon class="w-full" />
         </a>

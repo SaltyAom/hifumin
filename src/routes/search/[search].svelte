@@ -56,21 +56,24 @@
 
             if (!newHentais.length) return
         } catch (err) {
+            over = true
         } finally {
             isLoading = false
             page++
         }
     }
 
+    let observer: HTMLElement
+
     const handleScroll = async () => {
-        if (typeof window === 'undefined') return
+        if (typeof window === 'undefined' || isLoading) return
 
         let { scrollY: offset, innerHeight: windowHeight } = window
 
         if (
             isLoading ||
             over ||
-            document.body.clientHeight - windowHeight * 2 > offset
+            (observer?.offsetTop || 0) - windowHeight * 2 > offset
         )
             return
 
@@ -101,19 +104,18 @@
                 {#each row as hentai (hentai.id)}
                     <Cover {hentai} />
                 {/each}
-                {#each Array(~~(25 / totalMasonry)).fill(0) as __}
-                    <figure
-                        class="w-full rounded bg-gray-50"
-                        style="padding-bottom: 145%"
-                    />
-                {/each}
+                {#if index === 0}
+                    <div bind:this={observer} />
+                {/if}
+                {#if !over}
+                    {#each Array(~~(25 / totalMasonry)).fill(0) as __}
+                        <figure
+                            class="w-full rounded bg-gray-50"
+                            style="padding-bottom: 145%"
+                        />
+                    {/each}
+                {/if}
             </div>
         {/each}
     {/if}
 </main>
-
-{#if !over}
-    <button on:click={appendNhentai}
-        >{isLoading ? 'Loading...' : 'Load more'}</button
-    >
-{/if}

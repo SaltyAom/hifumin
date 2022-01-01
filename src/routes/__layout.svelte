@@ -32,7 +32,7 @@
         aria-level={1}
         href="/"
     >
-        Opener Studio
+        Hifumin
     </a>
 
     <form
