@@ -88,16 +88,18 @@
                     <div
                         class="overlay z-10 absolute flex justify-center items-end w-full h-full text-white text-lg font-medium bg-black bg-opacity-60 pb-3 opacity-0"
                     >
-                        <p>Page {index + 1}</p>
+                        <p class="indicator">Page {index + 1}</p>
                     </div>
-                    <Image
-                        {src}
-                        {width}
-                        {height}
-                        id={`page-${index + 1}`}
-                        alt={`Page ${index + 1}, ${nhql.title.display}`}
-                        autoReload
-                    />
+                    <div class="image">
+                        <Image
+                            {src}
+                            {width}
+                            {height}
+                            id={`page-${index + 1}`}
+                            alt={`Page ${index + 1}, ${nhql.title.display}`}
+                            autoReload
+                        />
+                    </div>
                 </a>
             {/each}
         {/if}
@@ -107,6 +109,8 @@
 </article>
 
 <style lang="sass">
+    $expo-out: cubic-bezier(.16,1,.3,1)
+
     #interactive
         @apply grid max-w-6xl gap-4 px-2
         grid-template-columns: repeat(auto-fill, minmax(135px, 1fr))
@@ -114,14 +118,27 @@
     #scroll
         @apply flex flex-col max-w-2xl
 
-    .overlay
-        @apply transition-opacity
-
     .cover
+        .overlay
+            transition: opacity .2s $expo-out
+
+            .indicator
+                transform: translateY(24px)
+                transition: transform .2s $expo-out
+
+        .image
+            transition: transform .2s $expo-out
+
         &:hover,
         &:focus
-            & > .overlay
+            .overlay
                 @apply opacity-100
+
+                .indicator
+                    transform: translateY(0)
+
+            .image
+                transform: scale(1.1)
 
     @media (min-width: 568px)
         #interactive

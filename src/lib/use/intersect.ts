@@ -1,46 +1,65 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 const intersect = (
     node: HTMLElement,
     {
-        loop = false
+        loop = false,
+        onIntersect = null
     }: {
-        loop: boolean
+        loop?: boolean
+        onIntersect?: () => Promise<void | null>
     } = {
-        loop: false
+        loop: false,
+        onIntersect: null
     }
 ) => {
     let intentIntersection: number | null
+    let init = true
 
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) {
-                    if (intentIntersection) {
-                        clearTimeout(intentIntersection)
-                        intentIntersection = null
-                    }
+    const checkIntersection = async () => {
+        if (onIntersect) await onIntersect()
+        else node.dispatchEvent(new CustomEvent('intersect'))
 
-                    return
-                }
+        clearTimeout(intentIntersection)
+        intentIntersection = null
 
-                if (intentIntersection) return
+        if (!loop)
+            return window.removeEventListener(
+                'scroll',
+                handleIntersection,
+                true
+            )
 
-                intentIntersection = setTimeout(() => {
-                    node.dispatchEvent(new CustomEvent('intersect'))
+        handleIntersection()
+    }
 
-                    if (!loop) observer.disconnect()
-                }, 75) as unknown as number
-            })
-        },
-        {
-            rootMargin: window.innerHeight * 0.75 + 'px'
+    const handleIntersection = () => {
+        if (node.getBoundingClientRect().top - window.innerHeight > 0) {
+            if (intentIntersection) {
+                clearTimeout(intentIntersection)
+                intentIntersection = null
+            }
+
+            return
         }
-    )
 
-    observer.observe(node)
+        if (intentIntersection) return
+
+        intentIntersection = setTimeout(
+            checkIntersection,
+            init ? 0 : 75
+        ) as unknown as number
+
+        if (!init) init = true
+    }
+
+    window.addEventListener('scroll', handleIntersection, true)
+    requestAnimationFrame(handleIntersection)
 
     return {
         destroy() {
-            observer.disconnect()
+            loop = false
+            window.removeEventListener('scroll', handleIntersection, true)
         }
     }
 }

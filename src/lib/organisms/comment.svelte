@@ -34,10 +34,6 @@
 </script>
 
 <footer
-    use:intersect={{
-        loop: !allLoaded
-    }}
-    on:intersect={loadComment}
     class="flex flex-col gap-5 w-full max-w-2xl mx-auto px-4 lg:px-0 py-8 border-t"
 >
     {#if comments}
@@ -50,17 +46,19 @@
         {/each}
         {#if !allLoaded}
             <div
-                class="opacity-0"
+                class="opacity-0 h-1"
                 use:intersect={{
-                    loop: true
+                    loop: !allLoaded,
+                    onIntersect: loadComment
                 }}
-                on:intersect={loadComment}
             />
             {#each Array(4).fill(0) as _, index (index)}
                 <SkeletonComment />
             {/each}
         {/if}
     {:else}
+        <div use:intersect on:intersect={loadComment} />
+
         <div class="w-36 h-6 mb-3 bg-gray-100 rounded" />
         {#each Array(10).fill(0) as _, index (index)}
             <SkeletonComment />

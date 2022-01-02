@@ -13,25 +13,3 @@
 #masonry {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))
 }
-
-.cover > .image {
-    transition: filter .16s ease-out, transform .16s ease-out;
-}
-
-.cover:hover > .image,
-.cover:focus > .image {
-    filter: brightness(.3);
-    transform: scale(1.1);
-}
-
-.detail {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity .16s ease-out, transform .16s ease-out;
-}
-
-.cover:hover > .detail,
-.cover:focus > .detail {
-    transform: translateY(0);
-    opacity: 1;
-}

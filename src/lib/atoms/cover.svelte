@@ -9,7 +9,7 @@
 
 <a
     sveltekit:prefetch
-    class="cover relative rounded overflow-hidden"
+    class="cover relative rounded-xl overflow-hidden"
     href={`/h/${hentai.id}`}
 >
     <div
@@ -33,10 +33,38 @@
             </p>
         </div>
     </div>
-    <Image
-        parentClass="image"
-        src={hentai.images.cover.link}
-        width={hentai.images.cover.info.width}
-        height={hentai.images.cover.info.height}
-    />
+    <div class="image">
+        <Image
+            src={hentai.images.cover.link}
+            width={hentai.images.cover.info.width}
+            height={hentai.images.cover.info.height}
+        />
+    </div>
 </a>
+
+<style lang="sass">
+    $expo-out: cubic-bezier(.16,1,.3,1)
+
+    .cover
+        transition: box-shadow .2s $expo-out
+
+        .image
+            transition: filter .2s $expo-out, transform .2s $expo-out
+
+        .detail
+            opacity: 0
+            transform: translateY(24px)
+            transition: opacity .16s ease-out, transform .16s ease-out
+
+        &:hover,
+        &:focus
+            box-shadow: 0 4px 16px rgba(66, 39, 39, .24), 0 8px 25px rgb(0 0 0 / 24%)
+
+            .image
+                filter: brightness(.3)
+                transform: scale(1.1)
+
+            .detail
+                transform: translateY(0)
+                opacity: 1
+</style>

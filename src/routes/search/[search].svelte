@@ -29,6 +29,8 @@
     let isLoading = false
     let over = false
 
+    $: shadowIds = [...hentais.map((h) => h.id)]
+
     sveltePage.subscribe(async (newPage) => {
         if (!newPage) return
 
@@ -42,6 +44,8 @@
             isLoading = false
             over = false
         }
+
+        handleScroll()
     })
 
     let layoutWidth: number
@@ -53,9 +57,12 @@
             isLoading = true
 
             const newHentais = await nhqlSearch(search, page)
-            hentais = [...hentais, ...newHentais]
+            hentais = [
+                ...hentais,
+                ...newHentais.filter((h) => !shadowIds.includes(h.id))
+            ]
 
-            if (!newHentais.length) return
+            if (newHentais.length < 25) over = true
         } catch (err) {
             over = true
         } finally {
@@ -88,35 +95,39 @@
 <svelte:window on:scroll={handleScroll} />
 
 <main class="flex gap-4 w-full p-4" bind:clientWidth={layoutWidth}>
-    {#if !layoutWidth}
-        {#each Array(totalMasonry).fill(0) as _}
-            <div class="flex flex-col flex-1 w-full gap-4">
-                {#each Array(~~(50 / totalMasonry)).fill(0) as __}
-                    <figure
-                        class="w-full rounded bg-gray-50"
-                        style="padding-bottom: 145%"
-                    />
-                {/each}
-            </div>
-        {/each}
-    {:else}
-        {#each chunkHentais as row, index (index)}
-            <div class="flex flex-col flex-1 w-full gap-4">
-                {#each row as hentai (hentai.id)}
-                    <Cover {hentai} />
-                {/each}
-                {#if index === 0}
-                    <div bind:this={observer} />
-                {/if}
-                {#if !over}
-                    {#each Array(~~(25 / totalMasonry)).fill(0) as __}
+    {#if layoutWidth}
+        {#if over && !hentais.length}
+            <h1>Not Found</h1>
+        {:else if !hentais.length}
+            {#each Array(totalMasonry).fill(0) as _}
+                <div class="flex flex-col flex-1 w-full gap-4">
+                    {#each Array(~~(50 / totalMasonry)).fill(0) as __}
                         <figure
                             class="w-full rounded bg-gray-50"
                             style="padding-bottom: 145%"
                         />
                     {/each}
-                {/if}
-            </div>
-        {/each}
+                </div>
+            {/each}
+        {:else}
+            {#each chunkHentais as row, index (index)}
+                <div class="flex flex-col flex-1 w-full gap-4">
+                    {#each row as hentai (hentai.id)}
+                        <Cover {hentai} />
+                    {/each}
+                    {#if index === 0}
+                        <div bind:this={observer} />
+                    {/if}
+                    {#if !over}
+                        {#each Array(~~(25 / totalMasonry)).fill(0) as __}
+                            <figure
+                                class="w-full rounded bg-gray-50"
+                                style="padding-bottom: 145%"
+                            />
+                        {/each}
+                    {/if}
+                </div>
+            {/each}
+        {/if}
     {/if}
 </main>

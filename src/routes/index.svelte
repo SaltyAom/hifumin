@@ -27,7 +27,7 @@
     export let nhql: NhqlSearchData[]
     export let hentais: NhqlSearchData[] = nhql
     export let initialTag: string
-    export let initialWidth: number
+
     $: shadowIds = [...hentais.map((h) => h.id)]
 
     let page = 1
@@ -38,7 +38,7 @@
     availables.splice(availables.indexOf(initialTag), 1)
 
     let layoutWidth: number
-    $: totalMasonry = getTotalMasonry(layoutWidth || initialWidth)
+    $: totalMasonry = getTotalMasonry(layoutWidth)
     $: chunkHentais = chunkHentai(totalMasonry, hentais)
 
     const appendNhentai = async () => {
@@ -56,7 +56,8 @@
                 ...newHentais.filter((h) => !shadowIds.includes(h.id))
             ]
 
-            if (!newHentais.length) return
+            if (newHentais.length < 25)
+                over = true
         } catch (err) {
             over = true
         } finally {
@@ -91,9 +92,11 @@
 
 <svelte:window on:scroll={handleScroll} />
 
-<main class="flex gap-4 w-full p-4" bind:clientWidth={layoutWidth}>
+<main class="flex gap-5 w-full p-4" bind:clientWidth={layoutWidth}>
     {#if layoutWidth}
-        {#if !hentais.length}
+        {#if over && !hentais.length}
+            <h1> Not Found</h1>
+        {:else if !hentais.length}
             {#each Array(totalMasonry).fill(0) as _, index (index)}
                 <div class="flex flex-col flex-1 w-full gap-4">
                     {#each Array(~~(50 / totalMasonry)).fill(0) as __, index (index)}
@@ -106,7 +109,7 @@
             {/each}
         {:else}
             {#each chunkHentais as row, index (index)}
-                <div class="flex flex-col flex-1 w-full gap-4">
+                <div class="flex flex-col flex-1 w-full gap-5">
                     {#each row as hentai (hentai.id)}
                         <Cover {hentai} />
                     {/each}
