@@ -23,7 +23,7 @@
 <script lang="ts">
     import { onMount } from 'svelte'
 
-    import controller from '$lib/stores/controller'
+    import settings, { ReaderType } from '$lib/stores/settings'
 
     import {
         XIcon,
@@ -35,9 +35,9 @@
     export let page: number
 
     onMount(() => {
-        controller.update((v) => ({
+        settings.update(v => ({
             ...v,
-            type: 'click'
+            reader: ReaderType.interactive
         }))
     })
 

@@ -20,7 +20,7 @@
 </script>
 
 <script lang="ts">
-    import controller from '$lib/stores/controller'
+    import settings, { ReaderType } from '$lib/stores/settings'
 
     import ReaderHeader from '$lib/atoms/reader-header.svelte'
     import ReaderMode from '$lib/molecules/reader-mode.svelte'
@@ -40,6 +40,11 @@
         setTimeout(() => {
             image.src = src
         }, 500)
+    }
+
+    const readerIdMap: Record<ReaderType, string> = {
+        [ReaderType.interactive]: 'interactive',
+        [ReaderType.scroll]: 'scroll'
     }
 </script>
 
@@ -63,11 +68,8 @@
 
     <ReaderMode />
 
-    <main
-        id={$controller.type === 'click' ? 'interactive' : 'scroll'}
-        class="w-full mx-auto pb-8"
-    >
-        {#if $controller.type === 'scroll'}
+    <main id={readerIdMap[$settings.reader]} class="w-full mx-auto pb-8">
+        {#if $settings.reader === ReaderType['scroll']}
             {#each nhql.images.pages as { link: src, info: { width, height } }, index (src)}
                 <Image
                     {src}
@@ -77,7 +79,7 @@
                     alt={`Page ${index + 1}, ${nhql.title.display}`}
                 />
             {/each}
-        {:else}
+        {:else if $settings.reader === ReaderType['interactive']}
             {#each nhql.images.pages as { link: src, info: { width, height } }, index (src)}
                 <a
                     class="cover relative rounded overflow-hidden"
@@ -104,28 +106,24 @@
     <Comment id={nhql.id} />
 </article>
 
-<style>
-    #interactive {
-        @apply grid max-w-6xl gap-4 px-2;
-        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
-    }
+<style lang="sass">
+    #interactive
+        @apply grid max-w-6xl gap-4 px-2
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr))
 
-    #scroll {
-        @apply flex flex-col max-w-2xl;
-    }
+    #scroll
+        @apply flex flex-col max-w-2xl
 
-    .overlay {
-        @apply transition-opacity;
-    }
+    .overlay
+        @apply transition-opacity
 
-    .cover:hover > .overlay,
-    .cover:focus > .overlay {
-        @apply opacity-100;
-    }
+    .cover
+        &:hover,
+        &:focus
+            & > .overlay
+                @apply opacity-100
 
-    @media (min-width: 568px) {
-        #interactive {
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        }
-    }
+    @media (min-width: 568px)
+        #interactive
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))
 </style>

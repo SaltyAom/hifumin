@@ -19,6 +19,7 @@
 
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
+    import { isServer } from '$lib/utils'
 
     export let nhql: NhqlSearchData[]
     export let search: string
@@ -66,7 +67,7 @@
     let observer: HTMLElement
 
     const handleScroll = async () => {
-        if (typeof window === 'undefined' || isLoading) return
+        if (isServer || isLoading) return
 
         let { scrollY: offset, innerHeight: windowHeight } = window
 

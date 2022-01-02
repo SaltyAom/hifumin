@@ -1,17 +1,16 @@
 <script lang="ts">
-    import controller from '$lib/stores/controller'
-    import type { ReaderType } from '$lib/stores/controller'
+    import settings, { ReaderType } from '$lib/stores/settings'
 
     export let type: ReaderType
     export let label: string
 
-    $: isActive = $controller.type === type
+    $: isActive = $settings.reader === type
     $: active = isActive ? 'text-blue-500 bg-gray-100 pr-2' : ''
 
     const saveType = () => {
-        controller.update((v) => ({
+        settings.update((v) => ({
             ...v,
-            type
+            reader: type
         }))
     }
 </script>

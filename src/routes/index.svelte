@@ -5,19 +5,14 @@
     import { randomBetween, randomPick } from '$lib/array'
     import { tags } from '$lib/data'
 
-    import Cookie from 'cookie'
-
     const initialTag = randomPick(tags)
 
     /** @type {import('@sveltejs/kit').Load} */
     export async function load({ request, session }) {
-        const cookie = Cookie.parse(session.cookie)
-
         return {
             props: {
                 nhql: await nhqlSearch(initialTag),
-                initialTag,
-                initialWidth: cookie.w
+                initialTag
             },
             maxage: 3600 * 3
         }
@@ -25,10 +20,9 @@
 </script>
 
 <script lang="ts">
-    import { onMount } from 'svelte'
-
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
+    import { isServer } from '$lib/utils'
 
     export let nhql: NhqlSearchData[]
     export let hentais: NhqlSearchData[] = nhql
@@ -77,8 +71,7 @@
     let observer: HTMLElement
 
     const handleScroll = async () => {
-        if (typeof window === 'undefined') return
-        if (isLoading) return
+        if (isServer || isLoading) return
 
         let { scrollY: offset, innerHeight: windowHeight } = window
 
@@ -93,53 +86,43 @@
         handleScroll()
     }
 
-    const saveWidth = () => {
-        document.cookie = `w=${layoutWidth}`
-    }
-
-    onMount(() => {
-        saveWidth()
-    })
-
     handleScroll()
 </script>
 
-<svelte:window
-    on:scroll={handleScroll}
-    on:resize={saveWidth}
-    on:beforeunload={saveWidth}
-/>
+<svelte:window on:scroll={handleScroll} />
 
 <main class="flex gap-4 w-full p-4" bind:clientWidth={layoutWidth}>
-    {#if !layoutWidth}
-        {#each Array(totalMasonry).fill(0) as _, index (index)}
-            <div class="flex flex-col flex-1 w-full gap-4">
-                {#each Array(~~(50 / totalMasonry)).fill(0) as __, index (index)}
-                    <figure
-                        class="w-full rounded bg-gray-50"
-                        style="padding-bottom: 145%"
-                    />
-                {/each}
-            </div>
-        {/each}
-    {:else}
-        {#each chunkHentais as row, index (index)}
-            <div class="flex flex-col flex-1 w-full gap-4">
-                {#each row as hentai (hentai.id)}
-                    <Cover {hentai} />
-                {/each}
-                {#if index === 0}
-                    <div bind:this={observer} />
-                {/if}
-                {#if !over}
-                    {#each Array(~~(25 / totalMasonry)).fill(0) as __}
+    {#if layoutWidth}
+        {#if !hentais.length}
+            {#each Array(totalMasonry).fill(0) as _, index (index)}
+                <div class="flex flex-col flex-1 w-full gap-4">
+                    {#each Array(~~(50 / totalMasonry)).fill(0) as __, index (index)}
                         <figure
                             class="w-full rounded bg-gray-50"
                             style="padding-bottom: 145%"
                         />
                     {/each}
-                {/if}
-            </div>
-        {/each}
+                </div>
+            {/each}
+        {:else}
+            {#each chunkHentais as row, index (index)}
+                <div class="flex flex-col flex-1 w-full gap-4">
+                    {#each row as hentai (hentai.id)}
+                        <Cover {hentai} />
+                    {/each}
+                    {#if index === 0}
+                        <div bind:this={observer} />
+                    {/if}
+                    {#if !over}
+                        {#each Array(~~(25 / totalMasonry)).fill(0) as __}
+                            <figure
+                                class="w-full rounded bg-gray-50"
+                                style="padding-bottom: 145%"
+                            />
+                        {/each}
+                    {/if}
+                </div>
+            {/each}
+        {/if}
     {/if}
 </main>

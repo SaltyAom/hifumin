@@ -1,4 +1,6 @@
 <script>
+    import settings, { SafeMode, Theme, ReaderType } from '$lib/stores/settings'
+
     import Dropdown from '$lib/atoms/dropdown.svelte'
 
     const options = ['adaptive', 'light', 'dark']
@@ -16,7 +18,11 @@
                 <p>Set color theme.</p>
                 <p>Choosing "adaptive" will use the system setting.</p>
             </header>
-            <Dropdown options={['adaptive', 'light', 'dark']} bind:value />
+            <Dropdown
+                options={[Theme.adaptive, Theme.light, Theme.dark]}
+                labels={['adaptive', 'light', 'dark']}
+                bind:value={$settings.theme}
+            />
         </article>
 
         <article class="flex justify-between w-full gap-2">
@@ -24,7 +30,25 @@
                 <h3 class="text-2xl font-semibold text-gray-700">Safe Mode</h3>
                 <p>Hide the image for some purpose.</p>
             </header>
-            <Dropdown options={['disable', 'blur', 'opaque']} bind:value />
+            <Dropdown
+                options={[SafeMode.off, SafeMode.blur, SafeMode.opaque]}
+                labels={['Off', 'Blur', 'Opaque']}
+                bind:value={$settings.safeMode}
+            />
+        </article>
+
+        <article class="flex justify-between w-full gap-2">
+            <header class="flex flex-col text-lg text-gray-500 gap-2">
+                <h3 class="text-2xl font-semibold text-gray-700">
+                    Reader Mode
+                </h3>
+                <p>Reading Layout</p>
+            </header>
+            <Dropdown
+                options={[ReaderType.scroll, ReaderType.interactive]}
+                labels={['Scroll', 'Interactive']}
+                bind:value={$settings.reader}
+            />
         </article>
     </main>
 </section>

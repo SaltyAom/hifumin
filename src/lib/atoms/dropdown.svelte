@@ -1,15 +1,18 @@
 <script lang="ts">
     import { ChevronDownIcon } from 'svelte-feather-icons'
 
-    export let options: string[]
+    export let options: Array<string | number>
     export let value = options[0]
+    export let labels: string[] | null = null
 
     let isOpen = false
-    let optionCard: HTMLElement
     let focus = 0
 
+    let selector: HTMLElement
+    let optionCard: HTMLElement
+
     $: selectedIndex = options.indexOf(value)
-    $: activeClass = (option: string) =>
+    $: activeClass = (option: string | number) =>
         value === option
             ? 'text-gray-300'
             : 'text-gray-700 hover:bg-gray-100 focus:bg-gray-100'
@@ -23,10 +26,10 @@
     const close = () => {
         isOpen = false
 
-        optionCard.focus()
+        selector.focus()
     }
 
-    const select = (option: string) => () => {
+    const select = (option: string | number) => () => {
         value = option
 
         close()
@@ -89,8 +92,15 @@
     <button
         class="flex items-center w-[16ch] font-bold text-gray-700 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 rounded"
         on:click={open}
+        bind:this={selector}
     >
-        <p class="flex flex-1 text-lg capitalize">{value}</p>
+        <p class="flex flex-1 text-lg capitalize">
+            {#if labels}
+                {labels[selectedIndex]}
+            {:else}
+                {value}
+            {/if}
+        </p>
         <ChevronDownIcon class="w-6 h-6" />
     </button>
 
@@ -114,7 +124,11 @@
                 tabindex={isOpen ? 0 : -1}
                 aria-hidden={!isOpen}
             >
-                {option}
+                {#if labels}
+                    {labels[index]}
+                {:else}
+                    {option}
+                {/if}
             </button>
         {/each}
     </section>
