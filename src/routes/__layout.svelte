@@ -7,9 +7,15 @@
 </script>
 
 <script lang="ts">
+    import { page } from '$app/stores'
     import { goto } from '$app/navigation'
 
-    import { SearchIcon, SendIcon } from 'svelte-feather-icons'
+    import {
+        BookmarkIcon,
+        SearchIcon,
+        SendIcon,
+        SettingsIcon
+    } from 'svelte-feather-icons'
 
     let search
 
@@ -21,6 +27,9 @@
 
         goto(`/search/${search}`)
     }
+
+    $: applyActive = (path: string) =>
+        $page.url.pathname.startsWith(path) ? 'text-blue-500 bg-gray-100' : ''
 </script>
 
 <nav
@@ -55,7 +64,25 @@
         </button>
     </form>
 
-    <div />
+    <div class="flex justify-end items-center gap-2 text-gray-500 px-2">
+        <a
+            href="/collection"
+            class={`w-10 h-10 p-2 rounded ${applyActive('/collection')}`}
+            title="Bookmark and History"
+            aria-label="Bookmark and History"
+        >
+            <BookmarkIcon />
+        </a>
+
+        <a
+            href="/settings"
+            class={`w-10 h-10 p-2 rounded ${applyActive('/settings')}`}
+            title="Settings"
+            aria-label="Settings"
+        >
+            <SettingsIcon />
+        </a>
+    </div>
 </nav>
 
 <slot />

@@ -5,13 +5,19 @@
     import { randomBetween, randomPick } from '$lib/array'
     import { tags } from '$lib/data'
 
+    import Cookie from 'cookie'
+
     const initialTag = randomPick(tags)
 
-    export async function load() {
+    /** @type {import('@sveltejs/kit').Load} */
+    export async function load({ request, session }) {
+        const cookie = Cookie.parse(session.cookie)
+
         return {
             props: {
                 nhql: await nhqlSearch(initialTag),
-                initialTag
+                initialTag,
+                initialWidth: cookie.w
             },
             maxage: 3600 * 3
         }
@@ -19,12 +25,15 @@
 </script>
 
 <script lang="ts">
+    import { onMount } from 'svelte'
+
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
 
     export let nhql: NhqlSearchData[]
     export let hentais: NhqlSearchData[] = nhql
     export let initialTag: string
+    export let initialWidth: number
     $: shadowIds = [...hentais.map((h) => h.id)]
 
     let page = 1
@@ -35,7 +44,7 @@
     availables.splice(availables.indexOf(initialTag), 1)
 
     let layoutWidth: number
-    $: totalMasonry = getTotalMasonry(layoutWidth)
+    $: totalMasonry = getTotalMasonry(layoutWidth || initialWidth)
     $: chunkHentais = chunkHentai(totalMasonry, hentais)
 
     const appendNhentai = async () => {
@@ -84,10 +93,22 @@
         handleScroll()
     }
 
+    const saveWidth = () => {
+        document.cookie = `w=${layoutWidth}`
+    }
+
+    onMount(() => {
+        saveWidth()
+    })
+
     handleScroll()
 </script>
 
-<svelte:window on:scroll={handleScroll} />
+<svelte:window
+    on:scroll={handleScroll}
+    on:resize={saveWidth}
+    on:beforeunload={saveWidth}
+/>
 
 <main class="flex gap-4 w-full p-4" bind:clientWidth={layoutWidth}>
     {#if !layoutWidth}
