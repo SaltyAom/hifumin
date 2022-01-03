@@ -1,3 +1,6 @@
+import { get } from 'svelte/store'
+import settings from '$lib/stores/settings'
+
 import gql from '@saltyaom/gq'
 
 export interface NhqlSearchData {
@@ -34,12 +37,13 @@ export interface NhqlSearch {
 export interface NhqlSearchVariable {
     with: string
     page?: number
+    excludes?: string[]
 }
 
 export const nhqlSearchDocument = `
-query getNhentaiBySearch($with: String!, $page: Int = 1) {
+query getNhentaiBySearch($with: String!, $page: Int = 1, $excludes: [String!]!) {
   nhql {
-    search(with: $with, page: $page) {
+    search(with: $with, page: $page, excludes: $excludes) {
       data {
         id
         title {
@@ -70,10 +74,15 @@ const nhqlSearch = async (
     search: string,
     page = 1
 ): Promise<NhqlSearchData[]> => {
+    const {
+        filter: { data: excludes, enable }
+    } = get(settings)
+
     const data = await gql<NhqlSearch, NhqlSearchVariable>(nhqlSearchDocument, {
         variables: {
             with: search,
-            page
+            page,
+            excludes: enable ? excludes : []
         }
     })
 

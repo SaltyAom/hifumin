@@ -24,6 +24,9 @@
     import { getTotalMasonry, chunkHentai } from '$lib/array'
     import { isServer } from '$lib/utils'
 
+    import { get } from 'svelte/store'
+    import settings from '$lib/stores/settings'
+
     export let nhql: NhqlSearchData[]
     export let hentais: NhqlSearchData[] = nhql
     export let initialTag: string
@@ -34,7 +37,12 @@
     let isLoading = false
     let over = false
 
-    let availables = [...tags]
+    const {
+        preference: { data: includes, enable }
+    } = get(settings)
+
+    const defaultTags = [...(enable ? includes : tags)]
+    let availables = [...defaultTags]
     availables.splice(availables.indexOf(initialTag), 1)
 
     let layoutWidth: number
@@ -56,8 +64,7 @@
                 ...newHentais.filter((h) => !shadowIds.includes(h.id))
             ]
 
-            if (newHentais.length < 25)
-                over = true
+            if (newHentais.length < 25) over = true
         } catch (err) {
             over = true
         } finally {
@@ -65,7 +72,7 @@
 
             if (!availables.length) page++
 
-            availables = [...tags]
+            availables = [...defaultTags]
         }
     }
 
@@ -95,7 +102,7 @@
 <main class="flex gap-5 w-full p-4" bind:clientWidth={layoutWidth}>
     {#if layoutWidth}
         {#if over && !hentais.length}
-            <h1> Not Found</h1>
+            <h1>Not Found</h1>
         {:else if !hentais.length}
             {#each Array(totalMasonry).fill(0) as _, index (index)}
                 <div class="flex flex-col flex-1 w-full gap-4">
