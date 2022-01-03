@@ -22,8 +22,14 @@ export interface Setting {
     theme: Theme
     reader: ReaderType
     saveHistory: boolean
-    preference: string[]
-    filter: string[]
+    preference: {
+        enable: boolean
+        data: string[]
+    }
+    filter: {
+        enable: boolean
+        data: string[]
+    }
     safeMode: SafeMode
 }
 
@@ -31,8 +37,14 @@ const defaultSetting: Setting = {
     theme: Theme.adaptive,
     reader: ReaderType.scroll,
     saveHistory: true,
-    preference: [],
-    filter: [],
+    preference: {
+        enable: false,
+        data: []
+    },
+    filter: {
+        enable: false,
+        data: []
+    },
     safeMode: SafeMode.off
 }
 

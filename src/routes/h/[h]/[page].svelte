@@ -35,7 +35,7 @@
     export let page: number
 
     onMount(() => {
-        settings.update(v => ({
+        settings.update((v) => ({
             ...v,
             reader: ReaderType.interactive
         }))
@@ -82,7 +82,14 @@
 
         goto(`/h/${id}/${page}`)
     }
+
+    const handleKeyPress = ({ key }: KeyboardEvent) => {
+        if (key === 'ArrowLeft') return prevPage()
+        if (key === 'ArrowRight') return nextPage()
+    }
 </script>
+
+<svelte:window on:keydown={handleKeyPress} />
 
 <main class="relative flex flex-col items-center w-full h-app mx-auto">
     <aside

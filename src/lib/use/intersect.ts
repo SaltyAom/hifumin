@@ -4,10 +4,11 @@ const intersect = (
     node: HTMLElement,
     {
         loop = false,
+        // Awaitable 
         onIntersect = null
     }: {
         loop?: boolean
-        onIntersect?: () => Promise<void | null>
+        onIntersect?: () => void | Promise<void>
     } = {
         loop: false,
         onIntersect: null
