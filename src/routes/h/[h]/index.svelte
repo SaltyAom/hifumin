@@ -49,7 +49,7 @@
 </script>
 
 <svelte:head>
-    <title>{nhql.title.display} - Narumin</title>
+    <title>Read: {nhql.title.display} &raquo; Hifumin: hentai doujinshi and manga</title>
 </svelte:head>
 
 <article class="flex flex-col w-full mx-auto">

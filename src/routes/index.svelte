@@ -1,25 +1,10 @@
-<script context="module" lang="ts">
+<script lang="ts">
     import nhqlSearch from '$lib/gql/nhqlSearch'
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
-    import { randomBetween, randomPick } from '$lib/array'
+    import { randomBetween } from '$lib/array'
     import { tags } from '$lib/data'
 
-    const initialTag = randomPick(tags)
-
-    /** @type {import('@sveltejs/kit').Load} */
-    export async function load({ request, session }) {
-        return {
-            props: {
-                nhql: await nhqlSearch(initialTag),
-                initialTag
-            },
-            maxage: 3600 * 3
-        }
-    }
-</script>
-
-<script lang="ts">
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
     import { isServer } from '$lib/utils'
@@ -27,9 +12,7 @@
     import { get } from 'svelte/store'
     import settings from '$lib/stores/settings'
 
-    export let nhql: NhqlSearchData[]
-    export let hentais: NhqlSearchData[] = nhql
-    export let initialTag: string
+    export let hentais: NhqlSearchData[] = []
 
     $: shadowIds = [...hentais.map((h) => h.id)]
 
@@ -43,8 +26,8 @@
 
     const defaultTags = [...(enable ? includes : tags)]
     let availables = [...defaultTags]
-    availables.splice(availables.indexOf(initialTag), 1)
 
+    // Bind resizable window width
     let layoutWidth: number
     $: totalMasonry = getTotalMasonry(layoutWidth)
     $: chunkHentais = chunkHentai(totalMasonry, hentais)
@@ -99,40 +82,48 @@
 
 <svelte:window on:scroll={handleScroll} />
 
+<svelte:head>
+    <title>Hifumin: hentai doujinshi and manga</title>
+</svelte:head>
+
 <main class="flex gap-5 w-full p-4" bind:clientWidth={layoutWidth}>
-    {#if layoutWidth}
-        {#if over && !hentais.length}
-            <h1>Not Found</h1>
-        {:else if !hentais.length}
-            {#each Array(totalMasonry).fill(0) as _, index (index)}
-                <div class="flex flex-col flex-1 w-full gap-4">
-                    {#each Array(~~(50 / totalMasonry)).fill(0) as __, index (index)}
+    {#if !layoutWidth}
+        <h1
+            class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 cursor-default"
+        >
+            Hifumin
+        </h1>
+    {:else if over && !hentais.length}
+        <h1>Not Found</h1>
+    {:else if !hentais.length}
+        {#each Array(totalMasonry).fill(0) as _, index (index)}
+            <div class="flex flex-col flex-1 w-full gap-4">
+                {#each Array(~~(50 / totalMasonry)).fill(0) as __, index (index)}
+                    <figure
+                        class="w-full rounded bg-gray-50"
+                        style="padding-bottom: 145%"
+                    />
+                {/each}
+            </div>
+        {/each}
+    {:else}
+        {#each chunkHentais as row, index (index)}
+            <div class="flex flex-col flex-1 w-full gap-5">
+                {#each row as hentai (hentai.id)}
+                    <Cover {hentai} />
+                {/each}
+                {#if index === 0}
+                    <div bind:this={observer} />
+                {/if}
+                {#if !over}
+                    {#each Array(~~(25 / totalMasonry)).fill(0) as __}
                         <figure
                             class="w-full rounded bg-gray-50"
                             style="padding-bottom: 145%"
                         />
                     {/each}
-                </div>
-            {/each}
-        {:else}
-            {#each chunkHentais as row, index (index)}
-                <div class="flex flex-col flex-1 w-full gap-5">
-                    {#each row as hentai (hentai.id)}
-                        <Cover {hentai} />
-                    {/each}
-                    {#if index === 0}
-                        <div bind:this={observer} />
-                    {/if}
-                    {#if !over}
-                        {#each Array(~~(25 / totalMasonry)).fill(0) as __}
-                            <figure
-                                class="w-full rounded bg-gray-50"
-                                style="padding-bottom: 145%"
-                            />
-                        {/each}
-                    {/if}
-                </div>
-            {/each}
-        {/if}
+                {/if}
+            </div>
+        {/each}
     {/if}
 </main>
