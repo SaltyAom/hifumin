@@ -6,7 +6,7 @@
     import ReaderButton from '../atoms/reader-button.svelte'
 </script>
 
-<section class="flex justify-end items-center max-w-2xl w-full my-3 mx-auto">
+<section class="flex justify-end items-center max-w-2xl w-full my-3 mx-auto px-2 md:px-0">
     <div class="flex items-center gap-1 text-gray-400">
         <ReaderButton type={ReaderType.scroll} label="Scroll">
             <ColumnsIcon class="w-8 transform rotate-90" />

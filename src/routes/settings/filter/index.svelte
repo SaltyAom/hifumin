@@ -39,7 +39,7 @@
     title="Filter"
     label="Remove unwanted tags or keyword from search results."
 >
-    <SettingRow title="Enable">
+    <SettingRow row title="Enable">
         <svelte:fragment slot="label">
             <p>Allow custom filter.</p>
             <p>Disable this will not removed filter you have added.</p>
@@ -48,7 +48,9 @@
     </SettingRow>
 
     <article class="flex flex-col w-full gap-4 text-gray-500 {disabledClass}">
-        <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">My filters</h3>
+        <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">
+            My filters
+        </h3>
         <p>Type down tags you want to filter out from search down here.</p>
         <Textfield
             id="filter"

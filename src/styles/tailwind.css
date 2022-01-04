@@ -6,6 +6,10 @@ body {
     @apply dark:bg-gray-800
 }
 
+a, button, input {
+    -webkit-tap-highlight-color: transparent;
+}
+
 .min-h-app {
     min-height: calc(100vh - 4rem);
 }

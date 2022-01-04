@@ -16,7 +16,7 @@
 
 <button
     {...$$props}
-    class="w-[58px] h-[30px] rounded-full {className} transition-colors {$$props.class}"
+    class="min-w-[58px] w-[58px] h-[30px] rounded-full {className} transition-colors {$$props.class}"
     on:click={toggle}
 >
     <div class="w-[28px] h-[28px] bg-white rounded-full {toggler} transition-transform" />
