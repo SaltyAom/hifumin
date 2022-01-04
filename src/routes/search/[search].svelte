@@ -101,7 +101,7 @@
 <main class="flex gap-4 lg:gap-5 w-full p-4" bind:clientWidth={layoutWidth}>
     {#if isServer}
         <h1
-            class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 cursor-default"
+            class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 dark:text-gray-600 cursor-default"
         >
             Hifumin
         </h1>

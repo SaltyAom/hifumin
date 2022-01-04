@@ -33,23 +33,28 @@
     $: chunkHentais = chunkHentai(totalMasonry, hentais)
 
     const appendNhentai = async () => {
+        if (isLoading) return
+
+        const newTagIndex = randomBetween(0, availables.length - 1)
+
         try {
             isLoading = true
-
-            const newTagIndex = randomBetween(0, availables.length - 1)
 
             const newHentais = await nhqlSearch(
                 availables.splice(newTagIndex, 1)[0],
                 page
             )
+
             hentais = [
                 ...hentais,
                 ...newHentais.filter((h) => !shadowIds.includes(h.id))
             ]
 
-            if (newHentais.length < 25) over = true
+            if (newHentais.length < 25) throw new Error('No more hentai')
         } catch (err) {
-            over = true
+            defaultTags.splice(newTagIndex, 1)
+
+            if (defaultTags.length === 0) over = true
         } finally {
             isLoading = false
 
@@ -89,7 +94,7 @@
 <main class="flex gap-4 lg:gap-5 w-full p-4" bind:clientWidth={layoutWidth}>
     {#if !layoutWidth}
         <h1
-            class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 cursor-default"
+            class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 dark:text-gray-600 cursor-default"
         >
             Hifumin
         </h1>
