@@ -100,7 +100,7 @@
             <div class="flex flex-col flex-1 w-full gap-4 lg:gap-5">
                 {#each Array(~~(50 / totalMasonry)).fill(0) as __, index (index)}
                     <figure
-                        class="w-full rounded-xl bg-gray-50"
+                        class="w-full rounded-xl bg-gray-50 dark:bg-gray-700"
                         style="padding-bottom: 145%"
                     />
                 {/each}
@@ -118,7 +118,7 @@
                 {#if !over}
                     {#each Array(~~(25 / totalMasonry)).fill(0) as __}
                         <figure
-                            class="w-full rounded-xl bg-gray-50"
+                            class="w-full rounded-xl bg-gray-50 dark:bg-gray-700"
                             style="padding-bottom: 145%"
                         />
                     {/each}
