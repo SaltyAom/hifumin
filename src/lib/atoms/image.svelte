@@ -1,6 +1,8 @@
 <script lang="ts">
     import intersect from '$lib/use/intersect'
 
+    import settings, { SafeMode } from '$lib/stores/settings'
+
     import { RefreshCwIcon } from 'svelte-feather-icons'
 
     export let intersected = false
@@ -33,6 +35,14 @@
     const reloadImage = () => {
         error = false
     }
+
+    const safeModeMap: Record<SafeMode, string> = {
+        [SafeMode.off]: '',
+        [SafeMode.blur]: 'blur-2xl',
+        [SafeMode.opaque]: 'opacity-0'
+    }
+
+    $: safeModeClass = safeModeMap[$settings.safeMode]
 </script>
 
 <figure
@@ -46,17 +56,17 @@
             <button
                 {...props}
                 {src}
-                class={`absolute flex flex-col justify-center items-center gap-2 w-full h-full text-gray-500 ${className}`}
+                class="absolute flex flex-col justify-center items-center gap-2 w-full h-full text-gray-500 {className}"
                 on:click={reloadImage}
             >
                 <RefreshCwIcon class="w-6 h-6" strokeWidth={1} />
                 <p class="text-sm font-light">Reload</p>
             </button>
-        {:else}
+        {:else if $settings.safeMode !== SafeMode.opaque}
             <img
                 {...props}
                 {src}
-                class={`absolute w-full h-full ${className}`}
+                class="absolute w-full h-full {className} {safeModeClass}"
                 on:error={handleError}
                 alt={$$props.alt || ''}
             />
