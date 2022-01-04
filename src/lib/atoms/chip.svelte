@@ -11,7 +11,7 @@
 </script>
 
 <div
-    class="flex items-center text-gray-600 gap-2 pl-3 pr-1 py-1 rounded-full border cursor-default"
+    class="flex items-center text-gray-600 dark:text-gray-400 dark:bg-gray-700 gap-2 pl-3 pr-1 py-1 rounded-full border dark:border-gray-700 cursor-default"
 >
     {value}
     <button

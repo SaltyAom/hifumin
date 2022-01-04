@@ -27,13 +27,13 @@
         />
     </div>
     <section class="flex flex-col gap-0.5 text-sm break-words w-full">
-        <div class="flex gap-2 text-xs text-gray-400 font-light">
-            <h6 class="text-gray-800 font-medium">
+        <div class="flex gap-2 text-xs text-gray-400 dark:text-gray-500 font-light">
+            <h6 class="text-gray-800 dark:text-gray-400 font-medium">
                 {username}
             </h6>
             {' • '}
             <time>{dayjs(created * 1000).format('D MMM YY')}</time>
         </div>
-        <p class="text-gray-600 overflow-hidden text-ellipsis">{body}</p>
+        <p class="text-gray-600 dark:text-gray-300 overflow-hidden text-ellipsis">{body}</p>
     </section>
 </article>

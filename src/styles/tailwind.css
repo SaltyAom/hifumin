@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    @apply dark:bg-gray-800
+}
+
 .min-h-app {
     min-height: calc(100vh - 4rem);
 }

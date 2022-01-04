@@ -1,5 +1,6 @@
+import { writable, derived } from 'svelte/store'
+
 import { isServer } from '$lib/utils'
-import { writable } from 'svelte/store'
 
 export enum Theme {
     'light',
@@ -57,5 +58,29 @@ const setting = writable<Setting>(
 setting.subscribe((setting) => {
     if (!isServer) localStorage.setItem('setting', JSON.stringify(setting))
 })
+
+const adaptiveDarkTheme = writable(false)
+
+adaptiveDarkTheme.subscribe(() => {
+    if (isServer) return
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
+    adaptiveDarkTheme.set(mediaQuery.matches)
+
+    mediaQuery.addEventListener('change', ({ matches }) => {
+        adaptiveDarkTheme.set(matches)
+    })
+})
+
+export const darkTheme = derived(
+    [setting, adaptiveDarkTheme],
+    ([settings, adaptive]) => {
+        if (settings.theme === Theme.dark) return true
+        if (settings.theme === Theme.light) return false
+
+        return adaptive
+    }
+)
 
 export default setting

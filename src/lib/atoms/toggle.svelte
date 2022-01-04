@@ -2,8 +2,8 @@
     export let value: boolean = false
 
     $: className = value
-        ? 'bg-black boder-black'
-        : 'bg-gray-300 border-gray-300'
+        ? 'bg-black boder-black dark:bg-blue-600 dark:border-blue-600'
+        : 'bg-gray-300 border-gray-300 dark:bg-gray-600 dark:border-gray-600'
 
     $: toggler = value
         ? 'transform translate-x-[29px]'

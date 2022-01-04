@@ -54,7 +54,7 @@
 
 <article class="flex flex-col w-full mx-auto">
     <div
-        class="relative flex items-center w-full min-h-app bg-cover bg-center overflow-hidden py-4 bg-white"
+        class="relative flex items-center w-full min-h-app bg-cover bg-center overflow-hidden py-4 bg-white dark:bg-gray-800"
     >
         <img
             class="absolute w-full h-full object-cover object-center blur-3xl brightness-60 pointer-events-none no-user-select"

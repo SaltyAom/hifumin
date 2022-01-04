@@ -48,10 +48,10 @@
     .cover
         transition: box-shadow .2s $expo-out
 
-        .image
+        & > .image
             transition: filter .2s $expo-out, transform .2s $expo-out
 
-        .detail
+        & > .detail
             opacity: 0
             transform: translateY(24px)
             transition: opacity .16s ease-out, transform .16s ease-out
@@ -60,11 +60,11 @@
         &:focus
             box-shadow: 0 4px 16px rgba(66, 39, 39, .24), 0 8px 25px rgb(0 0 0 / 24%)
 
-            .image
+            & > .image
                 filter: brightness(.3)
                 transform: scale(1.1)
 
-            .detail
+            & > .detail
                 transform: translateY(0)
                 opacity: 1
 </style>

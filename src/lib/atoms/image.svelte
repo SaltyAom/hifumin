@@ -49,7 +49,7 @@
     use:intersect
     on:intersect={handleIntersection}
     style="padding-bottom:{(height / width) * 100}%"
-    class={`relative bg-gray-50 overflow-hidden ${parentClass}`}
+    class={`relative bg-gray-50 dark:bg-gray-700 overflow-hidden ${parentClass}`}
 >
     {#if intersected}
         {#if error}

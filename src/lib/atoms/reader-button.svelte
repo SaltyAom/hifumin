@@ -5,7 +5,7 @@
     export let label: string
 
     $: isActive = $settings.reader === type
-    $: active = isActive ? 'text-blue-500 bg-gray-100 pr-2' : ''
+    $: active = isActive ? 'text-blue-500 bg-gray-100 dark:bg-gray-700 pr-2' : ''
 
     const saveType = () => {
         settings.update((v) => ({

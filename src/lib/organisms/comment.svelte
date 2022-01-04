@@ -34,10 +34,10 @@
 </script>
 
 <footer
-    class="flex flex-col gap-5 w-full max-w-2xl mx-auto px-4 lg:px-0 py-8 border-t"
+    class="flex flex-col gap-5 w-full max-w-2xl mx-auto px-4 lg:px-0 py-8 border-t dark:border-gray-600"
 >
     {#if comments}
-        <h4 class="text-xl text-gray-700 mb-2">
+        <h4 class="text-xl text-gray-700 dark:text-gray-200 mb-2">
             <!-- {comments.length} -->
             {' '}Comments
         </h4>
@@ -59,7 +59,7 @@
     {:else}
         <div use:intersect on:intersect={loadComment} />
 
-        <div class="w-36 h-6 mb-3 bg-gray-100 rounded" />
+        <div class="w-36 h-6 mb-3 bg-gray-100 dark:bg-gray-700 rounded" />
         {#each Array(10).fill(0) as _, index (index)}
             <SkeletonComment />
         {/each}

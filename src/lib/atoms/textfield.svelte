@@ -25,13 +25,13 @@
     aria-disabled={disabled}
 >
     <label class="text-gray-400 text-xs" for={id}>{label}</label>
-    <div class="flex flex-row max-w-xs w-full px-2 bg-gray-100 rounded">
+    <div class="flex flex-row max-w-xs w-full px-2 bg-gray-100 dark:bg-gray-700 rounded">
         <input
             {...$$props}
             {id}
             {name}
             type="text"
-            class="text-lg text-gray-700 bg-transparent w-full px-2 py-2 outline-none"
+            class="text-lg text-gray-700 dark:text-gray-300 bg-transparent w-full px-2 py-2 outline-none"
             {placeholder}
             bind:value
         />

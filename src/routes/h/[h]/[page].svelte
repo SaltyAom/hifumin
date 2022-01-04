@@ -93,7 +93,7 @@
 
 <main class="relative flex flex-col items-center w-full h-app mx-auto">
     <aside
-        class="flex justify-center items-center gap-2 h-8 pr-10 text-gray-600"
+        class="flex justify-center items-center gap-2 h-8 pr-10 text-gray-600 dark:text-gray-400"
     >
         <a class="w-8 h-8 p-1 opacity-50" href={`/h/${id}#page-${page}`}>
             <XIcon class="w-full" />
@@ -113,7 +113,7 @@
                 type="tel"
                 min={0}
                 max={pages.length}
-                class="px-[0.5ch] text-center outline-none bg-gray-100 rounded"
+                class="px-[0.5ch] text-center outline-none bg-gray-100 dark:bg-gray-700 rounded"
                 style="width:{digit + 2}ch;"
                 bind:value={prePage}
                 on:blur={changePage}
@@ -138,14 +138,18 @@
     </div>
 
     <aside
-        class="flex justify-center items-center gap-2 h-8 pr-10 text-gray-600"
+        class="flex justify-center items-center gap-2 h-8 pr-10 text-gray-600 dark:text-gray-400"
     >
-        <a class="w-8 h-8 p-1 opacity-50" href={`/h/${id}`}>
+        <a class="w-8 h-8 p-1 opacity-50" href={`/h/${id}#page-${page}`}>
             <XIcon class="w-full" />
         </a>
-        <button class="w-8 h-8 p-1" on:click={prevPage}>
+        <a
+            class="w-8 h-8 p-1"
+            on:click|preventDefault={prevPage}
+            href={page > 1 ? `/h/${id}/${page - 1}` : `/h/${id}`}
+        >
             <ChevronLeftIcon class="w-full" />
-        </button>
+        </a>
         <form
             on:submit|preventDefault={changePage}
             class="flex items-center gap-1.5"
@@ -154,16 +158,20 @@
                 type="tel"
                 min={0}
                 max={pages.length}
-                class="px-[0.5ch] text-center outline-none bg-gray-100 rounded"
+                class="px-[0.5ch] text-center outline-none bg-gray-100 dark:bg-gray-700 rounded"
                 style="width:{digit + 2}ch;"
                 bind:value={prePage}
                 on:blur={changePage}
             />
             of {pages.length}
         </form>
-        <button class="w-8 h-8 p-1" on:click={nextPage}>
+        <a
+            class="w-8 h-8 p-1"
+            on:click|preventDefault={nextPage}
+            href={page + 1 < pages.length ? `/h/${id}/${page + 1}` : `/h/${id}`}
+        >
             <ChevronRightIcon class="w-full" />
-        </button>
+        </a>
     </aside>
 
     <div class="flex absolute top-8 w-full h-full z-10 h-page" aria-hidden>
@@ -172,8 +180,7 @@
     </div>
 </main>
 
-<style>
-    .h-page {
-        height: calc(100vh - (4em + 2em * 2));
-    }
+<style lang="sass">
+    .h-page
+        height: calc(100vh - (4em + 2em * 2))
 </style>

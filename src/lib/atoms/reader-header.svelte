@@ -14,7 +14,7 @@
 </script>
 
 <header
-    class="z-20 flex flex-col md:flex-row items-center gap-8 w-11/12 md:w-full max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-3xl"
+    class="z-20 flex flex-col md:flex-row items-center gap-8 w-11/12 md:w-full max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-3xl"
 >
     <div class="w-full md:min-w-[300px] md:max-w-[300px]">
         <Image
@@ -29,15 +29,15 @@
     </div>
 
     <section class="flex flex-col gap-2">
-        <h6 class="text-sm text-gray-400">{nhql.id}</h6>
-        <h1 class="text-2xl text-gray-800">{nhql.title.display}</h1>
+        <h6 class="text-sm text-gray-400 dark:text-gray-500">{nhql.id}</h6>
+        <h1 class="text-2xl text-gray-800 dark:text-gray-300">{nhql.title.display}</h1>
 
-        <h4 class="flex items-center gap-1 text-gray-700 capitalize mt-2">
+        <h4 class="flex items-center gap-1 text-gray-700 dark:text-gray-400 capitalize mt-2">
             <PenToolIcon size="21" />
             {nhql.metadata.artist.name} ({nhql.metadata.artist.count})
         </h4>
 
-        <div class="flex flex-col gap-1.5 text-gray-500 my-2">
+        <div class="flex flex-col gap-1.5 text-gray-500 dark:text-gray-400 my-2">
             <h5 class="flex items-center gap-1 capitalize">
                 <GlobeIcon size="21" />
                 {nhql.metadata.language}
@@ -63,7 +63,7 @@
         >
             {#each nhql.metadata.tags as { name } (name)}
                 <a
-                    class="bg-gray-100 px-2 py-1 rounded-sm snap-start"
+                    class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-sm snap-start"
                     href={`/search/${name}`}>{name}</a
                 >
             {/each}

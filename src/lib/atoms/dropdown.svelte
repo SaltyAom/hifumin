@@ -14,8 +14,8 @@
     $: selectedIndex = options.indexOf(value)
     $: activeClass = (option: string | number) =>
         value === option
-            ? 'text-gray-300'
-            : 'text-gray-700 hover:bg-gray-100 focus:bg-gray-100'
+            ? 'text-gray-300 dark:text-gray-500'
+            : 'text-gray-700 dark:text-gray-400 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-600 dark:focus:bg-gray-600'
 
     const open = () => {
         isOpen = true
@@ -74,8 +74,13 @@
 
     $: {
         if (typeof window !== 'undefined') {
-            if (isOpen) window.addEventListener('keydown', handleKeyDown, true)
-            else window.removeEventListener('keydown', handleKeyDown, true)
+            if (isOpen) {
+                window.addEventListener('keydown', handleKeyDown, true)
+                // document.body.setAttribute('style', 'overflow-y: hidden;')
+            } else {
+                window.removeEventListener('keydown', handleKeyDown, true)
+                // document.body.setAttribute('style', '')
+            }
         }
     }
 </script>
@@ -90,7 +95,7 @@
 
 <div class="relative mt-7">
     <button
-        class="flex items-center w-[16ch] font-bold text-gray-700 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 rounded"
+        class="flex items-center w-[16ch] font-bold text-gray-700 dark:text-gray-400 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 dark:bg-gray-700 rounded"
         on:click={open}
         bind:this={selector}
     >
@@ -105,7 +110,7 @@
     </button>
 
     <section
-        class={`sheet absolute z-20 flex flex-col justify-center w-full bg-white rounded overflow-hidden ${
+        class={`sheet absolute z-20 flex flex-col justify-center w-full mt-1 bg-white dark:bg-gray-700 rounded overflow-hidden ${
             isOpen ? '-open' : ''
         }`}
         style="height:{isOpen ? 8 + options.length * 48 : 0}px"

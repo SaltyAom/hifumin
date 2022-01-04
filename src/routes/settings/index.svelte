@@ -2,71 +2,48 @@
     import settings, { SafeMode, Theme, ReaderType } from '$lib/stores/settings'
 
     import SettingLayout from '$lib/layouts/settings.svelte'
+    import SettingRow from '$lib/layouts/setting-row.svelte'
+    import SettingNavigation from '$lib/layouts/setting-navigation.svelte'
 
     import Dropdown from '$lib/atoms/dropdown.svelte'
-    import { ChevronRightIcon } from 'svelte-feather-icons'
 </script>
 
 <SettingLayout title="Settings" label="Adjust Platform behavior">
-    <article class="flex justify-between w-full gap-2">
-        <header class="flex flex-col text-lg text-gray-500 gap-2">
-            <h3 class="text-2xl font-semibold text-gray-700">Theme Mode</h3>
+    <SettingRow title="Theme Mode">
+        <svelte:fragment slot="label">
             <p>Set color theme.</p>
             <p>Choosing "adaptive" will use the system setting.</p>
-        </header>
+        </svelte:fragment>
         <Dropdown
             options={[Theme.adaptive, Theme.light, Theme.dark]}
             labels={['adaptive', 'light', 'dark']}
             bind:value={$settings.theme}
         />
-    </article>
+    </SettingRow>
 
-    <article class="flex justify-between w-full gap-2">
-        <header class="flex flex-col text-lg text-gray-500 gap-2">
-            <h3 class="text-2xl font-semibold text-gray-700">Safe Mode</h3>
-            <p>Hide the image for some purpose.</p>
-        </header>
+    <SettingRow title="Safe Mode">
+        <p slot="label">Hide the image for some purpose.</p>
         <Dropdown
             options={[SafeMode.off, SafeMode.blur, SafeMode.opaque]}
             labels={['Off', 'Blur', 'Opaque']}
             bind:value={$settings.safeMode}
         />
-    </article>
+    </SettingRow>
 
-    <article class="flex justify-between w-full gap-2">
-        <header class="flex flex-col text-lg text-gray-500 gap-2">
-            <h3 class="text-2xl font-semibold text-gray-700">Reader Mode</h3>
-            <p>Reading Layout</p>
-        </header>
+    <SettingRow title="Reader Mode">
+        <p slot="label">Reading Layout</p>
         <Dropdown
             options={[ReaderType.scroll, ReaderType.interactive]}
             labels={['Scroll', 'Interactive']}
             bind:value={$settings.reader}
         />
-    </article>
+    </SettingRow>
 
-    <a
-        class="flex justify-between items-center w-full gap-2 rounded"
-        href="/settings/preference"
-    >
-        <header class="flex flex-col text-lg text-gray-500 gap-2">
-            <h3 class="text-2xl font-semibold text-gray-700">Preference</h3>
-            <p>
-                Add your own tags preference for finding hentai on discover
-                page.
-            </p>
-        </header>
-        <ChevronRightIcon class="text-gray-400 w-8 h-8" />
-    </a>
+    <SettingNavigation title="Preference" href="/settings/preference">
+        <p>Add your own tags preference for finding hentai on discover page.</p>
+    </SettingNavigation>
 
-    <a
-        class="flex justify-between items-center w-full gap-2 rounded"
-        href="/settings/filter"
-    >
-        <header class="flex flex-col text-lg text-gray-500 gap-2">
-            <h3 class="text-2xl font-semibold text-gray-700">Filter</h3>
-            <p>Remove unwanted tags or keyword from search results.</p>
-        </header>
-        <ChevronRightIcon class="text-gray-400 w-8 h-8" />
-    </a>
+    <SettingNavigation title="Filter" href="/settings/filter">
+        <p>Remove unwanted tags or keyword from search results.</p>
+    </SettingNavigation>
 </SettingLayout>
