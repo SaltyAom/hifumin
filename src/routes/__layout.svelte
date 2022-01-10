@@ -4,7 +4,8 @@
 
     import ThemeProvider from '$lib/providers/theme.svelte'
 
-    import '../styles/tailwind.css'
+    import "virtual:windi.css"
+    import "../styles/global.css"
 </script>
 
 <ThemeProvider />

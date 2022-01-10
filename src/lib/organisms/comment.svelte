@@ -5,22 +5,26 @@
     import intersect from '$lib/use/intersect'
 
     import nhqlComment from '$lib/gql/nhqlComment'
-    import type { NhqlCommentData } from '$lib/gql/nhqlComment'
+    import type { Comment as IComment } from '$lib/gql/nhqlComment'
 
     export let id: number
 
-    let comments: NhqlCommentData['comments'] | null = null
+    let comments: IComment[] | null = null
     let allLoaded = false
     let batch = 1
+    let total = 0
 
     const loadComment = async () => {
         if (allLoaded) return
 
         const response = await nhqlComment({ id, batch })
 
-        if (!response.comments || !response?.comments.length) allLoaded = true
+        if (!response.comments || !response?.comments.data.length)
+            allLoaded = true
 
-        comments = [...(comments || []), ...response?.comments] || []
+        total = response?.comments.total
+
+        comments = [...(comments || []), ...response?.comments.data] || []
         batch++
     }
 
@@ -38,8 +42,7 @@
 >
     {#if comments}
         <h4 class="text-xl text-gray-700 dark:text-gray-200 mb-2">
-            <!-- {comments.length} -->
-            {' '}Comments
+            {Intl.NumberFormat().format(total)} comments
         </h4>
         {#each comments as comment (comment.created)}
             <Comment {comment} />

@@ -4,7 +4,7 @@ const intersect = (
     node: HTMLElement,
     {
         loop = false,
-        // Awaitable 
+        // Awaitable
         onIntersect = null
     }: {
         loop?: boolean
@@ -35,6 +35,11 @@ const intersect = (
     }
 
     const handleIntersection = () => {
+        window.removeEventListener('scroll', handleIntersection, true)
+        setTimeout(() => {
+            window.addEventListener('scroll', handleIntersection, true)
+        }, 16)
+
         if (node.getBoundingClientRect().top - window.innerHeight > 0) {
             if (intentIntersection) {
                 clearTimeout(intentIntersection)

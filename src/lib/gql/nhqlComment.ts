@@ -1,7 +1,7 @@
 import gql from '@saltyaom/gq'
 
 export interface Comment {
-    body: string
+    comment: string
     created: number
     user: {
         username: string
@@ -10,14 +10,10 @@ export interface Comment {
 }
 
 export interface NhqlCommentData {
-    comments: Array<{
-        body: string
-        created: number
-        user: {
-            username: string
-            avatar: string
-        }
-    }>
+    comments: {
+        total: number
+        data: Comment[]
+    }
 }
 
 export interface NhqlComment {
@@ -39,11 +35,14 @@ query NhqlComment($id: Int!, $batch: Int!) {
     by(id: $id) {
       data {
         comments(batch: $batch) {
-          body
-          created
-          user {
-            username
-            avatar
+          total
+          data {
+            comment 
+            created
+            user {
+                username
+                avatar
+            }
           }
         }
       }

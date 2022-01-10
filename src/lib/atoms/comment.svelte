@@ -8,7 +8,7 @@
     export let comment: Comment
 
     let {
-        body,
+        comment: body,
         created,
         user: { username, avatar }
     } = comment

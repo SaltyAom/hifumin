@@ -29,7 +29,10 @@
         searchActive = true
 
         requestAnimationFrame(() => {
-            searchBox?.focus()
+            // For Safari
+            requestAnimationFrame(() => {
+                searchBox?.focus()
+            })
         })
     }
 
@@ -61,7 +64,7 @@
 <nav
     class="sticky z-30 top-0 flex justify-between items-center h-16 safe-area {searchActive
         ? 'px-0'
-        : 'px-4'} md:px-4 border-b bg-white dark:bg-gray-800 dark:border-b-gray-600"
+        : 'px-4'} md:px-4 border-b bg-white/90 dark:bg-gray-800/90 backdrop-filter backdrop-blur-xl dark:border-b-gray-600"
 >
     <a
         class="{hidenOnSearch} md:inline text-xl font-medium text-gray-700 dark:text-gray-300"

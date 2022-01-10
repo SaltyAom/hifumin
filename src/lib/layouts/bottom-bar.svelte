@@ -18,7 +18,7 @@
 
 <div class="h-16 box-content safe-area" />
 <aside
-    class="box-content sare-area fixed z-30 bottom-0 flex md:hidden items-center w-full h-16 bg-white dark:bg-gray-800 border-t dark:border-gray-600"
+    class="box-content sare-area fixed z-30 bottom-0 flex md:hidden items-center w-full h-16 bg-white/90 dark:bg-gray-800/90 backdrop-filter backdrop-blur-xl border-t dark:border-gray-600"
 >
     <a class="{tabClass} {applyActive('/')}" href="/">
         <HomeIcon class="w-6 h-6" strokeWidth={1.5} />
