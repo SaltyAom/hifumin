@@ -15,6 +15,7 @@
             <p>Choosing "adaptive" will use the system setting.</p>
         </svelte:fragment>
         <Dropdown
+            class="mt-7"
             options={[Theme.adaptive, Theme.light, Theme.dark]}
             labels={['adaptive', 'light', 'dark']}
             bind:value={$settings.theme}
@@ -24,6 +25,7 @@
     <SettingRow title="Safe Mode">
         <p slot="label">Hide the image for some purpose.</p>
         <Dropdown
+            class="mt-3.5"
             options={[SafeMode.off, SafeMode.blur, SafeMode.opaque]}
             labels={['Off', 'Blur', 'Opaque']}
             bind:value={$settings.safeMode}
@@ -33,6 +35,7 @@
     <SettingRow title="Reader Mode">
         <p slot="label">Reading Layout</p>
         <Dropdown
+            class="mt-3.5"
             options={[ReaderType.scroll, ReaderType.interactive]}
             labels={['Scroll', 'Interactive']}
             bind:value={$settings.reader}

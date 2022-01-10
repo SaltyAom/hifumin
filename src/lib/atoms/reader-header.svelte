@@ -18,7 +18,6 @@
 >
     <div class="w-full md:min-w-[300px] md:max-w-[300px]">
         <Image
-            intersected
             src={nhql.images.cover.link}
             alt={nhql.title.display}
             parentClass="rounded-xl shadow-2xl overflow-hidden"
@@ -30,14 +29,20 @@
 
     <section class="flex flex-col gap-2">
         <h6 class="text-sm text-gray-400 dark:text-gray-500">{nhql.id}</h6>
-        <h1 class="text-2xl text-gray-800 dark:text-gray-300">{nhql.title.display}</h1>
+        <h1 class="text-2xl text-gray-800 dark:text-gray-300">
+            {nhql.title.display}
+        </h1>
 
-        <h4 class="flex items-center gap-1 text-gray-700 dark:text-gray-400 capitalize mt-2">
+        <h4
+            class="flex items-center gap-1 text-gray-700 dark:text-gray-400 capitalize mt-2"
+        >
             <PenToolIcon size="21" />
             {nhql.metadata.artist.name} ({nhql.metadata.artist.count})
         </h4>
 
-        <div class="flex flex-col gap-1.5 text-gray-500 dark:text-gray-400 my-2">
+        <div
+            class="flex flex-col gap-1.5 text-gray-500 dark:text-gray-400 my-2"
+        >
             <h5 class="flex items-center gap-1 capitalize">
                 <GlobeIcon size="21" />
                 {nhql.metadata.language}
@@ -55,7 +60,7 @@
         </div>
 
         <h4 class="text-gray-500">
-            Tags ({nhql.metadata.tags.length})
+            {nhql.metadata.tags.length} tags:
         </h4>
 
         <div

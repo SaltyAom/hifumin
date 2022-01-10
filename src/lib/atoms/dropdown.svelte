@@ -93,7 +93,7 @@
     />
 {/if}
 
-<div class="relative mt-7 w-[16ch]">
+<div class="relative w-[16ch] {$$props.class}">
     <button
         class="flex items-center w-full font-bold text-gray-700 dark:text-gray-400 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 dark:bg-gray-700 rounded"
         on:click={open}

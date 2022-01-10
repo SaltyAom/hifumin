@@ -13,9 +13,12 @@
     let allLoaded = false
     let batch = 1
     let total = 0
+    let isLoading = false
 
     const loadComment = async () => {
-        if (allLoaded) return
+        if (allLoaded || isLoading) return
+
+        isLoading = true
 
         const response = await nhqlComment({ id, batch })
 
@@ -26,6 +29,7 @@
 
         comments = [...(comments || []), ...response?.comments.data] || []
         batch++
+        isLoading = false
     }
 
     $: {

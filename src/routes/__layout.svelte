@@ -5,7 +5,7 @@
     import ThemeProvider from '$lib/providers/theme.svelte'
 
     import "virtual:windi.css"
-    import "../styles/global.css"
+    import "../styles/global.sass"
 </script>
 
 <ThemeProvider />

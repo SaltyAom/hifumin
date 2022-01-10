@@ -1,0 +1,23 @@
+body
+    @apply dark:bg-gray-800
+
+a, button, input
+    -webkit-tap-highlight-color: transparent
+
+.min-h-app
+    min-height: calc(100vh - 4rem)
+
+.h-app
+    height: calc(100vh - 4rem)
+
+#masonry
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))
+
+.blur-2xl
+    filter: blur(48px)
+
+.blur-3xl
+    filter: blur(64px)
+
+.backdrop-blur-xl
+    backdrop-filter: blur(24px)
