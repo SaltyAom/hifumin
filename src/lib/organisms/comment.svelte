@@ -6,6 +6,7 @@
 
     import nhqlComment from '$lib/gql/nhqlComment'
     import type { Comment as IComment } from '$lib/gql/nhqlComment'
+    import Dropdown from '$lib/atoms/dropdown.svelte'
 
     export let id: number
 
@@ -20,7 +21,7 @@
 
         isLoading = true
 
-        const response = await nhqlComment({ id, batch })
+        const response = await nhqlComment({ id, batch, orderBy })
 
         if (!response.comments || !response?.comments.data.length)
             allLoaded = true
@@ -32,6 +33,10 @@
         isLoading = false
     }
 
+    let labels = ['Newest', 'Oldest']
+    let options = labels.map((label) => label.toUpperCase())
+    let orderBy = options[0]
+
     $: {
         id
 
@@ -39,15 +44,34 @@
         batch = 1
         comments = null
     }
+
+    $: {
+        orderBy
+
+        allLoaded = false
+        batch = 1
+        comments = null
+
+        loadComment()
+    }
 </script>
 
 <footer
     class="flex flex-col gap-5 w-full max-w-2xl mx-auto px-4 lg:px-0 py-8 border-t dark:border-gray-600"
 >
     {#if comments}
-        <h4 class="text-xl text-gray-700 dark:text-gray-200 mb-2">
-            {Intl.NumberFormat().format(total)} comments
-        </h4>
+        <section class="flex justify-between items-center w-full mb-2">
+            <h4 class="text-xl text-gray-700 dark:text-gray-200">
+                {Intl.NumberFormat().format(total)} comments
+            </h4>
+            <Dropdown
+                class="w-[11ch]"
+                selectorClass="bg-transparent !text-sm !font-normal !text-gray-400 !px-1 !py-1"
+                {options}
+                {labels}
+                bind:value={orderBy}
+            />
+        </section>
         {#each comments as comment (comment.created)}
             <Comment {comment} />
         {/each}

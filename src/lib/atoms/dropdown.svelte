@@ -4,6 +4,7 @@
     export let options: Array<string | number>
     export let value = options[0]
     export let labels: string[] | null = null
+    export let selectorClass = ''
 
     let isOpen = false
     let focus = 0
@@ -93,9 +94,9 @@
     />
 {/if}
 
-<div class="relative w-[16ch] {$$props.class}">
+<div class="relative w-[16ch] {$$props.class || ''}">
     <button
-        class="flex items-center w-full font-bold text-gray-700 dark:text-gray-400 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 dark:bg-gray-700 rounded"
+        class="flex items-center w-full font-bold text-gray-700 dark:text-gray-400 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 dark:bg-gray-700 rounded {selectorClass}"
         on:click={open}
         bind:this={selector}
     >

@@ -27,21 +27,22 @@ export interface NhqlComment {
 export interface NhqlCommentVariable {
     id: number
     batch: number
+    orderBy: "NEWEST" | "OLDEST" | string
 }
 
 export const nhqlCommentDocument = `
-query NhqlComment($id: Int!, $batch: Int!) {
+query NhqlComment($id: Int!, $batch: Int!, $orderBy: String) {
   nhql {
     by(id: $id) {
       data {
-        comments(batch: $batch) {
+        comments(batch: $batch, orderBy: $orderBy) {
           total
           data {
-            comment 
+            comment
             created
             user {
-                username
-                avatar
+              username
+              avatar
             }
           }
         }
