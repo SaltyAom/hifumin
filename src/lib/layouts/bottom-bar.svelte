@@ -16,7 +16,7 @@
         'flex flex-col flex-1 justify-center items-center gap-1 text-xs text-gray-600 dark:text-gray-400 font-light !bg-transparent'
 </script>
 
-<div class="h-16 box-content safe-area" />
+<div class="block md:hidden h-16 box-content safe-area" />
 <aside
     class="box-content sare-area fixed z-30 bottom-0 flex md:hidden items-center w-full h-16 bg-white/90 dark:bg-gray-800/90 backdrop-filter backdrop-blur-xl border-t dark:border-gray-600"
 >

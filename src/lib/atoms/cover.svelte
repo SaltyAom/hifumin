@@ -1,70 +1,74 @@
 <script lang="ts">
-    import Image from './image.svelte'
-    import { GlobeIcon, BookOpenIcon, HeartIcon } from 'svelte-feather-icons'
-
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
+    import AddCollection from './add-collection.svelte'
+
+    import Image from './image.svelte'
 
     export let hentai: NhqlSearchData
+
+    const languageMap = {
+        english: 'EN',
+        japanese: '日本語',
+        chinese: '中文'
+    }
+
+    const mapLanguage = (language: string) => languageMap[language] || '-'
+
+    const reduceNumber = (number: number) => {
+        if (number < 1000) return number
+
+        return `${(number / 1000).toFixed(1)}k`
+    }
 </script>
 
-<a
-    sveltekit:prefetch
-    class="cover relative rounded-xl overflow-hidden"
-    href={`/h/${hentai.id}`}
->
-    <div
-        class="detail z-10 absolute flex flex-col justify-end gap-1 w-full h-full text-white text-lg p-3"
-    >
-        <h4 class="text-xl font-medium">{hentai.title.display}</h4>
+<article class="flex flex-col gap-2 w-full">
+    <a sveltekit:prefetch href="/h/{hentai.id}">
+        <div class="cover">
+            <div class="image rounded overflow-hidden">
+                <Image
+                    src={hentai.images.cover.link}
+                    width={hentai.images.cover.info.width}
+                    height={hentai.images.cover.info.height}
+                />
+            </div>
+        </div>
+    </a>
 
-        <p class="flex items-center gap-1 capitalize">
-            <GlobeIcon size="21" />
-            {hentai.metadata.language}
-        </p>
+    <header class="flex flex-1 flex-col gap-1 text-gray-400 text-sm w-full">
+        <div class="flex flex-row w-full">
+            <h5 class="inline-flex items-center flex-1 text-base">
+                {hentai.title.display}
+            </h5>
+            <AddCollection id={hentai.id} />
+        </div>
 
-        <div class="flex justify-between">
+        <div class="flex flex-row justify-between gap-1 md:gap-1.5">
             <p class="flex flex-1 items-center gap-1 capitalize">
-                <BookOpenIcon size="21" />
+                <img class="w-3.5 h-3.5" src="/icons/language.svg" alt="Add" />
+                {mapLanguage(hentai.metadata.language)}
+            </p>
+            <p class="flex flex-1 items-center gap-1 capitalize">
+                <img class="w-3.5 h-3.5" src="/icons/book-open.svg" alt="Add" />
                 {hentai.info.amount}
             </p>
             <p class="flex flex-1 items-center gap-1 capitalize">
-                <HeartIcon size="21" />
-                {Intl.NumberFormat().format(hentai.info.favorite)}
+                <img class="w-3.5 h-3.5" src="/icons/heart.svg" alt="Add" />
+                {reduceNumber(hentai.info.favorite)}
             </p>
         </div>
-    </div>
-    <div class="image">
-        <Image
-            src={hentai.images.cover.link}
-            width={hentai.images.cover.info.width}
-            height={hentai.images.cover.info.height}
-        />
-    </div>
-</a>
+    </header>
+</article>
 
 <style lang="sass">
     $expo-out: cubic-bezier(.16,1,.3,1)
 
     .cover
-        transition: box-shadow .2s $expo-out
-
         & > .image
-            transition: filter .2s $expo-out, transform .2s $expo-out
-
-        & > .detail
-            opacity: 0
-            transform: translateY(24px)
-            transition: opacity .16s ease-out, transform .16s ease-out
+            transition: box-shadow .36s $expo-out, transform .36s $expo-out
 
         &:hover,
         &:focus
-            box-shadow: 0 4px 16px rgba(66, 39, 39, .24), 0 8px 25px rgb(0 0 0 / 24%)
-
             & > .image
-                filter: brightness(.3)
-                transform: scale(1.1)
-
-            & > .detail
-                transform: translateY(0)
-                opacity: 1
+                transform: translateY(-.625em)
+                box-shadow: 0 4px 16px rgba(66, 39, 39, .24), 0 8px 25px rgb(0 0 0 / 24%)
 </style>

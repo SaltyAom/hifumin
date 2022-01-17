@@ -1,9 +1,3 @@
-<script context="module">
-    import { client } from '@saltyaom/gq'
-
-    client.config('https://akashic.opener.studio/v1/graphql')
-</script>
-
 <script lang="ts">
     import { page } from '$app/stores'
     import { goto } from '$app/navigation'
@@ -11,11 +5,11 @@
     import {
         BookmarkIcon,
         ChevronLeftIcon,
-        HomeIcon,
         SearchIcon,
         SendIcon,
         SettingsIcon
     } from 'svelte-feather-icons'
+    import user from '$lib/stores/user'
 
     let search
     // For mobile devices
@@ -57,17 +51,17 @@
                 ? $page.url.pathname === '/'
                 : $page.url.pathname.startsWith(path)
         )
-            ? 'text-blue-500 dark:text-blue-500 bg-gray-100 dark:bg-blue-300/10'
+            ? 'text-blue-500 dark:text-blue-500 bg-gray-100 dark:bg-transparent dark:border border-blue-500'
             : ''
 </script>
 
 <nav
-    class="sticky z-30 top-0 flex justify-between items-center h-16 safe-area {searchActive
+    class="sticky z-30 top-0 flex justify-between items-center gap-1 h-16 safe-area {searchActive
         ? 'px-0'
         : 'px-4'} md:px-4 border-b bg-white/90 dark:bg-gray-800/90 backdrop-filter backdrop-blur-xl dark:border-b-gray-600"
 >
     <a
-        class="{hidenOnSearch} md:inline text-xl font-medium text-gray-700 dark:text-gray-300"
+        class="{hidenOnSearch} md:inline lg:w-[200px] text-xl font-medium text-gray-700 dark:text-gray-300"
         role="heading"
         aria-level={1}
         href="/"
@@ -75,23 +69,11 @@
         Hifumin
     </a>
 
-    <div
-        class="{hidenOnSearch} md:hidden flex-1 justify-end items-center h-full"
-    >
-        <button
-            class="w-10 h-10 p-2 text-gray-500 dark:text-gray-300"
-            on:click={openSearch}
-            aria-label="Open Search"
-        >
-            <SearchIcon />
-        </button>
-    </div>
-
     <form
         on:submit|preventDefault={find}
         class="{searchActive
             ? 'flex'
-            : 'hidden'} md:flex items-center gap-2 w-[48ch] pl-2.5 md:pl-4 pr-4 md:pr-1.5 h-12 bg-transparent md:bg-gray-100 md:dark:bg-gray-700 rounded"
+            : 'hidden'} md:flex items-center gap-2 w-[42ch] pl-2.5 md:pl-4 pr-4 md:pr-1.5 h-12 bg-transparent md:bg-gray-100 md:dark:bg-gray-700 rounded"
     >
         <button
             class="flex md:hidden w-10 h-10 p-1 text-gray-600 dark:text-gray-300"
@@ -126,26 +108,59 @@
         </button>
     </form>
 
-    <div
-        class="hidden md:flex justify-end items-center gap-2 text-gray-500 dark:text-gray-400 px-2"
-    >
-        <a
-            href="/collection"
-            class={`w-10 h-10 p-2 rounded ${applyActive('/collection')}`}
-            title="Bookmark and History"
-            aria-label="Bookmark and History"
+    <div class="flex items-center gap-2">
+        <div
+            class="hidden md:flex justify-end items-center gap-2 text-gray-500 dark:text-gray-400 px-2"
         >
-            <BookmarkIcon />
-        </a>
+            <a
+                href="/collection"
+                class={`w-10 h-10 p-2 rounded ${applyActive('/collection')}`}
+                title="Bookmark and History"
+                aria-label="Bookmark and History"
+            >
+                <BookmarkIcon />
+            </a>
 
-        <a
-            href="/settings"
-            class={`w-10 h-10 p-2 rounded ${applyActive('/settings')}`}
-            title="Settings"
-            aria-label="Settings"
+            <a
+                href="/settings"
+                class={`w-10 h-10 p-2 rounded ${applyActive('/settings')}`}
+                title="Settings"
+                aria-label="Settings"
+            >
+                <SettingsIcon />
+            </a>
+        </div>
+
+        {#if $user.name}
+            <a
+                href="/sign-in"
+                class="{hidenOnSearch} w-9 h-9 bg-gray-100 dark:bg-gray-700 rounded-full"
+            >
+                <img
+                    class="w-9 h-9 object-cover rounded-full"
+                    src={$user.profile || '/assets/takodachi.webp'}
+                    alt={$user.name}
+                />
+            </a>
+        {:else}
+            <a
+                href="/sign-in"
+                class="{hidenOnSearch} text-lg text-gray-500 dark:text-gray-400 px-2 py-1 md:px-4 md:py-1.5 border border-gray-300 dark:border-gray-400 rounded"
+                >Sign in</a
+            >
+        {/if}
+
+        <div
+            class="{hidenOnSearch} md:hidden flex-1 justify-end items-center h-full ml-1"
         >
-            <SettingsIcon />
-        </a>
+            <button
+                class="w-10 h-10 p-2 text-gray-500 dark:text-gray-300"
+                on:click={openSearch}
+                aria-label="Open Search"
+            >
+                <SearchIcon />
+            </button>
+        </div>
     </div>
 </nav>
 

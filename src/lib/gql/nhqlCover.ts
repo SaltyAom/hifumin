@@ -1,6 +1,6 @@
 import gql from '@saltyaom/gq'
 
-export interface NhqlByIdData {
+export interface NhqlCoverByIdData {
     id: number
     title: {
         display: string
@@ -13,18 +13,9 @@ export interface NhqlByIdData {
                 height: number
             }
         }
-        pages: Array<{
-            link: string
-            info: {
-                width: number
-                height: number
-            }
-        }>
     }
     info: {
         amount: number
-        favorite: number
-        upload: number
     }
     metadata: {
         language: string
@@ -38,20 +29,20 @@ export interface NhqlByIdData {
     }
 }
 
-export interface NhqlById {
+export interface NhqlCoverById {
     nhql: {
         by: {
-            data: NhqlByIdData
+            data: NhqlCoverByIdData
         }
     }
 }
 
-export interface NhqlByIdVariable {
+export interface NhqlCoverByIdVariable {
     id: number
 }
 
-export const nhqlByIdDocument = `
-query getHentaiById($id: Int!) {
+export const nhqlCoverByIdDocument = `
+query getHentaiCoverById($id: Int!) {
   nhql {
     by(id: $id) {
       data {
@@ -67,18 +58,9 @@ query getHentaiById($id: Int!) {
               height
             }
           }
-          pages {
-            link
-            info {
-              width
-              height
-            }
-          }
         }
         info {
           amount
-          favorite
-          upload
         }
         metadata {
           language
@@ -95,12 +77,15 @@ query getHentaiById($id: Int!) {
   }
 }`
 
-const nhqlById = async (id: number): Promise<NhqlByIdData | null> => {
-    const data = await gql<NhqlById, NhqlByIdVariable>(nhqlByIdDocument, {
-        variables: {
-            id
+const nhqlCoverById = async (id: number): Promise<NhqlCoverByIdData | null> => {
+    const data = await gql<NhqlCoverById, NhqlCoverByIdVariable>(
+        nhqlCoverByIdDocument,
+        {
+            variables: {
+                id
+            }
         }
-    })
+    )
 
     if (Array.isArray(data) || data instanceof Error || !data.nhql.by.data)
         return
@@ -108,4 +93,4 @@ const nhqlById = async (id: number): Promise<NhqlByIdData | null> => {
     return data.nhql.by.data
 }
 
-export default nhqlById
+export default nhqlCoverById

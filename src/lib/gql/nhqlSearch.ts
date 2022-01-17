@@ -4,7 +4,7 @@ import settings from '$lib/stores/settings'
 import gql from '@saltyaom/gq'
 
 export interface NhqlSearchData {
-    id: string
+    id: number
     title: {
         display: string
     }

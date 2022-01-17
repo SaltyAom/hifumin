@@ -36,6 +36,7 @@
   "type": "module",
   "dependencies": {
     "@saltyaom/gq": "^1.1.3",
+    "@supabase/supabase-js": "^1.29.1",
     "cookie": "^0.4.1",
     "dayjs": "^1.10.7",
     "svelte-feather-icons": "^3.5.0"

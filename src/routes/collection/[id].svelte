@@ -1,38 +1,27 @@
 <script lang="ts">
-    import { collectionsData, collectionsArray } from '$lib/stores/collections'
+    import { collectionsArray, collectionsData } from '$lib/stores/collections'
+    import { page } from '$app/stores'
 
     import Image from '$lib/atoms/image.svelte'
-    import { ArrowRightCircleIcon } from 'svelte-feather-icons'
+
+    $: collection = $collectionsArray.find(({ id }) => $page.params.id === id)
 </script>
 
 <main
-    class="flex flex-col gap-8 w-full max-w-3xl mx-auto py-16 text-gray-700 dark:text-gray-300"
+    class="flex flex-col gap-12 w-full max-w-3xl mx-auto py-8 text-gray-700 dark:text-gray-300"
 >
-    {#each $collectionsArray as { name, h, id } (name)}
+    {#if collection}
         <section class="flex flex-col gap-4 px-4">
             <header class="flex flex-col">
                 <p class="text-gray-400 text-sm font-light">
-                    {h.length} stories
+                    {collection.h.length} stories
                 </p>
-                <h2 class="text-3xl text-gray-700 dark:text-gray-300 font-medium">{name}</h2>
+                <h2 class="text-3xl text-gray-700 dark:text-gray-300 font-medium">
+                    {collection.name}
+                </h2>
             </header>
             <div class="relative grid collection w-full gap-4 md:gap-8">
-                <a class="relative w-full" href="/collection/{id}">
-                    <div
-                        class="relative border-2 dark:border-gray-600 rounded-lg read-more"
-                    >
-                        <div
-                            class="absolute flex flex-col gap-2 justify-center items-center w-full h-full text-blue-400"
-                        >
-                            <ArrowRightCircleIcon
-                                class="w-12 h-12"
-                                strokeWidth={1}
-                            />
-                            <h1 class="text-base">View {name}</h1>
-                        </div>
-                    </div>
-                </a>
-                {#each h.slice(0, 2) as id}
+                {#each collection.h as id}
                     <article class="w-full">
                         <a
                             class="relative flex flex-col gap-2"
@@ -70,13 +59,16 @@
                 {/each}
             </div>
         </section>
-    {/each}
+    {:else}
+        <h1
+            class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 dark:text-gray-600 cursor-default"
+        >
+            Hifumin
+        </h1>
+    {/if}
 </main>
 
 <style lang="sass">
-    .read-more
-        padding-bottom: 144.74%
-
     .collection
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr))
 
@@ -85,15 +77,4 @@
 
         @screen md
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr))
-
-        @media (max-width: 483px)
-            & > article:nth-child(2)
-                display: none
-
-    @media (max-width: 327px)
-        .collection > article
-            display: none
-
-        .read-more
-            padding-bottom: 100%
 </style>

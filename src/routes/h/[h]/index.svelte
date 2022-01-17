@@ -9,7 +9,9 @@
 
         const nhql = await nhqlById(+h)
 
-        if (!nhql) return
+        if (!nhql) return {
+            status: 404
+        }
 
         return {
             props: {

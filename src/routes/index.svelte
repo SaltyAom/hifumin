@@ -3,7 +3,6 @@
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
     import { randomBetween } from '$lib/array'
-    import { tags } from '$lib/data'
 
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
@@ -24,7 +23,7 @@
         preference: { data: includes, enable }
     } = get(settings)
 
-    const defaultTags = [...(enable ? includes : tags)]
+    const defaultTags = [...(enable ? includes : 'all')]
     let availables = [...defaultTags]
 
     // Bind resizable window width
@@ -91,7 +90,7 @@
     <title>Hifumin: hentai doujinshi and manga</title>
 </svelte:head>
 
-<main class="flex gap-4 lg:gap-5 w-full p-4" bind:clientWidth={layoutWidth}>
+<main class="flex gap-4 lg:gap-5 w-full p-4 overflow-hidden" bind:clientWidth={layoutWidth}>
     {#if !layoutWidth}
         <h1
             class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 dark:text-gray-600 cursor-default"
