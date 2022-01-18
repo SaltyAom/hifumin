@@ -66,7 +66,7 @@
             </h4>
             <Dropdown
                 class="w-[11ch]"
-                selectorClass="bg-transparent !text-sm !font-normal !text-gray-400 !px-1 !py-1"
+                selectorClass="bg-transparent !text-sm !font-normal !text-gray-400 !px-2 !py-1"
                 {options}
                 {labels}
                 bind:value={orderBy}

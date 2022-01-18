@@ -90,7 +90,10 @@
     <title>Hifumin: hentai doujinshi and manga</title>
 </svelte:head>
 
-<main class="flex gap-4 lg:gap-5 w-full p-4 overflow-hidden" bind:clientWidth={layoutWidth}>
+<main
+    class="flex w-full px-4 overflow-hidden"
+    bind:clientWidth={layoutWidth}
+>
     {#if !layoutWidth}
         <h1
             class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 dark:text-gray-600 cursor-default"
@@ -101,7 +104,9 @@
         <h1>Not Found</h1>
     {:else if !hentais.length}
         {#each Array(totalMasonry).fill(0) as _, index (index)}
-            <div class="flex flex-col flex-1 w-full gap-4 lg:gap-5">
+            <div
+                class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden"
+            >
                 {#each Array(~~(50 / totalMasonry)).fill(0) as __, index (index)}
                     <figure
                         class="w-full rounded-xl bg-gray-50 dark:bg-gray-700"
@@ -112,9 +117,14 @@
         {/each}
     {:else}
         {#each chunkHentais as row, index (index)}
-            <div class="flex flex-col flex-1 w-full gap-4 lg:gap-5">
+            <div
+                class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden"
+            >
                 {#each row as hentai (hentai.id)}
-                    <Cover {hentai} />
+                    <Cover
+                        {hentai}
+                        isLast={index === totalMasonry - 1}
+                    />
                 {/each}
                 {#if index === 0}
                     <div bind:this={observer} />

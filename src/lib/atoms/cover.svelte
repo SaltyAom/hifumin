@@ -5,10 +5,11 @@
     import Image from './image.svelte'
 
     export let hentai: NhqlSearchData
+    export let isLast = false
 
     const languageMap = {
         english: 'EN',
-        japanese: '日本語',
+        japanese: '日本',
         chinese: '中文'
     }
 
@@ -39,19 +40,24 @@
             <h5 class="inline-flex items-center flex-1 text-base">
                 {hentai.title.display}
             </h5>
-            <AddCollection id={hentai.id} />
+            <AddCollection
+                parentClass="{isLast
+                    ? '!justify-end'
+                    : ''}"
+                id={hentai.id}
+            />
         </div>
 
         <div class="flex flex-row justify-between gap-1 md:gap-1.5">
-            <p class="flex flex-1 items-center gap-1 capitalize">
+            <p class="flex flex-[5] sm:flex-[4] items-center gap-1 capitalize">
                 <img class="w-3.5 h-3.5" src="/icons/language.svg" alt="Add" />
                 {mapLanguage(hentai.metadata.language)}
             </p>
-            <p class="flex flex-1 items-center gap-1 capitalize">
+            <p class="flex flex-[4] items-center gap-1 capitalize">
                 <img class="w-3.5 h-3.5" src="/icons/book-open.svg" alt="Add" />
                 {hentai.info.amount}
             </p>
-            <p class="flex flex-1 items-center gap-1 capitalize">
+            <p class="flex flex-[4] items-center gap-1 capitalize">
                 <img class="w-3.5 h-3.5" src="/icons/heart.svg" alt="Add" />
                 {reduceNumber(hentai.info.favorite)}
             </p>
@@ -70,5 +76,5 @@
         &:focus
             & > .image
                 transform: translateY(-.625em)
-                box-shadow: 0 4px 16px rgba(66, 39, 39, .24), 0 8px 25px rgb(0 0 0 / 24%)
+                box-shadow: 0 4px 12px rgba(66, 39, 39, .18), 0 8px 16px rgb(0 0 0 / 18%)
 </style>

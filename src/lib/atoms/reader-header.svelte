@@ -65,6 +65,7 @@
 
         <div class="flex items-center text-gray-400 gap-2">
             <AddCollection
+                parentClass="relative !justify-start"
                 class="border dark:border-gray-600 !my-2"
                 dialogClass="!left-0"
                 id={nhql.id}

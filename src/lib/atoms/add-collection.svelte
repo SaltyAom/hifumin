@@ -10,6 +10,7 @@
     export let title: string = ''
     export let id: number
     export let dialogClass: string = ''
+    export let parentClass: string = ''
 
     let searchBox: HTMLElement
     let search = ''
@@ -76,69 +77,73 @@
 
 {#if isDialogOpen}
     <div
-        class="z-40 absolute top-0 left-0 w-full h-screen"
+        class="z-40 fixed top-0 left-0 w-full h-screen"
         on:click={closeDialog}
     />
 {/if}
 
-<div class="relative">
-    <button
-        class="flex justify-center items-center text-gray-400 {title
-            ? 'px-2 gap-2'
-            : 'w-8'} h-8 min-w-8 min-h-8 my-auto rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors {$$props.class}"
-        title="Add to collection"
-        on:click={openDialog}
-    >
-        <img class="w-5.5 h-5.5" src="/icons/playlist.svg" alt="Add" />
-        {title}
-    </button>
-
-    {#if isDialogOpen}
-        <div
-            class="absolute z-50 right-0 dialog flex flex-col min-w-48 h-52 p-2 text-gray-600 dark:text-gray-400 pb-0 rounded bg-white dark:bg-gray-700 bg-opacity-80 dark:bg-opacity-60 backdrop-blur-xl overflow-hidden {dialogClass}"
+<div class="flex justify-center items-center">
+    <div class="flex justify-center {parentClass}">
+        <button
+            class="flex justify-center items-center text-gray-400 {title
+                ? 'px-2 gap-2'
+                : 'w-8'} h-8 min-w-8 min-h-8 my-auto rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors {$$props.class}"
+            title="Add to collection"
+            on:click={openDialog}
         >
-            <form
-                class="flex w-full gap-1 border-b border-gray-300 dark:border-gray-600 pb-1"
-                on:submit|preventDefault={createAndAddToCollection()}
+            <img class="w-5.5 h-5.5" src="/icons/playlist.svg" alt="Add" />
+            {title}
+        </button>
+
+        {#if isDialogOpen}
+            <div
+                class="absolute z-50 dialog flex flex-col min-w-48 max-w-48 h-52 mt-8 p-2 text-gray-600 dark:text-gray-400 pb-0 rounded bg-white dark:bg-gray-700 bg-opacity-80 dark:bg-opacity-60 backdrop-blur-xl overflow-hidden {dialogClass}"
             >
-                <img
-                    src="/icons/search.svg"
-                    alt="Search"
-                    class="w-5 h-5 p-0.5"
-                />
-                <input
-                    bind:this={searchBox}
-                    type="text"
-                    class="w-full bg-transparent outline-none ring-transparent"
-                    placeholder="My collection"
-                    title="Collection name"
-                    bind:value={search}
-                />
-            </form>
-            <section
-                class="relative flex flex-1 flex-col w-full pt-0.5 gap-0.5 overflow-x-hidden overflow-y-auto"
-            >
-                {#each filteredCollection as { name, h } (name)}
-                    <label
-                        class="flex justify-between items-center w-full px-2 py-1 rounded hover:bg-black hover:bg-opacity-5 focus:bg-black focus:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 dark:focus:bg-white dark:focus:bg-opacity-10 transition-colors"
-                        >{name}
-                        <input
-                            type="checkbox"
-                            checked={h.includes(id)}
-                            on:change={toggleCollection(
-                                id,
-                                name,
-                                h.includes(id)
-                            )}
-                        />
-                    </label>
-                {/each}
-                {#if filteredCollection.length === 0}
-                    <p class="text-center text-gray-400 my-auto">Not found</p>
-                {/if}
-            </section>
-        </div>
-    {/if}
+                <form
+                    class="flex w-full gap-1 border-b border-gray-300 dark:border-gray-600 pb-1"
+                    on:submit|preventDefault={createAndAddToCollection()}
+                >
+                    <img
+                        src="/icons/search.svg"
+                        alt="Search"
+                        class="w-5 h-5 p-0.5"
+                    />
+                    <input
+                        bind:this={searchBox}
+                        type="text"
+                        class="w-full bg-transparent outline-none ring-transparent"
+                        placeholder="My collection"
+                        title="Collection name"
+                        bind:value={search}
+                    />
+                </form>
+                <section
+                    class="relative flex flex-1 flex-col w-full pt-0.5 gap-0.5 overflow-x-hidden overflow-y-auto"
+                >
+                    {#each filteredCollection as { name, h } (name)}
+                        <label
+                            class="flex justify-between items-center w-full px-2 py-1 rounded hover:bg-black hover:bg-opacity-5 focus:bg-black focus:bg-opacity-5 dark:hover:bg-white dark:hover:bg-opacity-10 dark:focus:bg-white dark:focus:bg-opacity-10 transition-colors"
+                            >{name}
+                            <input
+                                type="checkbox"
+                                checked={h.includes(id)}
+                                on:change={toggleCollection(
+                                    id,
+                                    name,
+                                    h.includes(id)
+                                )}
+                            />
+                        </label>
+                    {/each}
+                    {#if filteredCollection.length === 0}
+                        <p class="text-center text-gray-400 my-auto">
+                            Not found
+                        </p>
+                    {/if}
+                </section>
+            </div>
+        {/if}
+    </div>
 </div>
 
 <style lang="sass">

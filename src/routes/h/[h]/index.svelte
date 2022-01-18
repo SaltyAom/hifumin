@@ -9,9 +9,10 @@
 
         const nhql = await nhqlById(+h)
 
-        if (!nhql) return {
-            status: 404
-        }
+        if (!nhql)
+            return {
+                status: 404
+            }
 
         return {
             props: {
@@ -51,19 +52,23 @@
 </script>
 
 <svelte:head>
-    <title>Read: {nhql.title.display} &raquo; Hifumin: hentai doujinshi and manga</title>
+    <title
+        >Read: {nhql.title.display} &raquo; Hifumin: hentai doujinshi and manga</title
+    >
 </svelte:head>
 
 <article class="flex flex-col w-full mx-auto">
     <div
-        class="relative flex items-center w-full min-h-app bg-cover bg-center overflow-hidden py-4 bg-white dark:bg-gray-800"
+        class="relative flex items-center w-full min-h-app bg-cover bg-center py-4 bg-white dark:bg-gray-800"
     >
-        <img
-            class="absolute w-full h-full object-cover object-center blur-3xl brightness-60 pointer-events-none no-user-select"
-            src={nhql.images.cover.link}
-            alt={nhql.title.display}
-            on:error={reload}
-        />
+        <figure class="absolute w-full h-full overflow-hidden">
+            <img
+                class="w-full h-full object-cover object-center blur-3xl brightness-60 pointer-events-none no-user-select"
+                src={nhql.images.cover.link}
+                alt={nhql.title.display}
+                on:error={reload}
+            />
+        </figure>
 
         <ReaderHeader {nhql} />
     </div>
