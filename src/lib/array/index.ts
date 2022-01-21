@@ -12,7 +12,8 @@ export const getTotalMasonry = (layout = 0): number => {
 
     let available: number
 
-    if (width < 568) available = 2
+    if (width < 420) available = 2
+    else if (width < 600) available = 3
     else if (width < 768) available = 3
     else available = Math.floor(width / cardWidth)
 

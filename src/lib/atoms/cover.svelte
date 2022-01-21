@@ -25,7 +25,7 @@
 <article class="flex flex-col gap-2 w-full">
     <a sveltekit:prefetch href="/h/{hentai.id}">
         <div class="cover">
-            <div class="image rounded overflow-hidden">
+            <div class="image rounded-4xl overflow-hidden">
                 <Image
                     src={hentai.images.cover.link}
                     width={hentai.images.cover.info.width}
@@ -70,11 +70,13 @@
 
     .cover
         & > .image
-            transition: box-shadow .36s $expo-out, transform .36s $expo-out
+            // transition: box-shadow .36s $expo-out, transform .36s $expo-out
+            transition: border-radius .48s $expo-out
 
         &:hover,
         &:focus
             & > .image
-                transform: translateY(-.625em)
-                box-shadow: 0 4px 12px rgba(66, 39, 39, .18), 0 8px 16px rgb(0 0 0 / 18%)
+                @apply rounded-xl
+                // transform: translateY(-.625em)
+                // box-shadow: 0 2px 8px rgba(66, 39, 39, .12), 0 4px 12px rgb(0 0 0 / 12%)
 </style>

@@ -104,7 +104,7 @@
 </svelte:head>
 
 <main
-    class="flex w-full px-4 overflow-hidden"
+    class="flex w-full px-2 md:px-4 overflow-hidden"
     bind:clientWidth={layoutWidth}
 >
     {#if isServer}
@@ -122,7 +122,7 @@
             >
                 {#each Array(~~(50 / totalMasonry)).fill(0) as __}
                     <figure
-                        class="w-full rounded-xl bg-gray-50 dark:bg-gray-700"
+                        class="w-full rounded-4xl bg-gray-50 dark:bg-gray-700"
                         style="padding-bottom: 145%"
                     />
                 {/each}
@@ -142,7 +142,7 @@
                 {#if !over}
                     {#each Array(~~(25 / totalMasonry)).fill(0) as __}
                         <figure
-                            class="w-full rounded-xl bg-gray-50 dark:bg-gray-700"
+                            class="w-full rounded-4xl bg-gray-50 dark:bg-gray-700"
                             style="padding-bottom: 145%"
                         />
                     {/each}

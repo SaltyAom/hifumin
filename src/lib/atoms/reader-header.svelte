@@ -12,13 +12,13 @@
 </script>
 
 <header
-    class="z-20 flex flex-col md:flex-row items-center gap-8 w-11/12 md:w-full max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-3xl"
+    class="z-20 flex flex-col md:flex-row items-center gap-8 w-11/12 md:w-full max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-3xl shadow-3xl"
 >
     <div class="w-full md:min-w-[300px] md:max-w-[300px]">
         <Image
             src={nhql.images.cover.link}
             alt={nhql.title.display}
-            parentClass="rounded-xl shadow-2xl overflow-hidden"
+            parentClass="rounded-2xl shadow-2xl overflow-hidden"
             width={nhql.images.cover.info.width}
             height={nhql.images.cover.info.height}
             autoReload

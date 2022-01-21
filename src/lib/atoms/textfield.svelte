@@ -25,7 +25,7 @@
     aria-disabled={disabled}
 >
     <label class="text-gray-400 text-xs" for={id}>{label}</label>
-    <div class="flex flex-row max-w-xs w-full px-2 bg-gray-100 dark:bg-gray-700 rounded">
+    <div class="flex flex-row max-w-xs w-full px-2 bg-gray-100 dark:bg-gray-700 rounded-full">
         <input
             {...$$props}
             {id}

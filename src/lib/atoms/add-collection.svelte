@@ -97,7 +97,7 @@
 
         {#if isDialogOpen}
             <div
-                class="absolute z-50 dialog flex flex-col min-w-48 max-w-48 h-52 mt-8 p-2 text-gray-600 dark:text-gray-400 pb-0 rounded bg-white dark:bg-gray-700 bg-opacity-80 dark:bg-opacity-60 backdrop-blur-xl overflow-hidden {dialogClass}"
+                class="absolute z-50 dialog flex flex-col min-w-48 max-w-48 h-52 mt-8 p-2 text-gray-600 dark:text-gray-400 pb-0 rounded-xl bg-white dark:bg-gray-700 bg-opacity-80 dark:bg-opacity-60 backdrop-blur-xl overflow-hidden {dialogClass}"
             >
                 <form
                     class="flex w-full gap-1 border-b border-gray-300 dark:border-gray-600 pb-1"

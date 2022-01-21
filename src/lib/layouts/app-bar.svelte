@@ -51,14 +51,14 @@
                 ? $page.url.pathname === '/'
                 : $page.url.pathname.startsWith(path)
         )
-            ? 'text-blue-500 dark:text-blue-500 bg-gray-100 dark:bg-transparent dark:border border-blue-500'
+            ? 'text-blue-500 dark:text-blue-500 bg-blue-50 dark:bg-blue-900/50 dark:bg-transparent'
             : ''
 </script>
 
 <nav
     class="sticky z-30 top-0 flex justify-between items-center gap-1 h-16 safe-area {searchActive
         ? 'px-0'
-        : 'px-4'} md:px-4 border-b bg-white/90 dark:bg-gray-800/90 backdrop-filter backdrop-blur-xl dark:border-b-gray-600"
+        : 'px-4'} md:px-4 border-b bg-white dark:bg-gray-800/90 dark:border-b-gray-600"
 >
     <a
         class="{hidenOnSearch} md:inline lg:w-[200px] text-xl font-medium text-gray-700 dark:text-gray-300"
@@ -73,7 +73,7 @@
         on:submit|preventDefault={find}
         class="{searchActive
             ? 'flex'
-            : 'hidden'} md:flex items-center gap-2 w-[42ch] pl-2.5 md:pl-4 pr-4 md:pr-1.5 h-12 bg-transparent md:bg-gray-100 md:dark:bg-gray-700 rounded"
+            : 'hidden'} md:flex items-center gap-2 w-full md:w-[42ch] pl-2.5 md:pl-4 pr-4 md:pr-1.5 h-12 bg-transparent md:bg-gray-100 md:dark:bg-gray-700 rounded-full"
     >
         <button
             class="flex md:hidden w-10 h-10 p-1 text-gray-600 dark:text-gray-300"
@@ -98,7 +98,7 @@
             bind:value={search}
         />
         <button
-            class="appearance-none flex justify-center items-center min-w-[2.25em] min-h-[2.25em] rounded hover:bg-white focus:bg-white dark:hover:bg-gray-800 dark:focus:bg-gray-800 hover:shadow-sm focus:shadow-sm transition-colors"
+            class="appearance-none flex justify-center items-center min-w-[2.25em] min-h-[2.25em] rounded-full hover:bg-white focus:bg-white dark:hover:bg-gray-800 dark:focus:bg-gray-800 hover:shadow-sm focus:shadow-sm transition-colors"
             type="submit"
         >
             <SendIcon
@@ -114,7 +114,9 @@
         >
             <a
                 href="/collection"
-                class={`w-10 h-10 p-2 rounded ${applyActive('/collection')}`}
+                class={`w-10 h-10 p-2 rounded-2xl ${applyActive(
+                    '/collection'
+                )}`}
                 title="Bookmark and History"
                 aria-label="Bookmark and History"
             >
@@ -123,12 +125,24 @@
 
             <a
                 href="/settings"
-                class={`w-10 h-10 p-2 rounded ${applyActive('/settings')}`}
+                class={`w-10 h-10 p-2 rounded-2xl ${applyActive('/settings')}`}
                 title="Settings"
                 aria-label="Settings"
             >
                 <SettingsIcon />
             </a>
+        </div>
+
+        <div
+            class="{hidenOnSearch} md:hidden flex-1 justify-end items-center h-full ml-1"
+        >
+            <button
+                class="w-10 h-10 p-2 text-gray-500 dark:text-gray-300"
+                on:click={openSearch}
+                aria-label="Open Search"
+            >
+                <SearchIcon />
+            </button>
         </div>
 
         {#if $user.name}
@@ -145,22 +159,10 @@
         {:else}
             <a
                 href="/sign-in"
-                class="{hidenOnSearch} text-lg text-gray-500 dark:text-gray-400 px-2 py-1 md:px-4 md:py-1.5 border border-gray-300 dark:border-gray-400 rounded"
+                class="{hidenOnSearch} text-lg text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/50 px-4 py-1.5 rounded-2xl hover:rounded-lg focus:rounded-lg transition-all"
                 >Sign in</a
             >
         {/if}
-
-        <div
-            class="{hidenOnSearch} md:hidden flex-1 justify-end items-center h-full ml-1"
-        >
-            <button
-                class="w-10 h-10 p-2 text-gray-500 dark:text-gray-300"
-                on:click={openSearch}
-                aria-label="Open Search"
-            >
-                <SearchIcon />
-            </button>
-        </div>
     </div>
 </nav>
 

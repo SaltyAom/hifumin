@@ -96,7 +96,7 @@
 
 <div class="relative w-[16ch] {$$props.class || ''}">
     <button
-        class="flex items-center w-full font-bold text-gray-700 dark:text-gray-400 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 dark:bg-gray-700 rounded {selectorClass}"
+        class="flex items-center w-full font-bold text-gray-700 dark:text-gray-400 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 dark:bg-gray-700 rounded-full {selectorClass}"
         on:click={open}
         bind:this={selector}
     >
@@ -111,7 +111,7 @@
     </button>
 
     <section
-        class={`sheet absolute z-20 flex flex-col justify-center w-full mt-1 bg-white dark:bg-gray-700 rounded overflow-hidden ${
+        class={`sheet absolute z-20 flex flex-col justify-center w-full mt-1 bg-white dark:bg-gray-700 rounded-xl overflow-hidden ${
             isOpen ? '-open' : ''
         }`}
         style="height:{isOpen ? 8 + options.length * 48 : 0}px"
