@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { goto } from '$app/navigation'
+
     import Image from '$lib/atoms/image.svelte'
     import AddCollection from '$lib/atoms/add-collection.svelte'
 
@@ -9,6 +11,10 @@
     import { BookOpenIcon, HeartIcon, Edit2Icon } from 'svelte-feather-icons'
 
     export let nhql: NhqlByIdData
+
+    $: findTranslation = () => {
+        goto(`/source/${nhql.id}`)
+    }
 </script>
 
 <header
@@ -74,6 +80,7 @@
             <button
                 class="flex justify-center items-center gap-2 h-8 px-2 border dark:border-gray-600 rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors"
                 title="Find translation"
+                on:click={findTranslation}
             >
                 <TranslateIcon class="w-5.5 h-5.5 p-0.5" />
                 Translate

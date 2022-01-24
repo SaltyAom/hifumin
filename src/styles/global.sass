@@ -5,7 +5,10 @@ a, button, input
     -webkit-tap-highlight-color: transparent
 
 .min-h-app
-    min-height: calc(100vh - 4rem)
+    min-height: calc(100vh - 4rem - 65px)
+    
+    @screen md
+        min-height: calc(100vh - 4rem)
 
 .h-app
     height: calc(100vh - 4rem)
