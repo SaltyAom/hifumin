@@ -151,7 +151,7 @@ const Source = () => {
 				>
 					<img
 						className={tw`max-w-[192px]`}
-						src="/gif/a-chan.gif"
+						src="/gif/a-chan.webp"
 						alt="Processing"
 						title="Walfie's A-Chan illustration"
 					/>

@@ -9,7 +9,7 @@ module.exports = (config, options) => {
 	)
 
 	const fixUse = (use) => {
-		if (use.loader.indexOf('css-loader') >= 0 && use.options.modules)
+		if (use?.loader?.indexOf('css-loader') >= 0 && use.options.modules)
 			use.options = {
 				...use.options,
 				modules: {
