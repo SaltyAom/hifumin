@@ -128,10 +128,10 @@ const Reader: FunctionComponent<ReaderProps> = ({
 						can support the artist by purchasing the original
 					</p>
 					<section className={tw`flex flex-col gap-4 mt-4`}>
-						{error.response?.twitter && (
+						{error.response?.source && (
 							<a
 								className={tw`text-blue-500 bg-blue-50 dark:bg-blue-900/50 no-underline font-medium rounded px-4 py-2`}
-								href={error.response?.twitter}
+								href={error.response?.source}
 							>
 								Buy the original
 							</a>
