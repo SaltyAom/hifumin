@@ -40,7 +40,9 @@ const intersect = (
             window.addEventListener('scroll', handleIntersection, true)
         }, 16)
 
-        if (node.getBoundingClientRect().top - window.innerHeight > 0) {
+        const offset = node.getBoundingClientRect().top - window.innerHeight
+
+        if (offset > window.innerHeight * 0.25 || offset < -window.innerHeight * 1.25) {
             if (intentIntersection) {
                 clearTimeout(intentIntersection)
                 intentIntersection = null

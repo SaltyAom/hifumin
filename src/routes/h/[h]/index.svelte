@@ -45,9 +45,19 @@
         }, 500)
     }
 
+    const getPage = /\/([0-9]{1,4})\.(\w+)$/
+
     const readerIdMap: Record<ReaderType, string> = {
         [ReaderType.interactive]: 'interactive',
         [ReaderType.scroll]: 'scroll'
+    }
+
+    const composePreviewImage = (source: string) => {
+        const [, id, extension] = getPage.exec(source)
+
+        return source
+            .replace('i.nh', 't.nh')
+            .replace(getPage, `/${id}t.${extension}`)
     }
 </script>
 
@@ -99,7 +109,7 @@
                     </div>
                     <div class="image">
                         <Image
-                            {src}
+                            src={composePreviewImage(src)}
                             {width}
                             {height}
                             id={`page-${index + 1}`}
