@@ -36,7 +36,8 @@ module.exports = {
         'jsx-a11y/click-events-have-key-events': 0,
         'jsx-a11y/no-static-element-interactions': 0,
         'no-unused-vars': 1,
-        'arrow-body-style': 0
+        'arrow-body-style': 0,
+        'react/function-component-definition': 0
     },
     ignorePatterns: [
         '__tests__',
