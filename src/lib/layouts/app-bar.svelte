@@ -51,14 +51,14 @@
                 ? $page.url.pathname === '/'
                 : $page.url.pathname.startsWith(path)
         )
-            ? 'text-blue-500 dark:text-blue-500 bg-blue-50 dark:bg-blue-900/50 dark:bg-transparent'
+            ? 'text-blue-500 dark:text-blue-500 bg-blue-50 dark:bg-blue-900/50'
             : ''
 </script>
 
 <nav
     class="sticky z-30 top-0 flex justify-between items-center gap-1 h-16 safe-area {searchActive
         ? 'px-0'
-        : 'px-4'} md:px-4 border-b bg-white dark:bg-gray-800/90 dark:border-b-gray-600"
+        : 'px-4'} md:px-4 border-b bg-white dark:bg-gray-800 dark:border-b-gray-600"
 >
     <a
         class="{hidenOnSearch} md:inline lg:w-[200px] text-xl font-medium text-gray-700 dark:text-gray-300"

@@ -6,6 +6,7 @@
         removeFromCollection
     } from '$lib/stores/collections'
     import user from '$lib/stores/user'
+    import { PlusIcon } from 'svelte-feather-icons'
 
     export let title: string = ''
     export let id: number
@@ -114,8 +115,17 @@
                         class="w-full bg-transparent outline-none ring-transparent"
                         placeholder="My collection"
                         title="Collection name"
+                        inputmode="search"
                         bind:value={search}
                     />
+                    <button
+                        type="submit"
+                        class="min-w-6 h-6 p-0.5 text-gray-600 dark:text-gray-200 rounded hover:bg-gray-400/25 focus:bg-gray-400/25 dark:hover:bg-gray-400/50 dark:focus:bg-gray-400/50 transition-colors"
+                        title="Create new collection"
+                        aria-label="Create new collection"
+                    >
+                        <PlusIcon strokeWidth={1} />
+                    </button>
                 </form>
                 <section
                     class="relative flex flex-1 flex-col w-full pt-0.5 gap-0.5 overflow-x-hidden overflow-y-auto"

@@ -1,77 +1,50 @@
 <script lang="ts">
     import { collectionsData, collectionsArray } from '$lib/stores/collections'
 
+    import SkeletonCover from '$lib/skeletons/cover.svelte'
     import Image from '$lib/atoms/image.svelte'
-    import { ArrowRightCircleIcon } from 'svelte-feather-icons'
 </script>
 
-<main
-    class="flex flex-col gap-8 w-full max-w-3xl mx-auto py-16 text-gray-700 dark:text-gray-300"
->
-    {#each $collectionsArray as { name, h, id } (name)}
-        <section class="flex flex-col gap-4 px-4">
-            <header class="flex flex-col">
-                <p class="text-gray-400 text-sm font-light">
-                    {h.length} stories
-                </p>
-                <h2 class="text-3xl text-gray-700 dark:text-gray-300 font-medium">{name}</h2>
-            </header>
-            <div class="relative grid collection w-full gap-4 md:gap-8">
-                <a class="relative w-full" href="/collection/{id}">
-                    <div
-                        class="relative border-2 dark:border-gray-600 rounded-lg read-more"
-                    >
+<div class="flex flex-col w-full max-w-5xl mx-auto gap-6 px-4 py-6 md:py-12">
+    <h1 class="text-gray-700 dark:text-gray-300 font-medium text-3xl md:text-4xl">Collection</h1>
+    <main
+        class="grid collection gap-6 text-gray-700 dark:text-gray-300"
+    >
+        {#each $collectionsArray as { name, h, id } (name)}
+            <article class="w-full">
+                <a
+                    class="relative flex flex-col gap-1"
+                    href="/collection/{id}"
+                    sveltekit:prefetch
+                >
+                    {#if $collectionsData[h[h.length - 1]]}
+                        <Image
+                            parentClass="rounded-lg shadow-xl overflow-hidden mb-2"
+                            class="object-cover object-center"
+                            src={$collectionsData[h[h.length - 1]].images.cover.link}
+                            width={$collectionsData[h[h.length - 1]].images.cover.info
+                                .width}
+                            height={$collectionsData[h[h.length - 1]].images.cover.info
+                                .height}
+                        />
+                        <h1
+                            class="text-gray-500 dark:text-gray-300 text-2xl font-medium"
+                        >
+                            {name}
+                        </h1>
                         <div
-                            class="absolute flex flex-col gap-2 justify-center items-center w-full h-full text-blue-400"
+                            class="flex gap-2 items-center text-gray-400 capitalize"
                         >
-                            <ArrowRightCircleIcon
-                                class="w-12 h-12"
-                                strokeWidth={1}
-                            />
-                            <h1 class="text-base">View {name}</h1>
+                            {h.length} stories
                         </div>
-                    </div>
+                    {:else}
+                        <SkeletonCover />
+                    {/if}
                 </a>
-                {#each h.slice(0, 2) as id}
-                    <article class="w-full">
-                        <a
-                            class="relative flex flex-col gap-2"
-                            href="/h/{id}"
-                            sveltekit:prefetch
-                        >
-                            {#if $collectionsData[id]}
-                                <Image
-                                    parentClass="rounded-lg shadow-xl overflow-hidden"
-                                    class="object-cover object-center"
-                                    src={$collectionsData[id].images.cover.link}
-                                    width={$collectionsData[id].images.cover
-                                        .info.width}
-                                    height={$collectionsData[id].images.cover
-                                        .info.height}
-                                />
-                                <h1 class="text-gray-500">
-                                    {$collectionsData[id].title.display}
-                                </h1>
-                                <div
-                                    class="flex gap-2 items-center text-gray-400 capitalize"
-                                >
-                                    <img
-                                        src="/icons/language.svg"
-                                        class="w-5 h-5"
-                                        alt="Language icon"
-                                    />
-                                    {$collectionsData[id].metadata.language}
-                                </div>
-                            {:else}
-                                <h1>Loading 2</h1>
-                            {/if}
-                        </a>
-                    </article>
-                {/each}
-            </div>
-        </section>
-    {/each}
-</main>
+            </article>
+        {/each}
+    </main>
+</div>
 
 <style lang="sass">
     .read-more

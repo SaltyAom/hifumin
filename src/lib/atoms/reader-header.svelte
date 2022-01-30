@@ -40,7 +40,7 @@
         </header>
 
         <section
-            class="flex items-center gap-1 text-gray-700 dark:text-gray-400 capitalize"
+            class="flex items-center gap-1 text-gray-700 dark:text-gray-400 capitalize flex-wrap"
         >
             <Edit2Icon size="18" />
             {#each nhql.metadata.artists as artist (artist.name)}
@@ -75,7 +75,7 @@
                 class="border dark:border-gray-600 !my-2"
                 dialogClass="!left-0"
                 id={nhql.id}
-                title="Add to..."
+                title="Bookmark"
             />
             <button
                 class="flex justify-center items-center gap-2 h-8 px-2 border dark:border-gray-600 rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors"
