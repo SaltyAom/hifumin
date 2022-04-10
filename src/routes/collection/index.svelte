@@ -1,8 +1,10 @@
 <script lang="ts">
-    import { collectionsData, collectionsArray } from '$lib/stores/collections'
+    import { collectionsArray, collectionsCover } from '$lib/stores/collections'
 
     import SkeletonCover from '$lib/skeletons/cover.svelte'
     import Image from '$lib/atoms/image.svelte'
+
+    console.log($collectionsCover)
 </script>
 
 <div class="flex flex-col w-full max-w-5xl mx-auto gap-6 px-4 py-6 md:py-12">
@@ -11,20 +13,21 @@
         class="grid collection gap-6 text-gray-700 dark:text-gray-300"
     >
         {#each $collectionsArray as { name, h, id } (name)}
+            {@const cover = $collectionsCover[name]}
             <article class="w-full">
                 <a
                     class="relative flex flex-col gap-1"
                     href="/collection/{id}"
                     sveltekit:prefetch
                 >
-                    {#if $collectionsData[h[h.length - 1]]}
+                    {#if cover}
                         <Image
                             parentClass="rounded-lg shadow-xl overflow-hidden mb-2"
                             class="object-cover object-center"
-                            src={$collectionsData[h[h.length - 1]].images.cover.link}
-                            width={$collectionsData[h[h.length - 1]].images.cover.info
+                            src={cover.images.cover.link}
+                            width={cover.images.cover.info
                                 .width}
-                            height={$collectionsData[h[h.length - 1]].images.cover.info
+                            height={cover.images.cover.info
                                 .height}
                         />
                         <h1
@@ -47,8 +50,8 @@
 </div>
 
 <style lang="sass">
-    .read-more
-        padding-bottom: 144.74%
+    // .read-more
+    //     padding-bottom: 144.74%
 
     .collection
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr))
@@ -67,6 +70,6 @@
         .collection > article
             display: none
 
-        .read-more
-            padding-bottom: 100%
+        // .read-more
+        //     padding-bottom: 100%
 </style>

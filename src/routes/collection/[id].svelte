@@ -4,7 +4,7 @@
 
     import SkeletonCover from '$lib/skeletons/cover.svelte'
 
-    import { ChevronLeftIcon, ShareIcon } from 'svelte-feather-icons'
+    import { ChevronLeftIcon } from 'svelte-feather-icons'
 
     import Image from '$lib/atoms/image.svelte'
 

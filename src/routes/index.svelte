@@ -23,7 +23,7 @@
         preference: { data: includes, enable }
     } = get(settings)
 
-    const defaultTags = [...(enable ? includes : 'all')]
+    const defaultTags = [...(enable ? includes : ['all'])]
     let availables = [...defaultTags]
 
     // Bind resizable window width

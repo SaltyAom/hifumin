@@ -52,6 +52,7 @@
     $: totalMasonry = getTotalMasonry(layoutWidth)
     $: chunkHentais = chunkHentai(totalMasonry, hentais)
 
+    // Allow empty page once
     let toleratedError = false
 
     const appendNhentai = async () => {
@@ -64,13 +65,19 @@
                 ...newHentais.filter((h) => !shadowIds.includes(h.id))
             ]
 
-            if (newHentais.length < 25) over = true
+            if (newHentais.length < 25) {
+                if(!toleratedError)
+                    return toleratedError = true
+
+                over = true
+            }
+
+            toleratedError = false
         } catch (err) {
             if (toleratedError) over = true
 
             toleratedError = true
         } finally {
-            toleratedError = false
             isLoading = false
             page++
         }

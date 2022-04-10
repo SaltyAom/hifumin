@@ -43,6 +43,37 @@ export const collectionsArray = derived(collections, (collections) =>
     Object.keys(collections).flatMap((key) => collections[key])
 )
 
+export const collectionsCover = derived(
+    collectionsArray,
+    async (collections) => {
+        const collection: Record<string, NhqlCoverByIdData> = {}
+
+        await Promise.all(
+            collections.map(
+                ({ name, h, id }) =>
+                    new Promise<void>(async (resolve) => {
+                        const coverId = h[0]
+
+                        try {
+                            await saveCoverToLocal(h)
+
+                            const rawData = localStorage.getItem(`h-${coverId}`)
+                            const data: NhqlCoverByIdData = JSON.parse(rawData)
+
+                            collection[name] = data
+                        } catch (_e) {} finally {
+                            resolve()
+                        }
+                    })
+            )
+        )
+
+        console.log(collection)
+
+        return collection
+    }
+)
+
 export const collectionsData = derived(collectionsArray, (collections) => {
     const collection: Record<number, NhqlCoverByIdData> = {}
 
@@ -50,6 +81,7 @@ export const collectionsData = derived(collectionsArray, (collections) => {
         h.forEach((h) => {
             try {
                 const rawData = localStorage.getItem(`h-${h}`)
+
                 const data: NhqlCoverByIdData = JSON.parse(rawData)
 
                 collection[data.id] = data
