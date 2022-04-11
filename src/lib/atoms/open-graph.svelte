@@ -12,7 +12,7 @@
     export let title = 'Hifumin: hentai doujinshi and manga'
     export let alternativeTitle = []
     export let description =
-        'Find 6 digits code without ads, faster and clean design'
+        'Find 6 digits code without ads. Find and read hentai doujinshi and manga from 6 digits withouts ads, fast and safe.'
     export let author = ''
     export let icon = '/assets/icon/icon.png'
     export let createdAt: number | null = null
@@ -32,7 +32,7 @@
     <meta name="author" content={author} />
     <link rel="icon" href={icon} />
     <link rel="shortcut icon" href={icon} />
-    <link rel="canonical" href={`https://atago.opener.studio${asPath}`} />
+    <link rel="canonical" href={`https://hifumin.app${asPath}`} />
     <meta
         name="keyword"
         content={`${title},${
