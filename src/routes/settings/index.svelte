@@ -9,7 +9,7 @@
 </script>
 
 <SettingLayout title="Settings" label="Adjust Platform behavior">
-    <SettingRow title="Theme Mode">
+    <SettingRow vertical title="Theme Mode">
         <svelte:fragment slot="label">
             <p>Set color theme.</p>
             <p>Choosing "adaptive" will use the system setting.</p>
@@ -22,7 +22,7 @@
         />
     </SettingRow>
 
-    <SettingRow title="Safe Mode">
+    <SettingRow vertical title="Safe Mode">
         <p slot="label">Hide the image for some purpose.</p>
         <Dropdown
             class="mt-3.5"
@@ -32,7 +32,7 @@
         />
     </SettingRow>
 
-    <SettingRow title="Reader Mode">
+    <SettingRow vertical title="Reader Mode">
         <p slot="label">Reading Layout</p>
         <Dropdown
             class="mt-3.5"

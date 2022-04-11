@@ -1,11 +1,9 @@
 <script lang="ts">
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
-    import AddCollection from './add-collection.svelte'
 
     import Image from './image.svelte'
 
     export let hentai: NhqlSearchData
-    export let isLast = false
 
     const languageMap = {
         english: 'EN',
@@ -24,7 +22,7 @@
 
 <article class="flex flex-col gap-2 w-full">
     <a sveltekit:prefetch href="/h/{hentai.id}">
-        <div class="cover rounded-3xl border dark:border-gray-700">
+        <div class="cover rounded-2xl border dark:border-gray-700">
             <div class="image overflow-hidden">
                 <Image
                     src={hentai.images.cover.link}
@@ -40,12 +38,6 @@
             <h5 class="inline-flex items-center flex-1 text-base">
                 {hentai.title.display}
             </h5>
-            <AddCollection
-                parentClass="{isLast
-                    ? '!justify-end'
-                    : ''}"
-                id={hentai.id}
-            />
         </div>
 
         <div class="flex flex-row justify-between gap-1 md:gap-1.5">
@@ -77,7 +69,7 @@
 
         &:hover,
         &:focus
-            @apply rounded-xl
+            @apply rounded-lg
 
             & > .image
                 transform: scale(1.075)

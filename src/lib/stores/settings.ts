@@ -56,7 +56,9 @@ const setting = writable<Setting>(
 )
 
 setting.subscribe((setting) => {
-    if (!isServer) localStorage.setItem('setting', JSON.stringify(setting))
+    if (isServer) return 
+    
+    localStorage.setItem('setting', JSON.stringify(setting))
 })
 
 const adaptiveDarkTheme = writable(false)

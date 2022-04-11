@@ -10,6 +10,7 @@
 
     import { get } from 'svelte/store'
     import settings from '$lib/stores/settings'
+import OpenGraph from '$lib/atoms/open-graph.svelte'
 
     export let hentais: NhqlSearchData[] = []
 
@@ -90,10 +91,6 @@
 
 <svelte:window on:scroll={handleScroll} />
 
-<svelte:head>
-    <title>Hifumin: hentai doujinshi and manga</title>
-</svelte:head>
-
 <main
     class="flex w-full px-2 md:px-4 overflow-hidden"
     bind:clientWidth={layoutWidth}
@@ -138,7 +135,7 @@
             >
                 {#each Array(~~(50 / totalMasonry)).fill(0) as __, index (index)}
                     <figure
-                        class="w-full rounded-4xl bg-gray-50 dark:bg-gray-700"
+                        class="w-full rounded-lg bg-gray-50 dark:bg-gray-700"
                         style="padding-bottom: 145%"
                     />
                 {/each}
@@ -150,7 +147,7 @@
                 class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden"
             >
                 {#each row as hentai (hentai.id)}
-                    <Cover {hentai} isLast={index === totalMasonry - 1} />
+                    <Cover {hentai} />
                 {/each}
                 {#if index === 0}
                     <div bind:this={observer} />

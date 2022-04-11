@@ -20,6 +20,7 @@
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
     import { isServer } from '$lib/utils'
+    import OpenGraph from '$lib/atoms/open-graph.svelte'
 
     export let nhql: NhqlSearchData[]
     export let search: string
@@ -32,7 +33,7 @@
     $: shadowIds = [...hentais.map((h) => h.id)]
 
     sveltePage.subscribe(async (newPage) => {
-        if (!newPage) return
+        if (!newPage || isLoading) return
 
         isLoading = true
 
@@ -99,9 +100,9 @@
 
 <svelte:window on:scroll={handleScroll} />
 
-<svelte:head>
-    <title>Search: {search} &raquo; Hifumin: hentai doujinshi and manga</title>
-</svelte:head>
+<OpenGraph
+    title="Search: {search} &raquo; Hifumin: hentai doujinshi and manga"
+/>
 
 <main
     class="flex w-full px-2 md:px-4 overflow-hidden"
@@ -134,7 +135,7 @@
                 class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden"
             >
                 {#each row as hentai (hentai.id)}
-                    <Cover {hentai} isLast={index === totalMasonry - 1} />
+                    <Cover {hentai} />
                 {/each}
                 {#if index === 0}
                     <div bind:this={observer} />

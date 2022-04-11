@@ -26,12 +26,6 @@
         </div>
         Home
     </a>
-    <a class="{tabClass} {applyActive('/collection')}" href="/collection">
-        <div class="icon">
-            <BookmarkIcon class="icon w-6 h-6" strokeWidth={1.5} />
-        </div>
-        Bookmark
-    </a>
     <a class="{tabClass} {applyActive('/settings')}" href="/settings">
         <div class="icon">
             <SettingsIcon class="w-6 h-6" strokeWidth={1.5} />
@@ -50,7 +44,4 @@
     .-active
         & > .icon
             @apply bg-blue-50
-
-            @screen dark
-                @apply bg-blue-900/50
 </style>

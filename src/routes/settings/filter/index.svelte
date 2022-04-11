@@ -39,7 +39,7 @@
     title="Filter"
     label="Remove unwanted tags or keyword from search results."
 >
-    <SettingRow row title="Enable">
+    <SettingRow title="Enable">
         <svelte:fragment slot="label">
             <p>Allow custom filter.</p>
             <p>Disable this will not removed filter you have added.</p>

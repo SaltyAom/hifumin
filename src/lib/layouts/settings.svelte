@@ -7,7 +7,7 @@
     export let label = ''
 </script>
 
-<section class="flex flex-col w-full max-w-xl mx-auto py-8 px-4">
+<section class="flex flex-col w-full max-w-xl mx-auto py-8 px-8">
     {#if $page.url.pathname !== '/settings'}
         <a class="flex items-center gap-0.5 text-gray-400 dark:text-gray-500" href="/settings"
             ><ChevronLeftIcon class="w-5 h-5" /> Back</a

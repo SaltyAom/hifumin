@@ -1,10 +1,10 @@
 <script lang="ts">
     export let title: string
-    export let row: boolean = false
+    export let vertical = false
 </script>
 
 <article
-    class="flex {row
+    class="flex {!vertical
         ? 'flex-row'
         : 'flex-col'} md:flex-row justify-between w-full md:gap-2 {$$props.class}"
 >

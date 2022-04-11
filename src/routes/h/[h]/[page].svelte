@@ -91,6 +91,10 @@
 
 <svelte:window on:keydown={handleKeyPress} />
 
+<svelte:head>
+    <meta name="robots" content="noindex" />
+</svelte:head>
+
 <main class="relative flex flex-col items-center w-full h-app mx-auto">
     <aside
         class="flex justify-center items-center gap-2 h-8 pr-10 text-gray-600 dark:text-gray-400"

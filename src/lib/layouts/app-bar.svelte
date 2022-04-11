@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { page } from '$app/stores'
+    import { page, navigating } from '$app/stores'
     import { goto } from '$app/navigation'
 
     import {
@@ -9,7 +9,6 @@
         SendIcon,
         SettingsIcon
     } from 'svelte-feather-icons'
-    import user from '$lib/stores/user'
 
     let search
     // For mobile devices
@@ -39,6 +38,8 @@
     const find = () => {
         closeSearch()
 
+        if($navigating) return
+
         if (!search) return goto('/')
         if (isNumeric(search)) return goto(`/h/${search}`)
 
@@ -61,7 +62,7 @@
         : 'px-4'} md:px-4 border-b bg-white dark:bg-gray-800 dark:border-b-gray-600"
 >
     <a
-        class="{hidenOnSearch} md:inline lg:w-[200px] text-xl font-medium text-gray-700 dark:text-gray-300"
+        class="{hidenOnSearch} md:inline min-w-[104px] text-xl font-medium text-gray-700 dark:text-gray-300"
         role="heading"
         aria-level={1}
         href="/"
@@ -108,21 +109,10 @@
         </button>
     </form>
 
-    <div class="flex items-center gap-2">
+    <div class="flex justify-end items-center gap-2 min-w-[104px]">
         <div
-            class="hidden md:flex justify-end items-center gap-2 text-gray-500 dark:text-gray-400 px-2"
+            class="hidden md:flex gap-2 text-gray-500 dark:text-gray-400 px-2"
         >
-            <a
-                href="/collection"
-                class={`w-10 h-10 p-2 rounded-2xl ${applyActive(
-                    '/collection'
-                )}`}
-                title="Bookmark and History"
-                aria-label="Bookmark and History"
-            >
-                <BookmarkIcon />
-            </a>
-
             <a
                 href="/settings"
                 class={`w-10 h-10 p-2 rounded-2xl ${applyActive('/settings')}`}
@@ -144,25 +134,6 @@
                 <SearchIcon />
             </button>
         </div>
-
-        {#if $user.name}
-            <a
-                href="/sign-in"
-                class="{hidenOnSearch} w-9 h-9 bg-gray-100 dark:bg-gray-700 rounded-full"
-            >
-                <img
-                    class="w-9 h-9 object-cover rounded-full"
-                    src={$user.profile || '/assets/takodachi.webp'}
-                    alt={$user.name}
-                />
-            </a>
-        {:else}
-            <a
-                href="/sign-in"
-                class="{hidenOnSearch} text-lg text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/50 px-4 py-1.5 rounded-2xl hover:rounded-lg focus:rounded-lg transition-all"
-                >Sign in</a
-            >
-        {/if}
     </div>
 </nav>
 

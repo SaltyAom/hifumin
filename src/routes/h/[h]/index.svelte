@@ -16,6 +16,7 @@
 
         return {
             props: {
+                h,
                 nhql
             }
         }
@@ -29,8 +30,10 @@
     import ReaderMode from '$lib/molecules/reader-mode.svelte'
 
     import Comment from '$lib/organisms/comment.svelte'
+    import OpenGraph from '$lib/atoms/open-graph.svelte'
 
     export let nhql: NhqlByIdData
+    export let h: number
 
     const reload: svelte.JSX.EventHandler<Event, HTMLImageElement> = (
         event
@@ -59,13 +62,21 @@
             .replace('i.nh', 't.nh')
             .replace(getPage, `/${id}t.${extension}`)
     }
+
+    let tags = nhql.metadata.tags.map(({ name }) => name).join(', ')
 </script>
 
-<svelte:head>
-    <title
-        >Read: {nhql.title.display} &raquo; Hifumin: hentai doujinshi and manga</title
-    >
-</svelte:head>
+<OpenGraph
+    id={h}
+    title="Read: {nhql.title
+        .display} &raquo; Hifumin: hentai doujinshi and manga"
+    description="[{nhql.metadata.language}] {nhql.title
+        .display}, total page: {nhql.info
+        .amount}, favorite {nhql.info.favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
+    author={nhql.metadata.artists.map((artist) => artist.name).join(', ')}
+    image={nhql.images.cover}
+    createdAt={nhql.info.upload}
+/>
 
 <article class="flex flex-col w-full mx-auto">
     <div

@@ -1,0 +1,25 @@
+{
+    "short_name": "Hifumin",
+    "name": "Hifumin",
+    "icons": [
+        {
+            "src": "/assets/app/icon/icon.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/assets/app/icon/icon@medium.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "/assets/app/icon/icon@large.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "scope": "/",
+    "orientation": "portrait"
+}
