@@ -21,5 +21,6 @@
     "start_url": "/",
     "display": "standalone",
     "scope": "/",
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "background_color": "#ffffff"
 }

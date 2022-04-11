@@ -16,7 +16,7 @@
         'flex flex-col flex-1 justify-center items-center gap-0.5 font-medium text-xs text-gray-400 dark:text-gray-400 font-light !bg-transparent'
 </script>
 
-<div class="block md:hidden h-16 box-content safe-area" />
+<div class="block md:hidden h-16 safe-area" />
 <aside
     class="box-content sare-area fixed z-30 bottom-0 flex md:hidden items-center w-full h-16 bg-white dark:bg-gray-800 border-t dark:border-gray-600"
 >
@@ -36,6 +36,7 @@
 
 <style lang="sass">
     .safe-area
+        box-sizing: content-box
         padding-bottom: env(safe-area-inset-bottom)
 
     .icon

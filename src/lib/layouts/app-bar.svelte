@@ -109,7 +109,7 @@
         </button>
     </form>
 
-    <div class="flex justify-end items-center gap-2 min-w-[104px]">
+    <div class="{hidenOnSearch} justify-end items-center gap-2 min-w-[104px]">
         <div
             class="hidden md:flex gap-2 text-gray-500 dark:text-gray-400 px-2"
         >
@@ -124,7 +124,7 @@
         </div>
 
         <div
-            class="{hidenOnSearch} md:hidden flex-1 justify-end items-center h-full ml-1"
+            class="flex md:hidden flex-1 justify-end items-center h-full ml-1"
         >
             <button
                 class="w-10 h-10 p-2 text-gray-500 dark:text-gray-300"
