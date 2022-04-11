@@ -11,7 +11,8 @@
     export let id = 0
     export let title = 'Hifumin: hentai doujinshi and manga'
     export let alternativeTitle = []
-    export let description = 'Find 6 digits code without ads, faster and clean design'
+    export let description =
+        'Find 6 digits code without ads, faster and clean design'
     export let author = ''
     export let icon = '/assets/icon/icon.png'
     export let createdAt: number | null = null
@@ -81,4 +82,7 @@
     <meta name="theme-color" content={$darkTheme ? '#1f2937' : '#ffffff'} />
 
     <link rel="preconnect" content="https://t.nhentai.net" />
+    <link rel="preconnect" content="https://api.hifumin.app" />
+
+    <meta http-equiv="Content-Security-Policy" content="script-src 'none'" />
 </svelte:head>
