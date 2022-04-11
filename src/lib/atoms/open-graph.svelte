@@ -11,8 +11,7 @@
     export let id = 0
     export let title = 'Hifumin: hentai doujinshi and manga'
     export let alternativeTitle = []
-    export let description =
-        'Find 6 digits code without ads, faster and clean design'
+    export let description = 'Find 6 digits code without ads, faster and clean design'
     export let author = ''
     export let icon = '/assets/icon/icon.png'
     export let createdAt: number | null = null
