@@ -21,7 +21,7 @@
             width: 1920,
             height: 1080
         },
-        link: '/assets/image/image.jpg'
+        link: 'https://hifumin.app/assets/images/cover.jpg'
     }
 </script>
 
@@ -56,7 +56,7 @@
     <meta property="og:image:height" content={image.info.height.toString()} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={`https://atago.opener.studio${asPath}`} />
+    <meta property="og:url" content={`https://hifumin.app${asPath}`} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
