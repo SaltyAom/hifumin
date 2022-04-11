@@ -79,5 +79,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-touch-fullscreen" content="yes" />
 
-    <meta name="theme-color" content="{$darkTheme ? "#1f2937" : "#ffffff"}" />
+    <meta name="theme-color" content={$darkTheme ? '#1f2937' : '#ffffff'} />
+
+    <link rel="preconnect" content="https://t.nhentai.net" />
 </svelte:head>

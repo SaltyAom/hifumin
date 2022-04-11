@@ -51,7 +51,7 @@ const getTime = (time, unit) => {
     }
 }
 
-const staticAssets = build.concat(files)
+const staticAssets = build.concat(files).filter((v) => !v.endsWith('.psd'))
 
 precacheAndRoute(
     staticAssets.map((url) => ({
