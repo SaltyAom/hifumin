@@ -83,6 +83,4 @@
 
     <link rel="preconnect" content="https://t.nhentai.net" />
     <link rel="preconnect" content="https://api.hifumin.app" />
-
-    <meta http-equiv="Content-Security-Policy" content="script-src 'none'" />
 </svelte:head>
