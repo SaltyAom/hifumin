@@ -20,8 +20,8 @@
     }
 </script>
 
-<article class="flex flex-col gap-2 w-full">
-    <a sveltekit:prefetch href="/h/{hentai.id}">
+<a sveltekit:prefetch href="/h/{hentai.id}">
+    <article class="flex flex-col gap-2 w-full">
         <div class="cover rounded-2xl border dark:border-gray-700">
             <div class="image overflow-hidden">
                 <Image
@@ -31,31 +31,41 @@
                 />
             </div>
         </div>
-    </a>
 
-    <header class="flex flex-1 flex-col gap-1 text-gray-400 text-sm w-full">
-        <div class="flex flex-row w-full">
-            <h5 class="inline-flex items-center flex-1 text-base">
-                {hentai.title.display}
-            </h5>
-        </div>
+        <header class="flex flex-1 flex-col gap-1 text-gray-400 text-sm w-full">
+            <div class="flex flex-row w-full">
+                <h5 class="inline-flex items-center flex-1 text-base">
+                    {hentai.title.display}
+                </h5>
+            </div>
 
-        <div class="flex flex-row justify-between gap-1 md:gap-1.5">
-            <p class="flex flex-[5] sm:flex-[4] items-center gap-1 capitalize">
-                <img class="w-3.5 h-3.5" src="/icons/language.svg" alt="Add" />
-                {mapLanguage(hentai.metadata.language)}
-            </p>
-            <p class="flex flex-[4] items-center gap-1 capitalize">
-                <img class="w-3.5 h-3.5" src="/icons/book-open.svg" alt="Add" />
-                {hentai.info.amount}
-            </p>
-            <p class="flex flex-[4] items-center gap-1 capitalize">
-                <img class="w-3.5 h-3.5" src="/icons/heart.svg" alt="Add" />
-                {reduceNumber(hentai.info.favorite)}
-            </p>
-        </div>
-    </header>
-</article>
+            <div class="flex flex-row justify-between gap-1 md:gap-1.5">
+                <p
+                    class="flex flex-[5] sm:flex-[4] items-center gap-1 capitalize"
+                >
+                    <img
+                        class="w-3.5 h-3.5"
+                        src="/icons/language.svg"
+                        alt="Add"
+                    />
+                    {mapLanguage(hentai.metadata.language)}
+                </p>
+                <p class="flex flex-[4] items-center gap-1 capitalize">
+                    <img
+                        class="w-3.5 h-3.5"
+                        src="/icons/book-open.svg"
+                        alt="Add"
+                    />
+                    {hentai.info.amount}
+                </p>
+                <p class="flex flex-[4] items-center gap-1 capitalize">
+                    <img class="w-3.5 h-3.5" src="/icons/heart.svg" alt="Add" />
+                    {reduceNumber(hentai.info.favorite)}
+                </p>
+            </div>
+        </header>
+    </article>
+</a>
 
 <style lang="sass">
     $expo-out: cubic-bezier(.16,1,.3,1)
