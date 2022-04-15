@@ -16,9 +16,9 @@
         'flex flex-col flex-1 justify-center items-center gap-0.5 font-medium text-xs text-gray-400 dark:text-gray-400 font-light !bg-transparent'
 </script>
 
-<div class="block md:hidden h-16 safe-area" />
+<div class="block md:hidden safe-area" />
 <aside
-    class="box-content sare-area fixed z-30 bottom-0 flex md:hidden items-center w-full h-16 bg-white dark:bg-gray-800 border-t dark:border-gray-600"
+    class="sare-area fixed z-30 bottom-0 flex md:hidden items-center w-full bg-white dark:bg-gray-800 border-t dark:border-gray-600"
 >
     <a class="{tabClass} {applyActive('/')}" href="/">
         <div class="icon">
@@ -36,8 +36,7 @@
 
 <style lang="sass">
     .safe-area
-        box-sizing: content-box
-        padding-bottom: env(safe-area-inset-bottom)
+        height: calc(theme('h-16') + env(safe-area-inset-bottom))
 
     .icon
         @apply px-6 py-1 rounded-full transition-colors

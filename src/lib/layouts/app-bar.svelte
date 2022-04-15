@@ -93,6 +93,7 @@
             id="search"
             name="search"
             placeholder="Find Hentai or 6 digits code"
+            inputmode="search"
             type="search"
             aria-label="Search"
             bind:this={searchBox}
