@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
     import { goto } from '$app/navigation'
 
     import ProgressIndicator from '$lib/atoms/progress-indicator.svelte'
@@ -16,9 +15,9 @@
     let error = ''
     let complete = false
 
-    onMount(() => {
-        if (!isServer && $user) return goto('/')
-    })
+    $: {
+        if (!isServer && $user) goto('/')
+    }
 
     const signUp = async () => {
         if (!email || !username || !password || !confirmPassword) return

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
     import { goto } from '$app/navigation'
 
     import ProgressIndicator from '$lib/atoms/progress-indicator.svelte'
@@ -11,9 +10,9 @@
     let isLoading = false
     let error = ''
 
-    onMount(() => {
-        if (!isServer && $user) return goto('/')
-    })
+    $: {
+        if (!isServer && $user) goto('/')
+    }
 
     const signIn = async () => {
         if (isLoading) return
