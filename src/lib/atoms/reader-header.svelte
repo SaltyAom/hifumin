@@ -161,7 +161,7 @@
             </button> -->
             <button
                 class="flex justify-center items-center gap-1 h-8 px-2 pr-3 border dark:border-gray-600 rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors {isFavorite
-                    ? 'text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border-gray-100 dark:border-gray-700'
+                    ? 'text-white bg-blue-500 dark:bg-blue-600 border-blue-500 dark:border-blue-600'
                     : ''}"
                 title="Find translation"
                 on:click={favorite}
