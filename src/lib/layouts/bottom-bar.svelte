@@ -27,7 +27,7 @@
         Home
     </a>
 
-    <a class="{tabClass} {applyActive('/favorite')}" href="/settings">
+    <a class="{tabClass} {applyActive('/favorite')}" href="/favorite">
         <div class="icon">
             <BookmarkIcon class="w-6 h-6" strokeWidth={1.5} />
         </div>
