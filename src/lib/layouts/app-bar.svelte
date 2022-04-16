@@ -63,7 +63,7 @@
         : 'px-4'} md:px-4 border-b bg-white dark:bg-gray-800 dark:border-b-gray-600"
 >
     <a
-        class="{hidenOnSearch} md:inline min-w-[104px] text-xl font-medium text-gray-700 dark:text-gray-300"
+        class="{hidenOnSearch} md:inline min-w-[148px] text-xl font-medium text-gray-700 dark:text-gray-300"
         role="heading"
         aria-level={1}
         href="/"
@@ -112,7 +112,7 @@
     </form>
 
     <section
-        class="{hidenOnSearch} justify-end items-center gap-2 min-w-[104px]"
+        class="{hidenOnSearch} justify-end items-center gap-2 min-w-[148px]"
     >
         <div class="hidden md:flex gap-2 text-gray-500 dark:text-gray-400 px-2">
             <a
