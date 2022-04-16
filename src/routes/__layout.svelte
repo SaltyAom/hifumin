@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
     import { client } from '@saltyaom/gq'
 
-    client.config('https://akashic.hifumin.app/v1/graphql')
+    client.config('https://api.hifumin.app')
 </script>
 
 <script lang="ts">
