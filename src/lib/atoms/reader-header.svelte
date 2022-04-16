@@ -1,20 +1,102 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
 
+    import {
+        BookOpenIcon,
+        HeartIcon,
+        Edit2Icon,
+        BookmarkIcon
+    } from 'svelte-feather-icons'
     import Image from '$lib/atoms/image.svelte'
-
     import TranslateIcon from '$lib/icons/translate.svelte'
 
     import type { NhqlByIdData } from '$lib/gql/nhqlById'
 
-    import { BookOpenIcon, HeartIcon, Edit2Icon } from 'svelte-feather-icons'
+    import user, { isAuthed } from '$lib/stores/user'
+    import { isServer } from '$lib/utils'
+    import MemberOnly from './member-only.svelte'
 
     export let nhql: NhqlByIdData
+
+    let isFavorite: boolean | null = null
+    let isLoading = false
+
+    $: {
+        nhql
+        $user
+
+        isFavorite = null
+        isLoading = false
+
+        getFavoriteStatus()
+    }
+
+    const getFavoriteStatus = async () => {
+        if (isServer) return
+        if (!$user) return (isFavorite = false)
+
+        try {
+            const res = await fetch(
+                `https://user.hifumin.app/favorite/h/${nhql.id}`,
+                {
+                    credentials: 'include'
+                }
+            )
+
+            if (res.status !== 200)
+                throw new Error('Failed to get favorite status')
+
+            isFavorite = (await res.text()) === 'true'
+        } catch {
+            isFavorite = false
+        }
+    }
 
     // $: findTranslation = () => {
     //     goto(`/source/${nhql.id}`)
     // }
+
+    let showBanner = false
+
+    const close = () => {
+        showBanner = false
+    }
+
+    const favorite = async () => {
+        if (isFavorite === null || isLoading) return
+        if (!$isAuthed) return
+        if (!$user) return (showBanner = true)
+
+        const method = isFavorite ? 'DELETE' : 'PUT'
+
+        isLoading = true
+        isFavorite = !isFavorite
+
+        try {
+            const res = await fetch(
+                `https://user.hifumin.app/favorite/h/${nhql.id}`,
+                {
+                    method,
+                    credentials: 'include'
+                }
+            )
+
+            if (res.status !== 200)
+                throw new Error('Failed to get favorite status')
+        } catch {
+            isFavorite = !isFavorite
+        } finally {
+            setTimeout(() => {
+                // Prevent spam clicking
+                isLoading = false
+            }, 250)
+        }
+    }
 </script>
+
+{#if showBanner}
+    <MemberOnly {close} />
+{/if}
 
 <header
     class="z-20 flex flex-col md:flex-row items-center gap-8 w-11/12 md:w-full max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-3xl shadow-3xl"
@@ -68,7 +150,7 @@
             </div>
         </div>
 
-        <div class="flex items-center text-gray-400 gap-2">
+        <div class="flex items-center text-gray-400 gap-2 my-2">
             <!-- <button
                 class="flex justify-center items-center gap-2 h-8 px-2 border dark:border-gray-600 rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors"
                 title="Find translation"
@@ -77,6 +159,16 @@
                 <TranslateIcon class="w-5.5 h-5.5 p-0.5" />
                 Translate
             </button> -->
+            <button
+                class="flex justify-center items-center gap-1 h-8 px-2 pr-3 border dark:border-gray-600 rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors {isFavorite
+                    ? 'text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border-gray-100 dark:border-gray-700'
+                    : ''}"
+                title="Find translation"
+                on:click={favorite}
+            >
+                <HeartIcon class="w-5.5 h-5.5 p-0.5" />
+                Favorite
+            </button>
         </div>
 
         <h4 class="text-gray-500 dark:text-gray-400">

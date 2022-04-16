@@ -45,7 +45,7 @@
 
         setTimeout(() => {
             image.src = src
-        }, 500)
+        }, 333)
     }
 
     const getPage = /\/([0-9]{1,4})\.(\w+)$/
@@ -71,8 +71,8 @@
     title="Read: {nhql.title
         .display} &raquo; Hifumin: hentai doujinshi and manga"
     description="[{nhql.metadata.language}] {nhql.title
-        .display}, total page: {nhql.info
-        .amount}, favorite {nhql.info.favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
+        .display}, total page: {nhql.info.amount}, favorite {nhql.info
+        .favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
     author={nhql.metadata.artists.map((artist) => artist.name).join(', ')}
     image={nhql.images.cover}
     createdAt={nhql.info.upload}
@@ -123,6 +123,7 @@
                             src={composePreviewImage(src)}
                             {width}
                             {height}
+                            autoCrop
                             id={`page-${index + 1}`}
                             alt={`Page ${index + 1}, ${nhql.title.display}`}
                             autoReload

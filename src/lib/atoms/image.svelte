@@ -12,6 +12,7 @@
     export let parentClass: string = ''
     export let autoReload = false
     export let src: string
+    export let autoCrop = false
 
     let error = false
 
@@ -42,13 +43,21 @@
         [SafeMode.opaque]: 'opacity-0'
     }
 
+    const calculatePadding = () => {
+        const size = (height / width) * 100
+
+        if (autoCrop && size > 175) return 175
+
+        return size
+    }
+
     $: safeModeClass = safeModeMap[$settings.safeMode]
 </script>
 
 <figure
     use:intersect
     on:intersect={handleIntersection}
-    style="padding-bottom:{(height / width) * 100}%"
+    style="padding-bottom:{calculatePadding()}%"
     class={`relative bg-gray-50 dark:bg-gray-700 overflow-hidden ${parentClass}`}
 >
     {#if intersected}

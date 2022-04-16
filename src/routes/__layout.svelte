@@ -5,6 +5,8 @@
 </script>
 
 <script lang="ts">
+    import AuthProvider from '$lib/provider/authProvider.svelte'
+
     import AppBar from '$lib/layouts/app-bar.svelte'
     import BottomBar from '$lib/layouts/bottom-bar.svelte'
     import Nprogress from '$lib/layouts/nprogress.svelte'
@@ -14,6 +16,8 @@
     import 'virtual:windi.css'
     import '../styles/global.sass'
 </script>
+
+<AuthProvider />
 
 <OpenGraph />
 

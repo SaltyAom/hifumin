@@ -24,6 +24,7 @@
     import { onMount } from 'svelte'
 
     import settings, { ReaderType } from '$lib/stores/settings'
+    import { isServer } from '$lib/utils'
 
     import {
         XIcon,
@@ -33,6 +34,23 @@
 
     export let nhql: NhqlByIdData
     export let page: number
+
+    $: {
+        if (!isServer) {
+            page
+
+            if (page <= pages.length) prefetchPage(page)
+            if (page > 1) prefetchPage(page - 2)
+        }
+    }
+
+    // Since we already have service worker, no prevention logic is need
+    const prefetchPage = (page: number) => {
+        const image = new Image()
+        const src = nhql.images.pages[page]?.link
+
+        if (src) image.src = src
+    }
 
     onMount(() => {
         settings.update((v) => ({

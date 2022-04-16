@@ -10,7 +10,7 @@
 
     import { get } from 'svelte/store'
     import settings from '$lib/stores/settings'
-import OpenGraph from '$lib/atoms/open-graph.svelte'
+    import OpenGraph from '$lib/atoms/open-graph.svelte'
 
     export let hentais: NhqlSearchData[] = []
 
@@ -24,7 +24,7 @@ import OpenGraph from '$lib/atoms/open-graph.svelte'
         preference: { data: includes, enable }
     } = get(settings)
 
-    const defaultTags = [...(enable ? includes : 'all')]
+    const defaultTags = [...(enable ? new Set(includes) : ['all'])]
     let availables = [...defaultTags]
 
     // Bind resizable window width

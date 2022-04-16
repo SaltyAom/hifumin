@@ -11,7 +11,10 @@ a, button, input
         min-height: calc(100vh - 4rem)
 
 .h-app
-    height: calc(100vh - 4rem)
+    height: calc(100vh - 4rem - 65px)
+    
+    @screen md
+        height: calc(100vh - 4rem)
 
 #masonry
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr))

@@ -1,12 +1,14 @@
 <script lang="ts">
     import { darkTheme } from '$lib/stores/settings'
+
+    export let stroke = $darkTheme ? '#fff' : '#000'
 </script>
 
-<div class="loader">
+<div class="loader {$$props.class}">
     <svg class="circular" viewBox="25 25 50 50">
         <circle
             class="path"
-            stroke={$darkTheme ? '#fff' : '#000'}
+            stroke={stroke}
             cx="50"
             cy="50"
             r="20"

@@ -9,6 +9,7 @@
         SendIcon,
         SettingsIcon
     } from 'svelte-feather-icons'
+    import user from '$lib/stores/user'
 
     let search
     // For mobile devices
@@ -38,7 +39,7 @@
     const find = () => {
         closeSearch()
 
-        if($navigating) return
+        if ($navigating) return
 
         if (!search) return goto('/')
         if (isNumeric(search)) return goto(`/h/${search}`)
@@ -110,10 +111,19 @@
         </button>
     </form>
 
-    <div class="{hidenOnSearch} justify-end items-center gap-2 min-w-[104px]">
-        <div
-            class="hidden md:flex gap-2 text-gray-500 dark:text-gray-400 px-2"
-        >
+    <section
+        class="{hidenOnSearch} justify-end items-center gap-2 min-w-[104px]"
+    >
+        <div class="hidden md:flex gap-2 text-gray-500 dark:text-gray-400 px-2">
+            <a
+                href="/favorite"
+                class={`w-10 h-10 p-2 rounded-2xl ${applyActive('/favorite')}`}
+                title="Bookmark and History"
+                aria-label="Bookmark and History"
+            >
+                <BookmarkIcon />
+            </a>
+
             <a
                 href="/settings"
                 class={`w-10 h-10 p-2 rounded-2xl ${applyActive('/settings')}`}
@@ -124,9 +134,7 @@
             </a>
         </div>
 
-        <div
-            class="flex md:hidden flex-1 justify-end items-center h-full ml-1"
-        >
+        <div class="flex md:hidden flex-1 justify-end items-center h-full ml-1">
             <button
                 class="w-10 h-10 p-2 text-gray-500 dark:text-gray-300"
                 on:click={openSearch}
@@ -135,7 +143,26 @@
                 <SearchIcon />
             </button>
         </div>
-    </div>
+
+        {#if $user}
+            <a
+                href="/profile"
+                class="{hidenOnSearch} w-9 h-9 bg-gray-100 dark:bg-gray-700 rounded-full"
+            >
+                <img
+                    class="w-9 h-9 object-cover rounded-full"
+                    src={'/assets/images/cat.webp'}
+                    alt="Takodachi"
+                />
+            </a>
+        {:else}
+            <a
+                href="/signin"
+                class="{hidenOnSearch} text-lg text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/50 px-4 py-1.5 rounded-2xl hover:rounded-lg focus:rounded-lg transition-all"
+                >Sign in</a
+            >
+        {/if}
+    </section>
 </nav>
 
 <style lang="sass">
