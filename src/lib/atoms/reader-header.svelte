@@ -160,9 +160,9 @@
                 Translate
             </button> -->
             <button
-                class="flex justify-center items-center gap-1 h-8 px-2 pr-3 border dark:border-gray-600 rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors {isFavorite
-                    ? 'text-white bg-blue-500 dark:bg-blue-600 border-blue-500 dark:border-blue-600'
-                    : ''}"
+                class="flex justify-center items-center gap-1 h-8 px-2 pr-3 border dark:border-gray-600 rounded-full transition-colors {isFavorite
+                    ? 'text-white bg-blue-500 dark:bg-blue-600 border-blue-500 dark:border-blue-600 hover:bg-blue-500 focus:bg-blue-500 dark:hover:bg-blue-600 dark:focus:bg-blue-600'
+                    : 'hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700'}"
                 title="Find translation"
                 on:click={favorite}
             >
