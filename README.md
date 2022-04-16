@@ -1,3 +1,7 @@
+Current [hifumin.app](https://hifumin.app) is on branch [Bismarck](https://github.com/SaltyAom/hifumin/tree/bismarck).
+
+For [opener.studio](https://opener.studio), see `main` (current)
+
 # SaltyAom's Next Starter
 Starter template for blazing fast Next.js app:
 
