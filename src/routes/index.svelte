@@ -7,6 +7,7 @@
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
     import { isServer } from '$lib/utils'
+    import { tags } from '$lib/data'
 
     import { get } from 'svelte/store'
     import settings from '$lib/stores/settings'
@@ -16,7 +17,8 @@
 
     $: shadowIds = [...hentais.map((h) => h.id)]
 
-    let page = 1
+    // ? Increase chance that hentai is on mirror server (for bookmark)
+    let page = 2
     let isLoading = false
     let over = false
 
@@ -24,7 +26,7 @@
         preference: { data: includes, enable }
     } = get(settings)
 
-    const defaultTags = [...(enable ? new Set(includes) : ['all'])]
+    const defaultTags = [...(enable && includes.length ? new Set(includes) : tags)]
     let availables = [...defaultTags]
 
     // Bind resizable window width
