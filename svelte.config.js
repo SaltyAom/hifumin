@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-node'
+import adapter from '@sveltejs/adapter-cloudflare'
 import preprocess from 'svelte-preprocess'
 
 import WindiCSS from 'vite-plugin-windicss'
