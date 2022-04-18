@@ -23,10 +23,7 @@
         searchActive = true
 
         requestAnimationFrame(() => {
-            // For Safari
-            requestAnimationFrame(() => {
-                searchBox?.focus()
-            })
+            searchBox?.focus()
         })
     }
 
@@ -97,6 +94,7 @@
             inputmode="search"
             type="search"
             aria-label="Search"
+            required
             bind:this={searchBox}
             bind:value={search}
         />
