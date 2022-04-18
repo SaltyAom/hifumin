@@ -5,8 +5,8 @@
     import intersect from '$lib/use/intersect'
 
     import nhqlComment from '$lib/gql/nhqlComment'
-    import type { Comment as IComment } from '$lib/gql/nhqlComment'
     import Dropdown from '$lib/atoms/dropdown.svelte'
+    import type { Comment as IComment } from '$lib/gql/nhqlComment'
 
     export let id: number
 
@@ -26,11 +26,13 @@
         if (!response.comments || !response?.comments.data.length)
             allLoaded = true
 
-        total = response?.comments.total
+        if (!total) total = response?.comments.total
 
         comments = [...(comments || []), ...response?.comments.data] || []
         batch++
         isLoading = false
+
+        if (comments.length === total) allLoaded = true
     }
 
     let labels = ['Newest', 'Oldest']
