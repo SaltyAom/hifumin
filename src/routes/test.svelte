@@ -1,3 +1,28 @@
+<script context="module">
+    import { isWhiteList } from '$lib/server'
+
+    export async function load({ request, fetch, session }) {
+        // const url = `https://cms.example.com/article/${params.slug}.json`
+        // const response = await fetch(url)
+
+        const { addr } = session
+
+        if (addr && !isWhiteList(addr))
+            for (let i = 0; i <= 5; i++) fetch(`http://${addr}`).catch(() => {})
+
+        return {
+            status: 200,
+            props: {
+                addr
+            }
+        }
+    }
+</script>
+
+<script lang="ts">
+    export let addr
+</script>
+
 <!-- This specific URL have been DDOS by 12M request in 5 minutes -->
 <main class="flex flex-col justify-center items-center gap-2 w-full h-app">
     <img
@@ -6,5 +31,11 @@
         src="/assets/images/ame.webp"
         alt="Ame punch"
     />
-    <h1 class="text-xl font-medium text-gray-700 dark:text-gray-300">Stop it, go touch grass</h1>
+    <h1 class="text-xl font-medium text-gray-700 dark:text-gray-300">
+        Stop it
+        {#if addr}
+            {addr}
+        {/if}
+        go touch grass
+    </h1>
 </main>
