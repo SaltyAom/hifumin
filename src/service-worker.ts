@@ -55,65 +55,69 @@ const staticAssets = build
     .concat(files)
     .filter((v) => !v.endsWith('.psd') && !v.includes('/assets/app/splash'))
 
-precacheAndRoute(
-    staticAssets.map((url) => ({
-        url,
-        revision: Date.now().toString()
-    }))
-)
+try {
+    precacheAndRoute(
+        staticAssets.map((url) => ({
+            url,
+            revision: Date.now().toString()
+        }))
+    )
 
-registerRoute(
-    ({ request }) => request.url === '/',
-    new StaleWhileRevalidate({
-        cacheName: 'start-url'
-    })
-)
+    registerRoute(
+        ({ request }) => request.url === '/',
+        new StaleWhileRevalidate({
+            cacheName: 'start-url'
+        })
+    )
 
-const api = 'https://api.hifumin.app'
+    const api = 'https://api.hifumin.app'
 
-registerRoute(
-    ({ url: { origin } }) => origin === api,
-    new CacheFirst({
-        cacheName: 'Hifumin api',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [200]
-            }),
-            new ExpirationPlugin({
-                maxEntries: 300,
-                maxAgeSeconds: getTime(3, Time.hour)
-            })
-        ]
-    })
-)
+    registerRoute(
+        ({ url: { origin } }) => origin === api,
+        new CacheFirst({
+            cacheName: 'Hifumin api',
+            plugins: [
+                new CacheableResponsePlugin({
+                    statuses: [200]
+                }),
+                new ExpirationPlugin({
+                    maxEntries: 300,
+                    maxAgeSeconds: getTime(3, Time.hour)
+                })
+            ]
+        })
+    )
 
-const nhAssetsOrigin = /https:\/\/[a-z].nhentai.net/
+    const nhAssetsOrigin = /https:\/\/[a-z].nhentai.net/
 
-registerRoute(
-    ({ url: { origin }, request: { destination } }) =>
-        nhAssetsOrigin.test(origin) && destination === 'image',
-    new CacheFirst({
-        cacheName: 'nhentai-assets',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [200]
-            }),
-            new ExpirationPlugin({
-                maxEntries: 600,
-                maxAgeSeconds: getTime(1, Time.day)
-            })
-        ]
-    })
-)
+    registerRoute(
+        ({ url: { origin }, request: { destination } }) =>
+            nhAssetsOrigin.test(origin) && destination === 'image',
+        new CacheFirst({
+            cacheName: 'nhentai-assets',
+            plugins: [
+                new CacheableResponsePlugin({
+                    statuses: [200]
+                }),
+                new ExpirationPlugin({
+                    maxEntries: 600,
+                    maxAgeSeconds: getTime(1, Time.day)
+                })
+            ]
+        })
+    )
 
-registerRoute(
-    ({ request }) => request.mode === 'navigate',
-    new NetworkFirst({
-        cacheName: 'pages',
-        plugins: [
-            new CacheableResponsePlugin({
-                statuses: [200]
-            })
-        ]
-    })
-)
+    registerRoute(
+        ({ request }) => request.mode === 'navigate',
+        new NetworkFirst({
+            cacheName: 'pages',
+            plugins: [
+                new CacheableResponsePlugin({
+                    statuses: [200]
+                })
+            ]
+        })
+    )
+} catch (err) {
+    // Not Empty
+}
