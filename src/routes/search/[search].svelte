@@ -6,6 +6,7 @@
         const { search } = params
 
         return {
+            maxage: 3600,
             props: {
                 search,
                 nhql: await nhqlSearch(search)

@@ -15,6 +15,7 @@
             }
 
         return {
+            maxage: 3600,
             props: {
                 h,
                 nhql
