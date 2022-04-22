@@ -65,22 +65,5 @@
     <meta name="twitter:image" content={image.link} />
     <meta name="twitter:creator" content={twitterDevAccount} />
 
-    <link rel="manifest" href="/assets/app/manifest.json" />
-    <meta name="mobile-web-app-capable" content="yes" />
-
-    <meta name="application-name" content="Hifumin" />
-    <meta name="mssmarttagspreventparsing" content="true" />
-    <meta name="msapplication-window" content="width=1366;height=768" />
-
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Hifumin" />
-    <link rel="apple-touch-icon" href="/assets/app/icon/apple-icon.jpg" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-
     <meta name="theme-color" content={$darkTheme ? '#1f2937' : '#ffffff'} />
-
-    <link rel="preconnect" content="https://t.nhentai.net" />
-    <link rel="preconnect" content="https://api.hifumin.app" />
 </svelte:head>

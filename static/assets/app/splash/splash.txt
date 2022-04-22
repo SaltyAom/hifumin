@@ -1,0 +1,2 @@
+pnpx pwa-asset-generator icon@large.png ./light --splash-only --xhtml --single-quotes --padding "calc(50vh - 15%) calc(50vw - 20%)"
+pnpx pwa-asset-generator icon@large.png ./dark --splash-only --xhtml --single-quotes --padding "calc(50vh - 15%) calc(50vw - 20%)" --dark-mode --background "#1f2937"

@@ -113,7 +113,7 @@
     <meta name="robots" content="noindex" />
 </svelte:head>
 
-<main class="relative flex flex-col items-center w-full h-app mx-auto">
+<main class="relative flex flex-col items-center w-full h-screen mx-auto">
     <aside
         class="flex justify-center items-center gap-2 h-8 pr-10 text-gray-600 dark:text-gray-400"
     >
@@ -167,6 +167,7 @@
         </a>
         <a
             class="w-8 h-8 p-1"
+            sveltekit:noscroll
             on:click|preventDefault={prevPage}
             href={page > 1 ? `/h/${id}/${page - 1}` : `/h/${id}`}
         >
@@ -189,6 +190,7 @@
         </form>
         <a
             class="w-8 h-8 p-1"
+            sveltekit:noscroll
             on:click|preventDefault={nextPage}
             href={page + 1 < pages.length ? `/h/${id}/${page + 1}` : `/h/${id}`}
         >
@@ -204,5 +206,7 @@
 
 <style lang="sass">
     .h-page
-        height: calc(100vh - (4em + 2em * 2))
+        height: calc(100vh - (2em * 2))
+    // .h-page
+    //     height: calc(100vh - (4em + 2em * 2))
 </style>

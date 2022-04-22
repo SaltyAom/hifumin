@@ -26,7 +26,9 @@
         preference: { data: includes, enable }
     } = get(settings)
 
-    const defaultTags = [...(enable && includes.length ? new Set(includes) : tags)]
+    const defaultTags = [
+        ...(enable && includes.length ? new Set(includes) : tags)
+    ]
     let availables = [...defaultTags]
 
     // Bind resizable window width
@@ -42,10 +44,11 @@
         try {
             isLoading = true
 
-            const newHentais = await nhqlSearch(
-                availables.splice(newTagIndex, 1)[0],
-                page
-            )
+            const tag = availables.splice(newTagIndex, 1)[0]
+
+            if (!tag) throw new Error('No tag available')
+
+            const newHentais = await nhqlSearch(tag, page)
 
             hentais = [
                 ...hentais,
@@ -60,9 +63,10 @@
         } finally {
             isLoading = false
 
-            if (!availables.length) page++
-
-            availables = [...defaultTags]
+            if (!availables.length) {
+                page++
+                availables = [...defaultTags]
+            }
         }
     }
 
