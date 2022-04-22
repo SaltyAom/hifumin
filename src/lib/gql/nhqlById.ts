@@ -1,4 +1,7 @@
-import gql from '@saltyaom/gq'
+import { api } from '$lib/data'
+import gql, { client } from '@saltyaom/gq'
+
+client.config('https://api.hifumin.app')
 
 export interface NhqlByIdData {
     id: number
@@ -97,6 +100,7 @@ query getHentaiById($id: Int!) {
 
 const nhqlById = async (id: number): Promise<NhqlByIdData | null> => {
     const data = await gql<NhqlById, NhqlByIdVariable>(nhqlByIdDocument, {
+        endpoint: api.akashic,
         variables: {
             id
         }

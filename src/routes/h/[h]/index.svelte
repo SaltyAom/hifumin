@@ -15,7 +15,7 @@
             }
 
         return {
-            maxage: 3600,
+            cache: 3600,
             props: {
                 h,
                 nhql

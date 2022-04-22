@@ -11,9 +11,10 @@
     import TranslateIcon from '$lib/icons/translate.svelte'
 
     import type { NhqlByIdData } from '$lib/gql/nhqlById'
-
+    import { invalidateUserOnUnauthorize } from '$lib/cookie'
     import user, { isAuthed } from '$lib/stores/user'
     import { isServer } from '$lib/utils'
+
     import MemberOnly from './member-only.svelte'
 
     export let nhql: NhqlByIdData
@@ -42,6 +43,8 @@
                     credentials: 'include'
                 }
             )
+
+            if (await invalidateUserOnUnauthorize(res)) return
 
             if (res.status !== 200)
                 throw new Error('Failed to get favorite status')

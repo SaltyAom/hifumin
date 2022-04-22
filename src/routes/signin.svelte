@@ -58,13 +58,11 @@
 
             if (!name) throw new Error('Incorrect username or password')
 
-            console.log(name)
+            $user = {
+                name
+            }
 
-            // $user = {
-            //     name
-            // }
-
-            // location.href = '/'
+            location.href = '/'
         } catch (err) {
             if (!error) error = 'Incorrect Username or Password'
         } finally {

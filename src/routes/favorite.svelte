@@ -6,6 +6,7 @@
     import Image from '$lib/atoms/image.svelte'
     import SkeletonCover from '$lib/skeletons/cover.svelte'
     import intersect from '$lib/use/intersect'
+    import { invalidateUserOnUnauthorize } from '$lib/cookie'
 
     import type { FavoriteHentai, FavoriteHentaiData } from '$lib/types'
     import user, { isAuthed } from '$lib/stores/user'
@@ -16,17 +17,22 @@
 
     let favorite: FavoriteHentai[] = []
 
+
     const getFavorite = async () => {
         if (!$user || isLoading || isEnd) return
         isLoading = true
 
         try {
-            const data: FavoriteHentai[] = await fetch(
+            const res = await fetch(
                 `https://user.hifumin.app/favorite/list/${page}`,
                 {
                     credentials: 'include'
                 }
-            ).then((r) => r.json())
+            )
+
+            if (await invalidateUserOnUnauthorize(res)) return
+
+            const data: FavoriteHentai[] = await res.json()
 
             favorite = favorite.concat(data)
             if (data.length < 25) isEnd = true
@@ -81,9 +87,7 @@
         <section
             class="flex flex-col justify-center items-center w-full max-w-sm member-only text-gray-400 dark:text-gray-400 text-lg text-center mx-auto"
         >
-            <h1
-                class="text-3xl font-medium text-gray-700 dark:text-gray-300"
-            >
+            <h1 class="text-3xl font-medium text-gray-700 dark:text-gray-300">
                 Member only feature
             </h1>
             <p class="mt-6 mb-4">
@@ -99,10 +103,7 @@
                 Sign In
             </a>
 
-            <a
-                href="/"
-                class="text-blue-500 text-lg font-medium px-8 py-2"
-            >
+            <a href="/" class="text-blue-500 text-lg font-medium px-8 py-2">
                 No thanks
             </a>
         </section>

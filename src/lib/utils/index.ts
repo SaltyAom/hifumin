@@ -1,1 +1,3 @@
-export const isServer = typeof window === 'undefined'
+import { browser } from '$app/env'
+
+export const isServer = !browser
