@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
+    "@sveltejs/adapter-cloudflare": "^1.0.0-next.17",
     "@sveltejs/adapter-node": "^1.0.0-next.73",
     "@sveltejs/kit": "next",
     "@types/cookie": "^0.4.1",
