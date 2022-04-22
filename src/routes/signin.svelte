@@ -4,24 +4,29 @@
     import ProgressIndicator from '$lib/atoms/progress-indicator.svelte'
     import user from '$lib/stores/user'
     import { isServer } from '$lib/utils'
+    import { onMount } from 'svelte'
 
     let username: string
     let password: string
     let isLoading = false
     let error = ''
 
-    $: {
-        if (!isServer)
-            if ($user?.name) goto('/')
-            else
-                fetch('https://user.hifumin.app/refresh', {
-                    credentials: 'include'
+    onMount(() => {
+        if (!isServer) return
+
+        if (!$user?.name)
+            fetch('https://user.hifumin.app/refresh', {
+                credentials: 'include'
+            })
+                .then((res) => res.text())
+                .then((name) => {
+                    if (username) window.location.href = '/'
                 })
-                    .then((res) => res.text())
-                    .then((name) => {
-                        if (username) window.location.href = '/'
-                    })
-                    .catch((err) => {})
+                .catch((err) => {})
+    })
+
+    $: {
+        if ($user) goto('/')
     }
 
     const signIn = async () => {

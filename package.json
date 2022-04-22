@@ -47,6 +47,7 @@
     "@saltyaom/gq": "^1.1.7",
     "cookie": "^0.4.2",
     "dayjs": "^1.11.1",
+    "node-fetch": "^3.2.3",
     "nprogress": "^0.2.0",
     "svelte-feather-icons": "^3.6.0",
     "svelte-progresscircle": "^0.3.0"
