@@ -11,7 +11,7 @@
     let error = ''
 
     $: {
-        if (!isServer) {
+        if (!isServer)
             if ($user?.name) goto('/')
             else
                 fetch('https://user.hifumin.app/refresh', {
@@ -19,14 +19,9 @@
                 })
                     .then((res) => res.text())
                     .then((name) => {
-                        if (username)
-                            $user = {
-                                name
-                            }
-                        else goto('/signin')
+                        if (username) window.location.href = '/'
                     })
                     .catch((err) => {})
-        }
     }
 
     const signIn = async () => {
