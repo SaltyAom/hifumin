@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "LOCAL=true BUILD=true svelte-kit build",
-    "cloudflare:build": "BUILD=true svelte-kit build",
+    "build": "LOCAL=true svelte-kit build",
+    "cloudflare:build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
