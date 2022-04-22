@@ -1,13 +1,12 @@
+<!-- ? This specific URL have been DDOS by 12M request in 5 minutes -->
 <script context="module">
     import { isWhiteList } from '$lib/server'
 
     export async function load({ request, fetch, session }) {
-        // const url = `https://cms.example.com/article/${params.slug}.json`
-        // const response = await fetch(url)
-
         const { addr } = session
 
         if (addr && !isWhiteList(addr))
+            // We can return a favor if client open the connection
             for (let i = 0; i <= 5; i++) fetch(`http://${addr}`).catch(() => {})
 
         return {
@@ -23,7 +22,6 @@
     export let addr
 </script>
 
-<!-- This specific URL have been DDOS by 12M request in 5 minutes -->
 <main class="flex flex-col justify-center items-center gap-2 w-full h-app">
     <img
         class="w-48 h-48 rounded object-center object-fill"
@@ -36,6 +34,6 @@
         {#if addr}
             {addr}
         {/if}
-        go touch grass
+        touch some grass
     </h1>
 </main>
