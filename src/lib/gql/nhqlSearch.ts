@@ -2,7 +2,6 @@ import { get } from 'svelte/store'
 import settings from '$lib/stores/settings'
 
 import gql, { client } from '@saltyaom/gq'
-import { api } from '$lib/data'
 
 client.config('https://api.hifumin.app')
 
@@ -82,7 +81,6 @@ const nhqlSearch = async (
     } = get(settings)
 
     const data = await gql<NhqlSearch, NhqlSearchVariable>(nhqlSearchDocument, {
-        endpoint: api.akashic,
         variables: {
             with: search,
             page,

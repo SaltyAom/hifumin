@@ -1,11 +1,3 @@
-import { isServer } from '$lib/utils'
-
-export const api = {
-    akashic: isServer
-        ? process.env.AKASHIC ?? 'https://api.hifumin.app'
-        : 'https://api.hifumin.app'
-} as const
-
 // Top 100 tags on nHentai
 export const tags = [
     'big breasts',
