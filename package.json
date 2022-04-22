@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "LOCAL=true svelte-kit build",
-    "cloudflare:build": "svelte-kit build",
+    "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
@@ -15,7 +14,6 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
-    "@sveltejs/adapter-cloudflare": "^1.0.0-next.18",
     "@sveltejs/adapter-node": "^1.0.0-next.73",
     "@sveltejs/kit": "next",
     "@types/cookie": "^0.4.1",

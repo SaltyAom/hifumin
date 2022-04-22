@@ -1,5 +1,4 @@
-import cloudflare from '@sveltejs/adapter-cloudflare'
-import node from '@sveltejs/adapter-node'
+import adapter from '@sveltejs/adapter-node'
 import preprocess from 'svelte-preprocess'
 
 import WindiCSS from 'vite-plugin-windicss'
@@ -15,7 +14,7 @@ const config = {
     target: '#svelte',
 
     kit: {
-        adapter: process.env.LOCAL == 'true' ? node() : cloudflare(),
+        adapter: adapter(),
 
         vite: {
             plugins: [WindiCSS()]
