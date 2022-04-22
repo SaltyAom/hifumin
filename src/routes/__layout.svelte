@@ -12,7 +12,7 @@
 </script>
 
 <!-- {#if currentPath === '/h/229345'} -->
-    <AuthProvider />
+    <!-- <AuthProvider />
 
     <OpenGraph />
 
@@ -20,9 +20,9 @@
     <Nprogress />
     <AppBar />
     <slot />
-    <BottomBar />
+    <BottomBar /> -->
 <!-- {:else} -->
-    <!-- <main
+    <main
         class="flex flex-col justify-center items-center w-full h-screen max-w-xs mx-auto gap-2"
     >
         <img
@@ -40,5 +40,5 @@
             Hifumin will be available in 2 hours, thanks for your patient and
             understanding
         </p>
-    </main> -->
+    </main>
 <!-- {/if} -->
