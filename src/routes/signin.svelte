@@ -11,7 +11,22 @@
     let error = ''
 
     $: {
-        if (!isServer && $user) goto('/')
+        if (!isServer) {
+            if ($user?.name) goto('/')
+            else
+                fetch('https://user.hifumin.app/refresh', {
+                    credentials: 'include'
+                })
+                    .then((res) => res.text())
+                    .then((name) => {
+                        if (username)
+                            $user = {
+                                name
+                            }
+                        else goto('/signin')
+                    })
+                    .catch((err) => {})
+        }
     }
 
     const signIn = async () => {
@@ -111,4 +126,3 @@
         Don't have an account? <a href="/signup" class="underline">Sign up</a>
     </h2>
 </main>
-
