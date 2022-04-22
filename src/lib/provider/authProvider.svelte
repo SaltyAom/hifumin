@@ -16,12 +16,12 @@
 
             const name = await res.text()
 
-            $isAuthed = true
             $user = {
                 name
             }
         } catch (_error) {
         } finally {
+            $isAuthed = true
         }
     })
 </script>

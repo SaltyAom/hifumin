@@ -5,6 +5,6 @@ export interface User {
 }
 
 export const isAuthed = writable(false)
-const user = writable<User | null>()
+const user = writable<User | null>(null)
 
 export default user
