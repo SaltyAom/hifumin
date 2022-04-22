@@ -46,6 +46,12 @@
                 })
             })
 
+            if (res.status === 403) {
+                error =
+                    'You have been blocked due likely launching a DDOS attack. Please wait for a while and try again.'
+                return
+            }
+
             if (res.status !== 200)
                 throw new Error('Incorrect Username or Password')
 
