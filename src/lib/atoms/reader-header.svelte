@@ -65,8 +65,6 @@
     const favorite = async () => {
         if (isFavorite === null || isLoading) return
 
-        console.log($isAuthed, $user)
-
         if (!$isAuthed) return
         if (!$user) return (showBanner = true)
 

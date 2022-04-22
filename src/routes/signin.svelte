@@ -11,22 +11,8 @@
     let isLoading = false
     let error = ''
 
-    onMount(() => {
-        if (!isServer) return
-
-        if (!$user?.name)
-            fetch('https://user.hifumin.app/refresh', {
-                credentials: 'include'
-            })
-                .then((res) => res.text())
-                .then((name) => {
-                    if (username) window.location.href = '/'
-                })
-                .catch((err) => {})
-    })
-
     $: {
-        if ($user) goto('/')
+        if ($user?.name) goto('/')
     }
 
     const signIn = async () => {
@@ -34,7 +20,7 @@
         isLoading = true
 
         try {
-            const res = await fetch('https://user.hifumin.app/auth/signin', {
+            const name = await fetch('https://user.hifumin.app/auth/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -44,24 +30,43 @@
                     username,
                     password
                 })
+            }).then(async (res) => {
+                const { status } = res
+
+                if (status === 403) {
+                    try {
+                        const { error: msg } = (await res.json()) as {
+                            error: string
+                        }
+
+                        if (msg === 'Invalid password')
+                            return (error = 'Wrong Username or Password')
+                        else
+                            return (error =
+                                'You have been blocked due likely launching a DDOS attack. Please wait for a while and try again.')
+                    } catch (error) {
+                        return (error =
+                            'You have been blocked due likely launching a DDOS attack. Please wait for a while and try again.')
+                    }
+                }
+
+                if (status === 401)
+                    return (error = 'Wrong Username or Password')
+
+                return res.text()
             })
 
-            if (res.status === 403) {
-                error =
-                    'You have been blocked due likely launching a DDOS attack. Please wait for a while and try again.'
-                return
-            }
+            if (!name) throw new Error('Incorrect username or password')
 
-            if (res.status !== 200)
-                throw new Error('Incorrect Username or Password')
+            console.log(name)
 
-            $user = {
-                name: await res.text()
-            }
+            // $user = {
+            //     name
+            // }
 
-            location.href = '/'
+            // location.href = '/'
         } catch (err) {
-            error = 'Incorrect Username or Password'
+            if (!error) error = 'Incorrect Username or Password'
         } finally {
             isLoading = false
         }
