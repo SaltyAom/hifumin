@@ -104,6 +104,7 @@
     const handleKeyPress = ({ key }: KeyboardEvent) => {
         if (key === 'ArrowLeft') return prevPage()
         if (key === 'ArrowRight') return nextPage()
+        if (key === 'Escape') return goto(`/h/${nhql.id}#page-${page}`)
     }
 </script>
 

@@ -16,7 +16,7 @@
 
     let error = false
 
-    let { width: _w, height: _h, ...props } = $$props
+    let { width: _w, height: _h, id = '', ...props } = $$props
 
     let className = $$props['class'] || ''
 
@@ -51,14 +51,17 @@
         return size
     }
 
+    $: padding = calculatePadding()
+
     $: safeModeClass = safeModeMap[$settings.safeMode]
 </script>
 
 <figure
     use:intersect
     on:intersect={handleIntersection}
-    style="padding-bottom:{calculatePadding()}%"
+    style="padding-bottom:{padding}%"
     class={`relative bg-gray-50 dark:bg-gray-700 overflow-hidden ${parentClass}`}
+    id={id}
 >
     {#if intersected}
         {#if error}
