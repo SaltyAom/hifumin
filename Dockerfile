@@ -24,6 +24,7 @@ COPY package.json .
 COPY pnpm-lock.yaml .
 
 RUN pnpm install --frozen-lockfile --production
+RUN pnpm prune --production
 
 # * ====================
 FROM alpine:latest as main

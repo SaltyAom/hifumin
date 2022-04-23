@@ -42,8 +42,6 @@ dependencies:
   dayjs: 1.11.1
   js-cookie: 3.0.1
   nprogress: 0.2.0
-  svelte-feather-icons: 3.6.0
-  svelte-progresscircle: 0.3.0
 
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.73
@@ -60,7 +58,9 @@ devDependencies:
   sass: 1.50.1
   svelte: 3.47.0
   svelte-check: 2.7.0_51a5a327b71236f1a010e49f1b8f2eb0
+  svelte-feather-icons: 3.6.0
   svelte-preprocess: 4.10.6_e48edc85c5a197a2c623bacdf62c21ca
+  svelte-progresscircle: 0.3.0
   tslib: 2.4.0
   typescript: 4.6.3
   vite-plugin-windicss: 1.8.4
@@ -1726,7 +1726,7 @@ packages:
     resolution: {integrity: sha512-pdRmJwrYUxTI00uTJvGtrMoWXI56n4iX+7fBuxVG/TdBtnqZ8RlGPPvgXmH9+yGOMvWOF5SbZ7h4I+FiORbs2A==}
     dependencies:
       svelte: 3.47.0
-    dev: false
+    dev: true
 
   /svelte-hmr/0.14.11_svelte@3.47.0:
     resolution: {integrity: sha512-R9CVfX6DXxW1Kn45Jtmx+yUe+sPhrbYSUp7TkzbW0jI5fVPn6lsNG9NEs5dFg5qRhFNAoVdRw5qQDLALNKhwbQ==}
@@ -1792,11 +1792,12 @@ packages:
 
   /svelte-progresscircle/0.3.0:
     resolution: {integrity: sha512-SEr48vMgqVGW5taNiU26uvLitBk7DfjC3JmUEulqs3rc9CiQ1eGW0THKdxJyX4J8G0/+2lqi0sK/Jl/XjYyApQ==}
-    dev: false
+    dev: true
 
   /svelte/3.47.0:
     resolution: {integrity: sha512-4JaJp3HEoTCGARRWZQIZDUanhYv0iyoHikklVHVLH9xFE9db22g4TDv7CPeNA8HD1JgjXI1vlhR1JZvvhaTu2Q==}
     engines: {node: '>= 8'}
+    dev: true
 
   /table/6.8.0:
     resolution: {integrity: sha512-s/fitrbVeEyHKFa7mFdkuQMWlH1Wgw/yEXMt5xACT4ZpzWFluehAxRtUUQKPuWhaLAWhFcVx6w3oC8VKaUfPGA==}
