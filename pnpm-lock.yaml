@@ -2,8 +2,8 @@ lockfileVersion: 5.3
 
 specifiers:
   '@saltyaom/gql': 1.1.14
-  '@saltyaom/gql-inmemory-cache': 1.1.3
-  '@saltyaom/gql-local-cache': 1.1.3
+  '@saltyaom/gql-inmemory-cache': 1.1.7
+  '@saltyaom/gql-local-cache': 1.1.6
   '@sveltejs/adapter-node': ^1.0.0-next.73
   '@sveltejs/kit': 1.0.0-next.320
   '@types/js-cookie': ^3.0.1
@@ -37,8 +37,8 @@ specifiers:
 
 dependencies:
   '@saltyaom/gql': 1.1.14
-  '@saltyaom/gql-inmemory-cache': 1.1.3_@saltyaom+gql@1.1.14
-  '@saltyaom/gql-local-cache': 1.1.3_@saltyaom+gql@1.1.14
+  '@saltyaom/gql-inmemory-cache': 1.1.7_@saltyaom+gql@1.1.14
+  '@saltyaom/gql-local-cache': 1.1.6_@saltyaom+gql@1.1.14
   dayjs: 1.11.1
   js-cookie: 3.0.1
   nprogress: 0.2.0
@@ -159,16 +159,16 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@saltyaom/gql-inmemory-cache/1.1.3_@saltyaom+gql@1.1.14:
-    resolution: {integrity: sha512-QOUXDWcQ8qheURqICkueS977w/qvZXVzhLNU/6SnBWzYgB7X1R47DNvrOqruNiH9qowL01O4Q3u0NmzanGrv+A==}
+  /@saltyaom/gql-inmemory-cache/1.1.7_@saltyaom+gql@1.1.14:
+    resolution: {integrity: sha512-l6cbKRakY4ugkIjDJevN8ZJkKeHPV9DxDdqvpqIBMc5DxguLUXTqOgo/g7uvJARNN8WGfxcwIRboyBxSwJxajg==}
     peerDependencies:
       '@saltyaom/gql': '>= 1.1.1'
     dependencies:
       '@saltyaom/gql': 1.1.14
     dev: false
 
-  /@saltyaom/gql-local-cache/1.1.3_@saltyaom+gql@1.1.14:
-    resolution: {integrity: sha512-VVF7A6TmOvW4tpHBUnbFIYwmt96O6XR0RZct9rDNp2INQHHszqh9GiLFP/tID9AYBWpXv/Ol/D4fF/RaL5NI9Q==}
+  /@saltyaom/gql-local-cache/1.1.6_@saltyaom+gql@1.1.14:
+    resolution: {integrity: sha512-dk6HYt0UPqb3C9ExGlf7H6ikKgOjjtQw0ODk4vI0Up/3d9Sj5z+DsYEJDgp/2qgisr8jR1W6lgCxuJG2Kpzjiw==}
     peerDependencies:
       '@saltyaom/gql': '>= 1.1.1'
     dependencies:
@@ -180,7 +180,7 @@ packages:
     peerDependencies:
       graphql: '>=15.0.0'
     dependencies:
-      '@saltyaom/gql-inmemory-cache': 1.1.3_@saltyaom+gql@1.1.14
+      '@saltyaom/gql-inmemory-cache': 1.1.7_@saltyaom+gql@1.1.14
       isomorphic-unfetch: 3.1.0
     transitivePeerDependencies:
       - encoding
