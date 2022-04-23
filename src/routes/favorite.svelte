@@ -122,7 +122,7 @@
             </h2>
         </header>
 
-        {#if !failedToFetchHentai}
+        {#if failedToFetchHentai}
             <div class="flex justify-center items-center favorite-center">
                 <NotFound
                     class="max-w-xs"
