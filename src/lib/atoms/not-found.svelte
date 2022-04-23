@@ -1,10 +1,14 @@
 <script lang="ts">
+    export let title = 'Not Found'
+    export let detail = 'Try search with another tag?'
+    export let action = 'or Reload?'
+
     const reload = () => {
         window.location.reload()
     }
 </script>
 
-<main class="flex flex-col justify-center items-center gap-3 w-full min-h-app">
+<main class="flex flex-col justify-center items-center gap-3 w-full {$$props.class ?? 'min-h-app'}">
     <div class="w-[12em]">
         <a
             class="relative block w-[12em] pb-[120%] mx-app"
@@ -18,13 +22,13 @@
         </a>
     </div>
     <h1 class="text-gray-700 dark:text-gray-200 text-2xl font-medium">
-        Not found
+        {title}
     </h1>
-    <p class="text-gray-500 dark:text-gray-400 text-lg">
-        Try search with another tag?
+    <p class="text-gray-500 dark:text-gray-400 text-lg text-center">
+        {detail}
     </p>
     <button
         class="text-blue-500 bg-blue-50 dark:bg-blue-900/50 px-4 py-2 text-xl font-medium rounded-lg"
-        on:click={reload}>or Reload?</button
+        on:click={reload}>{action}</button
     >
 </main>
