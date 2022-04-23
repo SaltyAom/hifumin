@@ -11,16 +11,15 @@
 
     import { page as path } from '$app/stores'
     import SearchNotFound from '$lib/atoms/search-not-found.svelte'
+    import SkeletonCover from '$lib/skeletons/cover.svelte'
 
-    let nhql: NhqlSearchData[] = []
-    $: search = $path.params.search
-
-    let hentais: NhqlSearchData[] = [...nhql]
+    let hentais: NhqlSearchData[] = []
     let page = 1
     let isLoading = false
     let over = false
 
     $: shadowIds = [...hentais.map((h) => h.id)]
+    $: search = $path.params.search
 
     sveltePage.subscribe(async (newPage) => {
         if (!newPage || isLoading) return
@@ -31,7 +30,7 @@
             hentais = await nhqlSearch(newPage.params.search)
         } catch (err) {
         } finally {
-            page = 2
+            page = 1
             isLoading = false
             over = false
         }
@@ -55,13 +54,17 @@
                 ...newHentais.filter((h) => !shadowIds.includes(h.id))
             ]
 
+            if (newHentais.length === 0)
+                throw new Error('Maybe API error, skip to next')
+
             if (newHentais.length < 25) over = true
+
+            toleratedError = false
         } catch (err) {
             if (toleratedError) over = true
 
             toleratedError = true
         } finally {
-            toleratedError = false
             isLoading = false
             page++
         }
@@ -136,10 +139,7 @@
                 {/if}
                 {#if !over}
                     {#each Array(~~(25 / totalMasonry)).fill(0) as __}
-                        <figure
-                            class="w-full rounded-4xl bg-gray-50 dark:bg-gray-700"
-                            style="padding-bottom: 145%"
-                        />
+                        <SkeletonCover />
                     {/each}
                 {/if}
             </div>

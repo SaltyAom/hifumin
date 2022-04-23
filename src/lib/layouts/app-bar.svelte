@@ -97,6 +97,7 @@
                 inputmode="search"
                 type="search"
                 aria-label="Search"
+                title="Find Hentai or 6 digits code"
                 required
                 bind:this={searchBox}
                 bind:value={search}

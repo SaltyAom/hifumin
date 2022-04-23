@@ -13,6 +13,7 @@
     import settings from '$lib/stores/settings'
     import OpenGraph from '$lib/atoms/open-graph.svelte'
     import SearchNotFound from '$lib/atoms/search-not-found.svelte'
+    import SkeletonCover from '$lib/skeletons/cover.svelte'
 
     export let hentais: NhqlSearchData[] = []
 
@@ -132,10 +133,7 @@
                 {/if}
                 {#if !over}
                     {#each Array(~~(25 / totalMasonry)).fill(0) as __}
-                        <figure
-                            class="w-full rounded-4xl bg-gray-50 dark:bg-gray-700"
-                            style="padding-bottom: 145%"
-                        />
+                        <SkeletonCover />
                     {/each}
                 {/if}
             </div>
