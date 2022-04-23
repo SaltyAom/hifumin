@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@saltyaom/gql': 1.1.13
+  '@saltyaom/gql': 1.1.14
   '@saltyaom/gql-inmemory-cache': 1.1.3
   '@saltyaom/gql-local-cache': 1.1.3
   '@sveltejs/adapter-node': ^1.0.0-next.73
@@ -36,9 +36,9 @@ specifiers:
   workbox-window: ^6.5.3
 
 dependencies:
-  '@saltyaom/gql': 1.1.13
-  '@saltyaom/gql-inmemory-cache': 1.1.3_@saltyaom+gql@1.1.13
-  '@saltyaom/gql-local-cache': 1.1.3_@saltyaom+gql@1.1.13
+  '@saltyaom/gql': 1.1.14
+  '@saltyaom/gql-inmemory-cache': 1.1.3_@saltyaom+gql@1.1.14
+  '@saltyaom/gql-local-cache': 1.1.3_@saltyaom+gql@1.1.14
   dayjs: 1.11.1
   js-cookie: 3.0.1
   nprogress: 0.2.0
@@ -159,28 +159,28 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@saltyaom/gql-inmemory-cache/1.1.3_@saltyaom+gql@1.1.13:
+  /@saltyaom/gql-inmemory-cache/1.1.3_@saltyaom+gql@1.1.14:
     resolution: {integrity: sha512-QOUXDWcQ8qheURqICkueS977w/qvZXVzhLNU/6SnBWzYgB7X1R47DNvrOqruNiH9qowL01O4Q3u0NmzanGrv+A==}
     peerDependencies:
       '@saltyaom/gql': '>= 1.1.1'
     dependencies:
-      '@saltyaom/gql': 1.1.13
+      '@saltyaom/gql': 1.1.14
     dev: false
 
-  /@saltyaom/gql-local-cache/1.1.3_@saltyaom+gql@1.1.13:
+  /@saltyaom/gql-local-cache/1.1.3_@saltyaom+gql@1.1.14:
     resolution: {integrity: sha512-VVF7A6TmOvW4tpHBUnbFIYwmt96O6XR0RZct9rDNp2INQHHszqh9GiLFP/tID9AYBWpXv/Ol/D4fF/RaL5NI9Q==}
     peerDependencies:
       '@saltyaom/gql': '>= 1.1.1'
     dependencies:
-      '@saltyaom/gql': 1.1.13
+      '@saltyaom/gql': 1.1.14
     dev: false
 
-  /@saltyaom/gql/1.1.13:
-    resolution: {integrity: sha512-UMzP2r9lliiWUrhl9S6qRED/4Re/Y0Ymu03ckNtXKeRJ7ZnFFlnRLwTxYpMJN1QiqYdqXsbnDVgOp4LmTTaYAQ==}
+  /@saltyaom/gql/1.1.14:
+    resolution: {integrity: sha512-ZQ13FI0wtyGJv5kb78a5fECbKMzj7V3W0GKzpID/DYT+K+WuhesiDfaIomwm8oYJWUAMaOh1qHVR96t6r98RAA==}
     peerDependencies:
       graphql: '>=15.0.0'
     dependencies:
-      '@saltyaom/gql-inmemory-cache': 1.1.3_@saltyaom+gql@1.1.13
+      '@saltyaom/gql-inmemory-cache': 1.1.3_@saltyaom+gql@1.1.14
       isomorphic-unfetch: 3.1.0
     transitivePeerDependencies:
       - encoding
