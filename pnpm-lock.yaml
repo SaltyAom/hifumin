@@ -1,7 +1,9 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@saltyaom/gq': 1.1.8
+  '@saltyaom/gql': 1.1.13
+  '@saltyaom/gql-inmemory-cache': 1.1.1
+  '@saltyaom/gql-local-cache': 1.1.1
   '@sveltejs/adapter-auto': next
   '@sveltejs/adapter-node': ^1.0.0-next.73
   '@sveltejs/kit': next
@@ -38,7 +40,9 @@ specifiers:
   workbox-window: ^6.5.3
 
 dependencies:
-  '@saltyaom/gq': 1.1.8
+  '@saltyaom/gql': 1.1.13
+  '@saltyaom/gql-inmemory-cache': 1.1.1_@saltyaom+gql@1.1.13
+  '@saltyaom/gql-local-cache': 1.1.1_@saltyaom+gql@1.1.13
   cookie: 0.4.2
   dayjs: 1.11.1
   js-cookie: 3.0.1
@@ -48,7 +52,7 @@ dependencies:
   svelte-progresscircle: 0.3.0
 
 devDependencies:
-  '@sveltejs/adapter-auto': 1.0.0-next.37
+  '@sveltejs/adapter-auto': 1.0.0-next.38
   '@sveltejs/adapter-node': 1.0.0-next.73
   '@sveltejs/kit': 1.0.0-next.320_sass@1.50.1+svelte@3.47.0
   '@types/cookie': 0.4.1
@@ -167,19 +171,38 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@saltyaom/gq/1.1.8:
-    resolution: {integrity: sha512-J/hJWtjflE5cC4FWaWxxGCEkA1uRyhB52L+Z2vSN9IR548bfMb9whUW1iDBFOFCnZz0FRnBHJflG6wl+hFfCNw==}
+  /@saltyaom/gql-inmemory-cache/1.1.1_@saltyaom+gql@1.1.13:
+    resolution: {integrity: sha512-JiU9CoNwcEU04zTxsjFUknkhrM/i8v1NWjTEAitgwd+HJXV7m0WTRR/wEaSg2MkK2tHLy2VamhW1n2lEuX0wLg==}
+    peerDependencies:
+      '@saltyaom/gql': '>= 1.1.1'
     dependencies:
+      '@saltyaom/gql': 1.1.13
+    dev: false
+
+  /@saltyaom/gql-local-cache/1.1.1_@saltyaom+gql@1.1.13:
+    resolution: {integrity: sha512-igd9SWZm7gXio1jJUYgpDjtvTQ0ERkIdhrL30aU71/33Pnp6r/G66iYGmp+rhzg2umokliZbv4OA4iozq98qaQ==}
+    peerDependencies:
+      '@saltyaom/gql': '>= 1.1.1'
+    dependencies:
+      '@saltyaom/gql': 1.1.13
+    dev: false
+
+  /@saltyaom/gql/1.1.13:
+    resolution: {integrity: sha512-UMzP2r9lliiWUrhl9S6qRED/4Re/Y0Ymu03ckNtXKeRJ7ZnFFlnRLwTxYpMJN1QiqYdqXsbnDVgOp4LmTTaYAQ==}
+    peerDependencies:
+      graphql: '>=15.0.0'
+    dependencies:
+      '@saltyaom/gql-inmemory-cache': 1.1.1_@saltyaom+gql@1.1.13
       isomorphic-unfetch: 3.1.0
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@sveltejs/adapter-auto/1.0.0-next.37:
-    resolution: {integrity: sha512-eGwE7QqA3x9EY+aFiBU07sr6amrNhzZpEKBxQaY0eXEpQtph/aANv3AxtsdaarhDJZRV89DooURCz1n1UJSEJQ==}
+  /@sveltejs/adapter-auto/1.0.0-next.38:
+    resolution: {integrity: sha512-1//aiV/Wzebj+j5X8VLRs0vJUT3andc/0+IRQwy5ykOwjpNo5/Mj2RX8SA+t5nxBFYyJJf2kj6sszKA8LjRAQQ==}
     dependencies:
       '@sveltejs/adapter-cloudflare': 1.0.0-next.18
-      '@sveltejs/adapter-netlify': 1.0.0-next.54
+      '@sveltejs/adapter-netlify': 1.0.0-next.55
       '@sveltejs/adapter-vercel': 1.0.0-next.49
     dev: true
 
@@ -190,8 +213,8 @@ packages:
       worktop: 0.8.0-next.12
     dev: true
 
-  /@sveltejs/adapter-netlify/1.0.0-next.54:
-    resolution: {integrity: sha512-tPPIgoPDEn2iEF6mk12RTNG/j3STJQS3DoKV0I9UcbqXw5RhSscdqN4K50mogASNql1nevOcclEehsCVfb4Iag==}
+  /@sveltejs/adapter-netlify/1.0.0-next.55:
+    resolution: {integrity: sha512-LbqupuX8SdvUdCLSLiazPdU+JwwVhWGmoAopwlFkdlGOsGEag6jB+CjEYPmy81SVMSKxtYA2RqNzBPpPbURDtw==}
     dependencies:
       '@iarna/toml': 2.2.5
       esbuild: 0.14.38

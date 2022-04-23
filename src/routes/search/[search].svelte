@@ -1,21 +1,7 @@
-<script context="module" lang="ts">
+<script lang="ts">
     import nhqlSearch from '$lib/gql/nhqlSearch'
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
-    export async function load({ params }) {
-        const { search } = params
-
-        return {
-            cache: 3600,
-            props: {
-                search,
-                nhql: await nhqlSearch(search)
-            }
-        }
-    }
-</script>
-
-<script lang="ts">
     import { page as sveltePage } from '$app/stores'
 
     import Cover from '$lib/atoms/cover.svelte'
@@ -23,11 +9,14 @@
     import { isServer } from '$lib/utils'
     import OpenGraph from '$lib/atoms/open-graph.svelte'
 
-    export let nhql: NhqlSearchData[]
-    export let search: string
+    import { page as path } from '$app/stores'
+    import SearchNotFound from '$lib/atoms/search-not-found.svelte'
+
+    let nhql: NhqlSearchData[] = []
+    $: search = $path.params.search
 
     let hentais: NhqlSearchData[] = [...nhql]
-    let page = 2
+    let page = 1
     let isLoading = false
     let over = false
 
@@ -101,6 +90,10 @@
 
 <svelte:window on:scroll={handleScroll} />
 
+<svlte:head>
+    <meta name="robot" content="noindex, nofollow" />
+</svlte:head>
+
 <OpenGraph
     title="Search: {search} &raquo; Hifumin: hentai doujinshi and manga"
 />
@@ -116,7 +109,7 @@
             Hifumin
         </h1>
     {:else if over && !hentais.length}
-        <h1>Not Found</h1>
+        <SearchNotFound />
     {:else if !hentais.length}
         {#each Array(totalMasonry).fill(0) as _}
             <div

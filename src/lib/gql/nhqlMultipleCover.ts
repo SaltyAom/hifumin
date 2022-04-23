@@ -1,6 +1,4 @@
-import gql, { client } from '@saltyaom/gq'
-
-client.config('https://api.hifumin.app')
+import gql from '.'
 
 export interface NhqlCoverPreview {
     id: number

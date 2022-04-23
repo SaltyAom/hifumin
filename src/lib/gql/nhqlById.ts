@@ -1,6 +1,4 @@
-import gql, { client } from '@saltyaom/gq'
-
-client.config('https://api.hifumin.app')
+import gql from '.'
 
 export interface NhqlByIdData {
     id: number
@@ -52,8 +50,7 @@ export interface NhqlByIdVariable {
     id: number
 }
 
-export const nhqlByIdDocument = `
-query getHentaiById($id: Int!) {
+export const nhqlByIdDocument = `query getHentaiById($id: Int!) {
   nhql {
     by(id: $id) {
       data {

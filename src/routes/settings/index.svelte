@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import settings, { SafeMode, Theme, ReaderType } from '$lib/stores/settings'
 
     import SettingLayout from '$lib/layouts/settings.svelte'
@@ -6,6 +6,28 @@
     import SettingNavigation from '$lib/layouts/setting-navigation.svelte'
 
     import Dropdown from '$lib/atoms/dropdown.svelte'
+
+    import { isServer } from '$lib/utils'
+
+    const cacheKeys = isServer
+        ? []
+        : Object.keys(localStorage).filter((key) => key.startsWith('_gqc_'))
+
+    // ? @saltyaom/gql-local-cache contains value and expires
+    const totalCache = cacheKeys.length / 2
+    const totalCacheSize = cacheKeys.reduce((acc, key) => {
+        return localStorage.getItem(key).length + acc
+    }, 0)
+
+    const clearCache = () => {
+        if (isServer) return
+
+        cacheKeys.forEach((key) => {
+            localStorage.removeItem(key)
+        })
+
+        window.location.reload()
+    }
 </script>
 
 <SettingLayout title="Settings" label="Adjust Platform behavior">
@@ -49,4 +71,23 @@
     <SettingNavigation title="Filter" href="/settings/filter">
         <p>Remove unwanted tags or keyword from search results.</p>
     </SettingNavigation>
+
+    <SettingRow vertical title="Clear Cache">
+        <svelte:fragment slot="label">
+            <p>Clear search data and hentai cache.</p>
+            <p>
+                Each cache will remove itself every 3 hours. So no need to
+                remove manually except for really wanted to clear the cache.
+            </p>
+            <p>Cache: {(totalCacheSize / (1024 * 1024)).toFixed(3)} MB</p>
+        </svelte:fragment>
+        <div class="flex items-center min-w-36 my-4">
+            <button
+                class=" text-red-500 dark:text-red-600 font-medium whitespace-normal px-4 py-2 bg-red-50 dark:bg-red-900/40 rounded-lg"
+                on:click={clearCache}
+            >
+                Clear Cache
+            </button>
+        </div>
+    </SettingRow>
 </SettingLayout>

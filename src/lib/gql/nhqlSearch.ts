@@ -1,9 +1,7 @@
+import gql from '.'
+
 import { get } from 'svelte/store'
 import settings from '$lib/stores/settings'
-
-import gql, { client } from '@saltyaom/gq'
-
-client.config('https://api.hifumin.app')
 
 export interface NhqlSearchData {
     id: number

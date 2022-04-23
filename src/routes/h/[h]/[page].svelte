@@ -4,14 +4,19 @@
     import nhqlById from '$lib/gql/nhqlById'
     import type { NhqlByIdData } from '$lib/gql/nhqlById'
 
+    import { isServer } from '$lib/utils'
+
     export async function load({ params }) {
         const { h, page } = params
 
+        const t = performance.now()
         const nhql = await nhqlById(+h)
 
-        if (!nhql || page < 1 || page > nhql.info.amount) return
+        if (!nhql || page < 1 || page > nhql.info.amount)
+            return
 
         return {
+            cache: 3600,
             props: {
                 nhql,
                 page: +page
@@ -24,7 +29,6 @@
     import { onMount } from 'svelte'
 
     import settings, { ReaderType } from '$lib/stores/settings'
-    import { isServer } from '$lib/utils'
 
     import {
         XIcon,
@@ -208,6 +212,7 @@
 <style lang="sass">
     .h-page
         height: calc(100vh - (2em * 2))
+
     // .h-page
     //     height: calc(100vh - (4em + 2em * 2))
 </style>

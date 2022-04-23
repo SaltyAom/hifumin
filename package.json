@@ -43,7 +43,9 @@
   },
   "type": "module",
   "dependencies": {
-    "@saltyaom/gq": "1.1.8",
+    "@saltyaom/gql": "1.1.13",
+    "@saltyaom/gql-inmemory-cache": "1.1.1",
+    "@saltyaom/gql-local-cache": "1.1.1",
     "cookie": "^0.4.2",
     "dayjs": "^1.11.1",
     "js-cookie": "^3.0.1",

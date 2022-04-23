@@ -7,6 +7,7 @@
     export async function load({ params }) {
         const { h } = params
 
+        const t = performance.now()
         const nhql = await nhqlById(+h)
 
         if (!nhql)
