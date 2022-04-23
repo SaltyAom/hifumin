@@ -12,8 +12,7 @@
         const t = performance.now()
         const nhql = await nhqlById(+h)
 
-        if (!nhql || page < 1 || page > nhql.info.amount)
-            return
+        if (!nhql || page < 1 || page > nhql.info.amount) return
 
         return {
             cache: 3600,
