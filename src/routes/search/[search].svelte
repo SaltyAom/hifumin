@@ -45,6 +45,8 @@
     let toleratedError = false
 
     const appendNhentai = async () => {
+        if (isServer) return
+
         try {
             isLoading = true
 
@@ -119,10 +121,7 @@
                 class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden"
             >
                 {#each Array(~~(50 / totalMasonry)).fill(0) as __}
-                    <figure
-                        class="w-full rounded-4xl bg-gray-50 dark:bg-gray-700"
-                        style="padding-bottom: 145%"
-                    />
+                    <SkeletonCover />
                 {/each}
             </div>
         {/each}
