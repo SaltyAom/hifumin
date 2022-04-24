@@ -8,7 +8,6 @@
 
     export async function load({ params }) {
         const { h, page } = params
-
         const nhql = await nhqlById(+h)
 
         if (!nhql || page < 1 || page > nhql.info.amount) return

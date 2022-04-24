@@ -43,7 +43,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@saltyaom/gql": "1.2.2",
+    "@saltyaom/gql": "1.2.4",
     "@saltyaom/gql-inmemory-cache": "1.2.1",
     "@saltyaom/gql-local-cache": "1.2.1",
     "dayjs": "^1.11.1",
