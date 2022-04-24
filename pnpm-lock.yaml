@@ -1,9 +1,9 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@saltyaom/gql': 1.1.14
-  '@saltyaom/gql-inmemory-cache': 1.1.7
-  '@saltyaom/gql-local-cache': 1.1.6
+  '@saltyaom/gql': 1.2.2
+  '@saltyaom/gql-inmemory-cache': 1.2.1
+  '@saltyaom/gql-local-cache': 1.2.1
   '@sveltejs/adapter-node': ^1.0.0-next.73
   '@sveltejs/kit': 1.0.0-next.320
   '@types/js-cookie': ^3.0.1
@@ -36,9 +36,9 @@ specifiers:
   workbox-window: ^6.5.3
 
 dependencies:
-  '@saltyaom/gql': 1.1.14
-  '@saltyaom/gql-inmemory-cache': 1.1.7_@saltyaom+gql@1.1.14
-  '@saltyaom/gql-local-cache': 1.1.6_@saltyaom+gql@1.1.14
+  '@saltyaom/gql': 1.2.2
+  '@saltyaom/gql-inmemory-cache': 1.2.1_@saltyaom+gql@1.2.2
+  '@saltyaom/gql-local-cache': 1.2.1_@saltyaom+gql@1.2.2
   dayjs: 1.11.1
   js-cookie: 3.0.1
   nprogress: 0.2.0
@@ -159,28 +159,27 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@saltyaom/gql-inmemory-cache/1.1.7_@saltyaom+gql@1.1.14:
-    resolution: {integrity: sha512-l6cbKRakY4ugkIjDJevN8ZJkKeHPV9DxDdqvpqIBMc5DxguLUXTqOgo/g7uvJARNN8WGfxcwIRboyBxSwJxajg==}
+  /@saltyaom/gql-inmemory-cache/1.2.1_@saltyaom+gql@1.2.2:
+    resolution: {integrity: sha512-u9L7hu9HmU4SDu88dHgwv/x9obiZQmRYF0ac+MsW0/CqJ62aHUsQw1hXS6v/nT5q1/VkOuwvKRHUXFPts9IiqA==}
     peerDependencies:
-      '@saltyaom/gql': '>= 1.1.1'
+      '@saltyaom/gql': '>= 1.2.2'
     dependencies:
-      '@saltyaom/gql': 1.1.14
+      '@saltyaom/gql': 1.2.2
     dev: false
 
-  /@saltyaom/gql-local-cache/1.1.6_@saltyaom+gql@1.1.14:
-    resolution: {integrity: sha512-dk6HYt0UPqb3C9ExGlf7H6ikKgOjjtQw0ODk4vI0Up/3d9Sj5z+DsYEJDgp/2qgisr8jR1W6lgCxuJG2Kpzjiw==}
+  /@saltyaom/gql-local-cache/1.2.1_@saltyaom+gql@1.2.2:
+    resolution: {integrity: sha512-3qNBce+eM5ch26Y/PMR77UD+VmSNW9G3MPN/pb8VKmlQ8+BspByJp+ZYnvfkFmRSjwlIEEFStgT9rQqlTT+MLA==}
     peerDependencies:
-      '@saltyaom/gql': '>= 1.1.1'
+      '@saltyaom/gql': '>= 1.2.2'
     dependencies:
-      '@saltyaom/gql': 1.1.14
+      '@saltyaom/gql': 1.2.2
     dev: false
 
-  /@saltyaom/gql/1.1.14:
-    resolution: {integrity: sha512-ZQ13FI0wtyGJv5kb78a5fECbKMzj7V3W0GKzpID/DYT+K+WuhesiDfaIomwm8oYJWUAMaOh1qHVR96t6r98RAA==}
+  /@saltyaom/gql/1.2.2:
+    resolution: {integrity: sha512-z7hVqIrWhw0e3u67y2GK7xQlT8Q3qqV80NIC1R0Ni6h7UjrNq8nFXlYmwKoCFpOhOB08UTlhiAN/ExEdDltMow==}
     peerDependencies:
       graphql: '>=15.0.0'
     dependencies:
-      '@saltyaom/gql-inmemory-cache': 1.1.7_@saltyaom+gql@1.1.14
       isomorphic-unfetch: 3.1.0
     transitivePeerDependencies:
       - encoding
