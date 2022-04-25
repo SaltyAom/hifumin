@@ -122,7 +122,7 @@
         {/if}
 
         <button
-            class="flex justify-center items-center text-white text-xl font-medium bg-blue-500 dark:bg-blue-600 w-full mt-4 py-3 rounded-lg gap-4"
+            class="flex justify-center items-center text-white text-xl font-medium bg-blue-500 dark:bg-blue-600 w-full mt-4 py-3 rounded-lg gap-4 blue-shadow"
             disabled={isLoading}
             >Sign In
             {#if isLoading}

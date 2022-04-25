@@ -75,7 +75,7 @@
             on:submit|preventDefault={find}
             class="{searchActive
                 ? 'flex'
-                : 'hidden'} md:flex items-center gap-2 w-full md:w-[42ch] pl-2.5 md:pl-4 pr-4 md:pr-1.5 h-12 bg-transparent md:bg-gray-100 md:dark:bg-gray-700 rounded-full"
+                : 'hidden'} md:flex items-center gap-2 w-full md:w-[42ch] pl-2.5 md:pl-4 pr-4 md:pr-1.5 h-12 bg-transparent md:bg-gray-100 md:dark:bg-gray-700 rounded-xl"
         >
             <button
                 class="flex md:hidden w-10 h-10 p-1 text-gray-600 dark:text-gray-300"
@@ -103,7 +103,7 @@
                 bind:value={search}
             />
             <button
-                class="appearance-none flex justify-center items-center min-w-[2.25em] min-h-[2.25em] rounded-full hover:bg-white focus:bg-white dark:hover:bg-gray-800 dark:focus:bg-gray-800 hover:shadow-sm focus:shadow-sm transition-colors"
+                class="appearance-none flex justify-center items-center min-w-[2.25em] min-h-[2.25em] rounded-lg hover:bg-white focus:bg-white dark:hover:bg-gray-800 dark:focus:bg-gray-800 hover:shadow-sm focus:shadow-sm transition-colors"
                 type="submit"
             >
                 <SendIcon

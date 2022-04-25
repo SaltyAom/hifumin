@@ -1,3 +1,5 @@
+$ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1)
+
 body
     @apply dark:bg-gray-800
 
@@ -15,6 +17,9 @@ a, button, input
     
     @screen md
         height: calc(100vh - 4rem)
+
+.blue-shadow
+    box-shadow: 0 4px 25px rgba(0, 123, 255, 0.375)
 
 #masonry
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr))

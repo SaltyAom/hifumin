@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
     import {
         collections,
         addToCollection,
@@ -163,4 +163,4 @@
         // top: calc(50% + 1.625em / 2 + .25em)
         // right: .25em
         box-shadow: 0 4px 16px rgba(66, 39, 39, .12), 0 8px 25px rgb(0 0 0 / 12%)
-</style>
+</style> -->

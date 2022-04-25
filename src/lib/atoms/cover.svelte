@@ -20,9 +20,9 @@
     }
 </script>
 
-<a sveltekit:prefetch href="/h/{hentai.id}">
-    <article class="flex flex-col gap-2 w-full">
-        <div class="cover rounded-2xl border dark:border-gray-700">
+<a class="liftable" sveltekit:prefetch href="/h/{hentai.id}">
+    <article class="article flex flex-col gap-2 w-full">
+        <div class="cover rounded-2xl border dark:border-gray-700 liftable">
             <div class="image overflow-hidden">
                 <Image
                     src={hentai.images.cover.link}
@@ -70,18 +70,16 @@
 <style lang="sass">
     $expo-out: cubic-bezier(.16,1,.3,1)
 
-    .cover
-        @apply overflow-hidden
-        transition: border-radius .48s $expo-out
-
-        & > .image
-            transition: transform .48s $expo-out
+    .liftable
+        & > .article > .cover
+            @apply rounded-xl overflow-hidden
+            box-shadow: 0
+            transition: box-shadow .375s $expo-out, transform .375s $expo-out
 
         &:hover,
         &:focus
-            @apply rounded-lg
-
-            & > .image
-                transform: scale(1.075)
-                // box-shadow: 0 2px 8px rgba(66, 39, 39, .12), 0 4px 12px rgb(0 0 0 / 12%)
+            & > .article > .cover
+                @apply transform -translate-y-4
+                transform: scale(1.025) translateY(-0.75rem)
+                box-shadow: 0 4px 8px rgba(0, 0, 0, .1)
 </style>
