@@ -13,7 +13,10 @@
         if (!nhql || page < 1 || page > nhql.info.amount) return
 
         return {
-            cache: 3600,
+            cache: {
+                maxage: 3600,
+                private: true
+            },
             props: {
                 nhql,
                 page: +page
