@@ -1,7 +1,7 @@
 import gql from '.'
 import type { NhqlSearchData } from './nhqlSearch'
 
-type NhqlCoverPreview = NhqlSearchData
+export type NhqlCoverPreview = NhqlSearchData
 
 export interface NhqlMultipleCoverByIdData {
     success: boolean

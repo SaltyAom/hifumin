@@ -1,9 +1,9 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@saltyaom/gql': 1.2.4
-  '@saltyaom/gql-inmemory-cache': 1.2.1
-  '@saltyaom/gql-local-cache': 1.2.1
+  '@saltyaom/gql': 1.3.1
+  '@saltyaom/gql-inmemory-cache': 1.3.0
+  '@saltyaom/gql-local-cache': 1.3.0
   '@sveltejs/adapter-node': ^1.0.0-next.73
   '@sveltejs/kit': 1.0.0-next.320
   '@types/js-cookie': ^3.0.2
@@ -36,9 +36,9 @@ specifiers:
   workbox-window: ^6.5.3
 
 dependencies:
-  '@saltyaom/gql': 1.2.4
-  '@saltyaom/gql-inmemory-cache': 1.2.1_@saltyaom+gql@1.2.4
-  '@saltyaom/gql-local-cache': 1.2.1_@saltyaom+gql@1.2.4
+  '@saltyaom/gql': 1.3.1
+  '@saltyaom/gql-inmemory-cache': 1.3.0_@saltyaom+gql@1.3.1
+  '@saltyaom/gql-local-cache': 1.3.0_@saltyaom+gql@1.3.1
   dayjs: 1.11.1
   js-cookie: 3.0.1
   nprogress: 0.2.0
@@ -159,24 +159,24 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@saltyaom/gql-inmemory-cache/1.2.1_@saltyaom+gql@1.2.4:
-    resolution: {integrity: sha512-u9L7hu9HmU4SDu88dHgwv/x9obiZQmRYF0ac+MsW0/CqJ62aHUsQw1hXS6v/nT5q1/VkOuwvKRHUXFPts9IiqA==}
+  /@saltyaom/gql-inmemory-cache/1.3.0_@saltyaom+gql@1.3.1:
+    resolution: {integrity: sha512-/O5uIQ7Ef3D5jgjnQ+HMNsoQxwkxnXrlapF5aJFu4pebU9vQt02b61qlzcqqW8lwsmUhSwOXvpFQNFTknBBUYA==}
     peerDependencies:
       '@saltyaom/gql': '>= 1.2.2'
     dependencies:
-      '@saltyaom/gql': 1.2.4
+      '@saltyaom/gql': 1.3.1
     dev: false
 
-  /@saltyaom/gql-local-cache/1.2.1_@saltyaom+gql@1.2.4:
-    resolution: {integrity: sha512-3qNBce+eM5ch26Y/PMR77UD+VmSNW9G3MPN/pb8VKmlQ8+BspByJp+ZYnvfkFmRSjwlIEEFStgT9rQqlTT+MLA==}
+  /@saltyaom/gql-local-cache/1.3.0_@saltyaom+gql@1.3.1:
+    resolution: {integrity: sha512-HgRvpNJVnOvLKblnKMX1FcBN58zGXN7FlAFgtZ09DZUNJbkCFAR325Qn52ue4lAjhYV4ieyPxi1eb7H5AFQfzw==}
     peerDependencies:
       '@saltyaom/gql': '>= 1.2.2'
     dependencies:
-      '@saltyaom/gql': 1.2.4
+      '@saltyaom/gql': 1.3.1
     dev: false
 
-  /@saltyaom/gql/1.2.4:
-    resolution: {integrity: sha512-SwbDV8TFf3cerGyheas8ImrdhOFgkj2rIaWXDpLD0gLm5F6MqyM2pTagebwKpoWgzjpLj8DmOV2Lp8vSaTGWMg==}
+  /@saltyaom/gql/1.3.1:
+    resolution: {integrity: sha512-SeiOqJ84Mwxto4K8MM2nzzqaEbZjUsarJKjJUCnmRZFlcXP/1zDsAiqHnV9q+qdoKqkymAss/Iuw0gm2jjRK7A==}
     peerDependencies:
       graphql: '>=15.0.0'
     dependencies:

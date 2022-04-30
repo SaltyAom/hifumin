@@ -26,7 +26,7 @@
     const findSourceById = async (id: number) => {
         try {
             const similars: Similarity[] = await fetch(
-                `https://rosmontis-4ztfgpnnla-as.a.run.app/h/${id}/1`
+                `https://rosmontis.hifumin.app/h/${id}/1`
             ).then((res) => res.json())
 
             const similarsId = similars.filter(
@@ -51,7 +51,6 @@
     }
 
     $: id = +$page.params.id
-
     $: if (!isServer && id && !isNaN(id)) findSourceById(id)
 </script>
 
