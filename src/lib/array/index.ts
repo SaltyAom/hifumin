@@ -2,6 +2,14 @@ export const randomBetween = (min: number, max: number): number =>
     Math.floor(Math.random() * (max - min + 1) + min)
 export const randomPick = <T>(data: T[]): T =>
     data[randomBetween(0, data.length - 1)]
+export const iterate = (from: number, limit: number, step: number): number[] => {
+    const result: number[] = []
+
+    for(let i = 0; i <= limit - 1; i++)
+        result.push(from + i * step)
+
+    return result
+}
 
 const cardWidth = 220
 

@@ -1,13 +1,14 @@
 <script lang="ts">
     import nhqlSearch from '$lib/gql/nhqlSearch'
+    import nhqlMultipleCoverById from '$lib/gql/nhqlMultipleCover'
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
-    import { randomBetween } from '$lib/array'
+    import { randomBetween, iterate } from '$lib/array'
 
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
     import { isServer } from '$lib/utils'
-    import { tags } from '$lib/data'
+    import { recommended } from '$lib/data'
 
     import { get } from 'svelte/store'
     import settings from '$lib/stores/settings'
@@ -29,7 +30,7 @@
     } = get(settings)
 
     const defaultTags = [
-        ...(enable && includes.length ? new Set(includes) : tags)
+        ...(enable && includes.length ? new Set(includes) : recommended)
     ]
     let availables = [...defaultTags]
 
@@ -38,8 +39,40 @@
     $: totalMasonry = getTotalMasonry(layoutWidth)
     $: chunkHentais = chunkHentai(totalMasonry, hentais)
 
+    let maybeNhWentDown = false
+    let tolerated = false
+
+    const tryMultipleIdFallback = async () => {
+        if (isLoading) return
+
+        try {
+            isLoading = true
+
+            const newHentais = await nhqlMultipleCoverById(
+                iterate(randomBetween(1, 400000), 25, randomBetween(1, 30))
+            )
+
+            if (!newHentais.length) throw new Error('No hentai found')
+
+            hentais = [
+                ...hentais,
+                ...newHentais
+                    .filter((h) => h.success && !shadowIds.includes(h.data.id))
+                    .map((h) => h.data)
+            ]
+
+            tolerated = false
+        } catch (err) {
+            if (tolerated) over = true
+            else tolerated = true
+        } finally {
+            isLoading = false
+        }
+    }
+
     const appendNhentai = async () => {
         if (isLoading) return
+        if (maybeNhWentDown) return tryMultipleIdFallback()
 
         const newTagIndex = randomBetween(0, availables.length - 1)
 
@@ -61,7 +94,7 @@
         } catch (err) {
             defaultTags.splice(newTagIndex, 1)
 
-            if (defaultTags.length === 0) over = true
+            if (defaultTags.length === 0) maybeNhWentDown = true
         } finally {
             isLoading = false
 

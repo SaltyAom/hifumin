@@ -1,33 +1,7 @@
 import gql from '.'
+import type { NhqlSearchData } from './nhqlSearch'
 
-export interface NhqlCoverPreview {
-    id: number
-    title: {
-        display: string
-    }
-    images: {
-        cover: {
-            link: string
-            info: {
-                width: number
-                height: number
-            }
-        }
-    }
-    info: {
-        amount: number
-    }
-    metadata: {
-        language: string
-        tags: Array<{
-            name: string
-        }>
-        artists: Array<{
-            name: string
-            count: number
-        }>
-    }
-}
+type NhqlCoverPreview = NhqlSearchData
 
 export interface NhqlMultipleCoverByIdData {
     success: boolean
@@ -73,13 +47,6 @@ query getHentaiCoverById($id: Int!) {
           }
           metadata {
             language
-            tags {
-              name
-            }
-            artists {
-              name
-              count
-            }
           }
         }
       }

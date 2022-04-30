@@ -101,3 +101,26 @@ export const tags = [
     'stomach deformation',
     'blackmail'
 ]
+
+export const recommended = [
+    'big breasts',
+    'sole female',
+    'stockings',
+    'glasses',
+    'nakadashi',
+    'shotacon',
+    'blowjob',
+    'bondage',
+    'yaoi',
+    'yuri',
+    'defloration',
+    'futanari',
+    'paizuri',
+    'milf',
+    'femdom',
+    'pantyhose',
+    'tentacles',
+    'mind break',
+    'crossdressing',
+    'schoolboy uniform',
+]

@@ -23,6 +23,9 @@
     <p class="text-gray-500 dark:text-gray-400 text-lg">
         Try search with another tag?
     </p>
+    <p class="text-gray-500 dark:text-gray-400 text-lg mb-4">
+        Or maybe nHentai API is down?
+    </p>
     <button
         class="text-blue-500 bg-blue-50 dark:bg-blue-900/50 px-4 py-2 text-xl font-medium rounded-lg"
         on:click={reload}>or Reload?</button
