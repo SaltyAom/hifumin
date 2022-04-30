@@ -44,6 +44,7 @@ query getHentaiCoverById($id: Int!) {
           }
           info {
             amount
+            favorite
           }
           metadata {
             language
