@@ -2,6 +2,8 @@
     import { onMount } from 'svelte'
 
     import { ChevronLeftIcon } from 'svelte-feather-icons'
+    
+    import { galahad } from '$lib/api'
 
     import Image from '$lib/atoms/image.svelte'
     import SkeletonCover from '$lib/skeletons/cover.svelte'
@@ -9,15 +11,17 @@
     import { invalidateUserOnUnauthorize } from '$lib/cookie'
     import { isServer } from '$lib/utils'
 
-    import type { FavoriteHentai, FavoriteHentaiData } from '$lib/types'
     import user, { isAuthed } from '$lib/stores/user'
     import NotFound from '$lib/atoms/not-found.svelte'
+    import favoriteHentais, {
+        type FavoriteHentaiData
+    } from '$lib/gql/favoriteHentais'
 
     let page = 1
     let isLoading = false
     let isEnd = false
 
-    let favorite: FavoriteHentai[] = []
+    let favorite: FavoriteHentaiData[] = []
 
     $: failedToFetchHentai =
         !isLoading &&
@@ -26,21 +30,23 @@
         favorite.length > 0 &&
         favorite.every((hentai) => !hentai.data)
 
+    $: console.log(favorite)
+
     const getFavorite = async () => {
         if (!$user || isLoading || isEnd) return
         isLoading = true
 
         try {
-            const res = await fetch(
-                `https://user.hifumin.app/favorite/list/${page}`,
-                {
-                    credentials: 'include'
-                }
-            )
+            const res = await fetch(`${galahad}/favorite/list/${page}`, {
+                credentials: 'include'
+            })
 
             if (await invalidateUserOnUnauthorize(res)) return
 
-            const data: FavoriteHentai[] = await res.json()
+            const favoriteIds: number[] = await res.json()
+            const data = await favoriteHentais(favoriteIds)
+
+            if (!data.length) throw new Error('No data')
 
             favorite = favorite.concat(data)
             if (data.length < 25) isEnd = true
@@ -140,7 +146,7 @@
                         <article class="w-full">
                             <a
                                 class="relative flex flex-col gap-2"
-                                href="/h/{h.id}"
+                                href="/h/{favoriteH.id}"
                                 sveltekit:prefetch
                             >
                                 <Image

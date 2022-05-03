@@ -2,7 +2,9 @@
 import Cookie from 'js-cookie'
 
 // Return true if user is not authorized
-export const invalidateUserOnUnauthorize = async (res: Response) => {
+export const invalidateUserOnUnauthorize = async (
+    res: Response
+): Promise<boolean> => {
     if (res.status === 401 || res.status === 403) {
         try {
             const response = (await res.json()) as {
@@ -11,7 +13,8 @@ export const invalidateUserOnUnauthorize = async (res: Response) => {
 
             if (response?.error === 'Unauthorized') {
                 Cookie.remove('persistedName')
-                window.location.reload()
+                console.log("Err")
+                // window.location.reload()
                 return true
             }
         } catch (error) {

@@ -1,6 +1,8 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
 
+    import { galahad } from '$lib/api'
+
     import ProgressIndicator from '$lib/atoms/progress-indicator.svelte'
     import user from '$lib/stores/user'
     import { isServer } from '$lib/utils'
@@ -20,7 +22,7 @@
         isLoading = true
 
         try {
-            const name = await fetch('https://user.hifumin.app/auth/signin', {
+            const name = await fetch(`${galahad}/auth/signin`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

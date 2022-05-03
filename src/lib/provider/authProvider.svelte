@@ -1,6 +1,8 @@
 <script lang="ts">
     import { onMount } from 'svelte'
 
+    import { galahad } from '$lib/api'
+
     import user, { isAuthed } from '$lib/stores/user'
     import { isServer } from '$lib/utils'
 
@@ -28,7 +30,7 @@
                 return
             }
 
-            const res = await fetch('https://user.hifumin.app/auth/refresh', {
+            const res = await fetch(`${galahad}/auth/refresh`, {
                 credentials: 'include'
             })
 
