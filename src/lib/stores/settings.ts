@@ -56,8 +56,8 @@ const setting = writable<Setting>(
 )
 
 setting.subscribe((setting) => {
-    if (isServer) return 
-    
+    if (isServer) return
+
     localStorage.setItem('setting', JSON.stringify(setting))
 })
 

@@ -87,7 +87,7 @@
         </p>
 
         <a
-            class="text-white text-center text-xl font-medium bg-blue-500 dark:bg-blue-600 w-full mt-2 py-3 rounded-lg gap-4 blue-shadow"
+            class="text-white text-center text-xl font-medium bg-blue-500 dark:bg-blue-600 w-full mt-2 py-3 rounded-lg gap-4"
             href="/signin">Sign In</a
         >
     {:else}

@@ -30,8 +30,6 @@
         favorite.length > 0 &&
         favorite.every((hentai) => !hentai.data)
 
-    $: console.log(favorite)
-
     const getFavorite = async () => {
         if (!$user || isLoading || isEnd) return
         isLoading = true
@@ -150,7 +148,7 @@
                                 sveltekit:prefetch
                             >
                                 <Image
-                                    parentClass="rounded-lg shadow-xl overflow-hidden"
+                                    parentClass="rounded-lg overflow-hidden"
                                     class="object-cover object-center"
                                     src={cover.link}
                                     width={cover.info.width}

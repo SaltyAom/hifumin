@@ -40,7 +40,7 @@
 
     $: applyActive = (value: string) =>
         $settings.preference.data.includes(value)
-            ? 'bg-black text-white dark:text-gray-200 border-black dark:bg-blue-600/75 dark:border-transparent'
+            ? 'text-white bg-blue-500 dark:bg-blue-600 border-transparent'
             : 'text-gray-700 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-700'
 
     $: disabled = !$settings.preference.enable

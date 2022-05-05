@@ -16,9 +16,9 @@
     import SearchNotFound from '$lib/atoms/search-not-found.svelte'
     import SkeletonCover from '$lib/skeletons/cover.svelte'
 
-    export let hentais: NhqlSearchData[] = []
+    import hentais from '$lib/stores/hentais'
 
-    $: shadowIds = [...hentais.map((h) => h.id)]
+    $: shadowIds = $hentais.map((h) => h.id)
 
     // ? Increase chance that hentai is on mirror server (for bookmark)
     let page = 2
@@ -37,7 +37,7 @@
     // Bind resizable window width
     let layoutWidth: number
     $: totalMasonry = getTotalMasonry(layoutWidth)
-    $: chunkHentais = chunkHentai(totalMasonry, hentais)
+    $: chunkHentais = chunkHentai(totalMasonry, $hentais)
 
     let maybeNhWentDown = false
     let tolerated = false
@@ -54,12 +54,11 @@
 
             if (!newHentais.length) throw new Error('No hentai found')
 
-            hentais = [
-                ...hentais,
-                ...newHentais
+            $hentais = $hentais.concat(
+                newHentais
                     .filter((h) => h.success && !shadowIds.includes(h.data.id))
                     .map((h) => h.data)
-            ]
+            )
 
             tolerated = false
         } catch (err) {
@@ -85,10 +84,10 @@
 
             const newHentais = await nhqlSearch(tag, page)
 
-            hentais = [
-                ...hentais,
-                ...newHentais.filter((h) => !shadowIds.includes(h.id))
-            ]
+            $hentais = $hentais.concat(
+                $hentais,
+                newHentais.filter((h) => !shadowIds.includes(h.id))
+            )
 
             if (newHentais.length < 25) throw new Error('No more hentai')
         } catch (err) {
@@ -123,7 +122,7 @@
         handleScroll()
     }
 
-    handleScroll()
+    if (!$hentais.length) handleScroll()
 </script>
 
 <svelte:window on:scroll={handleScroll} />
@@ -138,9 +137,9 @@
         >
             Hifumin
         </h1>
-    {:else if over && !hentais.length}
+    {:else if over && !$hentais.length}
         <SearchNotFound />
-    {:else if !hentais.length}
+    {:else if !$hentais.length}
         {#each Array(totalMasonry).fill(0) as _, index (index)}
             <div
                 class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden"
