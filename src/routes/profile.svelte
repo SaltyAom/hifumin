@@ -1,8 +1,11 @@
-<script>
+<script lang="ts">
+    import Cookies from 'js-cookie'
+
     import { goto } from '$app/navigation'
 
     import ProgressIndicator from '$lib/atoms/progress-indicator.svelte'
     import user, { isAuthed } from '$lib/stores/user'
+    
 
     let isLoading = false
     let error = ''
@@ -20,6 +23,8 @@
             })
 
             if (res.status !== 200) throw new Error('Sign out failed')
+
+            Cookies.remove('persistedName')
 
             location.href = '/'
         } catch {

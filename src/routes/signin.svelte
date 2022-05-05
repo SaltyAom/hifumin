@@ -22,7 +22,7 @@
         isLoading = true
 
         try {
-            const name = await fetch(`${galahad}/auth/signin`, {
+            const res = await fetch(`${galahad}/auth/signin`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -32,31 +32,30 @@
                     username,
                     password
                 })
-            }).then(async (res) => {
-                const { status } = res
+            })
 
-                if (status === 403) {
-                    try {
-                        const { error: msg } = (await res.json()) as {
-                            error: string
-                        }
+            const { status } = res
 
-                        if (msg === 'Invalid password')
-                            return (error = 'Wrong Username or Password')
-                        else
-                            return (error =
-                                'You have been blocked due likely launching a DDOS attack. Please wait for a while and try again.')
-                    } catch (error) {
+            if (status === 403) {
+                try {
+                    const { error: msg } = (await res.json()) as {
+                        error: string
+                    }
+
+                    if (msg === 'Invalid password')
+                        return (error = 'Wrong Username or Password')
+                    else
                         return (error =
                             'You have been blocked due likely launching a DDOS attack. Please wait for a while and try again.')
-                    }
+                } catch (error) {
+                    return (error =
+                        'You have been blocked due likely launching a DDOS attack. Please wait for a while and try again.')
                 }
+            }
 
-                if (status === 401)
-                    return (error = 'Wrong Username or Password')
+            if (status === 401) return (error = 'Wrong Username or Password')
 
-                return res.text()
-            })
+            const name = await res.text()
 
             if (!name) throw new Error('Incorrect username or password')
 
@@ -100,6 +99,7 @@
         >
         <input
             id="username"
+            required
             type="text"
             name="username"
             placeholder="Username"
@@ -112,6 +112,7 @@
         >
         <input
             id="password"
+            required
             type="password"
             name="password"
             placeholder="Password"
@@ -124,7 +125,7 @@
         {/if}
 
         <button
-            class="flex justify-center items-center text-white text-xl font-medium bg-blue-500 dark:bg-blue-600 w-full mt-4 py-3 rounded-lg gap-4 blue-shadow"
+            class="flex justify-center items-center text-white text-xl font-medium bg-blue-500 dark:bg-blue-600 w-full mt-4 py-3 rounded-lg gap-4"
             disabled={isLoading}
             >Sign In
             {#if isLoading}

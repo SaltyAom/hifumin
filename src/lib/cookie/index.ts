@@ -13,8 +13,8 @@ export const invalidateUserOnUnauthorize = async (
 
             if (response?.error === 'Unauthorized') {
                 Cookie.remove('persistedName')
-                console.log("Err")
-                // window.location.reload()
+                window.location.reload()
+
                 return true
             }
         } catch (error) {
