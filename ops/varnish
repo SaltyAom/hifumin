@@ -1,0 +1,25 @@
+[Service]
+Type=forking
+KillMode=process
+
+# Maximum number of open files (for ulimit -n)
+LimitNOFILE=131072
+
+# Locked shared memory - should suffice to lock the shared memory log
+# Using 128MB
+LimitMEMLOCK=134217728
+
+# Enable this to avoid "fork failed" on reload.
+TasksMax=infinity
+
+# Maximum size of the corefile.
+LimitCORE=infinity
+
+# DAEMON_OPTS="-a :3002 \
+#              -T localhost:6082 \
+#              -f /etc/varnish/default.vcl \
+#              -s malloc,256m \
+#              -t 10800"
+
+[Install]
+WantedBy=multi-user.target

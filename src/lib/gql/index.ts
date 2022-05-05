@@ -10,10 +10,7 @@ client.config('https://api.hifumin.app', {
         LocalCache({
             ttl: 60 * 60 * 3
         })
-    ],
-    "config": {
-        "referrer": "unsafe-url"
-    }
+    ]
 })
 
 export default gql
