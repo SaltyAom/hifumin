@@ -20,8 +20,7 @@
 
     $: shadowIds = $hentais.map((h) => h.id)
 
-    // ? Increase chance that hentai is on mirror server (for bookmark)
-    let page = 2
+    let page = 1
     let isLoading = false
     let over = false
 
