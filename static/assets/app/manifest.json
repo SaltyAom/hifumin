@@ -30,25 +30,25 @@
             "src": "/assets/app/icon/icon@96.png",
             "type": "image/png",
             "sizes": "96x96",
-            "purpose": "maskable"
+            "purpose": "maskable any"
         },
         {
             "src": "/assets/app/icon/icon@192.png",
             "type": "image/png",
             "sizes": "192x192",
-            "purpose": "maskable"
+            "purpose": "maskable any"
         },
         {
             "src": "/assets/app/icon/icon@384.png",
             "type": "image/png",
             "sizes": "384x384",
-            "purpose": "maskable"
+            "purpose": "maskable any"
         },
         {
             "src": "/assets/app/icon/icon@512.png",
             "type": "image/png",
             "sizes": "512x512",
-            "purpose": "maskable"
+            "purpose": "maskable any"
         }
     ],
     "start_url": "/",
