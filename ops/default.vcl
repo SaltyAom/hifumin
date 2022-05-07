@@ -6,6 +6,9 @@ backend hifumin {
     .max_connections = 1500;
     .probe = {
         .url = "/";
+        .interval = 0.1s;
+        .timeout = 3s;
+        .threshold = 1;
     }
     .connect_timeout        = 30s;
     .first_byte_timeout     = 30s;
@@ -15,4 +18,7 @@ backend hifumin {
 sub vcl_backend_response {
     # Going to be replaced by Cloud Run instance anyway
     set beresp.ttl = 1d;
+
+    set beresp.grace = 30s;
+    set beresp.keep = 30s;
 }
