@@ -98,6 +98,12 @@
     }
 </script>
 
+<svelte:head>
+    {#if nhql?.images?.cover?.link}
+        <link rel="preload" as="image" href={nhql.images.cover.link} />
+    {/if}
+</svelte:head>
+
 {#if showBanner}
     <MemberOnly {close} />
 {/if}

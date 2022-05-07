@@ -3,24 +3,58 @@
     "name": "Hifumin",
     "icons": [
         {
-            "src": "/assets/app/icon/icon.png",
+            "src": "/assets/app/icon/icon@96.png",
             "type": "image/png",
-            "sizes": "192x192"
+            "sizes": "96x96",
+            "purpose": "any"
         },
         {
-            "src": "/assets/app/icon/icon@medium.png",
+            "src": "/assets/app/icon/icon@192.png",
             "type": "image/png",
-            "sizes": "256x256"
+            "sizes": "192x192",
+            "purpose": "any"
         },
         {
-            "src": "/assets/app/icon/icon@large.png",
+            "src": "/assets/app/icon/icon@384.png",
             "type": "image/png",
-            "sizes": "512x512"
+            "sizes": "384x384",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/app/icon/icon@512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any"
+        },
+        {
+            "src": "/assets/app/icon/icon@96.png",
+            "type": "image/png",
+            "sizes": "96x96",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/assets/app/icon/icon@192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/assets/app/icon/icon@384.png",
+            "type": "image/png",
+            "sizes": "384x384",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/assets/app/icon/icon@512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
         }
     ],
     "start_url": "/",
     "display": "standalone",
     "scope": "/",
     "orientation": "portrait",
-    "background_color": "#ffffff"
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff"
 }

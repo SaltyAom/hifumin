@@ -116,6 +116,9 @@
 
 <svelte:head>
     <meta name="robots" content="noindex" />
+    {#if nhql?.images?.cover?.link}
+        <link rel="preload" as="image" href={nhql.images.cover.link} />
+    {/if}
 </svelte:head>
 
 <main class="relative flex flex-col items-center w-full h-screen mx-auto">
