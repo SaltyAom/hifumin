@@ -116,7 +116,7 @@
         />
     </div>
 
-    <section class="flex flex-col gap-2">
+    <section class="flex flex-col gap-2 mr-auto">
         <header class="flex flex-col gap-1">
             <h6 class="text-sm text-gray-400 dark:text-gray-500">{nhql.id}</h6>
             <h1 class="text-2xl text-gray-800 dark:text-gray-300">
