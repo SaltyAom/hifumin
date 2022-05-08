@@ -56,7 +56,6 @@
             if (status === 401) return (error = 'Wrong Username or Password')
 
             const name = await res.text()
-
             if (!name) throw new Error('Incorrect username or password')
 
             $user = {

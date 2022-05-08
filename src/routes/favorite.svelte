@@ -2,7 +2,7 @@
     import { onMount } from 'svelte'
 
     import { ChevronLeftIcon } from 'svelte-feather-icons'
-    
+
     import { galahad } from '$lib/api'
 
     import Image from '$lib/atoms/image.svelte'
@@ -143,17 +143,19 @@
                     {#if favoriteH.success}
                         <article class="w-full">
                             <a
-                                class="relative flex flex-col gap-2"
+                                class="liftable relative flex flex-col gap-2"
                                 href="/h/{favoriteH.id}"
                                 sveltekit:prefetch
                             >
-                                <Image
-                                    parentClass="rounded-lg overflow-hidden"
-                                    class="object-cover object-center"
-                                    src={cover.link}
-                                    width={cover.info.width}
-                                    height={cover.info.height}
-                                />
+                                <figure class="cover inline p-0">
+                                    <Image
+                                        parentClass="rounded-lg overflow-hidden"
+                                        class="object-cover object-center"
+                                        src={cover.link}
+                                        width={cover.info.width}
+                                        height={cover.info.height}
+                                    />
+                                </figure>
                                 <h1
                                     class="font-medium text-lg text-gray-500 dark:text-gray-300 mt-1"
                                 >
@@ -233,4 +235,19 @@
 
         @screen md
             min-height: calc(100vh - 64px - 64px - 36px - 34px - 32px) !important
+
+    $expo-out: cubic-bezier(.16,1,.3,1)
+
+    .liftable
+        & > .cover
+            @apply rounded-xl overflow-hidden
+            box-shadow: 0
+            transition: box-shadow .375s $expo-out, transform .375s $expo-out
+
+        &:hover,
+        &:focus
+            & > .cover
+                @apply transform -translate-y-4
+                transform: scale(1.025) translateY(-0.75rem)
+                box-shadow: 0 4px 8px rgba(0, 0, 0, .1)
 </style>
