@@ -2,7 +2,9 @@
     import nhqlSearch from '$lib/gql/nhqlSearch'
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
+    import { onMount } from 'svelte'
     import { page as sveltePage } from '$app/stores'
+    import { beforeNavigate } from '$app/navigation'
 
     import Cover from '$lib/atoms/cover.svelte'
     import { getTotalMasonry, chunkHentai } from '$lib/array'
@@ -18,11 +20,11 @@
     let isLoading = false
     let over = false
 
-    $: shadowIds = [...hentais.map((h) => h.id)]
+    $: shadowIds = hentais.map((h) => h.id)
     $: search = $path.params.search
 
     sveltePage.subscribe(async (newPage) => {
-        if (!newPage || isLoading) return
+        if (!newPage || isLoading || !search) return
 
         isLoading = true
 
@@ -90,7 +92,11 @@
         handleScroll()
     }
 
-    handleScroll()
+    onMount(handleScroll)
+
+    beforeNavigate(() => {
+        over = true
+    })
 </script>
 
 <svelte:window on:scroll={handleScroll} />

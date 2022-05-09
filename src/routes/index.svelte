@@ -1,17 +1,25 @@
 <script lang="ts">
+    import { onMount } from 'svelte'
+
+    import { page as path } from '$app/stores'
+    import { beforeNavigate } from '$app/navigation'
+
     import nhqlSearch from '$lib/gql/nhqlSearch'
     import nhqlMultipleCoverById from '$lib/gql/nhqlMultipleCover'
     import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
 
-    import { randomBetween, iterate } from '$lib/array'
-
-    import Cover from '$lib/atoms/cover.svelte'
-    import { getTotalMasonry, chunkHentai } from '$lib/array'
-    import { isServer } from '$lib/utils'
+    import {
+        randomBetween,
+        iterate,
+        getTotalMasonry,
+        chunkHentai
+    } from '$lib/array'
     import { recommended } from '$lib/data'
-
+    import { isServer } from '$lib/utils'
     import { get } from 'svelte/store'
     import settings from '$lib/stores/settings'
+
+    import Cover from '$lib/atoms/cover.svelte'
     import OpenGraph from '$lib/atoms/open-graph.svelte'
     import SearchNotFound from '$lib/atoms/search-not-found.svelte'
     import SkeletonCover from '$lib/skeletons/cover.svelte'
@@ -121,7 +129,13 @@
         handleScroll()
     }
 
-    if (!$hentais.length) handleScroll()
+    onMount(() => {
+        if (!$hentais.length) handleScroll()
+    })
+
+    beforeNavigate(() => {
+        over = true
+    })
 </script>
 
 <svelte:window on:scroll={handleScroll} />
