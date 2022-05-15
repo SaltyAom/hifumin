@@ -78,6 +78,8 @@ const nhqlSearch = async (
         filter: { data: excludes, enable }
     } = get(settings)
 
+    if (!search || !page) return []
+
     const data = await gql<NhqlSearch, NhqlSearchVariable>(nhqlSearchDocument, {
         variables: {
             with: search,
