@@ -1,13 +1,13 @@
 vcl 4.1;
 
 backend hifumin {
-    .host = "127.0.0.1";
+    .host = "localhost";
     .port = "3001";
-    .max_connections = 1500;
+    .max_connections = 3000;
     .probe = {
         .url = "/";
         .interval = 0.1s;
-        .timeout = 3s;
+        .timeout = 5s;
         .threshold = 1;
     }
     .connect_timeout        = 30s;
