@@ -95,6 +95,8 @@ export const nhqlByIdDocument = `query getHentaiById($id: Int!) {
 }`
 
 const nhqlById = async (id: number): Promise<NhqlByIdData | null> => {
+    if(Number.isNaN(id) || id > 500_000) return
+
     const data = await gql<NhqlById, NhqlByIdVariable>(nhqlByIdDocument, {
         variables: {
             id
