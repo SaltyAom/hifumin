@@ -92,7 +92,11 @@
 
         page = prePage
 
-        goto(`/h/${id}/${page}`)
+        goto(`/h/${id}/${page}`, {
+            replaceState: true,
+            keepfocus: true,
+            noscroll: true
+        })
     }
 
     const nextPage = () => {
@@ -102,7 +106,11 @@
 
         page = prePage
 
-        goto(`/h/${id}/${page}`)
+        goto(`/h/${id}/${page}`, {
+            replaceState: true,
+            keepfocus: true,
+            noscroll: true
+        })
     }
 
     const handleKeyPress = ({ key }: KeyboardEvent) => {
