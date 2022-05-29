@@ -58,19 +58,14 @@
     <main
         class="flex flex-col justify-center items-center gap-6 w-full min-h-app max-w-xs mx-auto py-8"
     >
-        <figure class="max-w-52 w-full">
-            <a
-                class="block relative pb-[100%] overflow-hidden"
-                title="Ame working repeatly touching paper illustrated by Walfie"
-                href="https://twitter.com/walfieee/status/1398764772573786116?lang=en"
-                target="_blank"
-            >
+        <figure class="max-w-48 w-full pb-[100]">
+            <div class="block relative pb-[100%] overflow-hidden">
                 <img
-                    src="/gif/ame-report.webp"
-                    alt="Ame working repeatly touching paper illustrated by Walfie"
                     class="absolute object-contain h-full"
+                    src="/assets/images/griseo.webp"
+                    alt="Griseo crying"
                 />
-            </a>
+            </div>
         </figure>
         <h1 class="text-gray-700 dark:text-gray-300 text-2xl font-medium">
             Sorry, something went wrong
@@ -94,19 +89,14 @@
     <main
         class="flex flex-col justify-center items-center gap-6 w-full min-h-app max-w-xs mx-auto py-8"
     >
-        <figure class="max-w-52 w-full">
-            <a
-                class="block relative pb-[100%] overflow-hidden"
-                title="A Chan is working on it illustrated by Walfie"
-                href="https://twitter.com/walfieee/status/1398764772573786116?lang=en"
-                target="_blank"
-            >
+        <figure class="max-w-48 w-full pb-[100]">
+            <div class="block relative pb-[100%] overflow-hidden">
                 <img
-                    src="/gif/a-chan.webp"
-                    alt="A Chan is working on it illustrated by Walfie"
                     class="absolute object-contain h-full"
+                    src="/assets/images/griseo.webp"
+                    alt="Griseo crying"
                 />
-            </a>
+            </div>
         </figure>
         <h1 class="text-gray-700 dark:text-gray-300 text-2xl font-medium">
             Finding translation
@@ -116,19 +106,14 @@
     <main
         class="flex flex-col justify-center items-center gap-6 w-full min-h-app max-w-xs mx-auto py-8"
     >
-        <figure class="max-w-52 w-full">
-            <a
-                class="block relative pb-[100%] overflow-hidden"
-                title="Ame working repeatly touching paper illustrated by Walfie"
-                href="https://twitter.com/walfieee/status/1398764772573786116?lang=en"
-                target="_blank"
-            >
+        <figure class="max-w-48 w-full pb-[100]">
+            <div class="block relative pb-[100%] overflow-hidden">
                 <img
-                    src="/gif/ame-report.webp"
-                    alt="Ame working repeatly touching paper illustrated by Walfie"
                     class="absolute object-contain h-full"
+                    src="/assets/images/griseo.webp"
+                    alt="Griseo crying"
                 />
-            </a>
+            </div>
         </figure>
         <h1 class="text-gray-700 dark:text-gray-300 text-2xl font-medium">
             Not found

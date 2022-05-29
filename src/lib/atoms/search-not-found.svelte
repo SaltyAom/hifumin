@@ -5,18 +5,15 @@
 </script>
 
 <main class="flex flex-col justify-center items-center gap-3 w-full min-h-app">
-    <div class="w-[12em]">
-        <a
-            class="relative block w-[12em] pb-[120%] mx-app"
-            href="https://walfiegif.wordpress.com/2021/01/13/tap-tap"
-        >
+    <figure class="relative w-48">
+        <div class="pb-[100%]">
             <img
                 class="absolute w-full"
-                src="/gif/ame-report.webp"
-                alt="Ame touching report illustrated by Walfie"
+                src="/assets/images/griseo.webp"
+                alt="Griseo crying"
             />
-        </a>
-    </div>
+        </div>
+    </figure>
     <h1 class="text-gray-700 dark:text-gray-200 text-2xl font-medium">
         Not found
     </h1>

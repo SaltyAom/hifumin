@@ -23,7 +23,9 @@
         searchActive = true
 
         requestAnimationFrame(() => {
-            searchBox?.focus()
+            queueMicrotask(() => {
+                searchBox?.focus()
+            })
         })
     }
 
