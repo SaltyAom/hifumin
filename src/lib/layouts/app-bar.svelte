@@ -10,6 +10,7 @@
         SettingsIcon
     } from 'svelte-feather-icons'
     import user from '$lib/stores/user'
+    import { afterUpdate } from 'svelte'
 
     let search
     // For mobile devices
@@ -21,13 +22,11 @@
 
     const openSearch = () => {
         searchActive = true
-
-        requestAnimationFrame(() => {
-            queueMicrotask(() => {
-                searchBox?.focus()
-            })
-        })
     }
+
+    afterUpdate(() => {
+        if (searchActive) searchBox?.focus()
+    })
 
     const closeSearch = () => {
         searchActive = false
