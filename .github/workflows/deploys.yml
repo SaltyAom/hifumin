@@ -1,4 +1,4 @@
-name: mirror
+name: deploys
 
 on:
   push:
