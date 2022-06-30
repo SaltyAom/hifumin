@@ -1,0 +1,59 @@
+name: mirror
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: '0 */9 * * *'
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hifumin
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - uses: pnpm/action-setup@v2.0.1
+      with:
+        version: 6.0.2
+        run_install: |
+          - recursive: true
+            args: [--frozen-lockfile, --strict-peer-dependencies]
+          - args: [--global, gulp, prettier, typescript]
+
+    - run: pnpm build
+
+    - name: Build Docker image
+      run: docker build -t hifumin .
+
+    - name: Tag Docker image
+      run: docker tag hifumin $IMAGE_NAME
+
+    - name: Push Docker image
+      run: docker push $IMAGE_NAME
+
+    - uses: deploys-app/deploys-action@v1
+      with:
+        project: hifumin
+        location: gke.cluster-rcf2
+        name: sirin
+        image: ghcr.io/${{ github.repository_owner }}/hifumin
+        minReplicas: 2
+        maxReplicas: 10
+      env:
+        DEPLOYS_AUTH_USER: ${{ secrets.DEPLOYS_AUTH_USER }}
+        DEPLOYS_AUTH_PASS: ${{ secrets.DEPLOYS_AUTH_PASS }}
