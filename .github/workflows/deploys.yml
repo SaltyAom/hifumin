@@ -8,7 +8,7 @@ jobs:
   mirror:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hifumin
+      IMAGE_NAME: ghcr.io/saltyaom/hifumin
 
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: ghcr.io
-        username: ${{ github.repository_owner }}
+        username: saltyaom
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: actions/setup-node@v2
@@ -48,7 +48,7 @@ jobs:
         project: hifumin
         location: gke.cluster-rcf2
         name: sirin
-        image: ghcr.io/${{ github.repository_owner }}/hifumin
+        image: ghcr.io/saltyaom/hifumin
         minReplicas: 2
         maxReplicas: 10
       env:
