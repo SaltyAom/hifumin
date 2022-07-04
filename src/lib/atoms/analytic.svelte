@@ -21,7 +21,7 @@
     <script
         async
         type="text/partytown"
-        src="https://www.googletagmanager.com/gtag/js?id=G-3P8K1JLFMV"></script>
+        src="https://www.googletagmanager.com/gtag/js"></script>
     <script type="text/partytown">
         window.dataLayer = window.dataLayer || []
 
