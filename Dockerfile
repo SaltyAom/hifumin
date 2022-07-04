@@ -17,15 +17,11 @@ FROM node:16-alpine as modules
 WORKDIR /usr/app
 
 RUN apk --no-cache add curl bash
-RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash -s -- -b /usr/local/bin
 
 COPY package.json .
 COPY yarn.lock .
 
 RUN yarn --frozen-lockfile --production
-# RUN npm install -g npm@7.20.0
-# RUN npm prune --production
-RUN /usr/local/bin/node-prune
 
 # * ====================
 FROM alpine:latest as main
