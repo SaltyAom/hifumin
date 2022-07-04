@@ -8,18 +8,18 @@ const SearchHeader: SearchHeaderComponent = ({
 	children,
 	expanded = false
 }) => {
-	let padding = tw`lg:mx-0 px-4 py-4 lg:py-4`
+	let padding = tw`lg:mx-0 px-4 pb-4`
 
 	if (expanded)
 		return (
 			<header
 				className={combine(
-					tw`flex flex-col justify-center items-center w-full mx-auto`,
+					tw`flex flex-col justify-end items-center w-full mx-auto`,
 					padding,
 					tw`!px-8`
 				)}
 				style={{
-					height: 520
+					height: 360
 				}}
 			>
 				<div
