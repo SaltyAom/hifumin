@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /// <reference types="@sveltejs/kit" />
 
+declare interface Window {
+    gtag: (type: string, token: string | Date, config?: Record<string, unknown>) => void
+}
+
 declare namespace svelte.JSX {
     interface HTMLAttributes<T> {
         onintersect?: () => void
