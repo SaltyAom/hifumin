@@ -62,12 +62,12 @@ const DiscoverLayout: DiscoverLayoutComponent = ({ children, layoutRef }) => {
 					/>
 				</form>
 			</SearchHeader>
-			<main
+			<section
 				ref={layoutRef}
-				className={tw`flex flex-1 flex-row gap-4 px-4`}
+				className={tw`flex flex-1 flex-row items-start gap-4 px-4`}
 			>
 				{children}
-			</main>
+			</section>
 		</>
 	)
 }
