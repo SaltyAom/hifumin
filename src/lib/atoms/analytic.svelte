@@ -30,7 +30,7 @@
         }
 
         gtag('js', new Date())
-        gtag('config', 'YOUR-ID-HERE', {
+        gtag('config', 'G-3P8K1JLFMV', {
             page_path: window.location.pathname
         })
     </script>
