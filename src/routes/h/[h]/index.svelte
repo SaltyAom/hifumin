@@ -35,6 +35,7 @@
 
     import Comment from '$lib/organisms/comment.svelte'
     import OpenGraph from '$lib/atoms/open-graph.svelte'
+    import Related from '$lib/molecules/related.svelte';
 
     export let nhql: NhqlByIdData
     export let h: number
@@ -49,7 +50,7 @@
 
         setTimeout(() => {
             image.src = src
-        }, 333)
+        }, 75)
     }
 
     const getPage = /\/([0-9]{1,4})\.(\w+)$/
@@ -138,6 +139,7 @@
         {/if}
     </main>
 
+    <Related id={nhql.id} />
     <Comment id={nhql.id} />
 </article>
 
@@ -145,7 +147,7 @@
     $expo-out: cubic-bezier(.16,1,.3,1)
 
     #interactive
-        @apply grid max-w-6xl gap-4 px-2
+        @apply grid max-w-6xl gap-4 px-4
         grid-template-columns: repeat(auto-fill, minmax(135px, 1fr))
 
     #scroll

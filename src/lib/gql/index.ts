@@ -1,16 +1,20 @@
+import { dev } from '$app/env'
+
 import gql, { client } from '@saltyaom/gql'
 import InMemoryCache from '@saltyaom/gql-inmemory-cache'
 import LocalCache from '@saltyaom/gql-local-cache'
 
 client.config('https://api.hifumin.app/v1/graphql', {
-    plugins: [
-        InMemoryCache({
-            ttl: 60 * 30
-        }),
-        LocalCache({
-            ttl: 60 * 60 * 3
-        })
-    ]
+    plugins: dev
+        ? undefined
+        : [
+              InMemoryCache({
+                  ttl: 60 * 30
+              }),
+              LocalCache({
+                  ttl: 60 * 60 * 3
+              })
+          ]
 })
 
 export default gql

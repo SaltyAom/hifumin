@@ -90,8 +90,8 @@
         } catch {
             isFavorite = !isFavorite
         } finally {
+            // ? Prevent spam clicking
             setTimeout(() => {
-                // Prevent spam clicking
                 isLoading = false
             }, 250)
         }

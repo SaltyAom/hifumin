@@ -43,7 +43,7 @@
         [SafeMode.opaque]: 'opacity-0'
     }
 
-    const calculatePadding = () => {
+    const calculatePadding = (width: number, height: number) => {
         const size = (height / width) * 100
 
         if (autoCrop && size > 175) return 175
@@ -51,7 +51,8 @@
         return size
     }
 
-    $: padding = calculatePadding()
+    // ? Add param to make it reactive
+    $: padding = calculatePadding(width, height)
 
     $: safeModeClass = safeModeMap[$settings.safeMode]
 </script>
@@ -61,7 +62,7 @@
     on:intersect={handleIntersection}
     style="padding-bottom:{padding}%"
     class={`relative bg-gray-50 dark:bg-gray-700 overflow-hidden ${parentClass}`}
-    id={id}
+    {id}
 >
     {#if intersected}
         {#if error}

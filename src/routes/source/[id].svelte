@@ -19,10 +19,6 @@
     let sources: SimilarityCover[] = null
     let isError = false
 
-    const back = () => {
-        window.history.back()
-    }
-
     const findSourceById = async (id: number) => {
         try {
             const similars: Similarity[] = await fetch(

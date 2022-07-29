@@ -1,13 +1,14 @@
 <script lang="ts">
     import { page } from '$app/stores'
-    import { browser } from '$app/env'
+    import { browser, dev } from '$app/env'
 
     import { onMount } from 'svelte'
     import { partytownSnippet } from '@builder.io/partytown/integration'
 
     let scriptEl
 
-    onMount(() => scriptEl && (scriptEl.textContent = partytownSnippet()))
+    if (!dev)
+        onMount(() => scriptEl && (scriptEl.textContent = partytownSnippet()))
 </script>
 
 <svelte:head>
