@@ -49,6 +49,6 @@
     "dayjs": "^1.11.2",
     "eslint-plugin-svelte": "^2.3.1",
     "js-cookie": "^3.0.1",
-    "nprogress": "^0.2.0"
+    "svelte-adapter-bun": "^0.3.1"
   }
 }

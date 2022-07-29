@@ -130,9 +130,6 @@
                 />
             </div>
         {:else}
-            {#if !favorite.length}
-                <NotFound />
-            {/if}
             <section class="relative grid collection w-full gap-6 md:gap-8">
                 {#each favorite as favoriteH (favoriteH.id)}
                     {@const h = favoriteH.data}

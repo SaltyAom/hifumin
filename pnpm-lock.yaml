@@ -22,6 +22,7 @@ specifiers:
   prettier-plugin-svelte: ^2.7.0
   sass: ^1.52.1
   svelte: ^3.48.0
+  svelte-adapter-bun: ^0.3.1
   svelte-check: ^2.7.1
   svelte-feather-icons: ^3.6.0
   svelte-preprocess: ^4.10.6
@@ -47,6 +48,7 @@ dependencies:
   eslint-plugin-svelte: 2.3.1_k4rvtr32uzrs6rwp57u73ssa6q
   js-cookie: 3.0.1
   nprogress: 0.2.0
+  svelte-adapter-bun: 0.3.1
 
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.85
@@ -1166,7 +1168,6 @@ packages:
 
   /globalyzer/0.1.0:
     resolution: {integrity: sha512-40oNTM9UfG6aBmuKxk/giHn5nQ8RVz/SS4Ir6zgzOv9/qC3kKZ9v4etGTcJbEl/NyVQH7FGU7d+X1egr57Md2Q==}
-    dev: true
 
   /globby/11.1.0:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
@@ -1182,7 +1183,6 @@ packages:
 
   /globrex/0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
-    dev: true
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
@@ -1740,6 +1740,12 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /svelte-adapter-bun/0.3.1:
+    resolution: {integrity: sha512-IoxRX6VYd7JlX+g5NVRH2Uc6WadQMPEOF2Cz4y7XasyY1XC8DriD8osdhm8ENQYf8/ou8fCjuddh1MiHqGFQDA==}
+    dependencies:
+      tiny-glob: 0.2.9
+    dev: false
+
   /svelte-check/2.8.0_xm3fv5ojhymlmqm4rrgwrhjhnu:
     resolution: {integrity: sha512-HRL66BxffMAZusqe5I5k26mRWQ+BobGd9Rxm3onh7ZVu0nTk8YTKJ9vu3LVPjUGLU9IX7zS+jmwPVhJYdXJ8vg==}
     hasBin: true
@@ -1874,7 +1880,6 @@ packages:
     dependencies:
       globalyzer: 0.1.0
       globrex: 0.1.2
-    dev: true
 
   /to-regex-range/5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
