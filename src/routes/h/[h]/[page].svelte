@@ -1,16 +1,13 @@
 <script context="module" lang="ts">
     import { goto } from '$app/navigation'
 
-    import nhqlById from '$lib/gql/nhqlById'
-    import type { NhqlByIdData } from '$lib/gql/nhqlById'
-
-    import { isServer } from '$lib/utils'
+    import { hentaiById, type HentaiByIdData } from '@gql'
 
     export async function load({ params }) {
         const { h, page } = params
-        const nhql = await nhqlById(+h)
+        const hentai = await hentaiById(+h)
 
-        if (!nhql || page < 1 || page > nhql.info.amount) return
+        if (!hentai || page < 1 || page > hentai.info.amount) return
 
         return {
             cache: {
@@ -18,7 +15,7 @@
                 private: true
             },
             props: {
-                nhql,
+                hentai,
                 page: +page
             }
         }
@@ -27,8 +24,9 @@
 
 <script lang="ts">
     import { onMount } from 'svelte'
+    import { browser } from '$app/env'
 
-    import settings, { ReaderType } from '$lib/stores/settings'
+    import { settings, ReaderType } from '@stores'
 
     import {
         XIcon,
@@ -36,11 +34,11 @@
         ChevronRightIcon
     } from 'svelte-feather-icons'
 
-    export let nhql: NhqlByIdData
+    export let hentai: HentaiByIdData
     export let page: number
 
     $: {
-        if (!isServer) {
+        if (browser) {
             page
 
             if (page <= pages.length) prefetchPage(page)
@@ -48,27 +46,28 @@
         }
     }
 
+    $: ({
+        id,
+        title: { display },
+        images: { pages }
+    } = hentai)
+    $: link = pages[page - 1]?.link || ''
+    $: digit = pages.length.toString().length
     // Since we already have service worker, no prevention logic is need
     const prefetchPage = (page: number) => {
         const image = new Image()
-        const src = nhql.images.pages[page]?.link
+        const src = pages[page]?.link
 
         if (src) image.src = src
     }
 
     onMount(() => {
-        settings.update((v) => ({
-            ...v,
-            reader: ReaderType.interactive
-        }))
+        if ($settings.reader !== ReaderType.interactive)
+            settings.update((v) => ({
+                ...v,
+                reader: ReaderType.interactive
+            }))
     })
-
-    const {
-        id,
-        images: { pages }
-    } = nhql
-    $: link = pages[page - 1]?.link || ''
-    $: digit = pages.length.toString().length
 
     let prePage = +page
 
@@ -116,7 +115,7 @@
     const handleKeyPress = ({ key }: KeyboardEvent) => {
         if (key === 'ArrowLeft') return prevPage()
         if (key === 'ArrowRight') return nextPage()
-        if (key === 'Escape') return goto(`/h/${nhql.id}#page-${page}`)
+        if (key === 'Escape') return goto(`/h/${id}#page-${page}`)
     }
 </script>
 
@@ -124,9 +123,7 @@
 
 <svelte:head>
     <meta name="robots" content="noindex" />
-    {#if nhql?.images?.cover?.link}
-        <link rel="preload" as="image" href={nhql.images.cover.link} />
-    {/if}
+    <link rel="preload" as="image" href={link} />
 </svelte:head>
 
 <main class="relative flex flex-col items-center w-full h-screen mx-auto">
@@ -171,7 +168,7 @@
         <img
             src={link}
             class="h-full object-contain"
-            alt={`page ${page}, ${nhql.title.display}`}
+            alt={`page ${page}, ${display}`}
         />
     </div>
 

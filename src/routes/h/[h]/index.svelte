@@ -1,15 +1,12 @@
 <script context="module" lang="ts">
-    import nhqlById from '$lib/gql/nhqlById'
-    import type { NhqlByIdData } from '$lib/gql/nhqlById'
+    import { hentaiById, type HentaiByIdData } from '@gql'
 
-    import Image from '$lib/atoms/image.svelte'
+    import { Image } from '@shared'
 
     export async function load({ params }) {
-        const { h } = params
+        const hentai = await hentaiById(+params.h)
 
-        const nhql = await nhqlById(+h)
-
-        if (!nhql)
+        if (!hentai)
             return {
                 status: 404
             }
@@ -20,25 +17,27 @@
                 private: true
             },
             props: {
-                h,
-                nhql
+                hentai
             }
         }
     }
 </script>
 
 <script lang="ts">
-    import settings, { ReaderType } from '$lib/stores/settings'
+    import { settings, ReaderType } from '@stores'
+    import { Comment, ReaderMode, Related } from '@modules'
+    import { ReaderHeader, OpenGraph } from '@shared'
 
-    import ReaderHeader from '$lib/atoms/reader-header.svelte'
-    import ReaderMode from '$lib/molecules/reader-mode.svelte'
-
-    import Comment from '$lib/organisms/comment.svelte'
-    import OpenGraph from '$lib/atoms/open-graph.svelte'
-    import Related from '$lib/molecules/related.svelte';
-
-    export let nhql: NhqlByIdData
+    export let hentai: HentaiByIdData
     export let h: number
+
+    $: ({
+        id,
+        title: { display },
+        images: { cover, pages },
+        metadata: { language, tags, artists },
+        info: { amount, favorite, upload }
+    } = hentai)
 
     const reload: svelte.JSX.EventHandler<Event, HTMLImageElement> = (
         event
@@ -67,20 +66,15 @@
             .replace('i.nh', 't.nh')
             .replace(getPage, `/${id}t.${extension}`)
     }
-
-    let tags = nhql.metadata.tags.map(({ name }) => name).join(', ')
 </script>
 
 <OpenGraph
     id={h}
-    title="Read: {nhql.title
-        .display} &raquo; Hifumin: hentai doujinshi and manga"
-    description="[{nhql.metadata.language}] {nhql.title
-        .display}, total page: {nhql.info.amount}, favorite {nhql.info
-        .favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
-    author={nhql.metadata.artists.map((artist) => artist.name).join(', ')}
-    image={nhql.images.cover}
-    createdAt={nhql.info.upload}
+    title="Read: {display} &raquo; Hifumin: hentai doujinshi and manga"
+    description="[{language}] {display}, total page: {amount}, favorite {favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
+    author={artists.map((artist) => artist.name).join(', ')}
+    image={cover}
+    createdAt={upload}
 />
 
 <article class="flex flex-col w-full mx-auto">
@@ -90,33 +84,33 @@
         <figure class="absolute w-full h-full overflow-hidden">
             <img
                 class="w-full h-full object-cover object-center blur-3xl brightness-60 pointer-events-none no-user-select"
-                src={nhql.images.cover.link}
-                alt={nhql.title.display}
+                src={cover.link}
+                alt={display}
                 on:error={reload}
             />
         </figure>
 
-        <ReaderHeader {nhql} />
+        <ReaderHeader {hentai} />
     </div>
 
     <ReaderMode />
 
     <main id={readerIdMap[$settings.reader]} class="w-full mx-auto pb-8">
         {#if $settings.reader === ReaderType['scroll']}
-            {#each nhql.images.pages as { link: src, info: { width, height } }, index (src)}
+            {#each pages as { link: src, info: { width, height } }, index (src)}
                 <Image
                     {src}
                     {width}
                     {height}
                     id={`page-${index + 1}`}
-                    alt={`Page ${index + 1}, ${nhql.title.display}`}
+                    alt={`Page ${index + 1}, ${display}`}
                 />
             {/each}
         {:else if $settings.reader === ReaderType['interactive']}
-            {#each nhql.images.pages as { link: src, info: { width, height } }, index (src)}
+            {#each pages as { link: src, info: { width, height } }, index (src)}
                 <a
                     class="cover relative rounded overflow-hidden"
-                    href={`/h/${nhql.id}/${index + 1}`}
+                    href={`/h/${id}/${index + 1}`}
                 >
                     <div
                         class="overlay z-10 absolute flex justify-center items-end w-full h-full text-white text-lg font-medium bg-black bg-opacity-60 pb-3 opacity-0"
@@ -130,7 +124,7 @@
                             {height}
                             autoCrop
                             id={`page-${index + 1}`}
-                            alt={`Page ${index + 1}, ${nhql.title.display}`}
+                            alt={`Page ${index + 1}, ${display}`}
                             autoReload
                         />
                     </div>
@@ -139,8 +133,8 @@
         {/if}
     </main>
 
-    <Related id={nhql.id} />
-    <Comment id={nhql.id} />
+    <Related {id} />
+    <Comment {id} />
 </article>
 
 <style lang="sass">

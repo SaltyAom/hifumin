@@ -1,16 +1,11 @@
 <script lang="ts">
-    import AuthProvider from '$lib/providers/authProvider.svelte'
-    import ThemeProvider from '$lib/providers/theme.svelte'
+    import { AuthProvider, ThemeProvider } from '@providers'
 
-    import AppBar from '$lib/layouts/app-bar.svelte'
-    import BottomBar from '$lib/layouts/bottom-bar.svelte'
-    import Nprogress from '$lib/layouts/nprogress.svelte'
-
-    import OpenGraph from '$lib/atoms/open-graph.svelte'
-    import Analytic from '$lib/atoms/analytic.svelte'
+    import { AppBar, BottomBar } from '@layouts'
+    import { OpenGraph, Analytic } from '@shared'
 
     import 'virtual:windi.css'
-    import '../styles/global.sass'
+    import '@styles/global.sass'
 </script>
 
 <AuthProvider />
@@ -19,7 +14,6 @@
 <OpenGraph />
 <Analytic />
 
-<Nprogress />
 <AppBar />
 <slot />
 <BottomBar />

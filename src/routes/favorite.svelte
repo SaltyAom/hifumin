@@ -1,21 +1,15 @@
 <script lang="ts">
     import { onMount } from 'svelte'
+    import { browser } from '$app/env'
+
+    import { favoriteHentais, type FavoriteHentaiData } from '@gql'
+    import { galahad, intersect, invalidateUserOnUnauthorize } from '@services'
+    import { user, isAuthed } from '@stores'
+
+    import { Image, NotFound, SearchNotFound } from '@shared'
+    import { SkeletonCover } from '@skeletons'
 
     import { ChevronLeftIcon } from 'svelte-feather-icons'
-
-    import { galahad } from '$lib/api'
-
-    import Image from '$lib/atoms/image.svelte'
-    import SkeletonCover from '$lib/skeletons/cover.svelte'
-    import intersect from '$lib/use/intersect'
-    import { invalidateUserOnUnauthorize } from '$lib/cookie'
-    import { isServer } from '$lib/utils'
-
-    import user, { isAuthed } from '$lib/stores/user'
-    import NotFound from '$lib/atoms/not-found.svelte'
-    import favoriteHentais, {
-        type FavoriteHentaiData
-    } from '$lib/gql/favoriteHentais'
 
     let page = 1
     let isLoading = false
@@ -83,7 +77,7 @@
             ><ChevronLeftIcon class="w-6 h-6" /> Back</a
         >
     </div>
-    {#if !isAuthed || isServer}
+    {#if !browser || !isAuthed}
         <header class="flex flex-col">
             <h2 class="text-3xl text-gray-700 dark:text-gray-300 font-medium">
                 My Favorite
@@ -136,6 +130,9 @@
                 />
             </div>
         {:else}
+            {#if !favorite.length}
+                <NotFound />
+            {/if}
             <section class="relative grid collection w-full gap-6 md:gap-8">
                 {#each favorite as favoriteH (favoriteH.id)}
                     {@const h = favoriteH.data}

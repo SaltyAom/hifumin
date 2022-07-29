@@ -1,30 +1,21 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-
+    import { get } from 'svelte/store'
     import { page as path } from '$app/stores'
     import { beforeNavigate } from '$app/navigation'
+    import { browser } from '$app/env'
 
-    import nhqlSearch from '$lib/gql/nhqlSearch'
-    import nhqlMultipleCoverById from '$lib/gql/nhqlMultipleCover'
-    import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
-
+    import { search, multipleCoverById, type Cover as CoverData } from '@gql'
+    import { Cover, OpenGraph, SearchNotFound } from '@shared'
+    import { SkeletonCover } from '@skeletons'
+    import { settings, hentais } from '@stores'
     import {
         randomBetween,
         iterate,
         getTotalMasonry,
-        chunkHentai
-    } from '$lib/array'
-    import { recommended } from '$lib/data'
-    import { isServer } from '$lib/utils'
-    import { get } from 'svelte/store'
-    import settings from '$lib/stores/settings'
-
-    import Cover from '$lib/atoms/cover.svelte'
-    import OpenGraph from '$lib/atoms/open-graph.svelte'
-    import SearchNotFound from '$lib/atoms/search-not-found.svelte'
-    import SkeletonCover from '$lib/skeletons/cover.svelte'
-
-    import hentais from '$lib/stores/hentais'
+        chunkHentai,
+        recommended
+    } from '@services'
 
     $: shadowIds = $hentais.map((h) => h.id)
 
@@ -55,7 +46,7 @@
         try {
             isLoading = true
 
-            const newHentais = await nhqlMultipleCoverById(
+            const newHentais = await multipleCoverById(
                 iterate(randomBetween(1, 400000), 25, randomBetween(1, 30))
             )
 
@@ -89,7 +80,7 @@
 
             if (!tag) throw new Error('No tag available')
 
-            const newHentais = await nhqlSearch(tag, page)
+            const newHentais = await search(tag, page)
 
             $hentais = $hentais.concat(
                 $hentais,
@@ -114,7 +105,7 @@
     let observer: HTMLElement
 
     const handleScroll = async () => {
-        if (isServer || isLoading) return
+        if (!browser || isLoading) return
 
         let { scrollY: offset, innerHeight: windowHeight } = window
 

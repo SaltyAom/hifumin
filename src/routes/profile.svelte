@@ -1,11 +1,10 @@
 <script lang="ts">
-    import Cookies from 'js-cookie'
-
     import { goto } from '$app/navigation'
-
-    import ProgressIndicator from '$lib/atoms/progress-indicator.svelte'
-    import user, { isAuthed } from '$lib/stores/user'
     
+    import { ProgressIndicator } from '@shared'
+    import { user, isAuthed } from '@stores'
+
+    import Cookies from 'js-cookie'    
 
     let isLoading = false
     let error = ''

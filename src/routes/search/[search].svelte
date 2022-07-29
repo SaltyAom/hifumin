@@ -1,21 +1,15 @@
 <script lang="ts">
-    import nhqlSearch from '$lib/gql/nhqlSearch'
-    import type { NhqlSearchData } from '$lib/gql/nhqlSearch'
-
     import { onMount } from 'svelte'
-    import { page as sveltePage } from '$app/stores'
-    import { beforeNavigate } from '$app/navigation'
-
-    import Cover from '$lib/atoms/cover.svelte'
-    import { getTotalMasonry, chunkHentai } from '$lib/array'
-    import { isServer } from '$lib/utils'
-    import OpenGraph from '$lib/atoms/open-graph.svelte'
-
     import { page as path } from '$app/stores'
-    import SearchNotFound from '$lib/atoms/search-not-found.svelte'
-    import SkeletonCover from '$lib/skeletons/cover.svelte'
+    import { beforeNavigate } from '$app/navigation'
+    import { browser } from '$app/env'
 
-    let hentais: NhqlSearchData[] = []
+    import { Cover, OpenGraph, SearchNotFound } from '@shared'
+    import { SkeletonCover } from '@skeletons'
+    import { search as a, type Cover as CoverData } from '@gql'
+    import { getTotalMasonry, chunkHentai } from '@services'
+
+    let hentais: CoverData[] = []
     let page = 1
     let isLoading = false
     let over = false
@@ -23,13 +17,13 @@
     $: shadowIds = hentais.map((h) => h.id)
     $: search = $path.params.search
 
-    sveltePage.subscribe(async (newPage) => {
-        if (!newPage || isLoading || !search) return
+    path.subscribe(async ({ params: { search: query } }) => {
+        if (isLoading || !search) return
 
         isLoading = true
 
         try {
-            hentais = await nhqlSearch(newPage.params.search)
+            hentais = await a(query)
         } catch (err) {
         } finally {
             page = 1
@@ -47,12 +41,12 @@
     let toleratedError = false
 
     const appendNhentai = async () => {
-        if (isServer) return
+        if (!browser) return
 
         try {
             isLoading = true
 
-            const newHentais = await nhqlSearch(search, page)
+            const newHentais = await a(search, page)
             hentais = [
                 ...hentais,
                 ...newHentais.filter((h) => !shadowIds.includes(h.id))
@@ -77,7 +71,7 @@
     let observer: HTMLElement
 
     const handleScroll = async () => {
-        if (isServer || isLoading) return
+        if (!browser || isLoading) return
 
         let { scrollY: offset, innerHeight: windowHeight } = window
 
@@ -113,7 +107,7 @@
     class="flex w-full px-2 md:px-4 overflow-hidden"
     bind:clientWidth={layoutWidth}
 >
-    {#if isServer}
+    {#if !browser}
         <h1
             class="flex justify-center items-center w-full h-app text-2xl pb-16 text-gray-200 dark:text-gray-600 cursor-default"
         >

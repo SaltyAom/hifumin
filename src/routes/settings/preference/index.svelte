@@ -1,14 +1,8 @@
 <script lang="ts">
-    import settings from '$lib/stores/settings'
-
-    import SettingLayout from '$lib/layouts/settings.svelte'
-    import SettingRow from '$lib/layouts/setting-row.svelte'
-
-    import Toggle from '$lib/atoms/toggle.svelte'
-    import Textfield from '$lib/atoms/textfield.svelte'
-    import Chip from '$lib/atoms/chip.svelte'
-
-    import { tags } from '$lib/data'
+    import { settings } from '@stores'
+    import { SettingLayout, SettingRow } from '@modules'
+    import { Chip, TextField, Toggle } from '@shared'
+    import { tags } from '@services'
 
     const addPreference = (value: string) => {
         settings.update((v) => ({
@@ -64,7 +58,7 @@
             My preferences
         </h3>
         <p>Type down tags you had like to read.</p>
-        <Textfield
+        <TextField
             id="preference"
             name="preference"
             label="My preference"

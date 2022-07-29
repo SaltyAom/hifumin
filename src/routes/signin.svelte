@@ -1,12 +1,10 @@
 <script lang="ts">
+    import { onMount } from 'svelte'
     import { goto } from '$app/navigation'
 
-    import { galahad } from '$lib/api'
-
-    import ProgressIndicator from '$lib/atoms/progress-indicator.svelte'
-    import user from '$lib/stores/user'
-    import { isServer } from '$lib/utils'
-    import { onMount } from 'svelte'
+    import { ProgressIndicator } from '@shared'
+    import { user } from '@stores'
+    import { galahad } from '@services'
 
     let username: string
     let password: string

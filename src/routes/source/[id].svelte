@@ -1,18 +1,13 @@
 <script lang="ts">
     import { page } from '$app/stores'
+    import { browser } from '$app/env'
 
-    import { isServer } from '$lib/utils'
-
-    import nhqlMultipleCoverById from '$lib/gql/nhqlMultipleCover'
-    import type { NhqlCoverPreview } from '$lib/gql/nhqlMultipleCover'
-
-    import type { Similarity } from '$lib/models/similarity'
+    import { multipleCoverById, type Cover } from '@gql'
+    import { Image } from '@shared'
+    import type { Similarity } from '@models/similarity'
 
     import CircularProgress from 'svelte-progresscircle'
-
-    import Image from '$lib/atoms/image.svelte'
-
-    interface SimilarityCover extends NhqlCoverPreview {
+    interface SimilarityCover extends Cover {
         similarity: number
     }
 
@@ -29,7 +24,7 @@
                 ({ similarity }) => +similarity > 65
             )
 
-            const covers = await nhqlMultipleCoverById(
+            const covers = await multipleCoverById(
                 similarsId
                     .filter(({ similarity }) => +similarity > 65)
                     .map(({ id }) => id)
@@ -47,7 +42,7 @@
     }
 
     $: id = +$page.params.id
-    $: if (!isServer && id && !isNaN(id)) findSourceById(id)
+    $: if (browser && id && !isNaN(id)) findSourceById(id)
 </script>
 
 {#if isError}
@@ -150,7 +145,7 @@
                             <div
                                 class="min-w-9 min-h-9 w-9 h-9 text-sm text-blue-500 font-medium"
                             >
-                                <CircularProgress value={~~similarity} />
+                                <!-- <CircularProgress value={~~similarity} /> -->
                             </div>
                         </header>
                         <footer class="flex justify-between items-center">

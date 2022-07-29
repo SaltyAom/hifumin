@@ -1,10 +1,9 @@
 <script lang="ts">
+    import { browser } from '$app/env'
     import { goto } from '$app/navigation'
 
-    import ProgressIndicator from '$lib/atoms/progress-indicator.svelte'
-
-    import user from '$lib/stores/user'
-    import { isServer } from '$lib/utils'
+    import { ProgressIndicator } from '@shared'
+    import { user } from '@stores'
 
     let email: string
     let username: string
@@ -16,7 +15,7 @@
     let complete = false
 
     $: {
-        if (!isServer && $user) goto('/')
+        if (browser && $user) goto('/')
     }
 
     const signUp = async () => {

@@ -6,6 +6,6 @@
         alt="Ame punch"
     />
     <h1 class="text-xl font-medium text-gray-700 dark:text-gray-300">
-        Stop it, touch some grass
+        Go touch some grass
     </h1>
 </main>

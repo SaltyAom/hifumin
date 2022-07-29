@@ -1,15 +1,11 @@
 <script lang="ts">
-    import settings, { SafeMode, Theme, ReaderType } from '$lib/stores/settings'
+    import { browser } from '$app/env'
 
-    import SettingLayout from '$lib/layouts/settings.svelte'
-    import SettingRow from '$lib/layouts/setting-row.svelte'
-    import SettingNavigation from '$lib/layouts/setting-navigation.svelte'
+    import { settings, SafeMode, Theme, ReaderType } from '@stores'
+    import { SettingLayout, SettingRow, SettingNavigation } from '@modules'
+    import { Dropdown } from '@shared'
 
-    import Dropdown from '$lib/atoms/dropdown.svelte'
-
-    import { isServer } from '$lib/utils'
-
-    const cacheKeys = isServer
+    const cacheKeys = !browser
         ? []
         : Object.keys(localStorage).filter((key) => key.startsWith('_gqc_'))
 
@@ -20,7 +16,7 @@
     }, 0)
 
     const clearCache = () => {
-        if (isServer) return
+        if (!browser) return
 
         cacheKeys.forEach((key) => {
             localStorage.removeItem(key)

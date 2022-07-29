@@ -1,5 +1,5 @@
 <script>
-    import NotFound from '$lib/atoms/not-found.svelte'
+    import { NotFound } from '@shared'
 </script>
 
 <NotFound />

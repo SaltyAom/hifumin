@@ -1,12 +1,7 @@
 <script lang="ts">
-    import settings from '$lib/stores/settings'
-
-    import SettingLayout from '$lib/layouts/settings.svelte'
-
-    import Toggle from '$lib/atoms/toggle.svelte'
-    import Textfield from '$lib/atoms/textfield.svelte'
-    import Chip from '$lib/atoms/chip.svelte'
-    import SettingRow from '$lib/layouts/setting-row.svelte'
+    import { settings } from '@stores'
+    import { SettingLayout, SettingRow } from '@modules'
+    import { Chip, TextField, Toggle } from '@shared'
 
     const addFilter = (value: string) => {
         settings.update((v) => ({
@@ -52,7 +47,7 @@
             My filters
         </h3>
         <p>Type down tags you want to filter out from search down here.</p>
-        <Textfield
+        <TextField
             id="filter"
             name="filter"
             label="My filter"

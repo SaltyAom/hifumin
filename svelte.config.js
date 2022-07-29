@@ -14,6 +14,22 @@ const config = {
 
     kit: {
         adapter: adapter(),
+        alias: {
+            "@layouts": "./src/layouts",
+            "@components": "./src/components",
+            "@shared": "./src/components/shared",
+            "@modules": "./src/components/modules",
+            "@skeletons": "./src/components/skeletons",
+            "@providers": "./src/components/providers",
+            "@icons": "./src/components/icons",
+            "@pages": "./src/pages",
+            "@services": "./src/services",
+            "@gql": "./src/services/gql",
+            "@use": "./src/services/use",
+            "@stores": "./src/stores",
+            "@models": "./src/models",
+            "@styles": "./src/styles",
+        }
     }
 }
 
