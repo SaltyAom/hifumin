@@ -20,7 +20,7 @@
 </script>
 
 <footer id="related">
-    <h4 class="label">You might also like</h4>
+    <h4 class="text-2xl text-left text-gray-700 dark:text-gray-200 md:text-center">You might also like</h4>
     {#if related}
         <div class="stories">
             {#each related as hentai (hentai.id)}
@@ -41,12 +41,6 @@
 <style lang="sass">
     #related
         @apply flex flex-col max-w-6xl w-full mx-auto mt-6 mb-12 px-4
-
-        & > .label
-            @apply text-2xl text-left text-gray-700 dark:text-gray-200
-
-            @screen md
-                @apply text-center
 
         & > .stories
             @apply grid gap-4 py-6
