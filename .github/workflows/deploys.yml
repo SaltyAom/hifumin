@@ -21,18 +21,6 @@ jobs:
         username: saltyaom
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-
-    - uses: pnpm/action-setup@v2.2.2
-      with:
-        version: 7.5.0
-        run_install: |
-          - args: [--frozen-lockfile, --strict-peer-dependencies]
-
-    - run: pnpm build
-
     - name: Build Docker image
       run: docker build -t $APP_NAME .
 
