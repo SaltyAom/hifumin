@@ -7,7 +7,7 @@ RUN npm install -g pnpm
 COPY package.json .
 COPY pnpm-lock.yaml .
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 COPY . .
 
@@ -23,7 +23,7 @@ RUN npm install -g pnpm
 COPY package.json .
 COPY pnpm-lock.yaml .
 
-RUN pnpm install --frozen-lockfile --production
+RUN pnpm install --production
 RUN pnpm prune --production
 
 # * ====================
