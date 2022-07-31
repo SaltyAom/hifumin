@@ -1,15 +1,26 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
+    import { onMount, afterUpdate } from 'svelte'
     import { goto } from '$app/navigation'
     import { browser } from '$app/env'
 
     import { user, isAuthed } from '@stores'
-    import { ListView, ListTile, Image, MemberOnly } from '@shared'
     import {
-        getCollectionList,
+        ListView,
+        ListTile,
+        Image,
+        MemberOnly,
+        Dropdown,
+        TextField,
+        Dialog
+    } from '@shared'
+    import {
+        setCollectionByHentai,
+        updateFavoriteById,
+        getCollectionStatus,
         isFavorite as getIsFavorite,
         invalidateUserOnUnauthorize,
-        type CollectionData
+        createCollection,
+        type CollectionStatusData
     } from '@services'
     import type { HentaiByIdData } from '@gql'
 
@@ -37,7 +48,7 @@
             }
         },
         metadata: { artists, language, tags },
-        info: { amount, favorite }
+        info: { amount, favorite: totalFavorite }
     } = hentai)
 
     let isLoading = false
@@ -50,30 +61,74 @@
     }
 
     let init = false
-    let collections: CollectionData[] = []
-    let selected = new Set()
+    let collections: Omit<CollectionStatusData, 'selected'>[] = []
+    let initialSelected = new Set<number>()
+    let selected = new Set<number>()
+    let initialFavorite = false
     let isFavorite = false
 
     onMount(async () => {
         if (!browser || !$user) return
     })
 
+    let newCollectionTextField: HTMLInputElement
+    let requestCloseCollectionDialog: () => void
+    let requestClose: () => void
+    $: {
+        if (showDialog) requestClose = undefined
+    }
+
     let showDialog = false
+    let showNewColletionDialog = false
+
+    let collectionName: string
+    let collectionType: 'public' | 'private'
+    let collectionError = ''
+    let isCollectionProcessing = false
+    $: {
+        if (showNewColletionDialog) {
+            requestCloseCollectionDialog = undefined
+            collectionName = undefined
+            collectionType = undefined
+            collectionError = ''
+            afterUpdate(focusNewCollectionTextField)
+        }
+    }
+
+    const focusNewCollectionTextField = () => {
+        newCollectionTextField?.focus()
+    }
+
+    let isOpeningDialog = false
 
     const openDialog = async () => {
-        let _isFavorite: Promise<boolean>
+        if (isOpeningDialog) return
+
+        isOpeningDialog = true
 
         if (!init) {
             init = true
-            _isFavorite = getIsFavorite(id)
-            collections = await getCollectionList()
+
+            const { isFavorite: _isFavorite, collection: _collections } =
+                await getCollectionStatus(id)
+
+            isFavorite = _isFavorite
+            initialFavorite = isFavorite
+
+            collections = _collections.map((collection) => {
+                if (collection.selected) {
+                    selected.add(collection.id)
+                    initialSelected.add(collection.id)
+                }
+
+                return collection
+            })
         }
 
         requestAnimationFrame(() => {
+            isOpeningDialog = false
             showDialog = true
         })
-
-        if (_isFavorite) isFavorite = await _isFavorite
     }
 
     const closeDialog = () => {
@@ -91,22 +146,155 @@
         isFavorite = !isFavorite
     }
 
-    const addToCollection = () => {}
+    const collectionTypeOptions = ['public', 'private'] as const
+
+    const createNewCollection = async () => {
+        if (isCollectionProcessing) return
+
+        if (!collectionName) {
+            collectionError = "Name can't be empty"
+            return
+        }
+
+        if (!collectionTypeOptions.includes(collectionType)) {
+            collectionError = 'Invalid collection type'
+            return
+        }
+
+        isCollectionProcessing = true
+
+        const newCollection = await createCollection({
+            title: collectionName,
+            public: collectionType === 'public'
+        })
+
+        isCollectionProcessing = false
+
+        if (newCollection instanceof Error)
+            collectionError = newCollection.message
+        else {
+            collections.unshift({
+                id: newCollection.id,
+                public: newCollection.public,
+                title: newCollection.title
+            })
+
+            requestCloseCollectionDialog()
+            closeCollectionDialog()
+        }
+    }
+
+    const addToCollection = async () => {
+        closeDialog()
+
+        const add: number[] = []
+        const remove: number[] = []
+
+        collections.forEach(({ id }) => {
+            const current = selected.has(id)
+            const old = initialSelected.has(id)
+
+            if (current === old) return
+
+            if (current) add.push(id)
+            else remove.push(id)
+        })
+
+        const setCollectionRequest = new Promise<void>(async (resolve) => {
+            if (add[0] || remove[0]) {
+                const res = await setCollectionByHentai(id, {
+                    add,
+                    remove
+                })
+
+                if (res instanceof Error)
+                    selected = new Set([...initialSelected])
+                else initialSelected = new Set([...selected])
+            }
+
+            resolve()
+        })
+
+        const setFavoriteRequest = new Promise<void>(async (resolve) => {
+            if (initialFavorite !== isFavorite) {
+                const res = await updateFavoriteById(id, isFavorite)
+
+                if (res instanceof Error) isFavorite = initialFavorite
+                else initialFavorite = isFavorite
+            }
+
+            resolve()
+        })
+
+        await Promise.all([setCollectionRequest, setFavoriteRequest])
+    }
+
+    const openCollectionDialog = () => {
+        requestClose()
+
+        showNewColletionDialog = true
+    }
+
+    const closeCollectionDialog = () => {
+        openDialog()
+
+        setTimeout(() => {
+            showNewColletionDialog = false
+        }, 233)
+    }
 </script>
 
 <svelte:head>
     <link rel="preload" as="image" href={link} />
 </svelte:head>
 
+{#if showNewColletionDialog}
+    {#if !$user}
+        <MemberOnly on:close={closeCollectionDialog} />
+    {:else}
+        <Dialog
+            title="New Collection"
+            action="Create"
+            on:close={closeCollectionDialog}
+            on:action={createNewCollection}
+            bind:close={requestCloseCollectionDialog}
+        >
+            <TextField
+                bind:value={collectionName}
+                bind:inputElement={newCollectionTextField}
+                onChange={createNewCollection}
+                required
+                noLeading
+                label="Collection Name"
+                name="collection-name"
+                placeholder="Name"
+            />
+            <div class="flex justify-between items-center w-full">
+                <p class="text-lg font-medium text-gray-700">Publicity</p>
+                <Dropdown
+                    bind:value={collectionType}
+                    options={['private', 'public']}
+                    class="capitalize"
+                />
+            </div>
+
+            {#if collectionError}
+                <p class="text-red-500 text-sm">{collectionError}</p>
+            {/if}
+        </Dialog>
+    {/if}
+{/if}
+
 {#if showDialog}
     {#if !$user}
         <MemberOnly on:close={closeDialog} />
     {:else}
-        <ListView on:close={closeDialog}>
+        <ListView bind:requestClose on:close={addToCollection}>
             <ListTile noAction title="Save to..." class="!py-2 !pr-3 border-b">
                 <button
                     slot="trailing"
                     class="flex flex-row items-center gap-2 text-gray-600 font-light px-2 py-1 rounded text-blue-500"
+                    on:click={openCollectionDialog}
                 >
                     <PlusIcon size="21" strokeWidth={1.5} />
                     New Collection
@@ -128,10 +316,6 @@
                     strokeWidth={1.5}
                 />
             </ListTile>
-
-            <!-- <ListTile title="-">
-                <div slot="leading" class="w-[24px] h-[24px]" />
-            </ListTile> -->
 
             {#each collections as { id, title, public: isPublic } (id)}
                 <ListTile {title} on:select={toggle(id)}>
@@ -207,7 +391,9 @@
                 </h5>
                 <h5 class="flex flex-1 items-center gap-1 capitalize">
                     <HeartIcon size="18" />
-                    {!Intl ? favorite : Intl.NumberFormat().format(favorite)}
+                    {!Intl
+                        ? totalFavorite
+                        : Intl.NumberFormat().format(totalFavorite)}
                 </h5>
             </div>
         </div>

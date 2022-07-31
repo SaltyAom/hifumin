@@ -43,14 +43,20 @@
         comments = null
     }
 
-    $: {
-        orderBy
+    const loadCommentFromOrderBy = () => {
+        if (!comments) return
 
         allLoaded = false
         batch = 1
         comments = null
 
         loadComment()
+    }
+
+    $: {
+        orderBy
+
+        loadCommentFromOrderBy()
     }
 </script>
 
@@ -63,7 +69,7 @@
                 {Intl.NumberFormat().format(total)} comments
             </h4>
             <Dropdown
-                class="w-[11ch]"
+                class="w-[11.5ch]"
                 selectorClass="bg-transparent !text-sm !font-normal !text-gray-400 !px-3 !py-1"
                 {options}
                 {labels}
