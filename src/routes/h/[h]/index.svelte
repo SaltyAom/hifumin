@@ -25,11 +25,10 @@
 
 <script lang="ts">
     import { settings, ReaderType } from '@stores'
-    import { Comment, ReaderMode, Related } from '@modules'
-    import { ReaderHeader, OpenGraph } from '@shared'
+    import { Comment, ReaderMode, Related, ReaderHeader } from '@modules'
+    import { OpenGraph } from '@shared'
 
     export let hentai: HentaiByIdData
-    export let h: number
 
     $: ({
         id,
@@ -69,7 +68,7 @@
 </script>
 
 <OpenGraph
-    id={h}
+    {id}
     title="Read: {display} &raquo; Hifumin: hentai doujinshi and manga"
     description="[{language}] {display}, total page: {amount}, favorite {favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
     author={artists.map((artist) => artist.name).join(', ')}

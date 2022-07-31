@@ -1,10 +1,11 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
-    
+
     import { ProgressIndicator } from '@shared'
+    import { galahad } from '@services'
     import { user, isAuthed } from '@stores'
 
-    import Cookies from 'js-cookie'    
+    import Cookies from 'js-cookie'
 
     let isLoading = false
     let error = ''
@@ -16,7 +17,7 @@
         error = ''
 
         try {
-            const res = await fetch('https://user.hifumin.app/auth/signout', {
+            const res = await fetch(`${galahad}/auth/signout`, {
                 method: 'POST',
                 credentials: 'include'
             })

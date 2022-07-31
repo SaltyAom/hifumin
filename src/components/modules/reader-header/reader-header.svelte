@@ -1,21 +1,32 @@
 <script lang="ts">
+    import { onMount } from 'svelte'
     import { goto } from '$app/navigation'
     import { browser } from '$app/env'
 
     import { user, isAuthed } from '@stores'
-    import { Image, MemberOnly } from '@shared'
+    import { ListView, ListTile, Image, MemberOnly } from '@shared'
+    import {
+        getCollectionList,
+        isFavorite as getIsFavorite,
+        invalidateUserOnUnauthorize,
+        type CollectionData
+    } from '@services'
     import type { HentaiByIdData } from '@gql'
-    import { invalidateUserOnUnauthorize } from '@services'
 
     import {
         BookOpenIcon,
         HeartIcon,
         Edit2Icon,
-        BookmarkIcon
+        BookmarkIcon,
+        PlusSquareIcon,
+        LockIcon,
+        PlusIcon,
+        CheckIcon
     } from 'svelte-feather-icons'
-    import { TranslateIcon } from '@icons'
+    import { TranslateIcon, GlobeIcon } from '@icons'
 
     export let hentai: HentaiByIdData
+
     $: ({
         id,
         title: { display },
@@ -29,91 +40,126 @@
         info: { amount, favorite }
     } = hentai)
 
-    let isFavorite: boolean | null = null
     let isLoading = false
 
     $: {
         hentai
         $user
 
-        isFavorite = null
         isLoading = false
-
-        getFavoriteStatus()
     }
 
-    const getFavoriteStatus = async () => {
-        if (!browser) return
-        if (!$user) return (isFavorite = false)
+    let init = false
+    let collections: CollectionData[] = []
+    let selected = new Set()
+    let isFavorite = false
 
-        try {
-            const res = await fetch(
-                `https://user.hifumin.app/favorite/h/${id}`,
-                {
-                    credentials: 'include'
-                }
-            )
+    onMount(async () => {
+        if (!browser || !$user) return
+    })
 
-            if (await invalidateUserOnUnauthorize(res)) return
+    let showDialog = false
 
-            if (res.status !== 200)
-                throw new Error('Failed to get favorite status')
+    const openDialog = async () => {
+        let _isFavorite: Promise<boolean>
 
-            isFavorite = (await res.text()) === 'true'
-        } catch {
-            isFavorite = false
+        if (!init) {
+            init = true
+            _isFavorite = getIsFavorite(id)
+            collections = await getCollectionList()
         }
+
+        requestAnimationFrame(() => {
+            showDialog = true
+        })
+
+        if (_isFavorite) isFavorite = await _isFavorite
     }
 
-    // $: findTranslation = () => {
-    //     goto(`/source/${nhql.id}`)
-    // }
-
-    let showBanner = false
-
-    const close = () => {
-        showBanner = false
+    const closeDialog = () => {
+        showDialog = false
     }
 
-    const addToFavorite = async () => {
-        if (isFavorite === null || isLoading) return
+    const toggle = (id: number) => () => {
+        if (selected.has(id)) selected.delete(id)
+        else selected.add(id)
 
-        if (!$isAuthed) return
-        if (!$user) return (showBanner = true)
+        selected = selected
+    }
 
-        const method = isFavorite ? 'DELETE' : 'PUT'
-
-        isLoading = true
+    const toggleFavorite = () => {
         isFavorite = !isFavorite
-
-        try {
-            const res = await fetch(
-                `https://user.hifumin.app/favorite/h/${id}`,
-                {
-                    method,
-                    credentials: 'include'
-                }
-            )
-
-            if (res.status !== 200)
-                throw new Error('Failed to get favorite status')
-        } catch {
-            isFavorite = !isFavorite
-        } finally {
-            // ? Prevent spam clicking
-            setTimeout(() => {
-                isLoading = false
-            }, 250)
-        }
     }
+
+    const addToCollection = () => {}
 </script>
 
 <svelte:head>
     <link rel="preload" as="image" href={link} />
 </svelte:head>
 
-{#if showBanner}
-    <MemberOnly {close} />
+{#if showDialog}
+    {#if !$user}
+        <MemberOnly on:close={closeDialog} />
+    {:else}
+        <ListView on:close={closeDialog}>
+            <ListTile noAction title="Save to..." class="!py-2 !pr-3 border-b">
+                <button
+                    slot="trailing"
+                    class="flex flex-row items-center gap-2 text-gray-600 font-light px-2 py-1 rounded text-blue-500"
+                >
+                    <PlusIcon size="21" strokeWidth={1.5} />
+                    New Collection
+                </button>
+            </ListTile>
+            <ListTile title="My Favorite" on:select={toggleFavorite}>
+                <div slot="leading">
+                    {#if isFavorite}
+                        <CheckIcon size="24" strokeWidth={1.5} />
+                    {:else}
+                        <div class="w-[24px] h-[24px]" />
+                    {/if}
+                </div>
+
+                <HeartIcon
+                    slot="trailing"
+                    class="text-gray-700"
+                    size="21"
+                    strokeWidth={1.5}
+                />
+            </ListTile>
+
+            <!-- <ListTile title="-">
+                <div slot="leading" class="w-[24px] h-[24px]" />
+            </ListTile> -->
+
+            {#each collections as { id, title, public: isPublic } (id)}
+                <ListTile {title} on:select={toggle(id)}>
+                    <div slot="leading">
+                        {#if selected.has(id)}
+                            <CheckIcon size="24" strokeWidth={1.5} />
+                        {:else}
+                            <div class="w-[24px] h-[24px]" />
+                        {/if}
+                    </div>
+                    <div slot="trailing">
+                        {#if isPublic}
+                            <GlobeIcon
+                                class="text-gray-700"
+                                strokeWidth={1.5}
+                            />
+                        {:else}
+                            <LockIcon
+                                class="text-gray-700"
+                                size="21"
+                                strokeWidth={1.5}
+                            />
+                        {/if}
+                    </div>
+                </ListTile>
+            {/each}
+        </ListView>
+    {/if}
 {/if}
 
 <header
@@ -167,15 +213,15 @@
         </div>
 
         <div class="flex items-center text-gray-400 gap-2 my-2">
-            <!-- <button
+            <button
                 class="flex justify-center items-center gap-2 h-8 px-2 border dark:border-gray-600 rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors"
                 title="Find translation"
-                on:click={findTranslation}
+                on:click={openDialog}
             >
-                <TranslateIcon class="w-5.5 h-5.5 p-0.5" />
-                Translate
-            </button> -->
-            <button
+                <PlusSquareIcon class="w-5.5 h-5.5 p-0.5" />
+                Save
+            </button>
+            <!-- <button
                 class="flex justify-center items-center gap-1 h-8 px-2 pr-3 border dark:border-gray-600 rounded-full transition-colors {isFavorite
                     ? 'text-white bg-blue-500 dark:bg-blue-600 border-blue-500 dark:border-blue-600 hover:bg-blue-500 focus:bg-blue-500 dark:hover:bg-blue-600 dark:focus:bg-blue-600'
                     : 'hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700'}"
@@ -184,7 +230,7 @@
             >
                 <HeartIcon class="w-5.5 h-5.5 p-0.5" />
                 Favorite
-            </button>
+            </button> -->
         </div>
 
         <h4 class="text-gray-500 dark:text-gray-400">

@@ -1,5 +1,11 @@
 <script lang="ts">
-    export let close: () => void
+    import { createEventDispatcher } from 'svelte'
+
+    const dispatch = createEventDispatcher()
+
+    const close = () => {
+        dispatch('close')
+    }
 </script>
 
 <div
