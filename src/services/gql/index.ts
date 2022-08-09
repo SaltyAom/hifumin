@@ -16,7 +16,7 @@ export {
     type CommentByIdVariable
 } from './comment'
 export {
-    default as favoriteHentais,
+    default as getFavoriteHentais,
     favoriteHentaisDocument,
     type FavoriteHentai,
     type FavoriteHentaiData,

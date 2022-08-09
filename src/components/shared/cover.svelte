@@ -3,6 +3,8 @@
     import Image from './image.svelte'
 
     export let hentai: Cover
+    export let empasize = true
+
     $: ({
         title: { display },
         images: {
@@ -34,13 +36,13 @@
     <article class="article flex flex-col gap-2 w-full">
         <div class="cover rounded-2xl border dark:border-gray-700 liftable">
             <div class="image overflow-hidden">
-                <Image src={link} {width} {height} />
+                <Image src={link.replace("cover", "1t")} {width} {height} />
             </div>
         </div>
 
         <header class="flex flex-1 flex-col gap-1 text-gray-400 text-sm w-full">
             <div class="flex flex-row w-full">
-                <h5 class="inline-flex items-center flex-1 text-base">
+                <h5 class="inline-flex items-center flex-1 {empasize ? "text-gray-600 dark:text-gray-400 text-lg font-medium" : "text-base"}">
                     {display}
                 </h5>
             </div>

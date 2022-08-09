@@ -1,15 +1,20 @@
 import { galahad } from '.'
 
 export interface CollectionData {
-    cover?: number
+    cover?: string
     id: number
     public: boolean
     title: string
 }
 
-const getCollectionList = (): Promise<CollectionData[]> =>
-    fetch(`${galahad}/collection/list`, {
+Response
+
+export const getCollectionListFetch = (batch: number) =>
+    fetch(`${galahad}/collection/list/${batch}`, {
         credentials: 'include'
-    }).then((r) => r.json())
+    })
+
+const getCollectionList = (batch: number): Promise<CollectionData[]> =>
+    getCollectionListFetch(batch).then((r) => r.json())
 
 export default getCollectionList

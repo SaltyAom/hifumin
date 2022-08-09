@@ -121,10 +121,8 @@
                 class="hidden md:flex gap-2 text-gray-500 dark:text-gray-400 px-2"
             >
                 <a
-                    href="/favorite"
-                    class={`w-10 h-10 p-2 rounded-2xl ${applyActive(
-                        '/favorite'
-                    )}`}
+                    href="/c"
+                    class="w-10 h-10 p-2 rounded-2xl {applyActive('/c')} {applyActive('/favorite')}"
                     title="Bookmark and History"
                     aria-label="Bookmark and History"
                 >

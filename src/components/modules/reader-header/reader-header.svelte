@@ -8,10 +8,10 @@
         ListView,
         ListTile,
         Image,
-        MemberOnly,
+        MemberOnlyDialog,
         Dropdown,
         TextField,
-        Dialog
+        Dialog,
     } from '@shared'
     import {
         setCollectionByHentai,
@@ -54,10 +54,19 @@
     let isLoading = false
 
     $: {
-        hentai
-        $user
+        id
 
+        resetStatus()
+    }
+
+    const resetStatus = () => {
         isLoading = false
+        init = false
+        collections = []
+        initialSelected = new Set<number>()
+        selected = new Set<number>()
+        initialFavorite = false
+        isFavorite = false
     }
 
     let init = false
@@ -101,7 +110,7 @@
 
     let isOpeningDialog = false
 
-    const openDialog = async () => {
+    $: openDialog = async () => {
         if (isOpeningDialog) return
 
         isOpeningDialog = true
@@ -179,6 +188,8 @@
                 title: newCollection.title
             })
 
+            toggle(newCollection.id)
+
             requestCloseCollectionDialog()
             closeCollectionDialog()
         }
@@ -250,7 +261,7 @@
 
 {#if showNewColletionDialog}
     {#if !$user}
-        <MemberOnly on:close={closeCollectionDialog} />
+        <MemberOnlyDialog on:close={closeCollectionDialog} />
     {:else}
         <Dialog
             title="New Collection"
@@ -287,10 +298,10 @@
 
 {#if showDialog}
     {#if !$user}
-        <MemberOnly on:close={closeDialog} />
+        <MemberOnlyDialog on:close={closeDialog} />
     {:else}
         <ListView bind:requestClose on:close={addToCollection}>
-            <ListTile noAction title="Save to..." class="!py-2 !pr-3 border-b">
+            <ListTile noAction title="Save to..." class="md:sticky top-0 !py-2 !pr-3 border-b">
                 <button
                     slot="trailing"
                     class="flex flex-row items-center gap-2 text-gray-600 font-light px-2 py-1 rounded text-blue-500"

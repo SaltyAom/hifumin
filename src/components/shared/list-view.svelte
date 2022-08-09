@@ -20,6 +20,7 @@
         }, 233)
     }
 
+    // ? Exposed binding  to programatically control from outside
     export let requestClose = close
 
     onMount(() => {
@@ -30,7 +31,7 @@
 </script>
 
 <div
-    class="fixed z-50 top-0 left-0 dark:text-gray-400 w-full min-h-screen overflow-x-hidden overlay {activeClass}"
+    class="fixed z-50 top-0 left-0 flex flex-col md:justify-center w-full min-h-screen dark:text-gray-400 overflow-x-hidden overlay {activeClass}"
 >
     <style>
         body {
@@ -38,22 +39,23 @@
         }
     </style>
 
-    <section class="flex flex-col h-screen overflow-x-hidden overflow-y-scroll">
-        <div on:click={close} class="w-full h-[20vh] min-h-36" />
-        <div on:click={close} class="inline-flex flex-1" />
+    <section class="flex flex-col md:justify-center w-full h-screen md:h-auto md:max-w-sm md:mx-auto overflow-x-hidden overflow-y-scroll md:overflow-y-hidden">
+        <div on:click={close} class="w-full md:hidden h-[20vh] min-h-36" />
+        <div on:click={close} class="inline-flex flex-1 md:hidden" />
+        <div on:click={close} class="absolute hidden md:block left-0 z-[-1] w-full h-screen" />
         <ul
-            class="relative flex flex-col w-full bg-white slidable {activeClass}"
+            class="relative flex flex-col w-full md:h-md md:rounded-2xl overflow-x-hidden bg-white slidable {activeClass}"
         >
             <slot />
             {#if !noFooter}
-                <ListTile title="-" class="text-transparent" aria-hidden />
+                <ListTile noAction title="-" class="text-transparent" aria-hidden />
             {/if}
         </ul>
     </section>
     {#if !noFooter}
-        <div class="slidable {activeClass}">
+        <div class="w-full md:max-w-sm md:mx-auto slidable {activeClass}">
             <ListTile
-                class="fixed bottom-0 left-0 z-1 w-full border-t"
+                class="fixed z-30 bottom-0 left-0 z-1 w-full border-t md:rounded-b-2xl"
                 title="Done"
                 on:select={close}
             >

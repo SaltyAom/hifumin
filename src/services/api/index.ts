@@ -4,6 +4,7 @@ export const galahad = 'http://localhost:8080'
 export { default as createCollection } from './collection-create'
 export {
     default as getCollectionList,
+    getCollectionListFetch,
     type CollectionData
 } from './collection-list'
 export {

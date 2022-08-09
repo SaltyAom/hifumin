@@ -73,7 +73,7 @@ nhql {
   }
 }`
 
-const favoriteHentais = async (
+const getFavoriteHentais = async (
     id: number[]
 ): Promise<FavoriteHentaiData[] | null> => {
     if (!id.length) return
@@ -100,4 +100,4 @@ const favoriteHentais = async (
     }))
 }
 
-export default favoriteHentais
+export default getFavoriteHentais
