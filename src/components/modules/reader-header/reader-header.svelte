@@ -297,15 +297,13 @@
                 label="Collection Name"
                 name="collection-name"
                 placeholder="Name"
-                containerClass="!dark:bg-gray-600"
             />
             <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium text-gray-700">Publicity</p>
+                <p class="text-lg font-medium text-gray-700 dark:text-gray-400">Publicity</p>
                 <Dropdown
                     bind:value={collectionType}
                     options={['private', 'public']}
                     class="capitalize"
-                    selectorClass="!dark:bg-gray-600"
                 />
             </div>
 
@@ -342,7 +340,7 @@
 
                 <HeartIcon
                     slot="trailing"
-                    class="text-gray-700"
+                    class="text-gray-700 dark:text-gray-400"
                     size="21"
                     strokeWidth={1.5}
                 />
@@ -360,12 +358,12 @@
                     <div slot="trailing">
                         {#if isPublic}
                             <GlobeIcon
-                                class="text-gray-700"
+                                class="text-gray-700 dark:text-gray-400"
                                 strokeWidth={1.5}
                             />
                         {:else}
                             <LockIcon
-                                class="text-gray-700"
+                                class="text-gray-700 dark:text-gray-400"
                                 size="21"
                                 strokeWidth={1.5}
                             />

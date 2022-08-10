@@ -47,7 +47,7 @@
         role="dialog"
         open
         {...$$props}
-        class="z-1 flex flex-col w-full max-w-sm text-gray-500 dark:text-gray-400 pt-6 pl-6 pb-4 pr-4 bg-white dark:bg-gray-700 rounded-2xl gap-4"
+        class="z-1 flex flex-col w-full max-w-sm text-gray-500 dark:text-gray-400 pt-6 pl-6 pb-4 pr-4 bg-white dark:bg-gray-800 rounded-2xl gap-4"
     >
         {#if title}
             <h2

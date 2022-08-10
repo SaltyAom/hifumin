@@ -20,6 +20,7 @@
         collectionOverviewStatus,
         type CollectionOverviewStatus
     } from '@services'
+import OpenGraph from '@components/shared/open-graph.svelte'
 
     let page = 1
     let isLoading = false
@@ -98,6 +99,8 @@
         pendings.forEach(p => p.abort())
     })
 </script>
+
+<OpenGraph noIndex />
 
 {#if !$user && browser}
     <MemberOnlyPage />

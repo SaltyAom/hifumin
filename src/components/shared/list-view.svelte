@@ -44,11 +44,11 @@
         <div on:click={close} class="inline-flex flex-1 md:hidden" />
         <div on:click={close} class="absolute hidden md:block left-0 z-[-1] w-full h-screen" />
         <ul
-            class="relative flex flex-col w-full md:h-md md:rounded-2xl overflow-x-hidden bg-white dark:bg-gray-700 slidable {activeClass}"
+            class="relative flex flex-col w-full md:h-md md:rounded-2xl overflow-x-hidden bg-white dark:bg-gray-800 slidable {activeClass}"
         >
             <slot />
             {#if !noFooter}
-                <ListTile noAction title="-" class="text-transparent" aria-hidden />
+                <ListTile noAction title="-" class="!text-transparent !opacity-0" aria-hidden />
             {/if}
         </ul>
     </section>
