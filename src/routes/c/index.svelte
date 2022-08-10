@@ -173,7 +173,7 @@ import OpenGraph from '@components/shared/open-graph.svelte'
                 _count: {
                     hentai: hentaiCount
                 }
-             } (id)}
+             } (id + "." + hentaiCount)}
                 {@const preview = previews[cover]}
                 <a href="/c/{id}" role="article" class="flex flex-col gap-2 text-gray-400 dark:text-gray-500">
                     {#if cover}

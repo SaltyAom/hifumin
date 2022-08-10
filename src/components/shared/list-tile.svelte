@@ -32,7 +32,7 @@
     <button
         {...$$props}
         on:click={select}
-        class="flex flex-row items-center text-lg text-gray-700 dark:text-gray-200 gap-4 px-6 py-4 bg-white dark:bg-gray-800 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-600 dark:focus:bg-gray-600 transition-colors {$$props[
+        class="flex flex-row items-center text-lg text-gray-700 dark:text-gray-200 gap-4 px-6 py-4 bg-white dark:bg-gray-800 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors {$$props[
             'class'
         ]}"
     >
