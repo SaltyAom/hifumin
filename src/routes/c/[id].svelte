@@ -304,7 +304,7 @@
     {/if}
 
     <CollectionLayout loading={!browser}>
-        <header slot="header" class="flex flex-col">
+        <header slot="header" class="flex flex-col items-start">
             <a
                 href={$user ? '/c' : '/'}
                 class="inline-flex items-center gap-1 text-gray-500 py-1 rounded mb-3"
@@ -338,7 +338,7 @@
                         options={["Public", "Private"]}                        
                     />
                 {:else}
-                    {collection.public ? 'Public' : 'Private'}
+                    <p class="py-2">{collection.public ? 'Public' : 'Private'}</p>
                 {/if}
                 </div>
                 <p class="text-lg text-gray-400">

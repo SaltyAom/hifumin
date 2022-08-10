@@ -2,7 +2,7 @@ name: deploys
 
 on:
   push:
-    branches: [ main, bismarck ]
+    branches: [ main, cleveland ]
 
 jobs:
   mirror:

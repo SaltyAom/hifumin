@@ -51,7 +51,9 @@
                 }
             }
 
-            if (status === 401) return (error = 'Wrong Username or Password')
+            if (status === 400) return (error = 'Wrong Username or Password')
+
+            if(status !== 200) return (error = "Something went wrong")
 
             const name = await res.text()
             if (!name) throw new Error('Incorrect username or password')
