@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
 
-    import { ProgressIndicator } from '@shared'
+    import { ProgressIndicator, OpenGraph } from '@shared'
     import { galahad } from '@services'
     import { user, isAuthed } from '@stores'
 
@@ -40,9 +40,7 @@
     }
 </script>
 
-<svelte:head>
-    <meta name="robots" content="noindex" />
-</svelte:head>
+<OpenGraph noIndex />
 
 {#if !$isAuthed}
     <main class="flex justify-center items-center w-full h-app">

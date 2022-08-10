@@ -31,6 +31,13 @@ export {
     type MultipleCoverByIdVariable
 } from './multiple-cover'
 export {
+    default as multiplePreviewById,
+    multiplePreviewByIdDocument,
+    type MultiplePreviewById,
+    type MultiplePreviewByIdData,
+    type MultiplePreviewByIdVariable
+} from './multiple-preview'
+export {
     default as relatedById,
     relatedByIdDocument,
     type RelatedById,
@@ -43,6 +50,6 @@ export {
     type SearchVariable
 } from './search'
 
-export type { Cover } from './types'
+export type { Cover, Preview } from './types'
 
 export default gql

@@ -20,7 +20,9 @@
         isFavorite as getIsFavorite,
         invalidateUserOnUnauthorize,
         createCollection,
-        type CollectionStatusData
+        type CollectionStatusData,
+        purgeCollectionById,
+        purgeCollectionCache
     } from '@services'
     import type { HentaiByIdData } from '@gql'
 
@@ -113,6 +115,12 @@
     $: openDialog = async () => {
         if (isOpeningDialog) return
 
+        if(!$user) {
+            showNewColletionDialog = true
+
+            return
+        }
+
         isOpeningDialog = true
 
         if (!init) {
@@ -196,8 +204,6 @@
     }
 
     const addToCollection = async () => {
-        closeDialog()
-
         const add: number[] = []
         const remove: number[] = []
 
@@ -212,15 +218,25 @@
         })
 
         const setCollectionRequest = new Promise<void>(async (resolve) => {
+            closeDialog()
+
             if (add[0] || remove[0]) {
+                const uniques = [...new Set([...add, ...remove])]
+
+                uniques.forEach(id => {
+                    purgeCollectionById(id)
+                })
+
                 const res = await setCollectionByHentai(id, {
                     add,
                     remove
                 })
 
-                if (res instanceof Error)
+                if (res instanceof Error) {
                     selected = new Set([...initialSelected])
-                else initialSelected = new Set([...selected])
+                } else {
+                    initialSelected = new Set([...selected])
+                }
             }
 
             resolve()
@@ -228,6 +244,8 @@
 
         const setFavoriteRequest = new Promise<void>(async (resolve) => {
             if (initialFavorite !== isFavorite) {
+                purgeCollectionCache()
+
                 const res = await updateFavoriteById(id, isFavorite)
 
                 if (res instanceof Error) isFavorite = initialFavorite
@@ -279,6 +297,7 @@
                 label="Collection Name"
                 name="collection-name"
                 placeholder="Name"
+                containerClass="!dark:bg-gray-600"
             />
             <div class="flex justify-between items-center w-full">
                 <p class="text-lg font-medium text-gray-700">Publicity</p>
@@ -286,6 +305,7 @@
                     bind:value={collectionType}
                     options={['private', 'public']}
                     class="capitalize"
+                    selectorClass="!dark:bg-gray-600"
                 />
             </div>
 
@@ -301,7 +321,7 @@
         <MemberOnlyDialog on:close={closeDialog} />
     {:else}
         <ListView bind:requestClose on:close={addToCollection}>
-            <ListTile noAction title="Save to..." class="md:sticky top-0 !py-2 !pr-3 border-b">
+            <ListTile noAction title="Save to..." class="md:sticky top-0 !py-2 !pr-3 border-b dark:border-gray-500">
                 <button
                     slot="trailing"
                     class="flex flex-row items-center gap-2 text-gray-600 font-light px-2 py-1 rounded text-blue-500"

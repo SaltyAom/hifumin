@@ -1,7 +1,7 @@
 <script lang="ts">
     import { settings } from '@stores'
     import { SettingLayout, SettingRow } from '@modules'
-    import { Chip, TextField, Toggle } from '@shared'
+    import { Chip, TextField, Toggle, OpenGraph } from '@shared'
 
     const addFilter = (value: string) => {
         settings.update((v) => ({
@@ -29,6 +29,8 @@
     $: disabled = !$settings.filter.enable
     $: disabledClass = disabled ? 'opacity-50 pointer-events-none' : ''
 </script>
+
+<OpenGraph noIndex />
 
 <SettingLayout
     title="Filter"

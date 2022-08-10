@@ -10,6 +10,8 @@
 >
     <slot name="header" />
 
+    <slot name="outer" />
+
     <section class="relative grid collection w-full gap-6 md:gap-8">
         {#if loading}
             {#each Array(25).fill(null) as _}

@@ -1,3 +1,9 @@
+<script>
+    import { OpenGraph } from "@shared"
+</script>
+
+<OpenGraph noIndex />
+
 <main class="flex flex-col justify-center items-center gap-3 w-full min-h-app">
     <figure class="relative w-48 mx-auto">
         <div class="pb-[100%]">

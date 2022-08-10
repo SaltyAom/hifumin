@@ -72,7 +72,7 @@
     title="Read: {display} &raquo; Hifumin: hentai doujinshi and manga"
     description="[{language}] {display}, total page: {amount}, favorite {favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
     author={artists.map((artist) => artist.name).join(', ')}
-    image={cover}
+    image={pages[0]}
     createdAt={upload}
 />
 

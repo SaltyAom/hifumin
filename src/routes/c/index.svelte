@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
+    import { onMount, onDestroy } from 'svelte'
     import { browser } from '$app/env'
 
     import { MemberOnlyPage, NotFound, Image } from '@shared'
@@ -9,14 +9,16 @@
     import { GlobeIcon } from '@icons'
     import { ChevronLeftIcon, LockIcon } from 'svelte-feather-icons'
     
+    import { multiplePreviewById, type Preview } from '@gql'
     import { isAuthed, user } from '@stores'
     import { 
         galahad, 
         invalidateUserOnUnauthorize, 
         getCollectionList, 
-        getCollectionListFetch,
         intersect,
-        type CollectionData 
+        type CollectionData,
+        collectionOverviewStatus,
+        type CollectionOverviewStatus
     } from '@services'
 
     let page = 1
@@ -24,6 +26,9 @@
     let isEnd = false
 
     let collections: CollectionData[] = []
+    let previews: Record<number, Preview> = {}
+    let pendings: AbortController[] = []
+    let overview: CollectionOverviewStatus | null
 
     $: failedToFetch =
         !isLoading &&
@@ -36,16 +41,18 @@
         isLoading = true
 
         try {
-            const res = await getCollectionListFetch(page)
-
-            if (await invalidateUserOnUnauthorize(res)) return
-
-            const newCollection: CollectionData[] = await res.json()
+            const newCollection = await getCollectionList(page)
 
             if (!newCollection.length) throw new Error('No data')
 
             collections = collections.concat(newCollection)
             if (collections.length < 25) isEnd = true
+
+            await getPreviews(
+                newCollection
+                    .filter(c => c.cover)
+                    .map(c => c.cover)
+            )
         } catch (err) {
             isEnd = true
         } finally {
@@ -54,7 +61,42 @@
         }
     }
 
-    onMount(getCollections)
+    const getOverview = async () => {
+        overview = await collectionOverviewStatus()
+
+        if(overview.cover)
+            getPreviews([overview.cover])
+    }
+
+    const getPreviews = async (ids: number[]) => {
+        const abortableController = new AbortController()
+
+        pendings.push(abortableController)
+
+        await multiplePreviewById(
+                ids,
+                abortableController.signal
+            )
+            .then(res => {
+                res.forEach(p => {
+                    if(p?.data?.id) previews[p.data.id] = p.data
+                })
+            })
+            .catch(err => {
+                console.error(err)
+            })
+            .finally(() => {
+                pendings = pendings.filter(p => p !== abortableController)
+            })
+    }
+
+    onMount(() => {
+        getCollections()
+        getOverview()
+    })
+    onDestroy(() => {
+        pendings.forEach(p => p.abort())
+    })
 </script>
 
 {#if !$user && browser}
@@ -64,7 +106,7 @@
         <NotFound
             class="max-w-xs"
             title="Fail to load"
-            detail="Something went wrong when we try to load your favorite hentais."
+            detail="Unable to load your collection, please try again later."
             action="Try again"
         />
     </div>
@@ -72,29 +114,103 @@
     <CollectionLayout loading={!browser || !isAuthed}>
         <header slot="header" class="flex flex-col">
             <h2 class="text-4xl text-gray-700 dark:text-gray-300 font-medium my-4">
-                Collection
+                My Collection
             </h2>
         </header>
+
+        {#if overview}
+            {@const preview = previews[overview.cover]}
+            <a href="/favorite" role="article" class="flex flex-col gap-2 text-gray-400 dark:text-gray-500">
+                {#if overview.cover}
+                    {#if preview}
+                        {@const cover = preview.images.cover}
+                        <div class="liftable">
+                            <Image
+                                parentClass="rounded-lg"
+                                src={cover.link.replace("cover", "1t")}
+                                alt="My Favorite"
+                                width={cover.info.width}
+                                height={cover.info.height}
+                                loading="lazy"
+                                placeholder="blur"
+                                error="blur"
+                            />
+                        </div>
+                    {:else}
+                        <figure class="w-full pb-[141.74%] rounded-lg bg-gray-50 dark:bg-gray-700" />
+                    {/if}
+                {:else}
+                    <div class="relative w-full pb-[141.74%] rounded-lg bg-gray-50 dark:bg-gray-700" >
+                        <div class="absolute top-0 flex justify-center items-center w-full h-full">
+                            <h1>Empty</h1>
+                        </div>
+                    </div>
+                {/if}
+                <h4 class="text-gray-700 dark:text-gray-300 text-xl font-medium">My Favorite</h4>
+                <footer class="flex flex-row justify-between items-center gap-3">
+                    <div class="flex flex-row flex-1 items-center gap-1">
+                        <LockIcon size="18" />
+                        <p class="font-light">Private</p>
+                    </div>
+                    <p class="flex flex-row flex-1 font-light">
+                        {overview._count.favorites} total
+                    </p>  
+                </footer>
+            </a>
+        {:else}
+            <SkeletonCover />
+        {/if}
 
         {#if browser && isAuthed}
             {#each collections as {     
                 id,
                 cover,
                 public: isPublic,
-                title
+                title,
+                _count: {
+                    hentai: hentaiCount
+                }
              } (id)}
+                {@const preview = previews[cover]}
                 <a href="/c/{id}" role="article" class="flex flex-col gap-2 text-gray-400 dark:text-gray-500">
                     {#if cover}
-                        <img src={cover} alt={title} />
+                        {#if preview}
+                            {@const cover = preview.images.cover}
+                            <div class="liftable">
+                                <Image
+                                    parentClass="rounded-lg"
+                                    src={cover.link.replace("cover", "1t")}
+                                    alt={title}
+                                    width={cover.info.width}
+                                    height={cover.info.height}
+                                    loading="lazy"
+                                    placeholder="blur"
+                                    error="blur"
+                                />
+                            </div>
+                        {:else}
+                            <figure class="w-full pb-[141.74%] rounded-lg bg-gray-50 dark:bg-gray-700" />
+                        {/if}
+                    {:else}
+                        <div class="relative w-full pb-[141.74%] rounded-lg bg-gray-50 dark:bg-gray-700" >
+                            <div class="absolute top-0 flex justify-center items-center w-full h-full">
+                                <h1>Empty</h1>
+                            </div>
+                        </div>
                     {/if}
                     <h4 class="text-gray-700 dark:text-gray-300 text-xl font-medium">{title}</h4>
-                    <footer class="flex flex-row items-center gap-2">
-                        {#if isPublic}
-                            <GlobeIcon class="w-5 h-5" />
-                        {:else}
-                            <LockIcon size="18" />
-                        {/if}
-                        <p>{isPublic ? "Public" : "Private"}</p>
+                    <footer class="flex flex-row justify-between items-center gap-3">
+                        <div class="flex flex-row flex-1 items-center gap-1">
+                            {#if isPublic}
+                                <GlobeIcon class="w-5 h-5" />
+                            {:else}
+                                <LockIcon size="18" />
+                            {/if}
+                            <p class="font-light">{isPublic ? "Public" : "Private"}</p>
+                        </div>
+                        <p class="flex flex-row flex-1 font-light">
+                            {hentaiCount} total
+                        </p>  
                     </footer>
                 </a>
             {/each}
@@ -109,3 +225,20 @@
         {/if}
     </CollectionLayout>
 {/if}
+
+<style lang="sass">
+    $expo-out: cubic-bezier(.16,1,.3,1)
+
+    .liftable
+        @apply rounded-xl overflow-hidden
+        box-shadow: 0
+        transition: box-shadow .375s $expo-out, transform .375s $expo-out
+
+        &:hover,
+        &:focus,
+        &:focus-within
+            @apply transform -translate-y-4
+            transform: scale(1.025) translateY(-0.75rem)
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .1)
+
+</style>

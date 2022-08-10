@@ -5,6 +5,8 @@
     export let value = options[0]
     export let labels: string[] | null = null
     export let selectorClass = ''
+    export let chevronClass = ''
+    export let optionClass = ''
 
     let isOpen = false
     let focus = 0
@@ -107,7 +109,7 @@
                 {value}
             {/if}
         </p>
-        <ChevronDownIcon class="w-6 h-6" />
+        <ChevronDownIcon class="w-6 h-6 {chevronClass}" />
     </button>
 
     <section
@@ -121,7 +123,7 @@
         {#each options as option, index}
             <!-- svelte-ignore a11y-mouse-events-have-key-events -->
             <button
-                class={`option flex items-center w-full h-12 text-lg capitalize px-6 outline-none transition-colors ${activeClass(
+                class={`option flex items-center w-full h-12 text-lg capitalize px-6 outline-none transition-colors ${optionClass} ${activeClass(
                     option
                 )}`}
                 on:click={select(option)}

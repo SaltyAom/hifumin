@@ -44,7 +44,7 @@
         <div on:click={close} class="inline-flex flex-1 md:hidden" />
         <div on:click={close} class="absolute hidden md:block left-0 z-[-1] w-full h-screen" />
         <ul
-            class="relative flex flex-col w-full md:h-md md:rounded-2xl overflow-x-hidden bg-white slidable {activeClass}"
+            class="relative flex flex-col w-full md:h-md md:rounded-2xl overflow-x-hidden bg-white dark:bg-gray-700 slidable {activeClass}"
         >
             <slot />
             {#if !noFooter}
@@ -55,7 +55,7 @@
     {#if !noFooter}
         <div class="w-full md:max-w-sm md:mx-auto slidable {activeClass}">
             <ListTile
-                class="fixed z-30 bottom-0 left-0 z-1 w-full border-t md:rounded-b-2xl"
+                class="fixed z-30 bottom-0 left-0 z-1 w-full border-t dark:border-gray-500 md:rounded-b-2xl"
                 title="Done"
                 on:select={close}
             >

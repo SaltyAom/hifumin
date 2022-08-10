@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
     import { page as path } from '$app/stores'
     import { beforeNavigate } from '$app/navigation'
     import { browser } from '$app/env'
@@ -70,8 +70,17 @@
 
     let observer: HTMLElement
 
+    let isDestroy = false
+
+    onDestroy(() => {
+        isDestroy = true
+
+        if(browser)
+            window.removeEventListener("scroll", handleScroll)
+    })
+
     const handleScroll = async () => {
-        if (!browser || isLoading) return
+        if (!browser || isLoading || isDestroy) return
 
         let { scrollY: offset, innerHeight: windowHeight } = window
 

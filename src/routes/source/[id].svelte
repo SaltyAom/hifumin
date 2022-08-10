@@ -3,7 +3,7 @@
     import { browser } from '$app/env'
 
     import { multipleCoverById, type Cover } from '@gql'
-    import { Image } from '@shared'
+    import { Image, OpenGraph } from '@shared'
     import type { Similarity } from '@models/similarity'
 
     import CircularProgress from 'svelte-progresscircle'
@@ -44,6 +44,8 @@
     $: id = +$page.params.id
     $: if (browser && id && !isNaN(id)) findSourceById(id)
 </script>
+
+<OpenGraph noIndex />
 
 {#if isError}
     <main

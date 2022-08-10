@@ -3,6 +3,7 @@
 
     export let title = ''
     export let action = 'Ok'
+    export let actionClass = ''
 
     let active = false
     $: activeClass = active ? '-active' : ''
@@ -46,11 +47,11 @@
         role="dialog"
         open
         {...$$props}
-        class="z-1 flex flex-col w-full max-w-sm p-6 bg-white rounded-2xl gap-4"
+        class="z-1 flex flex-col w-full max-w-sm text-gray-500 dark:text-gray-400 pt-6 pl-6 pb-4 pr-4 bg-white dark:bg-gray-700 rounded-2xl gap-4"
     >
         {#if title}
             <h2
-                class="text-gray-700 text-2xl font-medium mb-2 ${$$props[
+                class="text-gray-700 dark:text-gray-300 text-2xl font-medium ${$$props[
                     'class'
                 ]}"
             >
@@ -64,16 +65,20 @@
 
         <footer class="flex justify-end items-center gap-2 mt-2">
             <button
-                class="text-gray-500 hover:bg-gray-100 focus:bg-gray-100 px-4 py-2 rounded-lg transition-colors"
+                class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-600 dark:focus:bg-gray-600 px-4 py-2 rounded-lg transition-colors"
                 on:click={close}
             >
                 Cancel
             </button>
             <button
-                class="text-blue-500 bg-blue-50 font-medium px-4 py-2 rounded-lg"
+                class="text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/15 font-medium px-4 py-2 rounded-lg {actionClass}"
                 on:click={handleAction}
             >
-                {action}
+                {#if $$slots['action']}
+                    <slot name="action" />
+                {:else}
+                    {action}
+                {/if}
             </button>
         </footer>
     </section>

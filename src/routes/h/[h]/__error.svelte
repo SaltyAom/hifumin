@@ -1,5 +1,6 @@
 <script>
-    import { NotFound } from '@shared'
+    import { NotFound, OpenGraph } from '@shared'
 </script>
 
+<OpenGraph noIndex />
 <NotFound />

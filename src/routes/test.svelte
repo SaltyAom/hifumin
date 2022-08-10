@@ -1,3 +1,9 @@
+<script lang="ts">
+    import { OpenGraph } from '@shared'
+</script>
+
+<OpenGraph noIndex />
+
 <main class="flex flex-col justify-center items-center gap-2 w-full h-app">
     <img
         class="w-48 h-48 rounded object-center object-fill"

@@ -2,7 +2,7 @@
     import { browser } from '$app/env'
     import { goto } from '$app/navigation'
 
-    import { ProgressIndicator } from '@shared'
+    import { ProgressIndicator, OpenGraph } from '@shared'
     import { user } from '@stores'
 
     let email: string
@@ -58,6 +58,11 @@
         }
     }
 </script>
+
+<OpenGraph 
+    title="Sign In - Hifumin: hentai doujinshi and manga" 
+    description="Sign in to Hifumin to sync data between devices, create and share collection, and more exclusive feature await - hentai doujinshi and manga"
+/>
 
 <main
     class="flex flex-col justify-center items-center w-full max-w-xs min-h-app p-4 mx-auto"

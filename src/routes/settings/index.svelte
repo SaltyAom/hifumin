@@ -3,7 +3,7 @@
 
     import { settings, SafeMode, Theme, ReaderType } from '@stores'
     import { SettingLayout, SettingRow, SettingNavigation } from '@modules'
-    import { Dropdown } from '@shared'
+    import { Dropdown, OpenGraph } from '@shared'
 
     const cacheKeys = !browser
         ? []
@@ -25,6 +25,8 @@
         window.location.reload()
     }
 </script>
+
+<OpenGraph noIndex />
 
 <SettingLayout title="Settings" label="Adjust Platform behavior">
     <SettingRow vertical title="Theme Mode">

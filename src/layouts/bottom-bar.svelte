@@ -29,11 +29,11 @@
             Home
         </a>
 
-        <a class="{tabClass} {applyActive('/favorite')}" href="/favorite">
+        <a class="{tabClass} {applyActive('/favorite')} {applyActive('/c')}" href="/c">
             <div class="icon">
                 <BookmarkIcon class="w-6 h-6" strokeWidth={1.5} />
             </div>
-            Bookmark
+            Collection
         </a>
 
         <a class="{tabClass} {applyActive('/settings')}" href="/settings">

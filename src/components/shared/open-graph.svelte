@@ -23,6 +23,8 @@
         },
         link: 'https://hifumin.app/assets/images/cover.jpg'
     }
+
+    export let noIndex = false
 </script>
 
 <svelte:head>
@@ -39,6 +41,10 @@
             alternativeTitle.length ? `${alternativeTitle.join(',')},` : ''
         }${author},Hifumin,nhentai${id ? `,${id}` : ''}`}
     />
+
+    {#if noIndex}
+        <meta name="robots" content="noindex" />
+    {/if}
 
     {#if createdAt}
         <meta

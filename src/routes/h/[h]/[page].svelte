@@ -33,6 +33,7 @@
         ChevronLeftIcon,
         ChevronRightIcon
     } from 'svelte-feather-icons'
+import OpenGraph from '@components/shared/open-graph.svelte'
 
     export let hentai: HentaiByIdData
     export let page: number
@@ -125,6 +126,12 @@
     <meta name="robots" content="noindex" />
     <link rel="preload" as="image" href={link} />
 </svelte:head>
+
+<OpenGraph
+    {id}
+    title="Read: {display} page {page} &raquo; Hifumin: hentai doujinshi and manga"
+    noIndex
+/>
 
 <main class="relative flex flex-col items-center w-full h-screen mx-auto">
     <aside

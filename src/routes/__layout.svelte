@@ -11,7 +11,6 @@
 <AuthProvider />
 <ThemeProvider />
 
-<OpenGraph />
 <Analytic />
 
 <AppBar />

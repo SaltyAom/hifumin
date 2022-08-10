@@ -1,7 +1,7 @@
 <script lang="ts">
     import { settings } from '@stores'
     import { SettingLayout, SettingRow } from '@modules'
-    import { Chip, TextField, Toggle } from '@shared'
+    import { Chip, TextField, Toggle, OpenGraph } from '@shared'
     import { tags } from '@services'
 
     const addPreference = (value: string) => {
@@ -40,6 +40,8 @@
     $: disabled = !$settings.preference.enable
     $: disabledClass = disabled ? 'opacity-50 pointer-events-none' : ''
 </script>
+
+<OpenGraph noIndex />
 
 <SettingLayout
     title="Preference"

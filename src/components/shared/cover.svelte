@@ -3,7 +3,7 @@
     import Image from './image.svelte'
 
     export let hentai: Cover
-    export let empasize = true
+    export let empasize = false
 
     $: ({
         title: { display },

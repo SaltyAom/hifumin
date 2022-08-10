@@ -9,6 +9,7 @@
     export let disabled = false
     export let noLeading = false
     export let inputElement: HTMLInputElement = null
+    export let containerClass = ''
 
     export let value = ''
 
@@ -28,7 +29,7 @@
 >
     <label class="text-gray-400 text-xs" for={id}>{label}</label>
     <div
-        class="flex flex-row w-full px-2 bg-gray-100 dark:bg-gray-700 rounded-lg"
+        class="flex flex-row w-full px-2 bg-gray-100 dark:bg-gray-700 rounded-lg {containerClass}"
     >
         <input
             {...$$props}

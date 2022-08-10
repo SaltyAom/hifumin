@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
+    import { onMount, onDestroy } from 'svelte'
     import { get } from 'svelte/store'
     import { page as path } from '$app/stores'
     import { beforeNavigate } from '$app/navigation'
@@ -104,8 +104,17 @@
 
     let observer: HTMLElement
 
+    let isDestroy = false
+
+    onDestroy(() => {
+        isDestroy = true
+
+        if(browser)
+            window.removeEventListener("scroll", handleScroll)
+    })
+
     const handleScroll = async () => {
-        if (!browser || isLoading) return
+        if (!browser || isLoading || isDestroy) return
 
         let { scrollY: offset, innerHeight: windowHeight } = window
 
@@ -130,6 +139,8 @@
 </script>
 
 <svelte:window on:scroll={handleScroll} />
+
+<OpenGraph />
 
 <main
     class="flex w-full px-2 md:px-4 overflow-hidden"

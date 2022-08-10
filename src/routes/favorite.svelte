@@ -7,7 +7,7 @@
     import { user, isAuthed } from '@stores'
     
     import { CollectionLayout } from '@layouts'
-    import { Cover, Image, MemberOnlyPage, NotFound, SearchNotFound } from '@shared'
+    import { Cover, Image, MemberOnlyPage, NotFound, SearchNotFound, OpenGraph } from '@shared'
     import { SkeletonCover } from '@skeletons'
 
     import { ChevronLeftIcon } from 'svelte-feather-icons'
@@ -68,6 +68,8 @@
     }
 </script>
 
+<OpenGraph noIndex />
+
 {#if !$user && browser}
     <MemberOnlyPage />
 {:else if failedToFetchHentai}
@@ -83,7 +85,7 @@
     <CollectionLayout loading={!browser || !isAuthed}>
         <header slot="header" class="flex flex-col">
             <a
-                href="/"
+                href="/c"
                 class="inline-flex items-center gap-1 text-gray-500 py-1 rounded mb-3"
             >
                 <ChevronLeftIcon class="w-6 h-6" /> 
