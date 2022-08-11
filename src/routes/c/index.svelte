@@ -2,6 +2,7 @@
     import { onMount, onDestroy } from 'svelte'
     import { browser } from '$app/env'
 
+    import CreateCollection from '@modules'
     import { MemberOnlyPage, NotFound, Image, OpenGraph } from '@shared'
     import { CollectionLayout } from '@layouts'
     import { SkeletonCover } from '@skeletons'
@@ -23,7 +24,6 @@
         purgeCollectionCoverCache,
         purgeCollectionPageCache
     } from '@services'
-import CreateCollection from '@components/modules/create-collection.svelte'
 
     let page = 1
     let isLoading = false
@@ -261,7 +261,7 @@ import CreateCollection from '@components/modules/create-collection.svelte'
                     {:else}
                         <div class="relative w-full pb-[141.74%] rounded-lg bg-gray-50 dark:bg-gray-700" >
                             <div class="absolute top-0 flex justify-center items-center w-full h-full">
-                                <h1>Empty</h1>
+                                <h1>Empty!</h1>
                             </div>
                         </div>
                     {/if}

@@ -115,6 +115,10 @@
     let publicStatus: "Public" | "Private" = "Public"
     let _initPublicStatus: "Public" | "Private" = "Public"
 
+    const requestMoreFavorite = () => {
+        getFavorite()
+    }
+
     const getFavorite = async (reset = false) => {
         if (isLoading || isEnd) return
         isLoading = true
@@ -449,7 +453,7 @@
         {/each}
         {#if !isEnd}
             <SkeletonCover>
-                <div use:intersect on:intersect={getFavorite} />
+                <div use:intersect on:intersect={requestMoreFavorite} />
             </SkeletonCover>
             {#each Array(24).fill(null) as _}
                 <SkeletonCover />
