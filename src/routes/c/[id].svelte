@@ -83,7 +83,9 @@
         FileTextIcon, 
         LockIcon, 
         TrashIcon,
-        RefreshCwIcon
+        RefreshCwIcon,
+ShareIcon,
+LinkIcon
     } from 'svelte-feather-icons'
     
     import dayjs from 'dayjs'
@@ -130,10 +132,8 @@
             if (!data.length) throw new Error('No data')
 
             favorite = favorite.concat(data)
-            if (data.length < 25) {
-                isEnd = true
-            }
-            
+            if (data.length < 25)
+                isEnd = true            
         } catch (err) {
             isEnd = true
         } finally {
@@ -171,6 +171,8 @@
         if(collection) return
 
         const collectionData = await collectionCover(id)
+
+        console.log("A", collectionData, collection, initFavorite)
 
         if(collectionData) {
             collection = collectionData
@@ -285,6 +287,28 @@
         goto("/c")
     }
 
+    const openShareSheet = () => {
+        navigator.share({
+            title: collection.title,
+            url: `${location.origin}${location.pathname}`
+        })
+    }
+
+    let noticeCopy = false
+    let latestNotice: number | null = null
+
+    const copyLink = async () => {
+        await navigator.clipboard.writeText(`${location.origin}${location.pathname}`)
+        noticeCopy = true
+
+        if(latestNotice)
+            clearTimeout(latestNotice)
+
+        latestNotice = setTimeout(() => {
+            noticeCopy = false
+        }, 1500) as unknown as number
+    }
+
     $: cover = initFavorite[0]?.data?.images.cover
 </script>
 
@@ -315,9 +339,15 @@
 {/if}
 
 {#if notFound}
-    <h1>Not Found</h1>
+    <div class="flex justify-center items-center h-error">
+        <NotFound
+            class="max-w-2xs m-auto"
+            detail="This page is either private or does not exist."
+            action="Try again"
+        />
+    </div>
 {:else if failedToFetchHentai}
-    <div class="flex justify-center items-center favorite-center">
+    <div class="flex justify-center items-center h-error">
         <NotFound
             class="max-w-xs"
             title="Fail to load"
@@ -328,7 +358,7 @@
 {:else}
     {#if collection}
         <OpenGraph
-            title="Read {collection.title} collection, {collection._count.hentai} in total - Hifumin Collection"
+            title="{collection.title} collection, {collection._count.hentai} stor{collection._count.hentai < 1 ? "ies" : "y"} to read - Hifumin Collection"
             description="{collection.title} total page: {collection._count.hentai}, &raquo; Read on Hifumin: hentai doujinshi and manga"
             image={preview ?? undefined}
         />
@@ -382,7 +412,7 @@
 
                     {#if collection.owned}
                         <button 
-                            class="inline-flex justify-center items-center gap-2 font-light text-red-400 hover:bg-red-50 focus:bg-red-50 dark:hover:bg-red-900/50 dark:focus:bg-red-900/50 ml-2 px-3 py-1.5 rounded transition-colors"
+                            class="inline-flex justify-center items-center gap-2 font-light text-red-400 hover:bg-red-50 focus:bg-red-50 dark:hover:bg-red-900/50 dark:focus:bg-red-900/50 ml-2 px-3 py-1.5 rounded-lg transition-colors"
                             on:click={requestDeleteDialog}
                         >
                             <TrashIcon size="18" />
@@ -391,9 +421,36 @@
                     {/if}
                 </section>
                 
-                <p class="text-lg text-gray-400 font-light">
-                    Last update: {dayjs(collection.updated).fromNow()}
-                </p>
+                <section class="flex items-center gap-6">
+                    <p class="text-lg text-gray-400 font-light">
+                        Last update: {dayjs(collection.updated).fromNow()}
+                    </p>
+                    {#if browser && navigator.share}
+                    <button 
+                        class="flex items-center gap-2 text-gray-400 hover:text-blue-500 focus:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400 font-light px-3 py-1.5 hover:bg-blue-50 focus:bg-blue-50 dark:hover:bg-blue-500/15 dark:focus:bg-blue-500/15 rounded-lg transition-colors"
+                        title="Share this collection"
+                        aria-label="Share this collection"
+                        on:click={openShareSheet}
+                    >
+                        <ShareIcon size="18" />
+                        Share
+                    </button>
+                    {:else}
+                        <button 
+                            class="flex items-center gap-2 text-gray-400 hover:text-blue-500 focus:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400 font-light px-3 py-1.5 hover:bg-blue-50 focus:bg-blue-50 dark:hover:bg-blue-500/15 dark:focus:bg-blue-500/15 rounded-lg transition-colors"
+                            title="Copy collection URL"
+                            aria-label="Copy collection URL"
+                            on:click={copyLink}
+                        >
+                            <LinkIcon size="18" />
+                            {#if noticeCopy}
+                                Copied
+                            {:else}
+                                Copy Link
+                            {/if}
+                        </button>
+                    {/if}
+                </section>
             {:else}
                 <h1
                     class="w-74 h-8 mt-1 bg-gray-100 dark:bg-gray-600 rounded-lg"
@@ -471,4 +528,12 @@
             &
                 @apply pb-16
                 height: calc(100vh - 4em - 2em - 124px - 4em - 1em)
+
+    .h-error
+        @apply pb-16
+        height: calc(100vh - 4em - 4em)
+
+        @screen sm
+            &
+                height: calc(100vh - 4em)
 </style>
