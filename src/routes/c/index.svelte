@@ -94,7 +94,7 @@ import CreateCollection from '@components/modules/create-collection.svelte'
             })
     }
 
-    const reset = () => {
+    const reset = async () => {
         pendings.forEach(p => p.abort())
 
         page = 1
@@ -109,8 +109,10 @@ import CreateCollection from '@components/modules/create-collection.svelte'
         purgeCollectionCoverCache()
         purgeCollectionPageCache()
 
-        getCollections()
-        getOverview()
+        await Promise.all([
+            getCollections(),
+            getOverview()
+        ])        
     }
 
     onMount(() => {
@@ -137,9 +139,10 @@ import CreateCollection from '@components/modules/create-collection.svelte'
         }, 216)
     }
 
-    const requestNewCollection = () => {
-        reset()
+    const requestNewCollection = async ({ detail: { close } }) => {
+        close()
         dismissNewCollection()
+        reset()
     }
 </script>
 

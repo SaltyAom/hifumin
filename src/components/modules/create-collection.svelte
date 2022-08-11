@@ -8,6 +8,7 @@
     
     const collectionTypeOptions = ['public', 'private'] as const
     let newCollectionTextField: HTMLInputElement
+    let requestClose: () => {}
 
     let collectionName: string
     let collectionType: 'public' | 'private'
@@ -49,7 +50,7 @@
             collectionError = newCollection.message
         else {
             dispatch('create', {
-                close,
+                close: requestClose,
                 id: newCollection.id,
                 public: newCollection.public,
                 title: newCollection.title
@@ -61,29 +62,30 @@
 <Dialog
     title="New Collection"
     action="Create"
+    bind:close={requestClose}
     on:close={close}
     on:action={createNewCollection}
 >
-<TextField
-    bind:value={collectionName}
-    bind:inputElement={newCollectionTextField}
-    onChange={createNewCollection}
-    required
-    noLeading
-    label="Collection Name"
-    name="collection-name"
-    placeholder="Name"
-/>
-<div class="flex justify-between items-center w-full">
-    <p class="text-lg font-medium text-gray-700 dark:text-gray-400">Publicity</p>
-    <Dropdown
-        bind:value={collectionType}
-        options={['private', 'public']}
-        class="capitalize"
+    <TextField
+        bind:value={collectionName}
+        bind:inputElement={newCollectionTextField}
+        onChange={createNewCollection}
+        required
+        noLeading
+        label="Collection Name"
+        name="collection-name"
+        placeholder="Name"
     />
-</div>
+    <div class="flex justify-between items-center w-full">
+        <p class="text-lg font-medium text-gray-700 dark:text-gray-400">Publicity</p>
+        <Dropdown
+            bind:value={collectionType}
+            options={['private', 'public']}
+            class="capitalize"
+        />
+    </div>
 
-{#if collectionError}
-    <p class="text-red-500 text-sm">{collectionError}</p>
-{/if}
+    {#if collectionError}
+        <p class="text-red-500 text-sm">{collectionError}</p>
+    {/if}
 </Dialog>
