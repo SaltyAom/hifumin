@@ -19,13 +19,24 @@ export const purgeCollectionCoverCache = () => {
 const collectionCover = async (collectionId: number) => {
     if (_cache.has(collectionId)) return _cache.get(collectionId)
 
-    const data = (await fetch(`${galahad}/collection/${collectionId}/hentai`, {
-        credentials: 'include'
-    }).then((res) => res.json())) as CollectionCover
+    try {
+        const data = (await fetch(
+            `${galahad}/collection/${collectionId}/hentai/preview`,
+            {
+                credentials: 'include'
+            }
+        ).then((res) => {
+            if (res.status !== 200) throw new Error('Invalid ownership')
 
-    if (browser) _cache.set(collectionId, data)
+            return res.json()
+        })) as CollectionCover
 
-    return data
+        if (browser) _cache.set(collectionId, data)
+
+        return data
+    } catch (error) {
+        return
+    }
 }
 
 export default collectionCover

@@ -69,14 +69,14 @@
 
 <OpenGraph
     {id}
-    title="Read: {display} &raquo; Hifumin: hentai doujinshi and manga"
+    title="Read: {display} ({id}) &raquo; Hifumin: hentai doujinshi and manga"
     description="[{language}] {display}, total page: {amount}, favorite {favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
     author={artists.map((artist) => artist.name).join(', ')}
     image={pages[0]}
     createdAt={upload}
 />
 
-<article class="flex flex-col w-full mx-auto">
+<article id="cover" class="flex flex-col w-full mx-auto">
     <div
         class="relative flex items-center w-full min-h-app bg-cover bg-center py-4 bg-white dark:bg-gray-800"
     >
@@ -138,6 +138,9 @@
 
 <style lang="sass">
     $expo-out: cubic-bezier(.16,1,.3,1)
+
+    #cover
+        scroll-margin-top: 4em
 
     #interactive
         @apply grid max-w-6xl gap-4 px-4

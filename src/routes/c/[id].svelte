@@ -5,6 +5,7 @@
         collectionCover, 
         collectionPage, 
         deleteCollection, 
+        purgeCollectionById, 
         purgeCollectionCache, 
         updateCollection, 
         type CollectionCover 
@@ -17,19 +18,18 @@
             status: 404
         }
 
-        const [collection, hentaiIds]  = await Promise.all([
+        const [collection, hentaiIds] = await Promise.all([
             collectionCover(collectionId),
-            collectionPage(collectionId, 1),
+            collectionPage(collectionId)
         ])
 
         if (!hentaiIds[0])
             return {
                 props: {
-                    preview: null,
+                    preview: undefined,
                     id: collectionId,
                     initFavorite: [],
-                    collection,
-                    page: 1
+                    collection
                 }
             }
 
@@ -48,8 +48,7 @@
                 preview,
                 id: collectionId,
                 initFavorite: favorite,
-                collection,
-                page: 2
+                collection
             }
         }
     }
@@ -78,7 +77,14 @@
     } from '@shared'
     import { SkeletonCover } from '@skeletons'
     import { GlobeIcon } from '@icons'
-    import { BoxIcon, ChevronLeftIcon, FileTextIcon, LockIcon, TrashIcon } from 'svelte-feather-icons'
+    import { 
+        BoxIcon, 
+        ChevronLeftIcon, 
+        FileTextIcon, 
+        LockIcon, 
+        TrashIcon,
+        RefreshCwIcon
+    } from 'svelte-feather-icons'
     
     import dayjs from 'dayjs'
     import relativeTime from 'dayjs/plugin/relativeTime'
@@ -88,10 +94,10 @@
     export let preview: FavoriteHentaiData['data']['images']['cover'] | null
     export let id: number
     export let initFavorite: FavoriteHentaiData[] = []
-    export let page: number
     export let collection: CollectionCover | null
 
     let favorite: FavoriteHentaiData[] = [...initFavorite]
+    $: lastId = favorite[favorite.length - 1]?.id ?? undefined
 
     let isLoading = false
     let isEnd = false
@@ -102,40 +108,41 @@
     $: failedToFetchHentai =
         !isLoading &&
         isEnd &&
-        page === 1 &&
+        (!lastId && favorite[0]) &&
         favorite.length > 0 &&
         favorite.every((hentai) => !hentai.data)
 
     let publicStatus: "Public" | "Private" = "Public"
     let _initPublicStatus: "Public" | "Private" = "Public"
 
-    const getFavorite = async () => {
+    const getFavorite = async (reset = false) => {
         if (isLoading || isEnd) return
         isLoading = true
 
         try {
-            const favoriteIds = await collectionPage(id, page)
+            const favoriteIds = await collectionPage(id, reset ? undefined : lastId)
             const data = await getFavoriteHentais(favoriteIds)
 
             if (!data.length) throw new Error('No data')
 
             favorite = favorite.concat(data)
-            if (data.length < 25) isEnd = true
+            if (data.length < 25) {
+                isEnd = true
+            }
+            
         } catch (err) {
             isEnd = true
         } finally {
-            page++
             isLoading = false
         }
     }
 
-    onMount(async () => {
+    const reloadClient = async () => {
         if($purgeCollection.has(id)) {
             const invalidation = invalidate("/c/" + id)
 
             initFavorite = []
             favorite = []
-            page = 1
 
             purgeCollection.update((collection) => {
                 collection.delete(id)
@@ -143,7 +150,7 @@
                 return collection
             })
 
-            await getFavorite()
+            await getFavorite(true)
             initFavorite = [...favorite]
             
             await invalidation
@@ -153,11 +160,11 @@
 
         if(initFavorite.length < 25) isEnd = true
         else getFavorite()
-    })
+    }
+    onMount(reloadClient)
 
-    // ? Private collection but owned by user
-    onMount(async () => {
-        if(!collection) return
+    const loadClient = async () => {
+        if(collection) return
 
         const collectionData = await collectionCover(id)
 
@@ -167,7 +174,26 @@
             _initPublicStatus = publicStatus
         } else
             notFound = true
-    })
+    }
+    onMount(loadClient)
+
+    const reset = () => {
+        purgeCollectionById(id)
+        purgeCollection.update((collection) => {
+            collection.add(id)
+
+            return collection
+        })
+        
+        favorite = []
+        collection = null
+        isEnd = false
+        notFound = false
+        showDeleteDialog = false
+
+        loadClient()
+        reloadClient()
+    }
 
     const languageMap = {
         english: 'EN',
@@ -178,7 +204,8 @@
     const saveTitle = async ({ currentTarget }: FocusEvent & {
         currentTarget: EventTarget & HTMLHeadingElement;
     }) => {
-        if(!collection || !collection.owned || currentTarget.textContent === collection.title) return
+        if(!collection || !collection.owned || currentTarget.textContent === collection.title) 
+            return
 
         const { textContent: title } = currentTarget
 
@@ -313,52 +340,79 @@
                 Back
             </a>
 
-            <h1 
-                class="text-3xl lg:text-4xl text-gray-700 dark:text-gray-300 font-medium outline-none"
-                contenteditable={collection.owned}
-                on:blur={saveTitle}
-            >
-                {collection.title}
-            </h1>
-            <section class="flex items-center gap-6 mt-2 font-light">
-                <div class="flex items-center gap-1.5 font-light text-lg text-gray-400">
-                {#if publicStatus === "Public"}
-                    <GlobeIcon class="w-5 h-5" />
-                {:else}
-                    <LockIcon size="18" />
-                {/if}
-
-                {#if collection.owned}
-                    <Dropdown 
-                        bind:value={publicStatus}
-                        class="w-[8.5ch] ml-1" 
-                        selectorClass="!bg-transparent !font-light !text-lg !text-gray-400 !px-0" 
-                        chevronClass="stroke-1"
-                        optionClass="!px-3.5 !py-1"
-                        options={["Public", "Private"]}                        
-                    />
-                {:else}
-                    <p class="py-2">{collection.public ? 'Public' : 'Private'}</p>
-                {/if}
-                </div>
-                <p class="text-lg text-gray-400">
-                    {collection._count.hentai} total
-                </p>
-
-                {#if collection.owned}
-                    <button 
-                        class="inline-flex justify-center items-center gap-2 font-light text-red-400 hover:bg-red-50 focus:bg-red-50 dark:hover:bg-red-900/50 dark:focus:bg-red-900/50 ml-2 px-3 py-1.5 rounded transition-colors"
-                        on:click={requestDeleteDialog}
-                    >
-                        <TrashIcon size="18" />
-                        Delete
+            {#if collection}
+                <h1
+                    class="text-3xl lg:text-4xl text-gray-700 dark:text-gray-300 font-medium outline-none"
+                    contenteditable={collection.owned}
+                    on:blur={saveTitle}
+                >
+                    {collection.title}
+                    <button on:click={reset} class="ml-2 text-gray-400">
+                        <RefreshCwIcon class="w-6 h-6" strokeWidth={1.5} />
                     </button>
-                {/if}
-            </section>
+                </h1>
+                <section class="flex items-center gap-6 mt-2 font-light">
+                    <div class="flex items-center gap-1.5 font-light text-lg text-gray-400">
+                        {#if publicStatus === "Public"}
+                            <GlobeIcon class="w-5 h-5" />
+                        {:else}
+                            <LockIcon size="18" />
+                        {/if}
 
-            <p class="text-lg text-gray-400 font-light">
-                Last update: {dayjs(collection.updated).fromNow()}
-            </p>
+                        {#if collection.owned}
+                            <Dropdown 
+                                bind:value={publicStatus}
+                                class="w-[8.5ch] ml-1" 
+                                selectorClass="!bg-transparent !font-light !text-lg !text-gray-400 !px-0" 
+                                chevronClass="stroke-1"
+                                optionClass="!px-3.5 !py-1"
+                                options={["Public", "Private"]}                        
+                            />
+                        {:else}
+                            <p class="py-2">{collection.public ? 'Public' : 'Private'}</p>
+                        {/if}
+                    </div>
+                    <p class="text-lg text-gray-400">
+                        {collection._count.hentai} total
+                    </p>
+
+                    {#if collection.owned}
+                        <button 
+                            class="inline-flex justify-center items-center gap-2 font-light text-red-400 hover:bg-red-50 focus:bg-red-50 dark:hover:bg-red-900/50 dark:focus:bg-red-900/50 ml-2 px-3 py-1.5 rounded transition-colors"
+                            on:click={requestDeleteDialog}
+                        >
+                            <TrashIcon size="18" />
+                            Delete
+                        </button>
+                    {/if}
+                </section>
+                
+                <p class="text-lg text-gray-400 font-light">
+                    Last update: {dayjs(collection.updated).fromNow()}
+                </p>
+            {:else}
+                <h1
+                    class="w-74 h-8 mt-1 bg-gray-100 dark:bg-gray-600 rounded-lg"
+                />
+                <section class="flex items-center gap-6 mt-2 font-light">
+                    <div class="flex items-center h-[50px] gap-1.5 font-light text-lg text-gray-400 my-1">
+                        <p
+                            class="w-6 h-6 bg-gray-100 dark:bg-gray-600 rounded-lg"
+                        />
+
+                        <p
+                            class="w-[8.5ch] h-6 bg-gray-100 dark:bg-gray-600 rounded-lg"
+                        />
+                    </div>
+                    <p
+                        class="w-16 h-6 bg-gray-100 dark:bg-gray-600 rounded-lg"
+                    />                    
+                </section>
+
+                <p
+                    class="w-60 h-6 bg-gray-100 dark:bg-gray-600 rounded-lg"
+                />
+            {/if}
         </header>
 
         <svelte:fragment slot="outer">

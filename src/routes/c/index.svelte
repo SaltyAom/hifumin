@@ -2,12 +2,12 @@
     import { onMount, onDestroy } from 'svelte'
     import { browser } from '$app/env'
 
-    import { MemberOnlyPage, NotFound, Image } from '@shared'
+    import { MemberOnlyPage, NotFound, Image, OpenGraph } from '@shared'
     import { CollectionLayout } from '@layouts'
     import { SkeletonCover } from '@skeletons'
 
     import { GlobeIcon } from '@icons'
-    import { ChevronLeftIcon, LockIcon } from 'svelte-feather-icons'
+    import { ChevronLeftIcon, LockIcon, PlusIcon, RefreshCwIcon } from 'svelte-feather-icons'
     
     import { multiplePreviewById, type Preview } from '@gql'
     import { isAuthed, user } from '@stores'
@@ -18,9 +18,12 @@
         intersect,
         type CollectionData,
         collectionOverviewStatus,
-        type CollectionOverviewStatus
+        type CollectionOverviewStatus,
+        purgeCollectionCache,
+        purgeCollectionCoverCache,
+        purgeCollectionPageCache
     } from '@services'
-import OpenGraph from '@components/shared/open-graph.svelte'
+import CreateCollection from '@components/modules/create-collection.svelte'
 
     let page = 1
     let isLoading = false
@@ -91,16 +94,63 @@ import OpenGraph from '@components/shared/open-graph.svelte'
             })
     }
 
+    const reset = () => {
+        pendings.forEach(p => p.abort())
+
+        page = 1
+        isLoading = false
+        isEnd = false
+        collections = []
+        previews = {}
+        pendings = []
+        overview = null
+
+        purgeCollectionCache()
+        purgeCollectionCoverCache()
+        purgeCollectionPageCache()
+
+        getCollections()
+        getOverview()
+    }
+
     onMount(() => {
         getCollections()
         getOverview()
     })
+
     onDestroy(() => {
         pendings.forEach(p => p.abort())
     })
+
+    let isCreatingCollection = false
+    const createNewCollection = () => {
+        requestAnimationFrame(() => {
+            isCreatingCollection = true
+        })
+    }
+
+    const dismissNewCollection = () => {
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                isCreatingCollection = false
+            })
+        }, 216)
+    }
+
+    const requestNewCollection = () => {
+        reset()
+        dismissNewCollection()
+    }
 </script>
 
 <OpenGraph noIndex />
+
+{#if $user && isCreatingCollection}
+    <CreateCollection
+        on:close={dismissNewCollection}
+        on:create={requestNewCollection}
+    />
+{/if}
 
 {#if !$user && browser}
     <MemberOnlyPage />
@@ -115,19 +165,30 @@ import OpenGraph from '@components/shared/open-graph.svelte'
     </div>
 {:else}
     <CollectionLayout loading={!browser || !isAuthed}>
-        <header slot="header" class="flex flex-col">
-            <h2 class="text-4xl text-gray-700 dark:text-gray-300 font-medium my-4">
+        <header slot="header" class="flex flex-col items-start">
+            <button 
+                class="flex items-center gap-2 text-blue-500 dark:text-blue-400 font-light text-base px-1 py-0.5 hover:bg-blue-50 focus:bg-blue-50 dark:hover:bg-blue-500/15 dark:focus:bg-blue-500/15 rounded transition-colors"
+                on:click={createNewCollection}
+            >
+                <PlusIcon size="21" strokeWidth={1.5} />
+                New Collection
+            </button>
+    
+            <h1 class="text-4xl text-gray-700 dark:text-gray-300 font-medium my-4">
                 My Collection
-            </h2>
+                <button on:click={reset} class="ml-2 text-gray-400">
+                    <RefreshCwIcon class="w-6 h-6" strokeWidth={1.5} />
+                </button>
+            </h1>
         </header>
 
         {#if overview}
             {@const preview = previews[overview.cover]}
-            <a href="/favorite" role="article" class="flex flex-col gap-2 text-gray-400 dark:text-gray-500">
+            <a href="/favorite" role="article" class="flex flex-col gap-1 text-gray-400 dark:text-gray-500">
                 {#if overview.cover}
                     {#if preview}
                         {@const cover = preview.images.cover}
-                        <div class="liftable">
+                        <div class="liftable mb-1">
                             <Image
                                 parentClass="rounded-lg"
                                 src={cover.link.replace("cover", "1t")}
@@ -145,12 +206,12 @@ import OpenGraph from '@components/shared/open-graph.svelte'
                 {:else}
                     <div class="relative w-full pb-[141.74%] rounded-lg bg-gray-50 dark:bg-gray-700" >
                         <div class="absolute top-0 flex justify-center items-center w-full h-full">
-                            <h1>Empty</h1>
+                            <h2>Empty</h2>
                         </div>
                     </div>
                 {/if}
                 <h4 class="text-gray-700 dark:text-gray-300 text-xl font-medium">My Favorite</h4>
-                <footer class="flex flex-row justify-between items-center gap-3">
+                <footer class="flex flex-row justify-between items-center gap-3 text-gray-400">
                     <div class="flex flex-row flex-1 items-center gap-1">
                         <LockIcon size="18" />
                         <p class="font-light">Private</p>
@@ -175,11 +236,11 @@ import OpenGraph from '@components/shared/open-graph.svelte'
                 }
              } (id + "." + hentaiCount)}
                 {@const preview = previews[cover]}
-                <a href="/c/{id}" role="article" class="flex flex-col gap-2 text-gray-400 dark:text-gray-500">
+                <a href="/c/{id}" role="article" class="flex flex-col gap-1 text-gray-400 dark:text-gray-500">
                     {#if cover}
                         {#if preview}
                             {@const cover = preview.images.cover}
-                            <div class="liftable">
+                            <div class="liftable mb-1">
                                 <Image
                                     parentClass="rounded-lg"
                                     src={cover.link.replace("cover", "1t")}
@@ -202,7 +263,7 @@ import OpenGraph from '@components/shared/open-graph.svelte'
                         </div>
                     {/if}
                     <h4 class="text-gray-700 dark:text-gray-300 text-xl font-medium">{title}</h4>
-                    <footer class="flex flex-row justify-between items-center gap-3">
+                    <footer class="flex flex-row justify-between items-center gap-3 text-gray-400">
                         <div class="flex flex-row flex-1 items-center gap-1">
                             {#if isPublic}
                                 <GlobeIcon class="w-5 h-5" />

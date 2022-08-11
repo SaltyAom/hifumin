@@ -70,16 +70,20 @@
             >
                 Cancel
             </button>
-            <button
-                class="text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/15 font-medium px-4 py-2 rounded-lg {actionClass}"
-                on:click={handleAction}
-            >
-                {#if $$slots['action']}
-                    <slot name="action" />
-                {:else}
-                    {action}
-                {/if}
-            </button>
+            {#if $$slots['whole-action']}
+                <slot name="whole-action" />
+            {:else}
+                <button
+                    class="text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/15 font-medium px-4 py-2 rounded-lg {actionClass}"
+                    on:click={handleAction}
+                >
+                    {#if $$slots['action']}
+                        <slot name="action" />
+                    {:else}
+                        {action}
+                    {/if}
+                </button>
+            {/if}
         </footer>
     </section>
 </div>

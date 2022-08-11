@@ -5,8 +5,8 @@ import { purgeCollectionListCache } from './collection-list'
 import { purgeCollectionPageCacheById } from './collection-page'
 import { purgeCollectionOverviewStatusCache } from './favorite-status'
 
-export const galahad = 'https://user.hifumin.app'
-// export const galahad = 'http://localhost:8080'
+// export const galahad = 'https://user.hifumin.app'
+export const galahad = 'http://localhost:8080'
 
 export { default as createCollection } from './collection-create'
 export {

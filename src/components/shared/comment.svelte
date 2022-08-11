@@ -25,11 +25,11 @@
             autoReload
         />
     </div>
-    <section class="flex flex-col gap-0.5 text-sm break-words w-full">
+    <section class="flex flex-col gap-0.5 text-sm break-words w-full max-w-full">
         <div
             class="flex gap-2 text-xs text-gray-400 dark:text-gray-500 font-light"
         >
-            <h6 class="text-gray-800 dark:text-gray-400 font-medium">
+            <h6 class="text-gray-800 dark:text-gray-400 font-medium overflow-hidden text-ellipsis">
                 {username}
             </h6>
             {' • '}

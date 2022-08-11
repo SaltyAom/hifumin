@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { Cover } from '@gql'
+    import { unescapeHTML } from '@services'
     import Image from './image.svelte'
 
     export let hentai: Cover
@@ -43,7 +44,7 @@
         <header class="flex flex-1 flex-col gap-1 text-gray-400 text-sm w-full">
             <div class="flex flex-row w-full">
                 <h5 class="inline-flex items-center flex-1 {empasize ? "text-gray-600 dark:text-gray-400 text-lg font-medium" : "text-base"}">
-                    {display}
+                    {unescapeHTML(display)}
                 </h5>
             </div>
 

@@ -13,6 +13,7 @@
         TextField,
         Dialog,
     } from '@shared'
+    import { CreateCollection } from '@modules'
     import {
         setCollectionByHentai,
         updateFavoriteById,
@@ -22,7 +23,8 @@
         createCollection,
         type CollectionStatusData,
         purgeCollectionById,
-        purgeCollectionCache
+        purgeCollectionCache,
+        unescapeHTML
     } from '@services'
     import type { HentaiByIdData } from '@gql'
 
@@ -30,11 +32,16 @@
         BookOpenIcon,
         HeartIcon,
         Edit2Icon,
-        BookmarkIcon,
-        PlusSquareIcon,
         LockIcon,
-        PlusIcon,
-        CheckIcon
+        CheckIcon,
+        ShareIcon,
+        MessageSquareIcon,
+        LinkIcon,
+        FilmIcon,
+        UsersIcon,
+        TagIcon,
+        BookmarkIcon,
+        PlusIcon
     } from 'svelte-feather-icons'
     import { TranslateIcon, GlobeIcon } from '@icons'
 
@@ -49,16 +56,27 @@
                 info: { width, height }
             }
         },
-        metadata: { artists, language, tags },
+        metadata: { artists, language, tags, parodies, characters },
         info: { amount, favorite: totalFavorite }
     } = hentai)
 
     let isLoading = false
+    let init = false
+    let collections: Omit<CollectionStatusData, 'selected'>[] = []
+    let initialSelected = new Set<number>()
+    let selected = new Set<number>()
+    let initialFavorite = false
+    let isFavorite = false
 
     $: {
         id
 
         resetStatus()
+    }
+
+    let requestClose: () => void
+    $: {
+        if (showDialog) requestClose = undefined
     }
 
     const resetStatus = () => {
@@ -71,43 +89,11 @@
         isFavorite = false
     }
 
-    let init = false
-    let collections: Omit<CollectionStatusData, 'selected'>[] = []
-    let initialSelected = new Set<number>()
-    let selected = new Set<number>()
-    let initialFavorite = false
-    let isFavorite = false
-
-    onMount(async () => {
-        if (!browser || !$user) return
-    })
-
-    let newCollectionTextField: HTMLInputElement
-    let requestCloseCollectionDialog: () => void
-    let requestClose: () => void
-    $: {
-        if (showDialog) requestClose = undefined
-    }
-
     let showDialog = false
     let showNewColletionDialog = false
 
-    let collectionName: string
-    let collectionType: 'public' | 'private'
-    let collectionError = ''
-    let isCollectionProcessing = false
-    $: {
-        if (showNewColletionDialog) {
-            requestCloseCollectionDialog = undefined
-            collectionName = undefined
-            collectionType = undefined
-            collectionError = ''
-            afterUpdate(focusNewCollectionTextField)
-        }
-    }
-
-    const focusNewCollectionTextField = () => {
-        newCollectionTextField?.focus()
+    const toggleFavorite = () => {
+        isFavorite = !isFavorite
     }
 
     let isOpeningDialog = false
@@ -121,7 +107,9 @@
             return
         }
 
-        isOpeningDialog = true
+        requestAnimationFrame(() => {  
+            isOpeningDialog = true
+        })
 
         if (!init) {
             init = true
@@ -159,48 +147,17 @@
         selected = selected
     }
 
-    const toggleFavorite = () => {
-        isFavorite = !isFavorite
-    }
-
-    const collectionTypeOptions = ['public', 'private'] as const
-
-    const createNewCollection = async () => {
-        if (isCollectionProcessing) return
-
-        if (!collectionName) {
-            collectionError = "Name can't be empty"
-            return
-        }
-
-        if (!collectionTypeOptions.includes(collectionType)) {
-            collectionError = 'Invalid collection type'
-            return
-        }
-
-        isCollectionProcessing = true
-
-        const newCollection = await createCollection({
-            title: collectionName,
-            public: collectionType === 'public'
+    const handleNewCollection = async ({ detail: { id, public: isPublic, title } }) => {
+        collections.unshift({
+            id,
+            public: isPublic,
+            title
         })
 
-        isCollectionProcessing = false
-
-        if (newCollection instanceof Error)
-            collectionError = newCollection.message
-        else {
-            collections.unshift({
-                id: newCollection.id,
-                public: newCollection.public,
-                title: newCollection.title
-            })
-
-            toggle(newCollection.id)
-
-            requestCloseCollectionDialog()
+        requestAnimationFrame(() => {
+            toggle(id)
             closeCollectionDialog()
-        }
+        })
     }
 
     const addToCollection = async () => {
@@ -261,7 +218,9 @@
     const openCollectionDialog = () => {
         requestClose()
 
-        showNewColletionDialog = true
+        requestAnimationFrame(() => {
+            showNewColletionDialog = true
+        })
     }
 
     const closeCollectionDialog = () => {
@@ -271,6 +230,35 @@
             showNewColletionDialog = false
         }, 233)
     }
+
+    const openShareSheet = () => {
+        navigator.share({
+            title: display,
+            url: `${location.origin}${location.pathname}`
+        })
+    }
+
+    let noticeCopy = false
+    let latestNotice: number | null = null
+
+    const copyLink = async () => {
+        await navigator.clipboard.writeText(`${location.origin}${location.pathname}`)
+        noticeCopy = true
+
+        if(latestNotice)
+            clearTimeout(latestNotice)
+
+        latestNotice = setTimeout(() => {
+            noticeCopy = false
+        }, 1500) as unknown as number
+    }
+
+    const formatNumber = (value: number) => !Intl
+        ? value
+        : Intl.NumberFormat().format(value)
+
+    const actionClass = "flex flex-col justify-center items-center gap-1 flex-1  hover:text-blue-500 focus:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400 h-20 rounded-lg hover:bg-blue-50 focus:bg-blue-50 dark:hover:bg-blue-500/15 dark:focus:bg-blue-500/15 transition-colors"
+    const numberClass = "font-light text-gray-400 dark:text-gray-500"
 </script>
 
 <svelte:head>
@@ -281,36 +269,10 @@
     {#if !$user}
         <MemberOnlyDialog on:close={closeCollectionDialog} />
     {:else}
-        <Dialog
-            title="New Collection"
-            action="Create"
+        <CreateCollection
             on:close={closeCollectionDialog}
-            on:action={createNewCollection}
-            bind:close={requestCloseCollectionDialog}
-        >
-            <TextField
-                bind:value={collectionName}
-                bind:inputElement={newCollectionTextField}
-                onChange={createNewCollection}
-                required
-                noLeading
-                label="Collection Name"
-                name="collection-name"
-                placeholder="Name"
-            />
-            <div class="flex justify-between items-center w-full">
-                <p class="text-lg font-medium text-gray-700 dark:text-gray-400">Publicity</p>
-                <Dropdown
-                    bind:value={collectionType}
-                    options={['private', 'public']}
-                    class="capitalize"
-                />
-            </div>
-
-            {#if collectionError}
-                <p class="text-red-500 text-sm">{collectionError}</p>
-            {/if}
-        </Dialog>
+            on:create={handleNewCollection}
+        />
     {/if}
 {/if}
 
@@ -318,11 +280,11 @@
     {#if !$user}
         <MemberOnlyDialog on:close={closeDialog} />
     {:else}
-        <ListView bind:requestClose on:close={addToCollection}>
-            <ListTile noAction title="Save to..." class="md:sticky top-0 !py-2 !pr-3 border-b dark:border-gray-500">
+        <ListView noDismiss bind:requestClose on:close={addToCollection}>
+            <ListTile noAction title="Save to..." class="md:sticky top-0 !py-2 !pr-3 border-b dark:border-gray-700">
                 <button
                     slot="trailing"
-                    class="flex flex-row items-center gap-2 text-gray-600 font-light px-2 py-1 rounded text-blue-500"
+                    class="flex flex-row items-center gap-2 text-gray-600 font-light px-2 py-1 rounded text-blue-500 dark:text-blue-400 hover:bg-blue-50 focus:bg-blue-500 dark:hover:bg-blue-500/15 dark:hover:bg-blue-500/15 transition-colors"
                     on:click={openCollectionDialog}
                 >
                     <PlusIcon size="21" strokeWidth={1.5} />
@@ -375,10 +337,8 @@
     {/if}
 {/if}
 
-<header
-    class="z-20 flex flex-col md:flex-row items-center gap-8 w-11/12 md:w-full max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-3xl shadow-3xl"
->
-    <div class="w-full md:min-w-[300px] md:max-w-[300px]">
+<header class="z-20 flex flex-col md:flex-row items-center gap-8 w-11/12 md:w-full max-w-178 mx-auto p-6 bg-white dark:bg-gray-800 rounded-3xl shadow-3xl">
+    <div class="w-full md:min-w-[320px] md:max-w-[320px]">
         <Image
             src={link}
             alt={display}
@@ -389,78 +349,130 @@
         />
     </div>
 
-    <section class="flex flex-col gap-2 mr-auto">
+    <section class="flex flex-col gap-2 mr-auto mt-2">
         <header class="flex flex-col gap-1">
             <h6 class="text-sm text-gray-400 dark:text-gray-500">{id}</h6>
             <h1 class="text-2xl text-gray-800 dark:text-gray-300">
-                {display}
+                {unescapeHTML(display)}
             </h1>
         </header>
 
-        <section
-            class="flex items-center gap-1 text-gray-700 dark:text-gray-400 capitalize flex-wrap"
-        >
-            <Edit2Icon size="18" />
-            {#each artists as { name, count } (name)}
-                <a href="/search/{name}">
-                    {name} ({count})
-                </a>
-            {/each}
-        </section>
-
-        <div class="flex flex-col gap-2 text-gray-500 dark:text-gray-400">
-            <h5 class="flex items-center gap-1 capitalize">
+        <section class="flex items-start gap-4 text-gray-500 dark:text-gray-400">
+            <h5 class="flex items-center gap-2 capitalize">
                 <TranslateIcon class="w-5 h-5" />
                 {language}
             </h5>
-            <div class="flex justify-between items-center gap-2">
-                <h5 class="flex min-w-[6ch] items-center gap-1.5 capitalize">
-                    <BookOpenIcon size="18" />
-                    {amount}
-                </h5>
-                <h5 class="flex flex-1 items-center gap-1 capitalize">
-                    <HeartIcon size="18" />
-                    {!Intl
-                        ? totalFavorite
-                        : Intl.NumberFormat().format(totalFavorite)}
-                </h5>
-            </div>
-        </div>
+            <h5 class="flex items-center gap-2 capitalize">
+                <BookOpenIcon size="18" />
+                {amount}
+            </h5>
+            <h5 class="flex items-center gap-2 capitalize">
+                <HeartIcon size="18" />
+                {formatNumber(totalFavorite)}
+            </h5>
+        </section>
 
-        <div class="flex items-center text-gray-400 gap-2 my-2">
+        <section class="flex items-center text-gray-500 dark:text-gray-400 gap-3 text-sm">
             <button
-                class="flex justify-center items-center gap-2 h-8 px-2 border dark:border-gray-600 rounded-full hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 transition-colors"
-                title="Find translation"
+                class={actionClass}
+                title="Add to Collection"
+                aria-label="Add to Collection"
                 on:click={openDialog}
             >
-                <PlusSquareIcon class="w-5.5 h-5.5 p-0.5" />
-                Save
+                <BookmarkIcon class="w-9 h-9 p-1" strokeWidth={1.5} />
+                Collection
             </button>
-            <!-- <button
-                class="flex justify-center items-center gap-1 h-8 px-2 pr-3 border dark:border-gray-600 rounded-full transition-colors {isFavorite
-                    ? 'text-white bg-blue-500 dark:bg-blue-600 border-blue-500 dark:border-blue-600 hover:bg-blue-500 focus:bg-blue-500 dark:hover:bg-blue-600 dark:focus:bg-blue-600'
-                    : 'hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700'}"
-                title="Find translation"
-                on:click={addToFavorite}
+            <a
+                href="#comment"
+                class={actionClass}
+                title="Go to comments"
+                aria-label="Go to comments"
             >
-                <HeartIcon class="w-5.5 h-5.5 p-0.5" />
-                Favorite
-            </button> -->
-        </div>
+                <MessageSquareIcon class="w-9 h-9 p-1" strokeWidth={1.5} />
+                Comment
+            </a>
+            {#if browser && navigator.share}
+                <button
+                    class={actionClass}
+                    title="Share this story"
+                    aria-label="Share this story"
+                    on:click={openShareSheet}
+                >
+                    <ShareIcon class="w-9 h-9 p-1" strokeWidth={1.5} />
+                    Share
+                </button>
+            {:else}
+                <button
+                    class={actionClass}
+                    title="Copy Link"
+                    aria-label="Copy Link"
+                    on:click={copyLink}
+                >
+                    <LinkIcon class="w-9 h-9 p-1" strokeWidth={1.5} />
+                    {#if noticeCopy}
+                        Copied
+                    {:else}
+                        Copy Link
+                    {/if}
+                </button>
+            {/if}
+        </section>
 
-        <h4 class="text-gray-500 dark:text-gray-400">
+        {#if parodies[0]}
+            <section
+                class="flex items-center gap-2 text-gray-700 dark:text-gray-400 capitalize flex-wrap"
+            >
+                <FilmIcon size="18" strokeWidth={1.5} />
+                {#each parodies as { name, count } (name)}
+                    <a href="/search/{name}">
+                        {name} <span class={numberClass}>({formatNumber(count)})</span>
+                    </a>
+                {/each}
+            </section>
+        {/if}
+
+        {#if characters[0]}
+            <section
+                class="flex items-center gap-2 text-gray-600 dark:text-gray-400 capitalize flex-wrap"
+            >
+                <UsersIcon size="18" class="text-gray-500 dark:text-gray-400" />
+                {#each characters as { name, count } (name)}
+                    <a href="/search/{name}">
+                        {name} <span class={numberClass}>({formatNumber(count)})</span>
+                    </a>
+                {/each}
+            </section>
+        {/if}
+
+        {#if artists[0]}
+            <section
+                class="flex items-center gap-2 text-gray-700 dark:text-gray-400 capitalize flex-wrap"
+            >
+                <Edit2Icon size="18" />
+                {#each artists as { name, count } (name)}
+                    <a href="/search/{name}">
+                        {name} <span class={numberClass}>({formatNumber(count)})</span>
+                    </a>
+                {/each}
+            </section>
+        {/if}
+
+        <h4 class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+            <TagIcon size="18" />
             {tags.length} tags:
         </h4>
 
-        <div
+        <section
             class="flex flex-wrap w-full gap-1 md:max-h-[15ch] overflow-x-hidden overflow-y-auto snap-y snap-mandatory"
         >
             {#each tags as { name } (name)}
                 <a
-                    class="text-gray-700 dark:text-gray-400 px-2 py-1 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 border dark:border-gray-600 rounded-full snap-start transition-colors"
-                    href={`/search/${name}`}>{name}</a
+                    class="text-gray-700 dark:text-gray-400 px-2.5 py-1 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700 border dark:border-gray-600 rounded-full snap-start transition-colors"
+                    href={`/search/${name}`}
                 >
+                    {name}
+                </a>
             {/each}
-        </div>
+        </section>
     </section>
 </header>

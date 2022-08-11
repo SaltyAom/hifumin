@@ -5,11 +5,16 @@
     import ListTile from './list-tile.svelte'
 
     export let noFooter = false
+    export let noDismiss = false
 
     let active = false
     $: activeClass = active ? '-active' : ''
 
     const dispatch = createEventDispatcher()
+
+    const dismiss = () => {
+        if(!noDismiss) close()
+    }
 
     const close = () => {
         active = false
@@ -40,9 +45,9 @@
     </style>
 
     <section class="flex flex-col md:justify-center w-full h-screen md:h-auto md:max-w-sm md:mx-auto overflow-x-hidden overflow-y-scroll md:overflow-y-hidden">
-        <div on:click={close} class="w-full md:hidden h-[20vh] min-h-36" />
-        <div on:click={close} class="inline-flex flex-1 md:hidden" />
-        <div on:click={close} class="absolute hidden md:block left-0 z-[-1] w-full h-screen" />
+        <div on:click={dismiss} class="w-full md:hidden h-[20vh] min-h-36" />
+        <div on:click={dismiss} class="inline-flex flex-1 md:hidden" />
+        <div on:click={dismiss} class="absolute hidden md:block left-0 z-[-1] w-full h-screen" />
         <ul
             class="relative flex flex-col w-full md:h-md md:rounded-2xl overflow-x-hidden bg-white dark:bg-gray-800 slidable {activeClass}"
         >
@@ -55,7 +60,7 @@
     {#if !noFooter}
         <div class="w-full md:max-w-sm md:mx-auto slidable {activeClass}">
             <ListTile
-                class="fixed z-30 bottom-0 left-0 z-1 w-full border-t dark:border-gray-500 md:rounded-b-2xl"
+                class="fixed z-30 bottom-0 left-0 z-1 w-full border-t dark:border-gray-700 md:rounded-b-2xl"
                 title="Done"
                 on:select={close}
             >

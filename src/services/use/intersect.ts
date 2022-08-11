@@ -55,7 +55,8 @@ const intersect = (
 
         intentIntersection = setTimeout(
             checkIntersection,
-            init ? 0 : 75
+            // ? 83 is 1 frame away from 0.1s in 60fps, hardly notice
+            init ? 0 : 83
         ) as unknown as number
 
         if (!init) init = true

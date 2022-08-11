@@ -11,31 +11,35 @@ export const purgeCollectionPageCache = () => {
     _cache = new Map()
 }
 
-const collectionPage = async (collectionId: number, page: number) => {
+const collectionPage = async (collectionId: number, linkedId?: number) => {
     const isInCacheCollection = _cache.has(collectionId)
 
     if (_cache.has(collectionId)) {
-        const _collectionCache = _cache.get(page)
+        const _collectionCache = _cache.get(linkedId)
 
-        if (_collectionCache && _collectionCache.has(page))
-            return _collectionCache.get(page)
+        if (_collectionCache && _collectionCache.has(linkedId))
+            return _collectionCache.get(linkedId)
     }
 
+    const endpoint = `${galahad}/collection/${collectionId}/hentai`
+
     const data: number[] = await fetch(
-        `${galahad}/collection/${collectionId}/hentai/${page}`,
+        linkedId
+            ? `${endpoint}/${linkedId}`
+            : endpoint,
         {
             credentials: 'include'
         }
     ).then((r) => r.json())
 
-    if(browser)
+    if (browser)
         if (isInCacheCollection) {
             const _collectionCache = _cache.get(collectionId)
 
-            _collectionCache.set(page, data)
+            _collectionCache.set(linkedId, data)
         } else {
             const _map = new Map<number, number[]>()
-            _map.set(page, data)
+            _map.set(linkedId, data)
 
             _cache.set(collectionId, _map)
         }

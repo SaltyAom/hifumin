@@ -27,13 +27,13 @@
     import { browser } from '$app/env'
 
     import { settings, ReaderType } from '@stores'
+    import { OpenGraph } from '@shared'
 
     import {
         XIcon,
         ChevronLeftIcon,
         ChevronRightIcon
     } from 'svelte-feather-icons'
-import OpenGraph from '@components/shared/open-graph.svelte'
 
     export let hentai: HentaiByIdData
     export let page: number
@@ -129,7 +129,7 @@ import OpenGraph from '@components/shared/open-graph.svelte'
 
 <OpenGraph
     {id}
-    title="Read: {display} page {page} &raquo; Hifumin: hentai doujinshi and manga"
+    title="Read: {display} ({id}) page {page} &raquo; Hifumin: hentai doujinshi and manga"
     noIndex
 />
 

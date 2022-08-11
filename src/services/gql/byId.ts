@@ -35,6 +35,14 @@ export interface HentaiByIdData {
             name: string
             count: number
         }>
+        parodies: Array<{
+            name: string
+            count: number
+        }>
+        characters: Array<{
+            name: string
+            count: number
+        }>
     }
 }
 
@@ -85,6 +93,14 @@ export const hentaiByIdDocument = `query getHentaiById($id: Int!) {
             name
           }
           artists {
+            name
+            count
+          }
+          characters {
+            name
+            count
+          }
+          parodies {
             name
             count
           }
