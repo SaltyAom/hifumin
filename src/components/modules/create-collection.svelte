@@ -20,7 +20,6 @@
     }
 
     const close = () => {
-        console.log("Inner close")
         dispatch('close')
     }
 
