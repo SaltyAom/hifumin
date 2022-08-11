@@ -2,7 +2,7 @@
     import { onMount, onDestroy } from 'svelte'
     import { browser } from '$app/env'
 
-    import CreateCollection from '@modules'
+    import { CreateCollection } from '@modules'
     import { MemberOnlyPage, NotFound, Image, OpenGraph } from '@shared'
     import { CollectionLayout } from '@layouts'
     import { SkeletonCover } from '@skeletons'
