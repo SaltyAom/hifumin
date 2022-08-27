@@ -5,11 +5,14 @@ import settings from '@stores/settings'
 
 import type { Cover } from './types'
 
+export interface SearchResult {
+    total: number
+    data: Cover[]
+}
+
 export interface Search {
     nhql: {
-        search: {
-            data: Cover[]
-        }
+        search: SearchResult
     }
 }
 
@@ -23,6 +26,7 @@ export const searchDocument = `
 query getNhentaiBySearch($with: String!, $page: Int = 1, $excludes: [String!]!) {
   nhql {
     search(with: $with, page: $page, excludes: $excludes) {
+      total
       data {
         id
         title {
@@ -49,12 +53,16 @@ query getNhentaiBySearch($with: String!, $page: Int = 1, $excludes: [String!]!) 
   }
 }`
 
-const search = async (search: string, page = 1): Promise<Cover[]> => {
+const search = async (search: string, page = 1): Promise<SearchResult> => {
     const {
         filter: { data: excludes, enable }
     } = get(settings)
 
-    if (!search || !page) return []
+    if (!search || !page)
+        return {
+            total: 0,
+            data: []
+        }
 
     const data = await gql<Search, SearchVariable>(searchDocument, {
         variables: {
@@ -65,9 +73,12 @@ const search = async (search: string, page = 1): Promise<Cover[]> => {
     })
 
     if (Array.isArray(data) || data instanceof Error || !data.nhql.search.data)
-        return []
+        return {
+            total: 0,
+            data: []
+        }
 
-    return data.nhql.search.data
+    return data.nhql.search
 }
 
 export default search

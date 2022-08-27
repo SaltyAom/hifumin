@@ -1,5 +1,5 @@
-import { writable } from "svelte/store"
+import { writable } from 'svelte/store'
 
-import type { NhqlSearchData } from "@gql/nhqlSearch"
+import type { Cover } from '@gql'
 
-export default writable<NhqlSearchData[]>([])
+export default writable<Cover[]>([])

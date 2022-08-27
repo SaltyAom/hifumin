@@ -6,7 +6,7 @@
 
     import { Cover, OpenGraph, SearchNotFound } from '@shared'
     import { SkeletonCover } from '@skeletons'
-    import { search as a, type Cover as CoverData } from '@gql'
+    import { search as searchHentai, type Cover as CoverData } from '@gql'
     import { getTotalMasonry, chunkHentai } from '@services'
 
     let hentais: CoverData[] = []
@@ -17,13 +17,18 @@
     $: shadowIds = hentais.map((h) => h.id)
     $: search = $path.params.search
 
+    let total = 0
+
     path.subscribe(async ({ params: { search: query } }) => {
         if (isLoading || !search) return
 
         isLoading = true
 
         try {
-            hentais = await a(query)
+            const { total: totalH, data } = await searchHentai(query)
+
+            hentais = data
+            total = totalH
         } catch (err) {
         } finally {
             page = 1
@@ -46,11 +51,12 @@
         try {
             isLoading = true
 
-            const newHentais = await a(search, page)
+            const { total: totalH, data: newHentais } = await searchHentai(search, page)
             hentais = [
                 ...hentais,
                 ...newHentais.filter((h) => !shadowIds.includes(h.id))
             ]
+            total= totalH
 
             if (newHentais.length === 0)
                 throw new Error('Maybe API error, skip to next')
@@ -125,32 +131,44 @@
     {:else if over && !hentais.length}
         <SearchNotFound />
     {:else if !hentais.length}
-        {#each Array(totalMasonry).fill(0) as _}
-            <div
-                class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden"
-            >
-                {#each Array(~~(50 / totalMasonry)).fill(0) as __}
-                    <SkeletonCover />
+        <section class="flex flex-col w-full">
+            <h2 class="w-32 h-4 bg-gray-50 dark:bg-gray-600 rounded text-gray-400 text-sm mx-2 lg:mx-2.5 mt-2" />
+            <div class="flex w-full">
+                {#each Array(totalMasonry).fill(0) as _}
+                    <div
+                        class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden transform -translate-y-2"
+                    >
+                        {#each Array(~~(50 / totalMasonry)).fill(0) as __}
+                            <SkeletonCover />
+                        {/each}
+                    </div>
                 {/each}
             </div>
-        {/each}
+        </section>
     {:else}
-        {#each chunkHentais as row, index (index)}
-            <div
-                class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden"
-            >
-                {#each row as hentai (hentai.id)}
-                    <Cover {hentai} />
+        <section class="flex flex-col w-full">
+            <h2 class="text-gray-400 dark:text-gray-500 text-sm mx-2 lg:mx-2.5 mt-2">
+                Found {Intl.NumberFormat().format(total)} results
+            </h2>
+            <div class="flex w-full">
+                {#each chunkHentais as row, index (index)}
+                    <div
+                        class="flex flex-col flex-1 w-full gap-4 lg:gap-5 px-2 lg:px-2.5 py-4 overflow-hidden transform -translate-y-2"
+                    >
+                        {#each row as hentai (hentai.id)}
+                            <Cover {hentai} />
+                        {/each}
+                        {#if index === 0}
+                            <div bind:this={observer} />
+                        {/if}
+                        {#if !over}
+                            {#each Array(~~(25 / totalMasonry)).fill(0) as __}
+                                <SkeletonCover />
+                            {/each}
+                        {/if}
+                    </div>
                 {/each}
-                {#if index === 0}
-                    <div bind:this={observer} />
-                {/if}
-                {#if !over}
-                    {#each Array(~~(25 / totalMasonry)).fill(0) as __}
-                        <SkeletonCover />
-                    {/each}
-                {/if}
             </div>
-        {/each}
+        </section>
     {/if}
 </main>

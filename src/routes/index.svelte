@@ -80,7 +80,7 @@
 
             if (!tag) throw new Error('No tag available')
 
-            const newHentais = await search(tag, page)
+            const { data: newHentais } = await search(tag, page)
 
             $hentais = $hentais.concat(
                 $hentais,

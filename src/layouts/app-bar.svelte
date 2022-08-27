@@ -12,7 +12,7 @@
         SettingsIcon
     } from 'svelte-feather-icons'
 
-    let search
+    let search = ""
     // For mobile devices
     let searchActive = false
 
@@ -40,7 +40,11 @@
         if ($navigating) return
 
         if (!search) return goto('/')
-        if (isNumeric(search)) return goto(`/h/${search}`)
+        if (isNumeric(search)) {
+            goto(`/h/${search}`)
+            search = ""
+            return 
+        }
 
         goto(`/search/${search}`)
     }

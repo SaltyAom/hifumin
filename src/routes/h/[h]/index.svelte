@@ -70,7 +70,7 @@
 <OpenGraph
     {id}
     title="Read: {display} ({id}) &raquo; Hifumin: hentai doujinshi and manga"
-    description="[{language}] {display}, total page: {amount}, favorite {favorite}, tags: {tags} &raquo; Read on Hifumin: hentai doujinshi and manga"
+    description="[{language}] {display}, total page: {amount}, favorite {favorite}, tags: {tags.map(({ name }) => name).join(", ")} &raquo; Read on Hifumin: hentai doujinshi and manga"
     author={artists.map((artist) => artist.name).join(', ')}
     image={pages[0]}
     createdAt={upload}
