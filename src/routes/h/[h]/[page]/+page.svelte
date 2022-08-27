@@ -1,33 +1,12 @@
-<script context="module" lang="ts">
-    import { goto } from '$app/navigation'
-
-    import { hentaiById, type HentaiByIdData } from '@gql'
-
-    export async function load({ params }) {
-        const { h, page } = params
-        const hentai = await hentaiById(+h)
-
-        if (!hentai || page < 1 || page > hentai.info.amount) return
-
-        return {
-            cache: {
-                maxage: 3600,
-                private: true
-            },
-            props: {
-                hentai,
-                page: +page
-            }
-        }
-    }
-</script>
-
 <script lang="ts">
     import { onMount } from 'svelte'
     import { browser } from '$app/env'
+    import { goto } from '$app/navigation'
 
     import { settings, ReaderType } from '@stores'
     import { OpenGraph } from '@shared'
+
+    import type { HentaiByIdData } from '@gql'
 
     import {
         XIcon,
@@ -35,9 +14,12 @@
         ChevronRightIcon
     } from 'svelte-feather-icons'
 
-    export let hentai: HentaiByIdData
-    export let page: number
+    export let data: {
+        hentai: HentaiByIdData
+        page: number
+    }
 
+    $: ({hentai, page} = data)
     $: {
         if (browser) {
             page
@@ -54,6 +36,7 @@
     } = hentai)
     $: link = pages[page - 1]?.link || ''
     $: digit = pages.length.toString().length
+
     // Since we already have service worker, no prevention logic is need
     const prefetchPage = (page: number) => {
         const image = new Image()
@@ -70,7 +53,7 @@
             }))
     })
 
-    let prePage = +page
+    $: prePage = +page
 
     const changePage = () => {
         if (prePage < 0) page = 1

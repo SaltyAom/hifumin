@@ -1,6 +1,4 @@
-<script context="module" lang="ts">
-    import type { Load } from '@sveltejs/kit'
-    import { hentaiById, type HentaiByIdData } from '@gql'
+<script lang="ts">
     import { 
         collectionCover, 
         collectionPage, 
@@ -11,50 +9,6 @@
         type CollectionCover 
     } from '@services'
 
-    export const load: Load = async ({ params: { id } }) => {
-        const collectionId = +id
-
-        if(Number.isNaN(collectionId) || collectionId < 1) return {
-            status: 404
-        }
-
-        const [collection, hentaiIds] = await Promise.all([
-            collectionCover(collectionId),
-            collectionPage(collectionId)
-        ])
-
-        if (!hentaiIds[0])
-            return {
-                props: {
-                    preview: undefined,
-                    id: collectionId,
-                    initFavorite: [],
-                    collection
-                }
-            }
-
-        const [favorite, previewData] = await Promise.all([
-            getFavoriteHentais(hentaiIds),
-            hentaiById(hentaiIds[0])
-        ])
-
-        const preview = previewData?.images.pages[0]
-
-        return {
-            cache: {
-                maxage: 3600
-            },
-            props: {
-                preview,
-                id: collectionId,
-                initFavorite: favorite,
-                collection
-            }
-        }
-    }
-</script>
-
-<script lang="ts">
     import { onMount } from 'svelte'
     import { browser } from '$app/env'
     import { goto, invalidate } from '$app/navigation'
@@ -84,8 +38,8 @@
         LockIcon, 
         TrashIcon,
         RefreshCwIcon,
-ShareIcon,
-LinkIcon
+        ShareIcon,
+        LinkIcon
     } from 'svelte-feather-icons'
     
     import dayjs from 'dayjs'
@@ -93,12 +47,21 @@ LinkIcon
 
     dayjs.extend(relativeTime)
 
-    export let preview: FavoriteHentaiData['data']['images']['cover'] | null
-    export let id: number
-    export let initFavorite: FavoriteHentaiData[] = []
-    export let collection: CollectionCover | null
+    export let data: {
+        id: number
+        preview: FavoriteHentaiData['data']['images']['cover'] | null
+        initFavorite: FavoriteHentaiData[]
+        collection: CollectionCover | null
+    }
 
-    let favorite: FavoriteHentaiData[] = [...initFavorite]
+    $: ({
+        id,
+        preview,
+        initFavorite = [],
+        collection
+    } = data)
+
+    $: favorite = [...(initFavorite ?? [])]
     $: lastId = favorite[favorite.length - 1]?.id ?? undefined
 
     let isLoading = false

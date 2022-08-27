@@ -1,35 +1,15 @@
-<script context="module" lang="ts">
-    import { hentaiById, type HentaiByIdData } from '@gql'
-
-    import { Image } from '@shared'
-
-    export async function load({ params }) {
-        const hentai = await hentaiById(+params.h)
-
-        if (!hentai)
-            return {
-                status: 404
-            }
-
-        return {
-            cache: {
-                maxage: 3600,
-                private: true
-            },
-            props: {
-                hentai
-            }
-        }
-    }
-</script>
-
 <script lang="ts">
     import { settings, ReaderType } from '@stores'
     import { Comment, ReaderMode, Related, ReaderHeader } from '@modules'
-    import { OpenGraph } from '@shared'
+    import { OpenGraph, Image } from '@shared'
+    import type {  HentaiByIdData } from '@gql'
 
-    export let hentai: HentaiByIdData
 
+    export let data: {
+        hentai: HentaiByIdData
+    }
+
+    $: ({ hentai } = data)
     $: ({
         id,
         title: { display },
