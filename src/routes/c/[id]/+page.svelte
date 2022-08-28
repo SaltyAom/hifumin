@@ -128,14 +128,17 @@
         if(initFavorite.length < 25) isEnd = true
         else getFavorite()
     }
+
     onMount(reloadClient)
 
     const loadClient = async () => {
-        if(collection) return
+        if(collection) {
+            publicStatus = collection.public ? "Public" : "Private"
+
+            return
+        }
 
         const collectionData = await collectionCover(id)
-
-        console.log("A", collectionData, collection, initFavorite)
 
         if(collectionData) {
             collection = collectionData
@@ -144,6 +147,7 @@
         } else
             notFound = true
     }
+
     onMount(loadClient)
 
     const reset = () => {
