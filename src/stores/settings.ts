@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store'
-import { browser } from '$app/env'
+import { browser } from '$app/environment'
 
 export enum Theme {
     'light',

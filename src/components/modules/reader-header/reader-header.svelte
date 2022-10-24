@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount, afterUpdate } from 'svelte'
     import { goto } from '$app/navigation'
-    import { browser } from '$app/env'
+    import { browser } from '$app/environment'
 
     import { user, isAuthed } from '@stores'
     import {

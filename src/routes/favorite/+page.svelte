@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-    import { browser } from '$app/env'
+    import { browser } from '$app/environment'
 
     import { getFavoriteHentais, type FavoriteHentaiData } from '@gql'
     import { galahad, intersect, invalidateUserOnUnauthorize } from '@services'

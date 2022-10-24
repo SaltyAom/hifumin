@@ -1,0 +1,13 @@
+.git
+.github
+.svelte-kit
+build
+node_modules
+.eslintrc.cjs
+.gitignore
+.npmrc
+.prettierrc
+bun.lockb
+Dockerfile
+README.md
+stats.html

@@ -2,7 +2,7 @@
     import { onDestroy, onMount } from 'svelte'
     import { page as path } from '$app/stores'
     import { beforeNavigate } from '$app/navigation'
-    import { browser } from '$app/env'
+    import { browser } from '$app/environment'
 
     import { Cover, OpenGraph, SearchNotFound } from '@shared'
     import { SkeletonCover } from '@skeletons'

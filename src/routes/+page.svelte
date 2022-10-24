@@ -3,7 +3,7 @@
     import { get } from 'svelte/store'
     import { page as path } from '$app/stores'
     import { beforeNavigate } from '$app/navigation'
-    import { browser } from '$app/env'
+    import { browser } from '$app/environment'
 
     import { search, multipleCoverById, type Cover as CoverData } from '@gql'
     import { Cover, OpenGraph, SearchNotFound } from '@shared'

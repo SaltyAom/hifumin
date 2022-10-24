@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from '$app/stores'
-    import { browser } from '$app/env'
+    import { browser } from '$app/environment'
 
     import { multipleCoverById, type Cover } from '@gql'
     import { Image, OpenGraph } from '@shared'

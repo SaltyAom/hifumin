@@ -1,4 +1,4 @@
-import { browser } from '$app/env'
+import { browser } from '$app/environment'
 import { galahad } from '.'
 
 let _cache: Map<number, Map<number, number[]>> = new Map()

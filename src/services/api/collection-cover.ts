@@ -1,4 +1,4 @@
-import { browser } from '$app/env'
+import { browser } from '$app/environment'
 import { galahad, type CollectionData } from '.'
 
 export interface CollectionCover extends Omit<CollectionData, 'cover'> {

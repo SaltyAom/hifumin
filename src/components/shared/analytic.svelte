@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from '$app/stores'
-    import { browser, dev } from '$app/env'
+    import { browser, dev } from '$app/environment'
 
     import { onMount } from 'svelte'
     import { partytownSnippet } from '@builder.io/partytown/integration'

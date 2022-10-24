@@ -1,4 +1,4 @@
-import { browser } from '$app/env'
+import { browser } from '$app/environment'
 import { galahad } from '.'
 
 export interface CollectionData {
