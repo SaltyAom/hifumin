@@ -72,8 +72,8 @@
         </section>
         <Dropdown
             class="mt-3.5"
-            options={[true, false]}
-            labels={['Enable', 'Disable']}
+            options={[false, true]}
+            labels={['Disable', 'Enable']}
             bind:value={$settings.vergil}
         />
     </SettingRow>
