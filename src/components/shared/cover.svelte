@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { Cover } from '@gql'
     import { unescapeHTML } from '@services'
+    import { settings } from '@stores'
     import Image from './image.svelte'
 
     export let hentai: Cover
@@ -33,7 +34,7 @@
     }
 </script>
 
-<a class="liftable" sveltekit:prefetch href="/h/{hentai.id}">
+<a class="liftable" sveltekit:prefetch href={$settings.vergil ? "https://youtu.be/NOZONW-UK0w?t=26" : `/h/${hentai.id}`}>
     <article class="article flex flex-col gap-2 w-full">
         <div class="cover rounded-2xl border dark:border-gray-700 liftable">
             <div class="image overflow-hidden">
