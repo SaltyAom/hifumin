@@ -34,6 +34,10 @@
     }
 </script>
 
+<svelte:head>
+    <link rel="preconnect" href="https://youtu.be/NOZONW-UK0w?t=26" />
+</svelte:head>
+
 <a class="liftable" sveltekit:prefetch href={$settings.vergil ? "https://youtu.be/NOZONW-UK0w?t=26" : `/h/${hentai.id}`}>
     <article class="article flex flex-col gap-2 w-full">
         <div class="cover rounded-2xl border dark:border-gray-700 liftable">
