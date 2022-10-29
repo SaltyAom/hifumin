@@ -1,7 +1,7 @@
 <script lang="ts">
     import { ChevronDownIcon } from 'svelte-feather-icons'
 
-    export let options: Array<string | number>
+    export let options: Array<string | number | boolean>
     export let value = options[0]
     export let labels: string[] | null = null
     export let selectorClass = ''
@@ -18,7 +18,7 @@
     $: activeClass = (option: string | number) =>
         value === option
             ? 'text-gray-300 dark:text-gray-500'
-            : 'text-gray-700 dark:text-gray-400 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-600 dark:focus:bg-gray-600'
+            : 'text-gray-700 dark:text-gray-400 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-600'
 
     const open = () => {
         isOpen = true
@@ -32,7 +32,7 @@
         selector.focus()
     }
 
-    const select = (option: string | number) => () => {
+    const select = (option: string | number | boolean) => () => {
         value = option
 
         close()
@@ -127,7 +127,7 @@
             <!-- svelte-ignore a11y-mouse-events-have-key-events -->
             <button
                 class={`option flex items-center w-full h-12 text-lg capitalize px-6 outline-none transition-colors ${optionClass} ${activeClass(
-                    option
+                    option.toString()
                 )}`}
                 on:click={select(option)}
                 on:mouseover={index !== selectedIndex && registerFocus(index)}

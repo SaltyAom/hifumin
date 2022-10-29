@@ -62,6 +62,22 @@
         />
     </SettingRow>
 
+    <SettingRow vertical title="Vergil Status">
+        <section slot="label">
+            <p>I am the storm that is approaching</p>
+            <p>
+                For those who participate in 
+                <a href="https://youtu.be/a0h_8ewFizI">NNN</a>
+            </p>
+        </section>
+        <Dropdown
+            class="mt-3.5"
+            options={[false, true]}
+            labels={['Disable', 'Enable']}
+            bind:value={$settings.vergil}
+        />
+    </SettingRow>
+
     <SettingNavigation title="Preference" href="/settings/preference">
         <p>Add your own tags preference for finding hentai on discover page.</p>
     </SettingNavigation>
