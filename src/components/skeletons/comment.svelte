@@ -1,4 +1,4 @@
-<article class="flex gap-4">
+<article class="flex gap-4 w-full max-w-full">
     <div class="min-w-10 w-10 h-10">
         <figure class="w-[40px] h-[40px] bg-gray-100 dark:bg-gray-700 rounded-full" />
     </div>

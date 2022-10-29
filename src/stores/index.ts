@@ -1,4 +1,5 @@
 export { default as hentais } from './hentais'
+export { default as purgeCollection } from './purge-collection'
 export {
     default as settings,
     Theme,

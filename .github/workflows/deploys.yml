@@ -2,7 +2,7 @@ name: deploys
 
 on:
   push:
-    branches: [ main, bismarck ]
+    branches: [ main, cleveland ]
 
 jobs:
   mirror:
@@ -37,7 +37,7 @@ jobs:
         name: hifumin
         image: ghcr.io/saltyaom/hifumin
         minReplicas: 2
-        maxReplicas: 10
+        maxReplicas: 20
       env:
         DEPLOYS_AUTH_USER: ${{ secrets.DEPLOYS_AUTH_USER }}
         DEPLOYS_AUTH_PASS: ${{ secrets.DEPLOYS_AUTH_PASS }}

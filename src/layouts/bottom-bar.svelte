@@ -7,8 +7,11 @@
 
     $: applyActive = (path: string) =>
         (path === '/' ? currentPath === '/' : currentPath.startsWith(path))
-            ? '-active text-blue-400 dark:text-blue-500'
+            ? 'text-blue-400 dark:text-blue-500'
             : ''
+
+    $: applyActiveIcon = (path: string) =>
+        (path === '/' ? currentPath === '/' : currentPath.startsWith(path)) ? 'bg-blue-50 dark:bg-blue-500/20' : ''
 
     const tabClass =
         'flex flex-col flex-1 justify-center items-center gap-0.5 font-medium text-xs text-gray-400 dark:text-gray-400 font-light !bg-transparent'
@@ -23,21 +26,21 @@
         class="box-content safe-area fixed z-30 bottom-0 flex md:hidden items-center w-full h-16 bg-white dark:bg-gray-800 border-t dark:border-gray-600"
     >
         <a class="{tabClass} {applyActive('/')}" href="/">
-            <div class="icon">
+            <div class="icon {applyActiveIcon('/')}">
                 <HomeIcon class="icon w-6 h-6" strokeWidth={1.5} />
             </div>
             Home
         </a>
 
-        <a class="{tabClass} {applyActive('/favorite')}" href="/favorite">
-            <div class="icon">
+        <a class="{tabClass} {applyActive('/favorite')} {applyActive('/c')}" href="/c">
+            <div class="icon {applyActiveIcon('/favorite')} {applyActiveIcon('/c')}">
                 <BookmarkIcon class="w-6 h-6" strokeWidth={1.5} />
             </div>
-            Bookmark
+            Collection
         </a>
 
         <a class="{tabClass} {applyActive('/settings')}" href="/settings">
-            <div class="icon">
+            <div class="icon {applyActiveIcon('/settings')}">
                 <SettingsIcon class="w-6 h-6" strokeWidth={1.5} />
             </div>
             Settings
@@ -52,8 +55,4 @@
 
     .icon
         @apply px-6 py-1 rounded-full transition-colors
-
-    .-active
-        & > .icon
-            @apply bg-blue-50
 </style>

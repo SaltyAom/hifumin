@@ -1,10 +1,12 @@
 <script lang="ts">
     import { ChevronDownIcon } from 'svelte-feather-icons'
 
-    export let options: Array<string | number>
+    export let options: Array<string | number | boolean>
     export let value = options[0]
     export let labels: string[] | null = null
     export let selectorClass = ''
+    export let chevronClass = ''
+    export let optionClass = ''
 
     let isOpen = false
     let focus = 0
@@ -16,7 +18,7 @@
     $: activeClass = (option: string | number) =>
         value === option
             ? 'text-gray-300 dark:text-gray-500'
-            : 'text-gray-700 dark:text-gray-400 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-600 dark:focus:bg-gray-600'
+            : 'text-gray-700 dark:text-gray-400 hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-600'
 
     const open = () => {
         isOpen = true
@@ -30,7 +32,7 @@
         selector.focus()
     }
 
-    const select = (option: string | number) => () => {
+    const select = (option: string | number | boolean) => () => {
         value = option
 
         close()
@@ -94,7 +96,10 @@
     />
 {/if}
 
-<div class="relative w-[16ch] {$$props.class || ''}">
+<div 
+    {...$$props}
+    class="relative w-[16ch] {$$props.class || ''}"
+>
     <button
         class="flex items-center w-full font-bold text-gray-700 dark:text-gray-400 mt-0.5 pl-6 pr-3 py-2.5 bg-gray-100 dark:bg-gray-700 rounded-lg {selectorClass}"
         on:click={open}
@@ -107,7 +112,7 @@
                 {value}
             {/if}
         </p>
-        <ChevronDownIcon class="w-6 h-6" />
+        <ChevronDownIcon class="w-6 h-6 {chevronClass}" />
     </button>
 
     <section
@@ -121,8 +126,8 @@
         {#each options as option, index}
             <!-- svelte-ignore a11y-mouse-events-have-key-events -->
             <button
-                class={`option flex items-center w-full h-12 text-lg capitalize px-6 outline-none transition-colors ${activeClass(
-                    option
+                class={`option flex items-center w-full h-12 text-lg capitalize px-6 outline-none transition-colors ${optionClass} ${activeClass(
+                    option.toString()
                 )}`}
                 on:click={select(option)}
                 on:mouseover={index !== selectedIndex && registerFocus(index)}

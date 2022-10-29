@@ -3,6 +3,7 @@
     import { Comment, Dropdown } from '@shared'
     import { SkeletonComment } from '@skeletons'
     import { intersect } from '@services'
+    import { ArrowUpIcon } from 'svelte-feather-icons'
 
     export let id: number
 
@@ -43,8 +44,8 @@
         comments = null
     }
 
-    $: {
-        orderBy
+    const loadCommentFromOrderBy = () => {
+        if (!comments) return
 
         allLoaded = false
         batch = 1
@@ -52,18 +53,32 @@
 
         loadComment()
     }
+
+    $: {
+        orderBy
+
+        loadCommentFromOrderBy()
+    }
 </script>
 
 <footer
-    class="flex flex-col gap-5 w-full max-w-2xl mx-auto px-4 lg:px-0 py-8 border-t dark:border-gray-600"
+    id="comment"
+    class="flex flex-col items-start gap-5 w-full max-w-2xl mx-auto px-4 lg:px-0 pb-8 overflow-x-hidden"
 >
+    <a 
+        class="flex items-center gap-2 text-gray-400 dark:text-gray-500 font-light text-base"
+        href="#cover"
+    >
+        <ArrowUpIcon size="21" strokeWidth={1.5} />
+        Back to top
+    </a>
     {#if comments}
         <section class="flex justify-between items-center w-full mb-2">
-            <h4 class="text-xl text-gray-700 dark:text-gray-200">
+            <h4 class="flex items-center gap-6 text-xl text-gray-700 dark:text-gray-200">
                 {Intl.NumberFormat().format(total)} comments
             </h4>
             <Dropdown
-                class="w-[11ch]"
+                style="width:12ch"
                 selectorClass="bg-transparent !text-sm !font-normal !text-gray-400 !px-3 !py-1"
                 {options}
                 {labels}
@@ -86,11 +101,22 @@
             {/each}
         {/if}
     {:else}
-        <div use:intersect on:intersect={loadComment} />
+        <section class="flex justify-between items-center w-full mb-2">
+            <h4 
+                class="w-36 h-8 bg-gray-100 dark:bg-gray-700 rounded"
+                use:intersect 
+                on:intersect={loadComment} 
+            />
+            <div class="w-36 h-8 bg-gray-100 dark:bg-gray-700 rounded" />
+        </section>
 
-        <div class="w-36 h-6 mb-3 bg-gray-100 dark:bg-gray-700 rounded" />
         {#each Array(10).fill(0) as _, index (index)}
             <SkeletonComment />
         {/each}
     {/if}
 </footer>
+
+<style lang="sass">
+    #comment
+        scroll-margin-top: 5.5em
+</style>

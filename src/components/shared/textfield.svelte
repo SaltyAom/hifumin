@@ -1,14 +1,17 @@
 <script lang="ts">
     import { PlusIcon } from 'svelte-feather-icons'
 
-    export let id: string
-    export let label: string
     export let name: string
+    export let id = name
+    export let label: string
     export let placeholder: string
     export let onChange: (value: string) => void = () => {}
     export let disabled = false
+    export let noLeading = false
+    export let inputElement: HTMLInputElement = null
+    export let containerClass = ''
 
-    let value = ''
+    export let value = ''
 
     const handleChange = () => {
         if (!value.trim()) return
@@ -25,7 +28,9 @@
     aria-disabled={disabled}
 >
     <label class="text-gray-400 text-xs" for={id}>{label}</label>
-    <div class="flex flex-row max-w-xs w-full px-2 bg-gray-100 dark:bg-gray-700 rounded-full">
+    <div
+        class="flex flex-row w-full px-2 bg-gray-100 dark:bg-gray-700 rounded-lg {containerClass}"
+    >
         <input
             {...$$props}
             {id}
@@ -34,13 +39,16 @@
             class="text-lg text-gray-700 dark:text-gray-300 bg-transparent w-full px-2 py-2 outline-none"
             {placeholder}
             bind:value
+            bind:this={inputElement}
         />
-        <button
-            class="w-12 h-12 p-2.5"
-            disabled={disabled}
-            tabindex={disabled ? -1 : 0}
-        >
-            <PlusIcon />
-        </button>
+        {#if !noLeading}
+            <button
+                class="w-12 h-12 p-2.5"
+                {disabled}
+                tabindex={disabled ? -1 : 0}
+            >
+                <PlusIcon />
+            </button>
+        {/if}
     </div>
 </form>

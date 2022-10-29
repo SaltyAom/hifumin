@@ -5,6 +5,7 @@
     import { intersect } from '@services'
 
     export let id: number
+    export let isLoading = false
 
     let related: CoverData[] | null
 
@@ -15,7 +16,11 @@
     }
 
     const loadRelated = async () => {
+        if(isLoading) return
+
+        isLoading = true
         related = await relatedById(id)
+        isLoading = false
     }
 </script>
 

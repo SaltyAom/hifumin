@@ -20,3 +20,5 @@ export interface Cover {
         language: string
     }
 }
+
+export type Preview = Pick<Cover, 'id' | 'images'>

@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store'
-import { browser } from '$app/env'
+import { browser } from '$app/environment'
 
 export enum Theme {
     'light',
@@ -31,6 +31,7 @@ export interface Setting {
         data: string[]
     }
     safeMode: SafeMode
+    vergil: boolean
 }
 
 const defaultSetting: Setting = {
@@ -45,7 +46,8 @@ const defaultSetting: Setting = {
         enable: false,
         data: []
     },
-    safeMode: SafeMode.off
+    safeMode: SafeMode.off,
+    vergil: false
 }
 
 const setting = writable<Setting>(

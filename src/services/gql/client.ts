@@ -1,4 +1,4 @@
-import { dev } from '$app/env'
+import { dev } from '$app/environment'
 
 import gql, { client } from '@saltyaom/gql'
 import InMemoryCache from '@saltyaom/gql-inmemory-cache'

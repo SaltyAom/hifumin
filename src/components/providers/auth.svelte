@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-    import { browser } from '$app/env'
+    import { browser } from '$app/environment'
 
     import user, { isAuthed } from '@stores/user'
     import { galahad } from '@services'

@@ -9,6 +9,9 @@ import { dirname, join } from 'path'
 
 /** @type {import('vite').UserConfig} */
 const config = {
+    server: {
+        port: 3000
+    },
     plugins: [
         sveltekit(),
         WindiCSS(),
